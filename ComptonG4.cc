@@ -6,6 +6,7 @@
 
 // Standard G4 includes
 #include <G4RunManager.hh>
+#include <QGSP_BERT.hh>
 
 // Includes for this project
 #include "ComptonDetectorConstruction.hh"
@@ -14,7 +15,7 @@
 // ... IT BEGIIINNNNSSSS!!!!
 int main( int argc, char **argv)
 {
-  // Choose the random enegine
+  // Choose the random engine
   CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
 
   // Seed the random number generator with a constant seed...cause, you know,
@@ -27,7 +28,8 @@ int main( int argc, char **argv)
   // Mandatory Detector Constructor
   ComptonDetectorConstruction *detector = new ComptonDetectorConstruction();
   runManager->SetUserInitialization(detector);
-  runManager->SetUserInitialization(new ComptonPhysicsList() );
+  runManager->SetUserInitialization( new QGSP_BERT() );
+  runManager->SetUserInitialization( new ComptonPhysicsList() );
 
   // Initialize G4 kernel
   runManager->Initialize();

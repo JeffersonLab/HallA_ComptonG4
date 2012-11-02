@@ -3,7 +3,7 @@
 
 #include <G4VUserDetectorConstruction.hh>
 
-// Prefedine classes
+// Predefine classes
 class G4VPhysicalVolume;
 
 class ComptonDetectorConstruction : public G4VUserDetectorConstruction {
