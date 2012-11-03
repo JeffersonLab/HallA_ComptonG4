@@ -33,14 +33,9 @@ include(${Geant4_USE_FILE})
 
 # Add the target executables
 add_executable(ComptonG4 ComptonG4.cc ${my_project_sources})
+add_executable(ComptonG4_batch ComptonG4.cc ${my_project_sources})
+set_target_properties(ComptonG4_batch PROPERTIES COMPILE_DEFINITIONS "COMPTONG4_BATCH_MODE=1")
 
 # Link the ROOT and Geant4 libraries
 target_link_libraries(ComptonG4 ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
-
-# Define whether to force the use of the --batch or -b command line option
-if( DEFINED ${REQUIRE_BATCH_COMMAND})
-  set_property(
-    TARGET ComptonG4
-    PROPERTY COMPILE_DEFINITIONS REQUIRE_BATCH_COMMAND
-  )
-endif()
+target_link_libraries(ComptonG4_batch ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})

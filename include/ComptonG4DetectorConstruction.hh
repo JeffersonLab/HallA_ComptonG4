@@ -6,11 +6,11 @@
 // Predefine classes
 class G4VPhysicalVolume;
 
-class ComptonDetectorConstruction : public G4VUserDetectorConstruction {
+class ComptonG4DetectorConstruction : public G4VUserDetectorConstruction {
 
 public:
-  ComptonDetectorConstruction();
-  ~ComptonDetectorConstruction();
+  ComptonG4DetectorConstruction();
+  ~ComptonG4DetectorConstruction();
 
   G4VPhysicalVolume* Construct();
 };
