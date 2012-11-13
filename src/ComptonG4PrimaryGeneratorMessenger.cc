@@ -3,7 +3,7 @@
 #include "ComptonG4PrimaryGeneratorAction.hh"
 
 #include <G4UIdirectory.hh>
-#include <G4UIcmdWithAString.hh>
+#include <G4UIcmdWithoutParameter.hh>
 #include <G4UIcmdWithAnInteger.hh>
 #include <G4UIcmdWithADoubleAndUnit.hh>
 
@@ -11,7 +11,8 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
     ComptonG4PrimaryGeneratorAction *action) :
   fAction(action)
 {
-  fGunDir = new G4UIdirectory("/Compton/gun");
+  G4cout << "Generating new directory!!\n";
+  fGunDir = new G4UIdirectory("/Compton/gun/");
   fGunDir->SetGuidance("Constrols Primary Particle Generator");
 
   // Set Mode for primary particle generation
@@ -52,6 +53,9 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
   fSetIncidentEnergyCmd->SetParameterName("MaxPhotonEnergy",false);
   fSetIncidentEnergyCmd->SetUnitCategory("Energy");
   fSetIncidentEnergyCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  fInitializeCmd = new G4UIcmdWithoutParameter(
+      "/Compton/gun/Initialize",this);
 }
 
 ComptonG4PrimaryGeneratorMessenger::~ComptonG4PrimaryGeneratorMessenger()
@@ -77,5 +81,7 @@ void ComptonG4PrimaryGeneratorMessenger::SetNewValue(
     fAction->SetLaserWavelength(fSetLaserWavelengthCmd->GetNewDoubleValue(newValue));
   } else if ( command == fSetPhotonVertexZCmd ) {
     fAction->SetPhotonZ(fSetPhotonVertexZCmd->GetNewDoubleValue(newValue));
+  } else if ( command == fInitializeCmd ) {
+    fAction->Initialize();
   }
 }

@@ -8,6 +8,7 @@
 #include <G4RunManager.hh>
 #include <QGSP_BERT.hh>
 #include <G4UImanager.hh>
+#include <G4UIterminal.hh>
 
 #ifdef G4UI_USE_QT
     #include "G4UIQt.hh"
@@ -26,9 +27,6 @@
 // ... IT BEGIIINNNNSSSS!!!!
 int main( int argc, char **argv)
 {
-  // Choose the random engine
-  CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
-
   // Seed the random number generator with a constant seed...cause, you know,
   // confusion is great!!!
   CLHEP::HepRandom::setTheSeed(20091010.);
@@ -39,24 +37,26 @@ int main( int argc, char **argv)
   // Auxiliary DataIO class
   ComptonG4Analysis *analysis = new ComptonG4Analysis();
 
+  // Create the default /Compton directory for all messengers
+  G4UIdirectory *compDir = new G4UIdirectory("/Compton/");
+  compDir->SetGuidance("UI commands for the ComptonG4 simulation");
+
   // Mandatory Detector Constructor
   ComptonG4DetectorConstruction *detector = new ComptonG4DetectorConstruction();
   runManager->SetUserInitialization(detector);
   runManager->SetUserInitialization( new QGSP_BERT() );
   runManager->SetUserInitialization( new ComptonG4PhysicsList() );
 
-  // UI Session pointer
-  G4UIsession *session = 0;
-
   // Are we in interactive mode (GUI) or batch-mode?
 #ifndef COMPTONG4_BATCH_MODE // Interactive mode
+
+  // UI Session pointer
+  G4UIsession *session = 0;
 
 #ifdef G4UI_USE_QT
   session = new G4UIQt(argc,argv);
 #else
   session = new G4UIterminal();
-#endif
-
 #endif
 
 #ifdef G4VIS_USE
@@ -76,8 +76,12 @@ int main( int argc, char **argv)
   visManager ->Initialize();
 #endif
 
+#endif
+
   // Set user action classes
+  G4cerr << "Here!!!\n";
   runManager->SetUserAction(new ComptonG4PrimaryGeneratorAction(analysis));
+  G4cerr << "After here!!!\n";
 
   // Initialize G4 kernel
   runManager->Initialize();
@@ -97,19 +101,16 @@ int main( int argc, char **argv)
   session->SessionStart();
 
   delete session;
-#else // Batch-mode
 
 #ifdef G4VIS_USE
-  visManager->SetVerboseLevel("quiet");
+  delete visManager;
 #endif
+
+#else // Batch-mode
 
   G4String command = "/control/execute ";
   G4String fileName = argv[1];
   UI->ApplyCommand(command+fileName);
-#endif
-
-#ifdef G4VIS_USE
-  delete visManager;
 #endif
 
   delete runManager;

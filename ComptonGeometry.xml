@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+    <position name="WorldCenter" unit="m" x="0" y="0" z="0" />
+</define>
+
+<materials >
+
+	<element Z="8" formula="O" name="Oxygen" >
+	  <atom value="16" />
+	</element>
+	
+	<element Z="7" formula="N" name="Nitrogen" >
+	  <atom value="14" />
+	</element>
+
+	<material formula="air" name="Air" >
+	  <D value="0.00129" />
+	  <fraction n="0.7" ref="Nitrogen" />
+	  <fraction n="0.3" ref="Oxygen" />
+	</material>
+</materials>
+
+<solids>
+  <box lunit="m" name="WorldBox" x="1" y="1" z="1" />
+  <box lunit="m" name="Tunnel" x="1" y="1" z="1" />
+</solids>
+
+<structure>
+
+  <volume name="WorldTunnel">
+    <materialref ref="Air" />
+    <solidref ref="Tunnel" />
+  </volume>
+  
+	<volume name="World" >
+	  <materialref ref="Air" />
+	  <solidref ref="WorldBox" />
+	  <physvol>
+	    <volumeref ref="WorldTunnel" />
+	    <positionref ref="WorldCenter" />
+	  </physvol>
+	</volume>
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="World"/>
+</setup>
+
+</gdml>

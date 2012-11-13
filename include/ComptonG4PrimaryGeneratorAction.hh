@@ -5,6 +5,7 @@
 // Geant4 Includes
 #include <G4VUserPrimaryGeneratorAction.hh>
 #include <G4ThreeVector.hh>
+#include <fstream>
 
 // Pre-defined classes
 class ComptonG4Analysis;
@@ -18,7 +19,7 @@ public:
   ComptonG4PrimaryGeneratorAction(ComptonG4Analysis *analysis = 0);
   ~ComptonG4PrimaryGeneratorAction() {}
 
-  void GeneratePrimaries(G4Event *event) {}
+  void GeneratePrimaries(G4Event *event);
 
   // Setup setters
   void SetElectronEnergy(G4double val) { fElectronEnergy = val; }
@@ -31,6 +32,9 @@ public:
   void SetPhotonVertex(G4ThreeVector vec) { fPrimaryVertexLocation = vec; }
   void SetPhotonDivergence(G4double val) { fPhotonDivergence = val; }
   void SetPhotonTrackStart(G4double val) { fPhotonTrackStart = val; }
+  void Initialize();
+  G4double GetRandomRho();
+
 
 private:
   ComptonG4Analysis *fAnalysis; // Our IO class
@@ -49,6 +53,10 @@ private:
   // Hold the particle definitions
   G4ParticleDefinition* fGammaDef;    // Gamma definition pointer
   G4ParticleDefinition* fElectronDef; // Electron definition pointer
+
+  // Hold CX arrays
+  G4double fCXdSig_dRho[10000];
+  std::fstream fOut;
 };
 
 #endif
