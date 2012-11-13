@@ -11,9 +11,34 @@
 	  <atom value="16" />
 	</element>
 	
+	<element Z="82" formula="Pb" name="Lead" >
+	  <atom value="207.20" />
+	</element>
+	
+	<element Z="74" formula="W" name="Tungsten" >
+    <atom value="183.84" />
+	</element>
+	
 	<element Z="7" formula="N" name="Nitrogen" >
 	  <atom value="14" />
 	</element>
+	
+  <material Z="29" name="Copper" state="solid" >
+    <D unit="g/cm3" value="8.96" />
+    <atom unit="g/mole" value="63.546" />
+  </material>
+	
+	<material name="Aluminum" Z="13" state="solid">
+	 <D unit="g/cm3" value="2.7" />
+	 <atom unit="g/mole" value="26.9815" />
+	</material>
+	
+	<material name="LeadTungstate" formula="PbWO4" >
+    <D unit="g/cm3" value="8.28" />
+    <fraction n="0.16666667" ref="Lead" />
+    <fraction n="0.16666667" ref="Tungsten" />
+    <fraction n="0.66666667" ref="Oxygen" />
+	</material>
 
 	<material formula="air" name="Air" >
 	  <D value="0.00129" />
@@ -23,8 +48,14 @@
 </materials>
 
 <solids>
-  <box lunit="m" name="WorldBox" x="1" y="1" z="1" />
-  <box lunit="m" name="Tunnel" x="1" y="1" z="1" />
+  <box lunit="mm" name="LeadTungstateDetector" x="60" y="60" z="100" />
+  <box lunit="m" name="WorldBox" x="3" y="3" z="12" />
+  <box lunit="m" name="Tunnel" x="2" y="2" z="12" />
+  <box lunit="cm" name="LeadTungstateCrystal" x="3" y="3" z="10" />
+  
+  <box lunit="mm" name="ComptonBeamPipe" x="140" y="140" z="2854" />
+  <tube lunit="mm" name="ComptonBeamPipeTube" rmin="68" rmax="70" z="2850" startphi="0" deltaphi="360" aunit="degree" />
+  <tube lunit="mm" name="ComptonBeamPipeEnd" rmin="0" rmax="70" z="2" startphi="0" deltaphi="360" aunit="degree" />
 </solids>
 
 <structure>
@@ -34,12 +65,74 @@
     <solidref ref="Tunnel" />
   </volume>
   
+  <volume name="LeadTungstateCrystalVolume" >
+    <materialref ref="LeadTungstate" />
+    <solidref ref="LeadTungstateCrystal" />
+  </volume>
+  
+  <volume name="LeadTungstateDetectorVolume" >
+    <materialref ref="Air" />
+    <solidref ref="LeadTungstateDetector" />
+    <physvol>
+      <volumeref ref="LeadTungstateCrystalVolume" />
+      <position name="LeadTungstateCrystal1" unit="mm" x="-15" y="15" z="0" />
+    </physvol>
+        <physvol>
+      <volumeref ref="LeadTungstateCrystalVolume" />
+      <position name="LeadTungstateCrystal2" unit="mm" x="15" y="15" z="0" />
+    </physvol>
+        <physvol>
+      <volumeref ref="LeadTungstateCrystalVolume" />
+      <position name="LeadTungstateCrystal3" unit="mm" x="-15" y="-15" z="0" />
+    </physvol>
+    <physvol>
+      <volumeref ref="LeadTungstateCrystalVolume" />
+      <position name="LeadTungstateCrystal4" unit="mm" x="15" y="-15" z="0" />
+    </physvol>
+  </volume>
+  
+  <volume name="ComptonBeamPipeTubeVolume" >
+    <materialref ref="Aluminum" />
+    <solidref ref="ComptonBeamPipeTube" />
+  </volume>
+  
+  <volume name="ComptonBeamPipeEndVolume" >
+    <materialref ref="Copper" />
+    <solidref ref="ComptonBeamPipeEnd" />
+  </volume>
+  
+  <volume name="ComptonBeamPipeVolume">
+    <materialref ref="Air" />
+    <solidref ref="ComptonBeamPipe" />
+    <physvol>
+      <volumeref ref="ComptonBeamPipeTubeVolume" />
+      <position name="ComptonBeamPipeTubePosition" unit="mm" x="0" y="0" z="0" />
+    </physvol>
+      <physvol>
+      <volumeref ref="ComptonBeamPipeEndVolume" />
+      <position name="ComptonBeamPipeEndUpstreamPosition" unit="mm" x="0" y="0" z="-1426" />
+    </physvol>
+      <physvol>
+      <volumeref ref="ComptonBeamPipeEndVolume" />
+      <position name="ComptonBeamPipeEndDownstream" unit="mm" x="0" y="0" z="1426" />
+    </physvol>
+  </volume>
+  
 	<volume name="World" >
 	  <materialref ref="Air" />
 	  <solidref ref="WorldBox" />
 	  <physvol>
 	    <volumeref ref="WorldTunnel" />
 	    <positionref ref="WorldCenter" />
+	  </physvol>
+	  <physvol>
+      <volumeref ref="ComptonBeamPipeVolume"/>
+      <positionref ref="WorldCenter" />
+	  </physvol>
+	  
+	  <physvol>
+	    <volumeref ref="LeadTungstateDetectorVolume" />
+	    <position unit="mm" name="LeadTungstateDetectorPosition" x="0" y="0" z="1525" />
 	  </physvol>
 	</volume>
 </structure>
