@@ -14,7 +14,15 @@
 ComptonG4DetectorConstruction::ComptonG4DetectorConstruction()
 {
   G4GDMLParser parser;
-  parser.Read("ComptonGeometry.xml");
+
+  // Be flexible in this. If the user has provided a COMPTONG4_GEOMETRY_FILE
+  // environmental variable, then use that
+  char *geometryFile = getenv("COMPTONG4_GEOMETRY_FILE");
+  if(geometryFile!=NULL) {
+    parser.Read(geometryFile);
+  } else {
+    parser.Read("ComptonG4Geometry.xml");
+  }
   fPhysicsWorld = parser.GetWorldVolume();
 }
 

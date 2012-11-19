@@ -90,12 +90,17 @@ int main( int argc, char **argv)
   G4UImanager* UI = G4UImanager::GetUIpointer();
 
 #ifndef COMPTONG4_BATCH_MODE // Interactive mode
-  // Apply commands
-  UI->ApplyCommand("/control/execute gui.mac");
 
 #if defined(G4UI_USE_XM) || defined(G4UI_USE_WIN32) || defined(G4UI_USE_QT)
-  // Customize the G4UIXm,Win32 menubar with a macro file :
-  UI->ApplyCommand("/control/execute gui.mac");
+  // Read default GUI mac file
+  char *guiFile = getenv("COMPTONG4_GUI_MAC_FILE");
+  if(guiFile!=NULL) {
+    char cmd[1000];
+    sprintf(cmd,"/control/execute %s",guiFile);
+    UI->ApplyCommand(cmd );
+  } else {
+    UI->ApplyCommand("/control/execute ComptonG4_GUI.mac");
+  }
 #endif
 
   session->SessionStart();
