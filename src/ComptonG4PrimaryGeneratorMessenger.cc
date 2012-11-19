@@ -11,7 +11,6 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
     ComptonG4PrimaryGeneratorAction *action) :
   fAction(action)
 {
-  G4cout << "Generating new directory!!\n";
   fGunDir = new G4UIdirectory("/Compton/gun/");
   fGunDir->SetGuidance("Constrols Primary Particle Generator");
 

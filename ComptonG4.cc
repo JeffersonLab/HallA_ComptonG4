@@ -79,9 +79,7 @@ int main( int argc, char **argv)
 #endif
 
   // Set user action classes
-  G4cerr << "Here!!!\n";
   runManager->SetUserAction(new ComptonG4PrimaryGeneratorAction(analysis));
-  G4cerr << "After here!!!\n";
 
   // Initialize G4 kernel
   runManager->Initialize();
@@ -93,10 +91,10 @@ int main( int argc, char **argv)
 
 #if defined(G4UI_USE_XM) || defined(G4UI_USE_WIN32) || defined(G4UI_USE_QT)
   // Read default GUI mac file
-  char *guiFile = getenv("COMPTONG4_GUI_MAC_FILE");
+  char *guiFile= getenv("COMPTONG4_GUI_MAC_FILE");
   if(guiFile!=NULL) {
-    char cmd[1000];
-    sprintf(cmd,"/control/execute %s",guiFile);
+    G4String cmd("/control/execute");
+    cmd += guiFile;
     UI->ApplyCommand(cmd );
   } else {
     UI->ApplyCommand("/control/execute ComptonG4_GUI.mac");
