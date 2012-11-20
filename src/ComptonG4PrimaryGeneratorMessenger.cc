@@ -65,6 +65,7 @@ ComptonG4PrimaryGeneratorMessenger::~ComptonG4PrimaryGeneratorMessenger()
   delete fSetPhotonVertexZCmd;
   delete fSetIncidentEnergyCmd;
   delete fGunDir;
+  delete fInitializeCmd;
 }
 
 void ComptonG4PrimaryGeneratorMessenger::SetNewValue(

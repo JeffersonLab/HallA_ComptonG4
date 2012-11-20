@@ -2,7 +2,6 @@
 #include "ComptonG4PrimaryGeneratorAction.hh"
 #include "ComptonG4PrimaryGeneratorMessenger.hh"
 #include "ComptonG4Analysis.hh"
-#include "ComptonConstants.hh"
 
 // GEANT4 Includes
 #include <G4Event.hh>
@@ -16,7 +15,7 @@ ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analys
 
   fAnalysis(analysis)
 {
-  G4int n_particle = 2; // Gun shoots photons ( and may shoot electrons too)
+  G4int n_particle = 1; // Gun shoots photons ( and may shoot electrons too)
   fParticleGun = new G4ParticleGun(n_particle);
 
   // Messenger class
@@ -36,16 +35,66 @@ ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analys
   G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
   G4String gammaName;
   G4String electronName;
-  fGammaDef = particleTable->FindParticle(gammaName="gamma");
-  fElectronDef = particleTable->FindParticle(electronName="electron");
+  fGammaDef = particleTable->FindParticle("gamma");
+  fElectronDef = particleTable->FindParticle("e-");
+}
 
-  fOut.open("out.dat",std::ios::out);
+ComptonG4PrimaryGeneratorAction::~ComptonG4PrimaryGeneratorAction()
+{
+  delete fParticleGun;
+  delete fGunMessenger;
 }
 
 
 void ComptonG4PrimaryGeneratorAction::GeneratePrimaries(G4Event *event)
 {
-  G4double laserE = 0.0;      // Laser Photon Energy
+  // We generate the primaries based on the selected mode
+  switch(fGeneratorMode) {
+  case 1:
+    break;
+  case 2:
+    break;
+  case 3: // Compton mode (i.e, real physics mode)
+    GeneratePrimaryComptonMode();
+    break;
+  default: // Do nothing, use the default GEANT4 gun
+    break;
+  };
+  fParticleGun->GeneratePrimaryVertex(event);
+}
+
+
+void ComptonG4PrimaryGeneratorAction::Initialize()
+{
+  // Initialize this generator. If we are using compton mode, one of the
+  // first thing to initialize is the distribution function (cross section)
+
+  if( fGeneratorMode == 3 ) {
+    // Variables used in the Compton mode
+
+    fLaserEnergy = h_Planck *c_light/fLaserWavelength;
+    fAParameter = 1/(1+(4*fLaserEnergy*fElectronEnergy)/
+        (electron_mass_c2*electron_mass_c2));
+    fMaxPhotonEnergy = fElectronEnergy*(1-fAParameter);
+    G4double am1 = fAParameter-1.0;
+    for(int i = 0; i < 10000; i++ ) {
+      G4double rho = G4double(i/10000.0);
+      G4double term1 = rho*rho*am1*am1/(1.+rho*am1);
+      G4double term3 = (1.-rho*(1.0+fAParameter))/(1.+rho*am1);
+      fCXdSig_dRho[i] = 2*pi*classic_electr_radius*
+        classic_electr_radius*fAParameter*(term1+1.0+term3*term3);
+    }
+  }
+}
+
+G4double ComptonG4PrimaryGeneratorAction::GetRandomRho()
+{
+  G4RandGeneral GenDist(fCXdSig_dRho,10000);
+  return GenDist.shoot();
+}
+
+void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
+{
   G4double gammaE = 0.0;      // Scattered photon energy
   G4double rho = 0.0;         // Normalized photon energy photonE/CE
   G4double dSig = 0.0;        // The cross section at this energy
@@ -56,58 +105,19 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaries(G4Event *event)
               // of the scattered photon. For now, we just point it towards
               // the photon detector
 
-  // We generate the primaries based on the selected mode
-  switch(fGeneratorMode) {
-  case 1:
-    break;
-  case 2:
-    break;
-  case 3: // Compton mode (i.e, real physics mode)
-    // Now get a random rho
-    rho = GetRandomRho();
-    laserE = ComptonConstants::kPlanck *
-        ComptonConstants::kC/fLaserWavelength;
-    gammaTheta = acos(1-ComptonConstants::kMassElectron*(laserE-rho*fMaxPhotonEnergy)/
-        (laserE*rho*fMaxPhotonEnergy));
-    gammaPhi=CLHEP::RandFlat::shoot(2.0*pi);
-    break;
-  default: // Do nothing, use the default GEANT4 gun
-    break;
-  };
-}
-
-
-void ComptonG4PrimaryGeneratorAction::Initialize()
-{
-  // Initialize this generator. If we are using compton mode, one of the
-  // first thing to initialize is the distribution function (cross section)
-
-  if( fGeneratorMode == 3 ) {
-    for(int i = 0; i < 10000; i++ ) {
-      // Variables used in the Compton mode
-      G4double laserE;  // Laser energy (computed from Wavelength)
-      G4double gamma;   //
-      G4double rho = G4double(i/10000.0);
-
-      laserE = ComptonConstants::kPlanck *
-        ComptonConstants::kC/fLaserWavelength;
-      gamma = fElectronEnergy/ComptonConstants::kMassElectron;
-      fMaxPhotonEnergy = 4*gamma*gamma*laserE/
-        (1.0+(4*gamma*laserE/ComptonConstants::kMassElectron));
-      G4double a= 1./
-        (1.+4.*fElectronEnergy*laserE/
-            (electron_mass_c2*electron_mass_c2));
-      G4double am1 = a-1.0;
-      G4double term1 = rho*rho*am1*am1/(1.+rho*am1);
-      G4double term3 = (1.-rho*(1.0+a))/(1.+rho*am1);
-      fCXdSig_dRho[i] = 2*pi*classic_electr_radius*
-        classic_electr_radius*a*(term1+1.0+term3*term3);
-    }
-  }
-}
-
-G4double ComptonG4PrimaryGeneratorAction::GetRandomRho()
-{
-  G4RandGeneral GenDist(fCXdSig_dRho,10000);
-  return GenDist.shoot();
+  // Now get a random rho
+  rho = GetRandomRho();
+  gammaE = rho*fMaxPhotonEnergy;
+  // I took the following for theta from Megan Friend's CompCal code
+  G4double tmp = electron_mass_c2/fElectronEnergy;
+  tmp = tmp*tmp +4*gammaE/fElectronEnergy;
+  gammaTheta = acos( 1.0- 0.5*tmp*((1./rho)-1.0));
+  gammaPhi=CLHEP::RandFlat::shoot(2.0*pi);
+  gammaDirection.setRThetaPhi(1.0,gammaTheta/radian,gammaPhi/radian);
+  fParticleGun->SetParticleEnergy(gammaE);
+  fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
+  fParticleGun->SetParticleMomentumDirection(gammaDirection);
+  fParticleGun->SetParticleDefinition(fGammaDef);
+  G4cout << "Direction: (" << gammaDirection.getX() << ","
+      << gammaDirection.getY() << "," << gammaDirection.getZ() << ")\n";
 }

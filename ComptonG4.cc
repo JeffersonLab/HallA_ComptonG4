@@ -6,7 +6,7 @@
 
 // Standard G4 includes
 #include <G4RunManager.hh>
-#include <QGSP_BERT.hh>
+#include <QGSP_BERT_HP.hh>
 #include <G4UImanager.hh>
 #include <G4UIterminal.hh>
 
@@ -23,6 +23,9 @@
 #include "ComptonG4PhysicsList.hh"
 #include "ComptonG4Analysis.hh"
 #include "ComptonG4PrimaryGeneratorAction.hh"
+#include "ComptonG4EventAction.hh"
+#include "ComptonG4RunAction.hh"
+#include "ComptonG4SteppingAction.hh"
 
 // ... IT BEGIIINNNNSSSS!!!!
 int main( int argc, char **argv)
@@ -42,9 +45,9 @@ int main( int argc, char **argv)
   compDir->SetGuidance("UI commands for the ComptonG4 simulation");
 
   // Mandatory Detector Constructor
-  ComptonG4DetectorConstruction *detector = new ComptonG4DetectorConstruction();
-  runManager->SetUserInitialization(detector);
-  runManager->SetUserInitialization( new QGSP_BERT() );
+
+  runManager->SetUserInitialization(new ComptonG4DetectorConstruction());
+  //runManager->SetUserInitialization( new QGSP_BERT() );
   runManager->SetUserInitialization( new ComptonG4PhysicsList() );
 
   // Are we in interactive mode (GUI) or batch-mode?
@@ -80,6 +83,9 @@ int main( int argc, char **argv)
 
   // Set user action classes
   runManager->SetUserAction(new ComptonG4PrimaryGeneratorAction(analysis));
+  runManager->SetUserAction(new ComptonG4SteppingAction(analysis));
+  runManager->SetUserAction(new ComptonG4EventAction(analysis));
+  runManager->SetUserAction(new ComptonG4RunAction(analysis));
 
   // Initialize G4 kernel
   runManager->Initialize();
@@ -116,6 +122,7 @@ int main( int argc, char **argv)
   UI->ApplyCommand(command+fileName);
 #endif
 
+  delete compDir;
   delete runManager;
 
   return 0;

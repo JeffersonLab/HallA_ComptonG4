@@ -11,6 +11,8 @@ public:
   void ConstructParticle();
   void ConstructProcess();
   void SetCuts();
+private:
+  void ConstructEM();
 };
 
 #endif

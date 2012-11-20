@@ -17,7 +17,7 @@ class G4ParticleDefinition;
 class ComptonG4PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction {
 public:
   ComptonG4PrimaryGeneratorAction(ComptonG4Analysis *analysis = 0);
-  ~ComptonG4PrimaryGeneratorAction() {}
+  ~ComptonG4PrimaryGeneratorAction();
 
   void GeneratePrimaries(G4Event *event);
 
@@ -50,13 +50,20 @@ private:
   G4double fPhotonTrackStart;     // Length he photon is tracked
   G4int fGeneratorMode;           // Gun generator mode
 
+  // Compton Mode settings
+  G4double fLaserEnergy;               // Laser energy
+  G4double fAParameter;           // A common parameter that appears in the
+                                  // Compton Mode kinematics
+
   // Hold the particle definitions
   G4ParticleDefinition* fGammaDef;    // Gamma definition pointer
   G4ParticleDefinition* fElectronDef; // Electron definition pointer
 
   // Hold CX arrays
   G4double fCXdSig_dRho[10000];
-  std::fstream fOut;
+
+  // Generate custom Primaries
+  void GeneratePrimaryComptonMode();
 };
 
 #endif
