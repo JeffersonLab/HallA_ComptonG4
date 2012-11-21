@@ -1,8 +1,13 @@
-////////////////////////////////////////////////////////////////////////////////
-//
-//
-///
-////////////////////////////////////////////////////////////////////////////////
+/*!
+* @brief A Compton Polarimeter GEANT4 based Simulation Package
+*
+* This is a Compton Polarimeter GEANT4 based Simulation Package. It can load
+* specified Geometry files and output a ROOT file with the results.
+*
+* @author Juan Carlos Cornejo <cornejo@jlab.org>
+*
+* $Header $
+!*/
 
 // Standard G4 includes
 #include <G4RunManager.hh>

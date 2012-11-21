@@ -1,4 +1,3 @@
-
 #ifndef COMPTONG4PRIMARYGENERATORACTION_HH
 #define COMPTONG4PRIMARYGENERATORACTION_HH
 
@@ -13,6 +12,19 @@ class G4Event;
 class G4ParticleGun;
 class ComptonG4PrimaryGeneratorMessenger;
 class G4ParticleDefinition;
+
+/*!
+ * @class ComptonG4PrimaryGeneratorAction
+ *
+ * @brief Default Generator of Primaries for the Compton Scattering process
+ *
+ * The Default Generator of Primaries for the Compton Scattering process
+ * produces photons/gammas (and hopefully later electrons)
+ *
+ *
+ * @author Juan Carlos Cornejo <cornejo@jlab.org>
+ *
+ !*/
 
 class ComptonG4PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction {
 public:

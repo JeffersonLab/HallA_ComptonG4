@@ -5,6 +5,17 @@
 
 class ComptonG4Analysis;
 
+/*!
+ * @class ComptonG4SteppingAction
+ *
+ * @brief Compton Stepping Action Class
+ *
+ * Handles the simulation on a step-by-step way
+ *
+ *
+ * @author Juan Carlos Cornejo <cornejo@jlab.org>
+ *
+ !*/
 class ComptonG4SteppingAction : public G4UserSteppingAction {
 public:
   ComptonG4SteppingAction(ComptonG4Analysis *analysis);

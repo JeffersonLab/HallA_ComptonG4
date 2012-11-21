@@ -8,19 +8,19 @@
 <materials >
 
 	<element Z="8" formula="O" name="Oxygen" >
-	  <atom value="16" />
+	  <atom value="16." unit="g/mole" />
 	</element>
 	
 	<element Z="82" formula="Pb" name="Lead" >
-	  <atom value="207.20" />
+	  <atom value="207.20" unit="g/mole"/>
 	</element>
 	
 	<element Z="74" formula="W" name="Tungsten" >
-    <atom value="183.84" />
+    <atom value="183.84" unit="g/mole" />
 	</element>
 	
 	<element Z="7" formula="N" name="Nitrogen" >
-	  <atom value="14" />
+	  <atom value="14" unit="g/mole"/>
 	</element>
 	
   <material Z="29" name="Copper" state="solid" >

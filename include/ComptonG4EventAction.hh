@@ -7,6 +7,17 @@
 // Pre-defined classes
 class ComptonG4Analysis;
 
+/*!
+ * @class ComptonG4EventAction
+ *
+ * @brief Manages each event
+ *
+ * This manages each event in the simulation
+ *
+ *
+ * @author Juan Carlos Cornejo <cornejo@jlab.org>
+ *
+ !*/
 class ComptonG4EventAction : public G4UserEventAction {
 public:
   ComptonG4EventAction(ComptonG4Analysis *analysis);

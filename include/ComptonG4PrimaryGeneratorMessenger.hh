@@ -10,6 +10,17 @@ class G4UIcmdWithAnInteger;
 class G4UIcmdWithADoubleAndUnit;
 class G4UIcmdWithoutParameter;
 
+/*!
+ * @class ComptonG4PrimaryGeneratorMessenger
+ *
+ * @brief Primary Generator Messenger
+ *
+ * Handles user input to configure the primary generator/gun
+ *
+ *
+ * @author Juan Carlos Cornejo <cornejo@jlab.org>
+ *
+ !*/
 class ComptonG4PrimaryGeneratorMessenger : public G4UImessenger {
 public:
   ComptonG4PrimaryGeneratorMessenger(ComptonG4PrimaryGeneratorAction *action);

@@ -4,9 +4,18 @@
 
 #include "ComptonG4PhysicsList.hh"
 
-// GEANT4 Includes
+// GEANT4 Physics Constructors
 #include <G4LeptonConstructor.hh>
+#include <G4BosonConstructor.hh>
+#include <G4MesonConstructor.hh>
+#include <G4BaryonConstructor.hh>
+#include <G4IonConstructor.hh>
+
+
 #include <G4PhysicsListHelper.hh>
+#include <G4Decay.hh>
+
+// GEANT4 Physics Processes
 #include <G4PhotoElectricEffect.hh>
 #include <G4ComptonScattering.hh>
 #include <G4GammaConversion.hh>
@@ -14,7 +23,16 @@
 #include <G4eIonisation.hh>
 #include <G4eBremsstrahlung.hh>
 #include <G4eplusAnnihilation.hh>
-#include <G4BosonConstructor.hh>
+#include <G4MuMultipleScattering.hh>
+#include <G4MuIonisation.hh>
+#include <G4MuBremsstrahlung.hh>
+#include <G4MuPairProduction.hh>
+#include <G4hMultipleScattering.hh>
+#include <G4hIonisation.hh>
+#include <G4hBremsstrahlung.hh>
+#include <G4hPairProduction.hh>
+#include <G4ionIonisation.hh>
+
 
 ComptonG4PhysicsList::ComptonG4PhysicsList() : G4VUserPhysicsList()
 {
@@ -32,6 +50,15 @@ void ComptonG4PhysicsList::ConstructParticle()
 
   G4LeptonConstructor pLeptonConstructor;
   pLeptonConstructor.ConstructParticle();
+
+  G4MesonConstructor pMesonConstructor;
+  pMesonConstructor.ConstructParticle();
+
+  G4BaryonConstructor pBaryonConstructor;
+  pBaryonConstructor.ConstructParticle();
+
+  G4IonConstructor pIonConstructor;
+  pIonConstructor.ConstructParticle();
 }
 
 void ComptonG4PhysicsList::ConstructProcess()
@@ -68,7 +95,42 @@ void ComptonG4PhysicsList::ConstructEM()
       ph->RegisterProcess(new G4eBremsstrahlung,     particle);
       ph->RegisterProcess(new G4eplusAnnihilation,   particle);
 
-    }
+    } else if( particleName == "mu+" ||
+              particleName == "mu-"    ) {
+      //muon
+      ph->RegisterProcess(new G4MuMultipleScattering, particle);
+      ph->RegisterProcess(new G4MuIonisation,         particle);
+      ph->RegisterProcess(new G4MuBremsstrahlung,     particle);
+      ph->RegisterProcess(new G4MuPairProduction,     particle);
+
+      } else if( particleName == "proton" ||
+              particleName == "pi-" ||
+              particleName == "pi+"    ) {
+      //proton
+      ph->RegisterProcess(new G4hMultipleScattering, particle);
+      ph->RegisterProcess(new G4hIonisation,         particle);
+      ph->RegisterProcess(new G4hBremsstrahlung,     particle);
+      ph->RegisterProcess(new G4hPairProduction,     particle);
+
+      } else if( particleName == "alpha" ||
+              particleName == "He3" )     {
+      //alpha
+      ph->RegisterProcess(new G4hMultipleScattering, particle);
+      ph->RegisterProcess(new G4ionIonisation,       particle);
+
+      } else if( particleName == "GenericIon" ) {
+      //Ions
+      ph->RegisterProcess(new G4hMultipleScattering, particle);
+      ph->RegisterProcess(new G4ionIonisation,       particle);
+
+      } else if ((!particle->IsShortLived()) &&
+              (particle->GetPDGCharge() != 0.0) &&
+              (particle->GetParticleName() != "chargedgeantino")) {
+      //all others charged particles except geantino
+      ph->RegisterProcess(new G4hMultipleScattering, particle);
+      ph->RegisterProcess(new G4hIonisation,         particle);
+      }
+
   }
 }
 
@@ -89,3 +151,19 @@ void ComptonG4PhysicsList::SetCuts()
 
   if (verboseLevel>0) DumpCutValuesTable();
 }
+
+void ComptonG4PhysicsList::ConstructDecay()
+{
+  G4PhysicsListHelper* ph = G4PhysicsListHelper::GetPhysicsListHelper();
+
+  // Add Decay Process
+  G4Decay* theDecayProcess = new G4Decay();
+  theParticleIterator->reset();
+  while( (*theParticleIterator)() ){
+    G4ParticleDefinition* particle = theParticleIterator->value();
+    if (theDecayProcess->IsApplicable(*particle)) {
+      ph->RegisterProcess(theDecayProcess, particle);
+    }
+  }
+}
+
