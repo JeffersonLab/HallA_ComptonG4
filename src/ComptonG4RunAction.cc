@@ -9,7 +9,7 @@
 ComptonG4RunAction::ComptonG4RunAction(ComptonG4Analysis *analysis) :
   fAnalysis(analysis)
 {
-
+  fAnalysis->Initialize();
 }
 
 ComptonG4RunAction::~ComptonG4RunAction()

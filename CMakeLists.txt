@@ -13,8 +13,8 @@ file(GLOB my_project_headers ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hh)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 # Load ROOT and setup include directory
-#find_package(ROOT REQUIRED)
-#include_directories(${ROOT_INCLUDE_DIR})
+find_package(ROOT REQUIRED)
+include_directories(${ROOT_INCLUDE_DIR})
 
 # Create ROOT dictionary before messing up include dirs with Geant4 stuff
 # (-p option to "use of the compiler's preprocessor instead of CINT's preprocessor.")
