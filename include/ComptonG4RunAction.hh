@@ -24,7 +24,8 @@ public:
   ~ComptonG4RunAction();
 
   // G4UserRunAction related classes
-
+  void BeginOfRunAction(const G4Run* run);
+  void EndOfRunAction(const G4Run* run);
 
 private:
   ComptonG4Analysis   *fAnalysis;    // Pointer to the Data IO instance

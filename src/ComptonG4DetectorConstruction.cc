@@ -15,9 +15,9 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction()
 {
   G4GDMLParser parser;
 
-  // Be flexible in this. If the user has provided a COMPTONG4_GEOMETRY_FILE
+  // Be flexible in this. If the user has provided a CG4_GEOMETRY_FILE
   // environmental variable, then use that
-  char *geometryFile = getenv("COMPTONG4_GEOMETRY_FILE");
+  char *geometryFile = getenv("CG4_GEOMETRY_FILE");
   if(geometryFile!=NULL) {
     parser.Read(geometryFile);
   } else {

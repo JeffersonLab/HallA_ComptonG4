@@ -21,8 +21,10 @@ ComptonG4EventAction::~ComptonG4EventAction()
 
 void ComptonG4EventAction::BeginOfEventAction(const G4Event* evt)
 {
+  fAnalysis->StartOfEvent();
 }
 
 void ComptonG4EventAction::EndOfEventAction(const G4Event* evt)
 {
+  fAnalysis->EndOfEvent();
 }

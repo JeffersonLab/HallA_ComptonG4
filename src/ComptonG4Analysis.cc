@@ -43,10 +43,11 @@ void ComptonG4Analysis::Initialize( G4int runnum )
       G4UIcommand::ConvertToString(runnum)+".root";
   fFile = new TFile(outFile,"RECREATE");
   fTree = new TTree("ComptonG4","Compton GEANT4 Simulation Results");
-  fTree->Branch("asym/D",&fAsym);
-  fTree->Branch("rho/D",&fRho);
-  fTree->Branch("gammaE/D",&fGammaE);
-  fTree->Branch("eDep/D",&fEDep);
+  //fTree->Branch("asym",&fAsym,"asym/D");
+  fTree->Branch("rho",&fRho,"rho/D");
+  fTree->Branch("gammaE",&fGammaE,"gammaE/D");
+  fTree->Branch("eDep",&fEDep,"eDep/D");
+  CleanEvent();
 }
 
 /**
@@ -54,8 +55,6 @@ void ComptonG4Analysis::Initialize( G4int runnum )
  */
 void ComptonG4Analysis::StartOfEvent()
 {
-  // Reset all values!
-  fAsym = fRho = fGammaE = fEDep = 0.0;
 }
 
 /**
@@ -65,12 +64,19 @@ void ComptonG4Analysis::EndOfEvent()
 {
   // Fill the tree
   fTree->Fill();
+  CleanEvent();
+}
+
+void ComptonG4Analysis::CleanEvent()
+{
+  // Reset all values!
+  fAsym = fRho = fGammaE = fEDep = 0.0;
 }
 
 /**
  *
  */
-void ComptonG4Analysis::FinishRun()
+void ComptonG4Analysis::Finished()
 {
-  fFile->Close();
+  fFile->Write();
 }

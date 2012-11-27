@@ -4,7 +4,6 @@
 // Geant4 Includes
 #include <G4VUserPrimaryGeneratorAction.hh>
 #include <G4ThreeVector.hh>
-#include <fstream>
 
 // Pre-defined classes
 class ComptonG4Analysis;

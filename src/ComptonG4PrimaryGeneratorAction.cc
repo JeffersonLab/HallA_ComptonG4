@@ -97,7 +97,7 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
 {
   G4double gammaE = 0.0;      // Scattered photon energy
   G4double rho = 0.0;         // Normalized photon energy photonE/CE
-  G4double dSig = 0.0;        // The cross section at this energy
+  //G4double dSig = 0.0;        // The cross section at this energy
   G4double asym = 0.0;        // Theoretical Asymmetry
   G4double gammaTheta = 0.0;  // Photon scattered angle polar angle
   G4double gammaPhi = 0.0;    // Photon scattered azymuthal angle
@@ -118,6 +118,9 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
   fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
   fParticleGun->SetParticleMomentumDirection(gammaDirection);
   fParticleGun->SetParticleDefinition(fGammaDef);
-  G4cout << "Direction: (" << gammaDirection.getX() << ","
-      << gammaDirection.getY() << "," << gammaDirection.getZ() << ")\n";
+  //G4cout << "Direction: (" << gammaDirection.getX() << ","
+  //    << gammaDirection.getY() << "," << gammaDirection.getZ() << ")\n";
+  //fAnalysis->SetAsym(asym);
+  fAnalysis->SetRho(rho);
+  fAnalysis->SetGammaE(gammaE/MeV);
 }

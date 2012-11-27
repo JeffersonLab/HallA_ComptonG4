@@ -34,10 +34,10 @@
 	</material>
 	
 	<material name="LeadTungstate" formula="PbWO4" >
-    <D unit="g/cm3" value="8.28" />
-    <fraction n="0.16666667" ref="Lead" />
-    <fraction n="0.16666667" ref="Tungsten" />
-    <fraction n="0.66666667" ref="Oxygen" />
+    <D value="1.0" />
+    <composite n="1" ref="Lead" />
+    <composite n="1" ref="Tungsten" />
+    <composite n="4" ref="Oxygen" />
 	</material>
 
 	<material formula="air" name="Air" >
@@ -48,91 +48,85 @@
 </materials>
 
 <solids>
-  <box lunit="mm" name="LeadTungstateDetector" x="60" y="60" z="100" />
-  <box lunit="m" name="WorldBox" x="3" y="3" z="12" />
-  <box lunit="m" name="Tunnel" x="2" y="2" z="12" />
-  <box lunit="cm" name="LeadTungstateCrystal" x="3" y="3" z="10" />
+  <box lunit="mm" name="LeadTungstateDetector_Solid" x="60" y="60" z="100" />
+  <box lunit="m" name="Tunnel_Solid" x="2" y="2" z="12" />
+  <box lunit="mm" name="LeadTungstateCrystal_Solid" x="30" y="30" z="100" />
   
-  <box lunit="mm" name="ComptonBeamPipe" x="140" y="140" z="2854" />
-  <tube lunit="mm" name="ComptonBeamPipeTube" rmin="68" rmax="70" z="2850" startphi="0" deltaphi="360" aunit="degree" />
-  <tube lunit="mm" name="ComptonBeamPipeEnd" rmin="0" rmax="70" z="2" startphi="0" deltaphi="360" aunit="degree" />
+  <box lunit="mm" name="ComptonBeamline_Solid" x="140" y="140" z="2854" />
+  <tube lunit="mm" name="ComptonBeampipe_Solid" rmin="68" rmax="70" z="2850" startphi="0" deltaphi="360" aunit="degree" />
+  <tube lunit="mm" name="ComptonBeampipeEnd_Solid" rmin="0" rmax="70" z="2" startphi="0" deltaphi="360" aunit="degree" />
 </solids>
 
 <structure>
 
-  <volume name="WorldTunnel">
-    <materialref ref="Air" />
-    <solidref ref="Tunnel" />
-  </volume>
-  
-  <volume name="LeadTungstateCrystalVolume" >
+  <!-- Start: Define LeadTungstate 4crystal detector used in QWeak 2011-2012 -->
+  <volume name="LeadTungstateCrystal_Logical" >
     <materialref ref="LeadTungstate" />
-    <solidref ref="LeadTungstateCrystal" />
+    <solidref ref="LeadTungstateCrystal_Solid" />
   </volume>
   
-  <volume name="LeadTungstateDetectorVolume" >
+  <volume name="LeadTungstateDetectorContainer_Logical" >
     <materialref ref="Air" />
-    <solidref ref="LeadTungstateDetector" />
+    <solidref ref="LeadTungstateDetector_Solid" />
     <physvol>
-      <volumeref ref="LeadTungstateCrystalVolume" />
-      <position name="LeadTungstateCrystal1" unit="mm" x="-15" y="15" z="0" />
+      <volumeref ref="LeadTungstateCrystal_Logical" />
+      <position name="LeadTungstateCrystal1_Position" unit="mm" x="-15" y="15" z="0" />
+    </physvol>
+     <physvol>
+      <volumeref ref="LeadTungstateCrystal_Logical" />
+      <position name="LeadTungstateCrystal2_Position" unit="mm" x="15" y="15" z="0" />
     </physvol>
         <physvol>
-      <volumeref ref="LeadTungstateCrystalVolume" />
-      <position name="LeadTungstateCrystal2" unit="mm" x="15" y="15" z="0" />
-    </physvol>
-        <physvol>
-      <volumeref ref="LeadTungstateCrystalVolume" />
-      <position name="LeadTungstateCrystal3" unit="mm" x="-15" y="-15" z="0" />
+      <volumeref ref="LeadTungstateCrystal_Logical" />
+      <position name="LeadTungstateCrystal3_Position" unit="mm" x="-15" y="-15" z="0" />
     </physvol>
     <physvol>
-      <volumeref ref="LeadTungstateCrystalVolume" />
-      <position name="LeadTungstateCrystal4" unit="mm" x="15" y="-15" z="0" />
+      <volumeref ref="LeadTungstateCrystal_Logical" />
+      <position name="LeadTungstateCrystal4_Position" unit="mm" x="15" y="-15" z="0" />
     </physvol>
   </volume>
+  <!-- End: Define LeadTungstate 4crystal detector used in QWeak 2011-2012 -->
   
-  <volume name="ComptonBeamPipeTubeVolume" >
+  <!-- Start: Define Beampipe -->
+  <volume name="ComptonBeampipe_Logical" >
     <materialref ref="Aluminum" />
-    <solidref ref="ComptonBeamPipeTube" />
+    <solidref ref="ComptonBeampipe_Solid" />
   </volume>
   
-  <volume name="ComptonBeamPipeEndVolume" >
+  <volume name="ComptonBeampipeEnd_Logical" >
     <materialref ref="Copper" />
-    <solidref ref="ComptonBeamPipeEnd" />
+    <solidref ref="ComptonBeampipeEnd_Solid" />
   </volume>
   
-  <volume name="ComptonBeamPipeVolume">
+  <volume name="ComptonBeamlineContainer_Logical">
     <materialref ref="Air" />
-    <solidref ref="ComptonBeamPipe" />
+    <solidref ref="ComptonBeamline_Solid" />
     <physvol>
-      <volumeref ref="ComptonBeamPipeTubeVolume" />
-      <position name="ComptonBeamPipeTubePosition" unit="mm" x="0" y="0" z="0" />
+      <volumeref ref="ComptonBeampipe_Logical" />
+      <position name="ComptonBeampipe_Position" unit="mm" x="0" y="0" z="0" />
     </physvol>
       <physvol>
-      <volumeref ref="ComptonBeamPipeEndVolume" />
-      <position name="ComptonBeamPipeEndUpstreamPosition" unit="mm" x="0" y="0" z="-1426" />
+      <volumeref ref="ComptonBeampipeEnd_Logical" />
+      <position name="ComptonBeampipeEndUpstream_Position" unit="mm" x="0" y="0" z="-1426" />
     </physvol>
-      <physvol>
-      <volumeref ref="ComptonBeamPipeEndVolume" />
-      <position name="ComptonBeamPipeEndDownstream" unit="mm" x="0" y="0" z="1426" />
+    <physvol>
+      <volumeref ref="ComptonBeampipeEnd_Logical" />
+      <position name="ComptonBeampipeEndDownstream_Position" unit="mm" x="0" y="0" z="1426" />
     </physvol>
   </volume>
+  <!-- End: Define Beampipe -->
   
+  <!-- World Volume Reference -->
 	<volume name="World" >
 	  <materialref ref="Air" />
-	  <solidref ref="WorldBox" />
+	  <solidref ref="Tunnel_Solid" />
 	  <physvol>
-	    <volumeref ref="WorldTunnel" />
-	    <positionref ref="WorldCenter" />
-	  </physvol>
+      <volumeref ref="LeadTungstateDetectorContainer_Logical" />
+      <position unit="mm" name="LeadTungstateDetector_Position" x="0" y="0" z="1525" />
+    </physvol>
 	  <physvol>
-      <volumeref ref="ComptonBeamPipeVolume"/>
+      <volumeref ref="ComptonBeamlineContainer_Logical"/>
       <positionref ref="WorldCenter" />
-	  </physvol>
-	  
-	  <physvol>
-	    <volumeref ref="LeadTungstateDetectorVolume" />
-	    <position unit="mm" name="LeadTungstateDetectorPosition" x="0" y="0" z="1525" />
 	  </physvol>
 	</volume>
 </structure>

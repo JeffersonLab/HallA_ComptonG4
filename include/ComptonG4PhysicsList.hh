@@ -22,6 +22,7 @@ public:
   void ConstructParticle();
   void ConstructProcess();
   void SetCuts();
+
 private:
   void ConstructEM();
   void ConstructDecay();

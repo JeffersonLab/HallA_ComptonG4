@@ -4,6 +4,9 @@
 // GEANT4 Includes
 #include <G4UIcommand.hh>
 
+// ROOT Includes
+#include <Rtypes.h>
+
 // Pre-defined classes
 class TTree;
 class TFile;
@@ -28,6 +31,12 @@ public:
   void Initialize(G4int runnum = 0001);
   void StartOfEvent();
   void EndOfEvent();
+  void Finished();
+  void CleanEvent();
+  void SetAsym(Double_t asym) { fAsym = asym; }
+  void SetGammaE(Double_t e) { fGammaE = e; }
+  void SetRho(Double_t rho) { fRho = rho; }
+  void AddEDep(Double_t e) { fEDep += e; }
 
 private:
   TTree               *fTree;         // Generated TTree
@@ -35,10 +44,10 @@ private:
   G4String            fOutputPath;    // Path to output rootfiles
 
   // Tree variables per event
-  G4double            fAsym;          // Theoretical asymmetry
-  G4double            fRho;           // Normalized Gamma scattering energy
-  G4double            fGammaE;        // Absolute Gamma energy
-  G4double            fEDep;          // Energy deposited in the crystal
+  Double_t            fAsym;          // Theoretical asymmetry
+  Double_t            fRho;           // Normalized Gamma scattering energy
+  Double_t            fGammaE;        // Absolute Gamma energy
+  Double_t            fEDep;          // Energy deposited in the crystal
 };
 
 #endif
