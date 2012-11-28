@@ -71,7 +71,7 @@ void ComptonG4Analysis::EndOfEvent()
   CleanEvent();
   fNumberOfEvents++;
   if ( ( fNumberOfEvents % 10000 ) == 0) {
-    std::cout << "Processed event: " << fNumberOfEvents << " \t" << fNumberOfEvents%1000 << "\n";
+    std::cout << "Processed event: " << fNumberOfEvents << std::endl;
   }
 }
 
