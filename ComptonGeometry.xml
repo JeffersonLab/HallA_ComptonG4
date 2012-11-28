@@ -41,10 +41,16 @@
 	</material>
 
 	<material formula="air" name="Air" >
-	  <D value="0.00129" />
+	  <D unit="g/cm3" value="0.00129" />
 	  <fraction n="0.7" ref="Nitrogen" />
 	  <fraction n="0.3" ref="Oxygen" />
 	</material>
+	
+	<material name="AirVacuum" >
+    <D unit="g/cm3" value="1.0e-25" />
+    <fraction n="0.7" ref="Nitrogen" />
+    <fraction n="0.3" ref="Oxygen" />
+  </material>
 </materials>
 
 <solids>
@@ -66,7 +72,7 @@
   </volume>
   
   <volume name="LeadTungstateDetectorContainer_Logical" >
-    <materialref ref="Air" />
+    <materialref ref="AirVacuum" />
     <solidref ref="LeadTungstateDetector_Solid" />
     <physvol>
       <volumeref ref="LeadTungstateCrystal_Logical" />
@@ -99,7 +105,7 @@
   </volume>
   
   <volume name="ComptonBeamlineContainer_Logical">
-    <materialref ref="Air" />
+    <materialref ref="AirVacuum" />
     <solidref ref="ComptonBeamline_Solid" />
     <physvol>
       <volumeref ref="ComptonBeampipe_Logical" />
