@@ -25,7 +25,6 @@
 
 // Includes for this project
 #include "ComptonG4DetectorConstruction.hh"
-#include "ComptonG4PhysicsList.hh"
 #include "ComptonG4Analysis.hh"
 #include "ComptonG4PrimaryGeneratorAction.hh"
 #include "ComptonG4EventAction.hh"
@@ -37,8 +36,8 @@ int main( int argc, char **argv)
 {
   // Seed the random number generator with a constant seed...cause, you know,
   // confusion is great!!!
-  //CLHEP::HepRandom::setTheSeed(20091010.);
-  CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
+  CLHEP::HepRandom::setTheSeed(20091010.);
+  //CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
 
   // Run Manager
   G4RunManager *runManager = new G4RunManager();
