@@ -4,6 +4,7 @@
 #include <G4VUserDetectorConstruction.hh>
 
 // Predefine classes
+class ComptonG4DetectorConstructionMessenger;
 
 /*!
  * @class ComptonG4DetectorConstruction
@@ -22,8 +23,11 @@ public:
   ~ComptonG4DetectorConstruction();
 
   G4VPhysicalVolume* Construct();
+  void ActivateDetector(G4String det);
 private:
   G4VPhysicalVolume* fPhysicsWorld;
+
+  ComptonG4DetectorConstructionMessenger *fMessenger;
 };
 
 #endif

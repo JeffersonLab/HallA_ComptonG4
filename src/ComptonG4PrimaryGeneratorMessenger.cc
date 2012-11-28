@@ -12,7 +12,7 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
   fAction(action)
 {
   fGunDir = new G4UIdirectory("/Compton/gun/");
-  fGunDir->SetGuidance("Constrols Primary Particle Generator");
+  fGunDir->SetGuidance("Controls Primary Particle Generator");
 
   // Set Mode for primary particle generation
   fGenModeCmd = new G4UIcmdWithAnInteger("/Compton/gun/mode",this);

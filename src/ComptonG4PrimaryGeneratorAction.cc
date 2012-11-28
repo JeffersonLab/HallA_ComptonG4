@@ -97,8 +97,6 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
 {
   G4double gammaE = 0.0;      // Scattered photon energy
   G4double rho = 0.0;         // Normalized photon energy photonE/CE
-  //G4double dSig = 0.0;        // The cross section at this energy
-  G4double asym = 0.0;        // Theoretical Asymmetry
   G4double gammaTheta = 0.0;  // Photon scattered angle polar angle
   G4double gammaPhi = 0.0;    // Photon scattered azymuthal angle
   G4ThreeVector gammaDirection(0.0,0.0,1.0); // This will hold the direction
@@ -111,16 +109,34 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
   // I took the following for theta from Megan Friend's CompCal code
   G4double tmp = electron_mass_c2/fElectronEnergy;
   tmp = tmp*tmp +4*gammaE/fElectronEnergy;
-  gammaTheta = acos( 1.0- 0.5*tmp*((1./rho)-1.0));
+  // TODO: Fix this! Why are these values so large?!?!
+  gammaTheta = 0*acos( 1.0- 0.5*tmp*((1./rho)-1.0));
   gammaPhi=CLHEP::RandFlat::shoot(2.0*pi);
   gammaDirection.setRThetaPhi(1.0,gammaTheta/radian,gammaPhi/radian);
   fParticleGun->SetParticleEnergy(gammaE);
   fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
   fParticleGun->SetParticleMomentumDirection(gammaDirection);
   fParticleGun->SetParticleDefinition(fGammaDef);
-  //G4cout << "Direction: (" << gammaDirection.getX() << ","
-  //    << gammaDirection.getY() << "," << gammaDirection.getZ() << ")\n";
-  //fAnalysis->SetAsym(asym);
+  /*G4cout << "Direction: (" << gammaDirection.getX()/mm << ","
+      << gammaDirection.getY()/mm << "," << gammaDirection.getZ()/mm << ")\n";
+      */
+  fAnalysis->SetAsym(GetComptonAsym(rho));
   fAnalysis->SetRho(rho);
   fAnalysis->SetGammaE(gammaE/MeV);
+}
+
+/**
+ * Returns the theoretical Compton asymmetry for a given normalized photon
+ * energy rho.
+ *
+ * @param rho The normalized photon energy
+ */
+G4double ComptonG4PrimaryGeneratorAction::GetComptonAsym( G4double rho)
+{
+  G4double am1 = 1-fAParameter;
+  G4double term1 = rho*rho*am1*am1/(1.+rho*am1);
+  G4double term3 = (1.-rho*(1.0+fAParameter))/(1.+rho*am1);
+  G4double term4 = 1+rho*am1;
+  G4double termdenom = term1+1.0 + term3*term3;
+  return (1.0-rho*(1.0+fAParameter))*(1.-1./(term4*term4))/termdenom;
 }

@@ -1,20 +1,42 @@
 /*
  * ComptonG4DetectorConstructionMessenger.cc
  *
- *  Created on: Nov 26, 2012
- *      Author: cornejo
+ *  Created on: November 26, 2012
+ *      Author: Juan Carlos Cornejo <cornejo@jlab.org>
  */
 
-#include "/home/cornejo/qweak/Simulation/ComptonG4/include/ComptonG4DetectorConstructionMessenger.hh"
+#include "ComptonG4DetectorConstructionMessenger.hh"
+#include "ComptonG4DetectorConstruction.hh"
 
-ComptonG4DetectorConstructionMessenger::ComptonG4DetectorConstructionMessenger()
+#include <G4UIcommand.hh>
+#include <G4UIcmdWithAString.hh>
+#include <G4UIdirectory.hh>
+
+ComptonG4DetectorConstructionMessenger::ComptonG4DetectorConstructionMessenger(
+    ComptonG4DetectorConstruction *dete)
+  : fDetector(dete)
 {
-  // TODO Auto-generated constructor stub
+  fGeometryDir = new G4UIdirectory("/Compton/geometry/");
+  fGeometryDir->SetGuidance("Controls the setup of the geometry");
 
+  // Set the primary detector specified in the GDML geometry file
+  fActivateDetectorCmd = new G4UIcmdWithAString("/Compton/geometry/activeDetector"
+      ,this);
+  fActivateDetectorCmd->SetGuidance(
+      "Activates a detector, and records appropriate data in the tree");
+  fActivateDetectorCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 }
 
 ComptonG4DetectorConstructionMessenger::~ComptonG4DetectorConstructionMessenger()
 {
-  // TODO Auto-generated destructor stub
+  // TODO Cleanup detector messenger
+}
+
+void ComptonG4DetectorConstructionMessenger::SetNewValue(
+    G4UIcommand *command, G4String newValue )
+{
+  if( command == fActivateDetectorCmd ) {
+    fDetector->ActivateDetector(newValue);
+  }
 }
 

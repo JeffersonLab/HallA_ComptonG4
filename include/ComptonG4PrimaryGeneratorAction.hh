@@ -43,8 +43,12 @@ public:
   void SetPhotonVertex(G4ThreeVector vec) { fPrimaryVertexLocation = vec; }
   void SetPhotonDivergence(G4double val) { fPhotonDivergence = val; }
   void SetPhotonTrackStart(G4double val) { fPhotonTrackStart = val; }
+
   void Initialize();
+
+  // Compton Process helpers
   G4double GetRandomRho();
+  G4double GetComptonAsym(G4double rho);
 
 
 private:
