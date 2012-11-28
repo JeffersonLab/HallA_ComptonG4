@@ -33,6 +33,8 @@
 #include <G4hPairProduction.hh>
 #include <G4ionIonisation.hh>
 
+#include "G4ParticleTypes.hh"
+
 
 ComptonG4PhysicsList::ComptonG4PhysicsList() : G4VUserPhysicsList()
 {
@@ -45,7 +47,7 @@ ComptonG4PhysicsList::~ComptonG4PhysicsList()
 
 void ComptonG4PhysicsList::ConstructParticle()
 {
-  G4BosonConstructor  pBosonConstructor;
+/*  G4BosonConstructor  pBosonConstructor;
   pBosonConstructor.ConstructParticle();
 
   G4LeptonConstructor pLeptonConstructor;
@@ -59,12 +61,60 @@ void ComptonG4PhysicsList::ConstructParticle()
 
   G4IonConstructor pIonConstructor;
   pIonConstructor.ConstructParticle();
+  */
+
+  std::cout << "Constructing, yay!!!\n";
+
+  // pseudo-particles
+  G4Geantino::GeantinoDefinition();
+  G4ChargedGeantino::ChargedGeantinoDefinition();
+
+  // gamma
+  G4Gamma::GammaDefinition();
+
+  // leptons
+  G4Electron::ElectronDefinition();
+  G4Positron::PositronDefinition();
+  G4MuonPlus::MuonPlusDefinition();
+  G4MuonMinus::MuonMinusDefinition();
+
+  G4NeutrinoE::NeutrinoEDefinition();
+  G4AntiNeutrinoE::AntiNeutrinoEDefinition();
+  G4NeutrinoMu::NeutrinoMuDefinition();
+  G4AntiNeutrinoMu::AntiNeutrinoMuDefinition();
+
+  //  mesons
+   G4PionPlus::PionPlusDefinition();
+   G4PionMinus::PionMinusDefinition();
+   G4PionZero::PionZeroDefinition();
+   G4Eta::EtaDefinition();
+   G4EtaPrime::EtaPrimeDefinition();
+   G4KaonPlus::KaonPlusDefinition();
+   G4KaonMinus::KaonMinusDefinition();
+   G4KaonZero::KaonZeroDefinition();
+   G4AntiKaonZero::AntiKaonZeroDefinition();
+   G4KaonZeroLong::KaonZeroLongDefinition();
+   G4KaonZeroShort::KaonZeroShortDefinition();
+
+   //  barions
+     G4Proton::ProtonDefinition();
+     G4AntiProton::AntiProtonDefinition();
+     G4Neutron::NeutronDefinition();
+     G4AntiNeutron::AntiNeutronDefinition();
+
+     // optical photon
+     G4OpticalPhoton::OpticalPhotonDefinition();
+
+
 }
 
 void ComptonG4PhysicsList::ConstructProcess()
 {
   AddTransportation();
   ConstructEM();
+  ConstructDecay();
+
+  std::cout << "Awesomly awesome!!!!\n";
 }
 
 void ComptonG4PhysicsList::ConstructEM()

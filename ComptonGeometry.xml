@@ -8,7 +8,7 @@
 <materials >
 
 	<element Z="8" formula="O" name="Oxygen" >
-	  <atom value="16." unit="g/mole" />
+	  <atom value="16.0" unit="g/mole" />
 	</element>
 	
 	<element Z="82" formula="Pb" name="Lead" >
@@ -33,8 +33,8 @@
 	 <atom unit="g/mole" value="26.9815" />
 	</material>
 	
-	<material name="LeadTungstate" formula="PbWO4" >
-    <D value="1.0" />
+	<material name="LeadTungstate" formula="PbWO4" state="solid">
+    <D value="8.3" unit="g/cm3" />
     <composite n="1" ref="Lead" />
     <composite n="1" ref="Tungsten" />
     <composite n="4" ref="Oxygen" />
@@ -128,7 +128,7 @@
 	  <solidref ref="Tunnel_Solid" />
 	  <physvol>
       <volumeref ref="LeadTungstateDetectorContainer_Logical" />
-      <position unit="mm" name="LeadTungstateDetector_Position" x="0" y="0" z="1525" />
+      <position name="LeadTungstateDetectorContainer_Position" unit="mm" x="-15" y="15" z="1525" />
     </physvol>
 	  <physvol>
       <volumeref ref="ComptonBeamlineContainer_Logical"/>

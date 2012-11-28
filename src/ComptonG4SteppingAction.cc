@@ -27,8 +27,12 @@ void ComptonG4SteppingAction::UserSteppingAction(const G4Step* step)
   G4ThreeVector pos(track->GetPosition());
   // TODO: The detector should not be hard coded!! Use the Active Detectors
   // command to specify which detector to use
-  if (track->GetDefinition()->GetParticleName() == "gamma" &&
+  if (track->GetDefinition()->GetPDGCharge() != 0. &&
       !strcmp(volume->GetName(),"LeadTungstateCrystal_Logical_PV")) {
     fAnalysis->AddEDep(step->GetTotalEnergyDeposit()/MeV);
-  }
+    fAnalysis->AddStepSize(step->GetStepLength()/mm);
+  }// else {
+  //  std::cout << "At volume: " << volume->GetName() << " \tEDep: "
+  //      << step->GetTotalEnergyDeposit()/MeV << "\n";
+  //}
 }

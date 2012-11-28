@@ -37,6 +37,7 @@ public:
   void SetGammaE(Double_t e) { fGammaE = e; }
   void SetRho(Double_t rho) { fRho = rho; }
   void AddEDep(Double_t e) { fEDep += e; }
+  void AddStepSize(Double_t size) { fStepSize += size; }
 
 private:
   TTree               *fTree;         // Generated TTree
@@ -48,6 +49,9 @@ private:
   Double_t            fRho;           // Normalized Gamma scattering energy
   Double_t            fGammaE;        // Absolute Gamma energy
   Double_t            fEDep;          // Energy deposited in the crystal
+  Double_t            fStepSize;      // Total step size
+
+  int               fNumberOfEvents;
 };
 
 #endif

@@ -37,6 +37,9 @@ ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analys
   G4String electronName;
   fGammaDef = particleTable->FindParticle("gamma");
   fElectronDef = particleTable->FindParticle("e-");
+
+  // Set a default primary Z vertex
+  fPrimaryVertexLocation = G4ThreeVector(1.0*mm,0*mm,0*mm);
 }
 
 ComptonG4PrimaryGeneratorAction::~ComptonG4PrimaryGeneratorAction()
@@ -133,7 +136,7 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
  */
 G4double ComptonG4PrimaryGeneratorAction::GetComptonAsym( G4double rho)
 {
-  G4double am1 = 1-fAParameter;
+  G4double am1 = fAParameter-1.0;
   G4double term1 = rho*rho*am1*am1/(1.+rho*am1);
   G4double term3 = (1.-rho*(1.0+fAParameter))/(1.+rho*am1);
   G4double term4 = 1+rho*am1;

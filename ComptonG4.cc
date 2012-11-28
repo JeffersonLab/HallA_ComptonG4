@@ -11,7 +11,7 @@
 
 // Standard G4 includes
 #include <G4RunManager.hh>
-#include <QGSP_BERT_HP.hh>
+#include <QGSP_BERT.hh>
 #include <G4UImanager.hh>
 #include <G4UIterminal.hh>
 
@@ -37,7 +37,8 @@ int main( int argc, char **argv)
 {
   // Seed the random number generator with a constant seed...cause, you know,
   // confusion is great!!!
-  CLHEP::HepRandom::setTheSeed(20091010.);
+  //CLHEP::HepRandom::setTheSeed(20091010.);
+  CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
 
   // Run Manager
   G4RunManager *runManager = new G4RunManager();
@@ -52,8 +53,8 @@ int main( int argc, char **argv)
   // Mandatory Detector Constructor
 
   runManager->SetUserInitialization(new ComptonG4DetectorConstruction());
-  //runManager->SetUserInitialization( new QGSP_BERT() );
-  runManager->SetUserInitialization( new ComptonG4PhysicsList() );
+  runManager->SetUserInitialization( new QGSP_BERT() );
+  //runManager->SetUserInitialization( new ComptonG4PhysicsList() );
 
   // Are we in interactive mode (GUI) or batch-mode?
 #ifndef COMPTONG4_BATCH_MODE // Interactive mode
