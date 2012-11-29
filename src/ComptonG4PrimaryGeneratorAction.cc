@@ -39,7 +39,7 @@ ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analys
   fElectronDef = particleTable->FindParticle("e-");
 
   // Set a default primary Z vertex
-  fPrimaryVertexLocation = G4ThreeVector(1.0*mm,0*mm,0*mm);
+  fPrimaryVertexLocation = G4ThreeVector(0*mm,0*mm,0*mm);
 }
 
 ComptonG4PrimaryGeneratorAction::~ComptonG4PrimaryGeneratorAction()
