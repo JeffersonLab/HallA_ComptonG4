@@ -37,7 +37,7 @@
   </material>
   
   <material name="LeadTungstate" formula="PbWO4" >
-    <D value="1.0" />
+    <D value="8.3" unit="g/cm3" />
     <composite n="1" ref="Lead" />
     <composite n="1" ref="Tungsten" />
     <composite n="4" ref="Oxygen" />
@@ -62,9 +62,9 @@
   <box lunit="mm" name="ThinLead3_Solid" x="104" y="181" z="2.4469" />
   <box lunit="mm" name="ThinLead4_Solid" x="097" y="177" z="2.3389" />
   
-  <box lunit="mm" name="LeadTungstateDetector_Solid" x="60" y="60" z="254" />
+  <box lunit="mm" name="LeadTungstateDetector_Solid" x="60" y="60" z="200" />
   <box lunit="m" name="Tunnel_Solid" x="2" y="2" z="12" />
-  <box lunit="mm" name="LeadTungstateCrystal_Solid" x="30" y="30" z="254" />
+  <box lunit="mm" name="LeadTungstateCrystal_Solid" x="30" y="30" z="200" />
   
   <box lunit="mm" name="ComptonBeamline_Solid" x="140" y="140" z="2854" />
   <tube lunit="mm" name="ComptonBeampipe_Solid" rmin="68" rmax="70" z="2850" startphi="0" deltaphi="360" aunit="degree" />
