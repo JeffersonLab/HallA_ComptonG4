@@ -36,6 +36,7 @@ private:
   ComptonG4DetectorConstruction *fDetector;
 
   G4UIdirectory                 *fGeometryDir;
+  G4UIcmdWithAString            *fGeometryFileCmd;
   G4UIcmdWithAString            *fActivateDetectorCmd;
 };
 

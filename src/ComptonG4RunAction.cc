@@ -18,12 +18,12 @@ ComptonG4RunAction::~ComptonG4RunAction()
   delete fAnalysis;
 }
 
-void ComptonG4RunAction::BeginOfRunAction(const G4Run* run)
+void ComptonG4RunAction::BeginOfRunAction(const G4Run*)
 {
   fAnalysis->Initialize(fRunNumber);
 }
 
-void ComptonG4RunAction::EndOfRunAction(const G4Run* run)
+void ComptonG4RunAction::EndOfRunAction(const G4Run*)
 {
   fAnalysis->Finished();
 }

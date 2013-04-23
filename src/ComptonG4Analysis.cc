@@ -16,7 +16,8 @@
 /**
  *
  */
-ComptonG4Analysis::ComptonG4Analysis() : fTree(0),fFile(0)
+ComptonG4Analysis::ComptonG4Analysis() : fTree(0),fFile(0),fAsym(0.0),
+  fRho(0.0),fGammaE(0.0),fEDep(0.0),fStepSize(0.0),fNumberOfEvents(0)
 {
   char *out = getenv("CG4_OUTPUT_PATH");
   if(out!=NULL) {
@@ -71,7 +72,7 @@ void ComptonG4Analysis::EndOfEvent()
   CleanEvent();
   fNumberOfEvents++;
   if ( ( fNumberOfEvents % 10000 ) == 0) {
-    std::cout << "Processed event: " << fNumberOfEvents << std::endl;
+    G4cout << "Processed event: " << fNumberOfEvents << G4endl;
   }
 }
 

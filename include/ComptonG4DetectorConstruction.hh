@@ -24,6 +24,7 @@ public:
 
   G4VPhysicalVolume* Construct();
   void ActivateDetector(G4String det);
+  void SetGeometryFile(G4String file);
 private:
   G4VPhysicalVolume* fPhysicsWorld;
 

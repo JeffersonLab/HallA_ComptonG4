@@ -9,7 +9,8 @@
 #include <G4ParticleTable.hh>
 #include <Randomize.hh>
 
-//
+// Standard Includes
+#include <cmath>
 
 ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analysis *analysis) :
 
@@ -113,16 +114,15 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
   G4double tmp = electron_mass_c2/fElectronEnergy;
   tmp = tmp*tmp +4*gammaE/fElectronEnergy;
   // TODO: Fix this! Why are these values so large?!?!
-  gammaTheta = 0*acos( 1.0- 0.5*tmp*((1./rho)-1.0));
+  gammaTheta = std::acos( 1.0- 0.5*tmp*((1./rho)-1.0));
   gammaPhi=CLHEP::RandFlat::shoot(2.0*pi);
   gammaDirection.setRThetaPhi(1.0,gammaTheta/radian,gammaPhi/radian);
   fParticleGun->SetParticleEnergy(gammaE);
   fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
   fParticleGun->SetParticleMomentumDirection(gammaDirection);
   fParticleGun->SetParticleDefinition(fGammaDef);
-  /*G4cout << "Direction: (" << gammaDirection.getX()/mm << ","
+  G4cout << "Direction: (" << gammaDirection.getX()/mm << ","
       << gammaDirection.getY()/mm << "," << gammaDirection.getZ()/mm << ")\n";
-      */
   fAnalysis->SetAsym(GetComptonAsym(rho));
   fAnalysis->SetRho(rho);
   fAnalysis->SetGammaE(gammaE/MeV);

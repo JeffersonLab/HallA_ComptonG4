@@ -12,20 +12,8 @@
 // GEANT4 Geometry related includes
 #include <G4GDMLParser.hh>
 
-ComptonG4DetectorConstruction::ComptonG4DetectorConstruction()
+ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(): fPhysicsWorld(0)
 {
-  G4GDMLParser parser;
-
-  // Be flexible in this. If the user has provided a CG4_GEOMETRY_FILE
-  // environmental variable, then use that
-  char *geometryFile = getenv("CG4_GEOMETRY_FILE");
-  if(geometryFile!=NULL) {
-    parser.Read(geometryFile);
-  } else {
-    parser.Read("ComptonG4Geometry.xml");
-  }
-  fPhysicsWorld = parser.GetWorldVolume();
-
   // Create an instance of the messenger class
   fMessenger = new ComptonG4DetectorConstructionMessenger(this);
 }
@@ -40,6 +28,13 @@ G4VPhysicalVolume*  ComptonG4DetectorConstruction::Construct()
   return fPhysicsWorld;
 }
 
-void ComptonG4DetectorConstruction::ActivateDetector(G4String det)
+void ComptonG4DetectorConstruction::ActivateDetector(G4String)
 {
+}
+
+void ComptonG4DetectorConstruction::SetGeometryFile(G4String file)
+{
+  G4GDMLParser parser;
+  parser.Read(file);
+  fPhysicsWorld = parser.GetWorldVolume();
 }

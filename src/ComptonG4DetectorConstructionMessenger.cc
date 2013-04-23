@@ -19,6 +19,13 @@ ComptonG4DetectorConstructionMessenger::ComptonG4DetectorConstructionMessenger(
   fGeometryDir = new G4UIdirectory("/Compton/geometry/");
   fGeometryDir->SetGuidance("Controls the setup of the geometry");
 
+  // Set the geometry file
+  fGeometryFileCmd = new G4UIcmdWithAString("/Compton/geometry/file"
+      ,this);
+  fGeometryFileCmd->SetGuidance(
+      "Specify the geometry file to use");
+  fGeometryFileCmd->AvailableForStates(G4State_PreInit);
+
   // Set the primary detector specified in the GDML geometry file
   fActivateDetectorCmd = new G4UIcmdWithAString("/Compton/geometry/activeDetector"
       ,this);
@@ -37,6 +44,8 @@ void ComptonG4DetectorConstructionMessenger::SetNewValue(
 {
   if( command == fActivateDetectorCmd ) {
     fDetector->ActivateDetector(newValue);
+  } else if ( command == fGeometryFileCmd ) {
+    fDetector->SetGeometryFile(newValue);
   }
 }
 

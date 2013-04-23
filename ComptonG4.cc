@@ -64,7 +64,7 @@ int main( int argc, char **argv)
 #ifdef G4UI_USE_QT
   session = new G4UIQt(argc,argv);
 #else
-  session = new G4UIterminal();
+  session = new G4UIterminal(argc,argv);
 #endif
 
 #ifdef G4VIS_USE
