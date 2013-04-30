@@ -15,16 +15,13 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 # Load ROOT and setup include directory
 find_package(ROOT REQUIRED)
 include_directories(${ROOT_INCLUDE_DIR})
+#set(ROOT_LIBRARIES ${ROOT_LIBRARIES} -lGui)
 
-# Create ROOT dictionary before messing up include dirs with Geant4 stuff
-# (-p option to "use of the compiler's preprocessor instead of CINT's preprocessor.")
-#ROOT_GENERATE_DICTIONARY(${CMAKE_CURRENT_BINARY_DIR}/QweakSimUserMainEvent_Dict
-#	${CMAKE_CURRENT_SOURCE_DIR}/include/QweakSimUser*Event.hh
-#	${CMAKE_CURRENT_SOURCE_DIR}/include/QweakSimUser*Config.hh
-#	LINKDEF ${CMAKE_CURRENT_SOURCE_DIR}/include/QweakSimUserMainEvent_LinkDef.hh
-#	OPTIONS -p)
-#set(my_project_sources ${my_project_sources} ${CMAKE_CURRENT_BINARY_DIR}/QweakSimUserMainEvent_Dict.cxx)
-set(my_project_sources ${my_project_sources})
+# Find Boost libraries
+# There is a bug in CMAke 2.8's internal find boost process
+if(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} EQUAL 2.8)
+  SET( Boost_NO_BOOST_CMAKE ON)
+endif(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} EQUAL 2.8)
 
 find_package(Geant4 REQUIRED COMPONENTS gdml qt ui_all vis_all)                       # Find Geant4
 include_directories(${Geant4_INCLUDE_DIRS})         # Add -I type paths
@@ -36,6 +33,18 @@ add_executable(ComptonG4 ComptonG4.cc ${my_project_sources} ${my_project_headers
 add_executable(ComptonG4_batch ComptonG4.cc ${my_project_sources}  ${my_project_headers})
 set_target_properties(ComptonG4_batch PROPERTIES COMPILE_DEFINITIONS "COMPTONG4_BATCH_MODE=1")
 
+# Find Boost libraries
+# Though, there seems to be a bug in version 2.8 of CMake's boost
+# finding process. As such, we'll disable it for version 2.8
+if(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} EQUAL 2.8)
+  SET( Boost_NO_BOOST_CMAKE ON )
+endif(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} EQUAL 2.8)
+
+find_package(Boost COMPONENTS program_options REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+link_directories(${Boost_LIBRARY_DIR})
+
+
 # Link the ROOT and Geant4 libraries
-target_link_libraries(ComptonG4 ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
-target_link_libraries(ComptonG4_batch ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
+target_link_libraries(ComptonG4 ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(ComptonG4_batch ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES})
