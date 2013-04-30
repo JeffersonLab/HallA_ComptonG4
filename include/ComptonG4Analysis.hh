@@ -38,6 +38,8 @@ public:
   void SetRho(Double_t rho) { fRho = rho; }
   void AddEDep(Double_t e) { fEDep += e; }
   void AddStepSize(Double_t size) { fStepSize += size; }
+  void SetTheta(Double_t theta) { fTheta = theta; }
+  void SetPhi(Double_t phi) { fPhi = phi; }
 
 private:
   TTree               *fTree;         // Generated TTree
@@ -50,6 +52,8 @@ private:
   Double_t            fGammaE;        // Absolute Gamma energy
   Double_t            fEDep;          // Energy deposited in the crystal
   Double_t            fStepSize;      // Total step size
+  Double_t            fTheta;         // The scattering angle in Degrees
+  Double_t            fPhi;           // The azimuthal angle
 
   int               fNumberOfEvents;
 };

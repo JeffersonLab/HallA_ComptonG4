@@ -12,8 +12,13 @@
 // GEANT4 Geometry related includes
 #include <G4GDMLParser.hh>
 
-ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(): fPhysicsWorld(0)
+ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
+    G4String geometry_file): fPhysicsWorld(0)
 {
+  G4GDMLParser parser;
+  parser.Read(geometry_file);
+  fPhysicsWorld = parser.GetWorldVolume();
+
   // Create an instance of the messenger class
   fMessenger = new ComptonG4DetectorConstructionMessenger(this);
 }
@@ -30,11 +35,4 @@ G4VPhysicalVolume*  ComptonG4DetectorConstruction::Construct()
 
 void ComptonG4DetectorConstruction::ActivateDetector(G4String)
 {
-}
-
-void ComptonG4DetectorConstruction::SetGeometryFile(G4String file)
-{
-  G4GDMLParser parser;
-  parser.Read(file);
-  fPhysicsWorld = parser.GetWorldVolume();
 }

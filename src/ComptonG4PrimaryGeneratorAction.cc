@@ -89,6 +89,8 @@ void ComptonG4PrimaryGeneratorAction::Initialize()
         classic_electr_radius*fAParameter*(term1+1.0+term3*term3);
     }
   }
+
+  G4cout << "Max Scattered Photon Energy: " << fMaxPhotonEnergy/MeV << " MeV" << G4endl;
 }
 
 G4double ComptonG4PrimaryGeneratorAction::GetRandomRho()
@@ -115,17 +117,23 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
   tmp = tmp*tmp +4*gammaE/fElectronEnergy;
   // TODO: Fix this! Why are these values so large?!?!
   gammaTheta = std::acos( 1.0- 0.5*tmp*((1./rho)-1.0));
+  // Since the above did not work, I reworked the equation myself
+  tmp = electron_mass_c2/fElectronEnergy;
+  gammaTheta = std::sqrt(4*fLaserEnergy*fAParameter/gammaE-(tmp*tmp));
+
   gammaPhi=CLHEP::RandFlat::shoot(2.0*pi);
   gammaDirection.setRThetaPhi(1.0,gammaTheta/radian,gammaPhi/radian);
   fParticleGun->SetParticleEnergy(gammaE);
   fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
   fParticleGun->SetParticleMomentumDirection(gammaDirection);
   fParticleGun->SetParticleDefinition(fGammaDef);
-  G4cout << "Direction: (" << gammaDirection.getX()/mm << ","
-      << gammaDirection.getY()/mm << "," << gammaDirection.getZ()/mm << ")\n";
+  //G4cout << "Direction: (" << gammaDirection.getX()/mm << ","
+  //    << gammaDirection.getY()/mm << "," << gammaDirection.getZ()/mm << ")\n";
   fAnalysis->SetAsym(GetComptonAsym(rho));
   fAnalysis->SetRho(rho);
   fAnalysis->SetGammaE(gammaE/MeV);
+  fAnalysis->SetTheta(57.2957795*gammaTheta/radian);
+  fAnalysis->SetPhi(57.2957795*gammaPhi/radian);
 }
 
 /**
