@@ -14,6 +14,10 @@
 #include <QGSP_BERT.hh>
 #include <G4UImanager.hh>
 #include <G4UIterminal.hh>
+#include <G4String.hh>
+
+// Standard Lib includes
+#include <fstream>
 
 #ifdef G4UI_USE_QT
     #include "G4UIQt.hh"
@@ -31,9 +35,85 @@
 #include "ComptonG4RunAction.hh"
 #include "ComptonG4SteppingAction.hh"
 
+// Include BOOST headers and setup boost namespace
+#include <boost/program_options.hpp>
+namespace po = boost::program_options;
+
 // ... IT BEGIIINNNNSSSS!!!!
 int main( int argc, char **argv)
 {
+
+  G4String geometry_file;
+  G4String config_file;
+  G4String batch_file;
+
+  // Prepare the command line options
+  // Generic command line options
+  po::options_description generic("Generic options");
+  generic.add_options()
+    ("help,h","print this help message") // help
+    ("config,c",po::value<std::string>(&geometry_file)->default_value("./")
+        ,"config file") // config file
+    ;
+
+  // Shared with configuration file
+  po::options_description config("Configuration");
+  config.add_options()
+    ("geometry-file",po::value<std::string>(),"Geometry filename")
+    ("batch-file",po::value<std::string>(),"Batch filename")
+    ("output-dir",po::value<std::string>(),"path output directory")
+    ;
+
+  // Finally, add them to boost
+  po::options_description cmdline_options;
+  cmdline_options.add(generic).add(config);
+
+  po::options_description config_file_options;
+  config_file_options.add(config);
+
+  po::options_description visible("Allowed options");
+  visible.add(generic).add(config);
+
+  // Now process them generic options
+  po::variables_map vm;
+  po::store(po::parse_command_line(argc,argv,cmdline_options),vm);
+  po::notify(vm);
+  // First, check for the config file before parsing
+  if(vm.count("config")) { // was specified!
+    config_file = vm["config"].as<std::string>();
+    // Open the file as a stream for boost
+    std::ifstream ifs(config_file);
+    if(ifs) {
+      // Process config
+      po::store(parse_config_file(ifs,config_file_options),vm);
+    }
+  }
+
+  // Process help
+  if(vm.count("help")) {
+    std::cout << generic << "\n";
+    return 1;
+  }
+
+  // Process the mandatory geometry file
+  if(!vm.count("geometry-file")){
+    G4cerr << "Did not specify a geometry file!" << G4endl;
+    return -1;
+  } else {
+    geometry_file = vm["geometry-file"].as<std::string>();
+  }
+
+#ifdef COMPTONG4_BATCH_MODE // We are in batch mode
+  // Process the batch file
+  if(!vm.count("geometry-file")){
+    G4cerr << "Did not specify a batch file!" << G4endl;
+    return -1;
+  } else {
+    batch_file = vm["batch-file"].as<std::string>();
+  }
+#endif
+
+
   // Seed the random number generator with a constant seed...cause, you know,
   // confusion is great!!!
   CLHEP::HepRandom::setTheSeed(20091010.);
@@ -51,7 +131,7 @@ int main( int argc, char **argv)
 
   // Mandatory Detector Constructor
 
-  runManager->SetUserInitialization(new ComptonG4DetectorConstruction());
+  runManager->SetUserInitialization(new ComptonG4DetectorConstruction(geometry_file));
   runManager->SetUserInitialization( new QGSP_BERT() );
   //runManager->SetUserInitialization( new ComptonG4PhysicsList() );
 
@@ -123,8 +203,7 @@ int main( int argc, char **argv)
 #else // Batch-mode
 
   G4String command = "/control/execute ";
-  G4String fileName = argv[1];
-  UI->ApplyCommand(command+fileName);
+  UI->ApplyCommand(command+batch_file);
 #endif
 
   delete compDir;
