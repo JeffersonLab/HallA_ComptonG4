@@ -48,3 +48,7 @@ link_directories(${Boost_LIBRARY_DIR})
 # Link the ROOT and Geant4 libraries
 target_link_libraries(ComptonG4 ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES})
 target_link_libraries(ComptonG4_batch ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES})
+
+# Now install the executables
+install (TARGETS ComptonG4 DESTINATION bin)
+install (TARGETS ComptonG4_batch DESTINATION bin)
