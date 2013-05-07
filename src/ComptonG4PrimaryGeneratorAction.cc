@@ -55,6 +55,7 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaries(G4Event *event)
   // We generate the primaries based on the selected mode
   switch(fGeneratorMode) {
   case 1:
+    GeneratePrimaryMonoEnergeticMode();
     break;
   case 2:
     break;
@@ -97,6 +98,19 @@ G4double ComptonG4PrimaryGeneratorAction::GetRandomRho()
 {
   G4RandGeneral GenDist(fCXdSig_dRho,10000);
   return GenDist.shoot();
+}
+
+void ComptonG4PrimaryGeneratorAction::GeneratePrimaryMonoEnergeticMode()
+{
+	  fParticleGun->SetParticleEnergy(fMaxPhotonEnergy);
+	  fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
+	  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.0,0.0,1.0));
+	  fParticleGun->SetParticleDefinition(fGammaDef);
+	  fAnalysis->SetAsym(0.0);
+	  fAnalysis->SetRho(0.0);
+	  fAnalysis->SetGammaE(fMaxPhotonEnergy/MeV);
+	  fAnalysis->SetTheta(0.0);
+	  fAnalysis->SetPhi(0.0);
 }
 
 void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()

@@ -17,7 +17,8 @@
  *
  */
 ComptonG4Analysis::ComptonG4Analysis() : fTree(0),fFile(0),fAsym(0.0),
-  fRho(0.0),fGammaE(0.0),fEDep(0.0),fStepSize(0.0),fTheta(0.0),fPhi(0.0),
+  fRho(0.0),fGammaE(0.0),fEDep(0.0),fStepSize(0.0),fEDepAll(0.0),fStepSizeAll(0.0),
+  fTheta(0.0),fPhi(0.0),
   fNumberOfEvents(0)
 {
   char *out = getenv("CG4_OUTPUT_PATH");
@@ -50,6 +51,8 @@ void ComptonG4Analysis::Initialize( G4int runnum )
   fTree->Branch("gammaE",&fGammaE,"gammaE/D");
   fTree->Branch("eDep",&fEDep,"eDep/D");
   fTree->Branch("stepSize",&fStepSize,"stepSize/D");
+  fTree->Branch("eDepAllCharges",&fEDepAll,"eDepAllCharges/D");
+  fTree->Branch("stepSizeAllCharges",&fStepSizeAll,"stepSizeAllCharges/D");
   fTree->Branch("theta",&fTheta,"theta/D");
   fTree->Branch("phi",&fPhi,"phi/D");
   CleanEvent();
@@ -82,7 +85,8 @@ void ComptonG4Analysis::EndOfEvent()
 void ComptonG4Analysis::CleanEvent()
 {
   // Reset all values!
-  fAsym = fRho = fGammaE = fEDep = fStepSize = fTheta = 0.0;
+  fAsym = fRho = fGammaE = fEDep = fStepSize = fTheta =
+      fEDepAll = fStepSizeAll = 0.0;
 }
 
 /**

@@ -79,6 +79,7 @@ private:
 
   // Generate custom Primaries
   void GeneratePrimaryComptonMode();
+  void GeneratePrimaryMonoEnergeticMode();
 };
 
 #endif
