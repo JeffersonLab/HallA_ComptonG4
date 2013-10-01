@@ -1,0 +1,5 @@
+/gui/addMenu   viewer Viewer
+/gui/addButton viewer "Qt viewer"            "/control/execute vis/Qt.mac"
+/gui/addButton viewer "Update scene"         "/vis/scene/notifyHandlers"
+/gui/addMenu viewer Beam
+/gui/addButton viewer "Run 1 event"          "/control/execute test.mac"
