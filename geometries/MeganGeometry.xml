@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+  <materials>
+    <element Z="1" formula="H" name="Hydrogen" >
+      <atom value="1.01" unit="g/mole" />
+    </element>
+    <element Z="6" formula="C" name="Carbon" >
+      <atom value="12.01" unit="g/mole" />
+    </element>
+    <element Z="8" formula="O" name="Oxygen" >
+      <atom value="16.00" unit="g/mole" />
+    </element>
+    <element Z="14" formula="Si" name="Silicon" >
+      <atom value="28.09" unit="g/mole" />
+    </element>
+    <element Z="11" formula="Na" name="Sodium" >
+      <atom value="22.99" unit="g/mole" />
+    </element>
+    <element Z="53" formula="I" name="Iodine" >
+      <atom value="126.90" unit="g/mole" />
+    </element>
+    <element Z="64" formula="Gd" name="Gadolinium" >
+      <atom value="157.25" unit="g/mole" />
+    </element>
+    <element Z="51" formula="Sb" name="Antimony" >
+      <atom value="121.76" unit="g/mole" />
+    </element>
+    <element Z="55" formula="Cs" name="Cesium" >
+      <atom value="132.91" unit="g/mole" />
+    </element>
+    <element Z="19" formula="K" name="Potassium" >
+      <atom value="39.0983" unit="g/mole" />
+    </element>
+    <element Z="7" formula="N" name="Nitrogen" >
+      <atom value="14.0067" unit="g/mole" />
+    </element>
+
+    <material name="Air" >
+      <D value="0.000001290" unit="mg/cm3" />
+      <fraction n="0.7" ref="Nitrogen" />
+      <fraction n="0.3" ref="Oxygen" />
+    </material>
+
+    <!-- Is missing setting the Birk constant to 0.005250 mm/MeV -->
+    <material name="GSO" formula="GdSiO" >
+      <D value="6.71" unit="g/cm3" />
+      <composite n="2" ref="Gadolinium" />
+      <composite n="1" ref="Silicon" />
+      <composite n="5" ref="Oxygen" />
+    </material>
+
+    <material name="Aluminum" Z="13" state="solid" >
+      <D value="2.7" unit="g/cm3" />
+      <atom value="26.98" unit="g/mole" />
+    </material>
+
+    <material name="Lead" Z="82" state="solid" >
+      <D value="11.35" unit="g/cm3" />
+      <atom value="207.19" unit="g/mole" />
+    </material>
+
+    <material name="Glass" state="solid" >
+      <D value="1.032" unit="g/cm3" />
+      <fraction n=".91533" ref="Carbon" />
+      <fraction n=".08467" ref="Hydrogen" />
+    </material>
+
+    <material name="BialkaliK2CsSb" state="solid" >
+      <D value="2.9" unit="g/cm3" />
+      <composite n="2" ref="Potassium" />
+      <composite n="1" ref="Cesium" />
+      <composite n="1" ref="Antimony" />
+    </material>
+
+  </materials>
+
+  <solids>
+    <!-- I believe these should *not* be half units. -->
+    <box lunit="m" name="WorldSolid" x="1" y="1" z="200" />
+
+    <tube name="ScintSolid" aunit="deg" lunit="cm" rmin="0.0" rmax="3.0" z="15.0" startphi="0.0" deltaphi="360.0" />
+    <tube name="PMTSolid" aunit="deg" lunit="cm" rmin="0.0" rmax="2.541" z="10.0" startphi="0.0" deltaphi="360.0" />
+  </solids>
+
+  <structure>
+    <volume name="ScintLogical" >
+      <solidref ref="ScintSolid" />
+      <materialref ref="GSO" />
+    </volume>
+
+    <volume name="World">
+      <materialref ref="Air" />
+      <solidref ref="WorldSolid" />
+      <physvol>
+        <volumeref ref="ScintLogical" />
+        <position name="ScintPosition" unit="mm" x="0" y="0" z="0" />
+      </physvol>
+    </volume>
+  </structure>
+
+  <setup name="Default" version="1.0">
+    <world ref="World" />
+  </setup>
+</gdml>

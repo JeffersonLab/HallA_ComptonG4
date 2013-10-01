@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+    <position name="WorldCenter" unit="m" x="0" y="0" z="0" />
+</define>
+
+<materials >
+
+  <element Z="8" formula="O" name="Oxygen" >
+    <atom value="16." unit="g/mole" />
+  </element>
+  
+  <element Z="82" formula="Pb" name="Lead" >
+    <atom value="207.20" unit="g/mole"/>
+  </element>
+  
+  <element Z="74" formula="W" name="Tungsten" >
+    <atom value="183.84" unit="g/mole" />
+  </element>
+  
+  <element Z="7" formula="N" name="Nitrogen" >
+    <atom value="14" unit="g/mole"/>
+  </element>
+  
+  <material Z="29" name="Copper" state="solid" >
+    <D unit="g/cm3" value="8.96" />
+    <atom unit="g/mole" value="63.546" />
+  </material>
+  <material name="LeadMaterial" Z="82" formula="Pb" state="solid">
+    <D value="11.35" unit="g/cm3" />
+    <atom unit="g/mole" value="207.20" />
+  </material>
+  
+  <material name="Aluminum" Z="13" state="solid">
+   <D unit="g/cm3" value="2.7" />
+   <atom unit="g/mole" value="26.9815" />
+  </material>
+  
+  <material name="LeadTungstate" formula="PbWO4" >
+    <D value="8.3" unit="g/cm3" />
+    <composite n="1" ref="Lead" />
+    <composite n="1" ref="Tungsten" />
+    <composite n="4" ref="Oxygen" />
+  </material>
+
+  <material formula="air" name="Air" >
+    <D unit="g/cm3" value="0.00129" />
+    <fraction n="0.7" ref="Nitrogen" />
+    <fraction n="0.3" ref="Oxygen" />
+  </material>
+  
+  <material name="AirVacuum" >
+    <D unit="g/cm3" value="1.0e-25" />
+    <fraction n="0.7" ref="Nitrogen" />
+    <fraction n="0.3" ref="Oxygen" />
+  </material>
+</materials>
+
+<solids>
+  <box lunit="mm" name="ThinLead1_Solid" x="103" y="176" z="2.3681" />
+  <box lunit="mm" name="ThinLead2_Solid" x="101" y="182" z="2.8756" />
+  <box lunit="mm" name="ThinLead3_Solid" x="104" y="181" z="2.4469" />
+  <box lunit="mm" name="ThinLead4_Solid" x="097" y="177" z="2.3389" />
+  
+  <box lunit="mm" name="LeadTungstateDetector_Solid" x="60" y="60" z="200" />
+  <box lunit="m" name="Tunnel_Solid" x="2" y="2" z="12" />
+  <box lunit="mm" name="LeadTungstateCrystal_Solid" x="30" y="30" z="200" />
+  
+  <box lunit="mm" name="ComptonBeamline_Solid" x="140" y="140" z="2854" />
+  <tube lunit="mm" name="ComptonBeampipe_Solid" rmin="68" rmax="70" z="2850" startphi="0" deltaphi="360" aunit="degree" />
+  <tube lunit="mm" name="ComptonBeampipeEnd_Solid" rmin="0" rmax="70" z="2" startphi="0" deltaphi="360" aunit="degree" />
+</solids>
+
+<structure>
+
+  <!-- Start: Define the Thin Leads  -->
+  <volume name="ThinLead1_Logical">
+    <materialref ref="LeadMaterial" />
+    <solidref ref="ThinLead1_Solid" />
+  </volume>
+  <volume name="ThinLead2_Logical">
+    <materialref ref="LeadMaterial" />
+    <solidref ref="ThinLead2_Solid" />
+  </volume>
+  <volume name="ThinLead3_Logical">
+    <materialref ref="LeadMaterial" />
+    <solidref ref="ThinLead3_Solid" />
+  </volume>
+  <volume name="ThinLead4_Logical">
+    <materialref ref="LeadMaterial" />
+    <solidref ref="ThinLead4_Solid" />
+  </volume>
+  <!-- End: Define the Thin Leads -->
+
+  <!-- Start: Define LeadTungstate 4crystal detector used in QWeak 2011-2012 -->
+  <volume name="LeadTungstateCrystal_Logical" >
+    <materialref ref="LeadTungstate" />
+    <solidref ref="LeadTungstateCrystal_Solid" />
+  </volume>
+  
+  <volume name="LeadTungstateDetectorContainer_Logical" >
+    <materialref ref="AirVacuum" />
+    <solidref ref="LeadTungstateDetector_Solid" />
+    <physvol>
+      <volumeref ref="LeadTungstateCrystal_Logical" />
+      <position name="LeadTungstateCrystal1_Position" unit="mm" x="-15" y="15" z="0" />
+    </physvol>
+     <physvol>
+      <volumeref ref="LeadTungstateCrystal_Logical" />
+      <position name="LeadTungstateCrystal2_Position" unit="mm" x="15" y="15" z="0" />
+    </physvol>
+        <physvol>
+      <volumeref ref="LeadTungstateCrystal_Logical" />
+      <position name="LeadTungstateCrystal3_Position" unit="mm" x="-15" y="-15" z="0" />
+    </physvol>
+    <physvol>
+      <volumeref ref="LeadTungstateCrystal_Logical" />
+      <position name="LeadTungstateCrystal4_Position" unit="mm" x="15" y="-15" z="0" />
+    </physvol>
+  </volume>
+  <!-- End: Define LeadTungstate 4crystal detector used in QWeak 2011-2012 -->
+  
+  <!-- Start: Define Beampipe -->
+  <volume name="ComptonBeampipe_Logical" >
+    <materialref ref="Aluminum" />
+    <solidref ref="ComptonBeampipe_Solid" />
+  </volume>
+  
+  <volume name="ComptonBeampipeEnd_Logical" >
+    <materialref ref="Copper" />
+    <solidref ref="ComptonBeampipeEnd_Solid" />
+  </volume>
+  
+  <volume name="ComptonBeamlineContainer_Logical">
+    <materialref ref="AirVacuum" />
+    <solidref ref="ComptonBeamline_Solid" />
+    <physvol>
+      <volumeref ref="ComptonBeampipe_Logical" />
+      <position name="ComptonBeampipe_Position" unit="mm" x="0" y="0" z="0" />
+    </physvol>
+      <physvol>
+      <volumeref ref="ComptonBeampipeEnd_Logical" />
+      <position name="ComptonBeampipeEndUpstream_Position" unit="mm" x="0" y="0" z="-1426" />
+    </physvol>
+    <physvol>
+      <volumeref ref="ComptonBeampipeEnd_Logical" />
+      <position name="ComptonBeampipeEndDownstream_Position" unit="mm" x="0" y="0" z="1426" />
+    </physvol>
+  </volume>
+  <!-- End: Define Beampipe -->
+  
+  <!-- World Volume Reference -->
+  <volume name="World" >
+    <materialref ref="Air" />
+    <solidref ref="Tunnel_Solid" />
+        <physvol>
+      <volumeref ref="LeadTungstateDetectorContainer_Logical" />
+      <position name="LeadTungstateDetectorContainer_Position" unit="mm" x="0" y="0" z="1654" />
+    </physvol>
+    <physvol>
+      <volumeref ref="ComptonBeamlineContainer_Logical"/>
+      <positionref ref="WorldCenter" />
+    </physvol>
+    
+    <physvol>
+      <volumeref ref="ThinLead1_Logical" />
+      <position name="ThinLead1_Position" unit="mm" x="0" y="0" z="1490  " />
+    </physvol>
+  </volume>
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="World"/>
+</setup>
+
+</gdml>
