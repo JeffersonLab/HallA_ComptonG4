@@ -11,7 +11,8 @@
 
 // Standard G4 includes
 #include <G4RunManager.hh>
-#include <QGSP_BERT.hh>
+//#include <QGSP_BERT.hh>
+#include <FTFP_BERT.hh>
 #include <G4UImanager.hh>
 #include <G4UIterminal.hh>
 #include <G4String.hh>
@@ -132,7 +133,8 @@ int main( int argc, char **argv)
   // Mandatory Detector Constructor
 
   runManager->SetUserInitialization(new ComptonG4DetectorConstruction(geometry_file));
-  runManager->SetUserInitialization( new QGSP_BERT() );
+  //runManager->SetUserInitialization( new QGSP_BERT() );
+  runManager->SetUserInitialization( new FTFP_BERT() );
   //runManager->SetUserInitialization( new ComptonG4PhysicsList() );
 
   // Are we in interactive mode (GUI) or batch-mode?
