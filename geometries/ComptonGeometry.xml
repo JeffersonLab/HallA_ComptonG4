@@ -10,19 +10,19 @@
   <element Z="8" formula="O" name="Oxygen" >
     <atom value="16." unit="g/mole" />
   </element>
-  
+
   <element Z="82" formula="Pb" name="Lead" >
     <atom value="207.20" unit="g/mole"/>
   </element>
-  
+
   <element Z="74" formula="W" name="Tungsten" >
     <atom value="183.84" unit="g/mole" />
   </element>
-  
+
   <element Z="7" formula="N" name="Nitrogen" >
     <atom value="14" unit="g/mole"/>
   </element>
-  
+
   <material Z="29" name="Copper" state="solid" >
     <D unit="g/cm3" value="8.96" />
     <atom unit="g/mole" value="63.546" />
@@ -31,12 +31,12 @@
     <D value="11.35" unit="g/cm3" />
     <atom unit="g/mole" value="207.20" />
   </material>
-  
+
   <material name="Aluminum" Z="13" state="solid">
    <D unit="g/cm3" value="2.7" />
    <atom unit="g/mole" value="26.9815" />
   </material>
-  
+
   <material name="LeadTungstate" formula="PbWO4" >
     <D value="8.3" unit="g/cm3" />
     <composite n="1" ref="Lead" />
@@ -49,7 +49,7 @@
     <fraction n="0.7" ref="Nitrogen" />
     <fraction n="0.3" ref="Oxygen" />
   </material>
-  
+
   <material name="AirVacuum" >
     <D unit="g/cm3" value="1.0e-25" />
     <fraction n="0.7" ref="Nitrogen" />
@@ -62,11 +62,11 @@
   <box lunit="mm" name="ThinLead2_Solid" x="101" y="182" z="2.8756" />
   <box lunit="mm" name="ThinLead3_Solid" x="104" y="181" z="2.4469" />
   <box lunit="mm" name="ThinLead4_Solid" x="097" y="177" z="2.3389" />
-  
+
   <box lunit="mm" name="LeadTungstateDetector_Solid" x="60" y="60" z="200" />
   <box lunit="m" name="Tunnel_Solid" x="2" y="2" z="12" />
   <box lunit="mm" name="LeadTungstateCrystal_Solid" x="30" y="30" z="200" />
-  
+
   <box lunit="mm" name="ComptonBeamline_Solid" x="140" y="140" z="2854" />
   <tube lunit="mm" name="ComptonBeampipe_Solid" rmin="68" rmax="70" z="2850" startphi="0" deltaphi="360" aunit="degree" />
   <tube lunit="mm" name="ComptonBeampipeEnd_Solid" rmin="0" rmax="70" z="2" startphi="0" deltaphi="360" aunit="degree" />
@@ -98,7 +98,7 @@
     <materialref ref="LeadTungstate" />
     <solidref ref="LeadTungstateCrystal_Solid" />
   </volume>
-  
+
   <volume name="LeadTungstateDetectorContainer_Logical" >
     <materialref ref="AirVacuum" />
     <solidref ref="LeadTungstateDetector_Solid" />
@@ -120,18 +120,18 @@
     </physvol>
   </volume>
   <!-- End: Define LeadTungstate 4crystal detector used in QWeak 2011-2012 -->
-  
+
   <!-- Start: Define Beampipe -->
   <volume name="ComptonBeampipe_Logical" >
     <materialref ref="Aluminum" />
     <solidref ref="ComptonBeampipe_Solid" />
   </volume>
-  
+
   <volume name="ComptonBeampipeEnd_Logical" >
     <materialref ref="Copper" />
     <solidref ref="ComptonBeampipeEnd_Solid" />
   </volume>
-  
+
   <volume name="ComptonBeamlineContainer_Logical">
     <materialref ref="AirVacuum" />
     <solidref ref="ComptonBeamline_Solid" />
@@ -149,7 +149,7 @@
     </physvol>
   </volume>
   <!-- End: Define Beampipe -->
-  
+
   <!-- World Volume Reference -->
   <volume name="World" >
     <materialref ref="Air" />
@@ -162,7 +162,7 @@
       <volumeref ref="ComptonBeamlineContainer_Logical"/>
       <positionref ref="WorldCenter" />
     </physvol>
-    
+
     <physvol>
       <volumeref ref="ThinLead1_Logical" />
       <position name="ThinLead1_Position" unit="mm" x="0" y="0" z="1490  " />
