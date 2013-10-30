@@ -5,6 +5,7 @@
 
 // Predefine classes
 class ComptonG4DetectorConstructionMessenger;
+class ComptonG4SensitiveDetectorManager;
 
 /*!
  * @class ComptonG4DetectorConstruction
@@ -19,7 +20,7 @@ class ComptonG4DetectorConstructionMessenger;
  !*/
 class ComptonG4DetectorConstruction : public G4VUserDetectorConstruction {
 public:
-  ComptonG4DetectorConstruction(G4String geometry_file);
+  ComptonG4DetectorConstruction(G4String geometry_file, ComptonG4SensitiveDetectorManager*);
   ~ComptonG4DetectorConstruction();
 
   G4VPhysicalVolume* Construct();

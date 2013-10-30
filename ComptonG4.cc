@@ -36,6 +36,7 @@
 #include "ComptonG4EventAction.hh"
 #include "ComptonG4RunAction.hh"
 #include "ComptonG4SteppingAction.hh"
+#include "ComptonG4SensitiveDetectorManager.hh"
 
 // Include BOOST headers and setup boost namespace
 #include <boost/program_options.hpp>
@@ -127,13 +128,16 @@ int main( int argc, char **argv)
   // Auxiliary DataIO class
   ComptonG4Analysis *analysis = new ComptonG4Analysis();
 
+  // Sensitive Detector Manager
+  ComptonG4SensitiveDetectorManager* sensManager = new ComptonG4SensitiveDetectorManager(analysis);
+
   // Create the default /Compton directory for all messengers
   G4UIdirectory *compDir = new G4UIdirectory("/Compton/");
   compDir->SetGuidance("UI commands for the ComptonG4 simulation");
 
   // Mandatory Detector Constructor
 
-  runManager->SetUserInitialization(new ComptonG4DetectorConstruction(geometry_file));
+  runManager->SetUserInitialization(new ComptonG4DetectorConstruction(geometry_file,sensManager));
   //runManager->SetUserInitialization( new QGSP_BERT() );
   FTFP_BERT *physicsList = new FTFP_BERT();
   physicsList->RegisterPhysics(new G4OpticalPhysics() );

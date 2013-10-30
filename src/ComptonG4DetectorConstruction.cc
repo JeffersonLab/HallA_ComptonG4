@@ -5,6 +5,7 @@
 
 #include "ComptonG4DetectorConstruction.hh"
 #include "ComptonG4DetectorConstructionMessenger.hh"
+#include "ComptonG4SensitiveDetectorManager.hh"
 #include <G4VPhysicalVolume.hh>
 #include <G4PVPlacement.hh>
 #include <G4ThreeVector.hh>
@@ -25,7 +26,7 @@
 #include <boost/algorithm/string/regex.hpp>
 
 ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
-    G4String geometry_file): fPhysicsWorld(0)
+    G4String geometry_file, ComptonG4SensitiveDetectorManager*): fPhysicsWorld(0)
 {
   G4GDMLParser parser;
   parser.Read(geometry_file);
