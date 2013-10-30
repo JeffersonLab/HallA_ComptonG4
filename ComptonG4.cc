@@ -16,6 +16,7 @@
 #include <G4UImanager.hh>
 #include <G4UIterminal.hh>
 #include <G4String.hh>
+#include <G4OpticalPhysics.hh>
 
 // Standard Lib includes
 #include <fstream>
@@ -134,8 +135,14 @@ int main( int argc, char **argv)
 
   runManager->SetUserInitialization(new ComptonG4DetectorConstruction(geometry_file));
   //runManager->SetUserInitialization( new QGSP_BERT() );
-  runManager->SetUserInitialization( new FTFP_BERT() );
-  //runManager->SetUserInitialization( new ComptonG4PhysicsList() );
+  FTFP_BERT *physicsList = new FTFP_BERT();
+  physicsList->RegisterPhysics(new G4OpticalPhysics() );
+  runManager->SetUserInitialization( physicsList );
+  if(physicsList->GetPhysics("Optical") ){
+    G4cout << "***Optical Processes ON***" << G4endl;
+  } else {
+    G4cout << "***Optical Processes OFF***" << G4endl;
+  }
 
   // Are we in interactive mode (GUI) or batch-mode?
 #ifndef COMPTONG4_BATCH_MODE // Interactive mode
