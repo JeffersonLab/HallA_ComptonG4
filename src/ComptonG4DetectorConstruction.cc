@@ -8,9 +8,18 @@
 #include <G4VPhysicalVolume.hh>
 #include <G4PVPlacement.hh>
 #include <G4ThreeVector.hh>
+#include "G4LogicalVolumeStore.hh"
+#include <G4Colour.hh>
+#include <G4VisAttributes.hh>
 
 // GEANT4 Geometry related includes
 #include <G4GDMLParser.hh>
+
+
+// Include the Boost stuff we need
+#include <boost/algorithm/string/replace.hpp>
+#include <boost/algorithm/string/case_conv.hpp>
+#include <boost/algorithm/string/regex.hpp>
 
 ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
     G4String geometry_file): fPhysicsWorld(0)
@@ -21,6 +30,84 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
 
   // Create an instance of the messenger class
   fMessenger = new ComptonG4DetectorConstructionMessenger(this);
+
+  // For visualization purposes, load and respect the color attributes
+  const G4LogicalVolumeStore* lvs = G4LogicalVolumeStore::GetInstance();
+  std::vector<G4LogicalVolume*>::const_iterator lvciter;
+  G4Colour color;
+  for( lvciter = lvs->begin(); lvciter != lvs->end(); lvciter++ )
+  {
+    G4GDMLAuxListType auxInfo = parser.GetVolumeAuxiliaryInformation(*lvciter);
+    std::vector<G4GDMLAuxPairType>::const_iterator ipair = auxInfo.begin();
+    for( ipair = auxInfo.begin(); ipair != auxInfo.end(); ipair++ )
+    {
+
+      G4String str=ipair->type;
+      G4String val=ipair->value;
+      double red = 1.0;
+      double green = 1.0;
+      double blue = 1.0;
+      double alpha = 1.0;
+      std::stringstream ss;
+      unsigned int temp;
+      /*
+      G4cout << " Auxiliary Information is found for Logical Volume :  "
+        << (*lvciter)->GetName() << G4endl;
+      G4cout << " Name of Auxiliary type is     :  " << str << G4endl;
+      G4cout << " Associated Auxiliary value is :  " << val << G4endl;
+      */
+      // Check to see if it's not a know color
+      if(!G4Colour::GetColour(val,color)) {
+        // Sigh...okay, let's figure out the color. There are four possible
+        // combinations. They can either be numbers or hex values, and either
+        // one of these can include an alpha value or not.
+        // For now, assume only HEX values in the form of #AABBCC or if they
+        // have the alpha value #AABBCCDD
+        boost::to_lower(val);
+        boost::replace_all(val,"#","");
+        /*std::vector<std::string> results;
+        boost::split_regex(results,val,
+            boost::regex("[a-f]"));*/
+        if(val.size() >= 6 ) {
+          G4cout << "Setting color settings for " << (*lvciter)->GetName() << G4endl;
+          G4cout << val.substr(0,2);
+          ss << std::hex << val.substr(0,2);
+          ss >> temp;
+          red = temp/256.;
+          ss.str("");
+          ss.clear();
+          G4cout << val.substr(2,2);
+          ss << std::hex << val.substr(2,2);
+          ss >> temp;
+          green = temp/256.;
+          ss.str("");
+          ss.clear();
+          G4cout << val.substr(4,2);
+          ss << std::hex << val.substr(4,2);
+          ss >> temp;
+          blue = temp/256.;
+          ss.str("");
+          ss.clear();
+          if(val.size() >= 8 ) {
+            G4cout << val.substr(6,2);
+            ss << std::hex << val.substr(6,2);
+            ss >> temp;
+            alpha = temp/256.;
+            ss.str("");
+            ss.clear();
+          }
+          G4cout << G4endl;
+          G4cout << "red: " << red << G4endl;
+          G4cout << "green: " << green << G4endl;
+          G4cout << "blue: " << blue << G4endl;
+          G4cout << "alpha: " << alpha << G4endl;
+        }
+        color = G4Colour(red,green,blue,alpha);
+      }
+      (*lvciter)->SetVisAttributes(new G4VisAttributes(color));
+    }
+  }
+
 }
 
 ComptonG4DetectorConstruction::~ComptonG4DetectorConstruction()
