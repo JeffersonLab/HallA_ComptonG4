@@ -3,3 +3,11 @@ for simulations the moment. I'm trying to build it in a more sane manner :)
 
 
 For API reference to GEANT4 use: http://www-geant4.kek.jp/Reference/
+
+
+Compiling
+
+In a separate build directory type:
+
+cmake -DCMAKE_BUILD_TYPE=ReleaseWithDebugInfo /path/to/source/code
+make
