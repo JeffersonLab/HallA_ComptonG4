@@ -7,11 +7,12 @@
 
 #include "ComptonG4SensitiveDetector.hh"
 #include "ComptonG4Analysis.hh"
+#include <G4OpticalPhoton.hh>
 
 ComptonG4SensitiveDetector::ComptonG4SensitiveDetector(
     G4String name, ComptonG4Analysis *analysis) :
   G4VSensitiveDetector(name),
-  fAnalysis(analysis)
+  fAnalysis(analysis),fHits(0)
 {
 
 }
@@ -23,15 +24,28 @@ ComptonG4SensitiveDetector::~ComptonG4SensitiveDetector()
 
 void ComptonG4SensitiveDetector::Initialize(G4HCofThisEvent *)
 {
+  fHits = 0;
 }
 
-G4bool ComptonG4SensitiveDetector::ProcessHits(G4Step*, G4TouchableHistory*)
+G4bool ComptonG4SensitiveDetector::ProcessHits(G4Step* aStep,
+    G4TouchableHistory*)
 {
-  return false;
+  G4Track *aTrack = aStep->GetTrack();
+  if( !aTrack ) return false;
+
+  G4String str = aTrack->GetDefinition()->GetParticleName();
+
+  if( aTrack->GetDefinition() == G4OpticalPhoton::Definition() ) {
+    fHits++;
+  }
+  return true;
 }
 
 void ComptonG4SensitiveDetector::EndOfEvent(G4HCofThisEvent*)
 {
+/*  G4cout << "End of event, found " << fHits << " hits in "
+   << GetName() << G4endl;
+   */
 }
 
 

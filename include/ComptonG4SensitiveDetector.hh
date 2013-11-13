@@ -26,6 +26,7 @@ public:
 
 private:
   ComptonG4Analysis *fAnalysis;
+  G4int fHits;
 };
 
 #endif /* COMPTONG4SENSITIVEDETECTOR_HH_ */
