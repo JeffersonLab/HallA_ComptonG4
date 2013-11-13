@@ -15,6 +15,12 @@
 #include <G4VisAttributes.hh>
 #include <G4SolidStore.hh>
 #include <G4VSolid.hh>
+#include <G4LogicalSkinSurface.hh>
+#include <G4LogicalBorderSurface.hh>
+#include <G4Material.hh>
+#include <G4MaterialPropertiesTable.hh>
+#include <G4SurfaceProperty.hh>
+#include <G4OpticalSurface.hh>
 
 // GEANT4 Geometry related includes
 #include <G4GDMLParser.hh>
@@ -26,7 +32,8 @@
 #include <boost/algorithm/string/regex.hpp>
 
 ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
-    G4String geometry_file, ComptonG4SensitiveDetectorManager*): fPhysicsWorld(0)
+    G4String geometry_file, ComptonG4SensitiveDetectorManager* senseManager) :
+  fPhysicsWorld(0)
 {
   G4GDMLParser parser;
   parser.Read(geometry_file);
@@ -34,6 +41,15 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
 
   // Create an instance of the messenger class
   fMessenger = new ComptonG4DetectorConstructionMessenger(this);
+
+  // Material table
+  const G4MaterialTable* materials =  G4Material::GetMaterialTable();
+  for(size_t i = 0; i < materials->size(); i++ ) {
+    G4cout << (*materials)[i] << G4endl;
+    if((*materials)[i]->GetMaterialPropertiesTable()) {
+      (*materials)[i]->GetMaterialPropertiesTable()->DumpTable();
+    }
+  }
 
   // For visualization purposes, load and respect the color attributes
   const G4LogicalVolumeStore* lvs = G4LogicalVolumeStore::GetInstance();
@@ -64,6 +80,7 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
       G4String str=ipair->type;
       G4String val=ipair->value;
       if( str == "SensDet" ) {
+        (*lvciter)->SetSensitiveDetector(senseManager->RegisterDetector(val));
       } else if ( str == "Color" ) {
         double red = 1.0;
         double green = 1.0;
@@ -120,9 +137,30 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
     }
   }
 
+  G4cout << "Logical Skin surface info: " << G4endl;
+  /*const G4LogicalSkinSurfaceTable *surfaces =
+    G4LogicalSkinSurface::GetSurfaceTable ();
+  for(size_t i = 0; i < surfaces.size(); i++ ) {
 
-
-
+  }*/
+  G4LogicalSkinSurface::DumpInfo();
+  G4cout << "Logical border surface info: " << G4endl;
+  G4LogicalBorderSurface::DumpInfo();
+  G4cout << "Surface Properties: " << G4endl;
+  G4SurfaceProperty::DumpTableInfo();
+  const G4SurfacePropertyTable* table = G4SurfaceProperty::GetSurfacePropertyTable();
+  for(size_t i = 0; i < table->size(); i++ ) {
+    // Check for optical photon properties
+    const G4OpticalSurface* surf =
+      dynamic_cast<const G4OpticalSurface*>((*table)[i]);
+    if(surf) {
+      surf->DumpInfo();
+      G4MaterialPropertiesTable *tab = surf->GetMaterialPropertiesTable();
+      if(tab) {
+        tab->DumpTable();
+      }
+    }
+  }
 }
 
 ComptonG4DetectorConstruction::~ComptonG4DetectorConstruction()
