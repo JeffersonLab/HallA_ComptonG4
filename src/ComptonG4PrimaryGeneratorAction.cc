@@ -8,6 +8,7 @@
 #include <G4ParticleGun.hh>
 #include <G4ParticleTable.hh>
 #include <Randomize.hh>
+#include <G4OpticalPhoton.hh>
 
 // Standard Includes
 #include <cmath>
@@ -38,6 +39,7 @@ ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analys
   G4String electronName;
   fGammaDef = particleTable->FindParticle("gamma");
   fElectronDef = particleTable->FindParticle("e-");
+  fOpticalDef = particleTable->FindParticle("optical");
 
   // Set a default primary Z vertex
   fPrimaryVertexLocation = G4ThreeVector(0*mm,0*mm,0*mm);
@@ -61,6 +63,9 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaries(G4Event *event)
     break;
   case 3: // Compton mode (i.e, real physics mode)
     GeneratePrimaryComptonMode();
+    break;
+  case 4: // Optical photon mode
+    GeneratePrimaryOpticalMode();
     break;
   default: // Do nothing, use the default GEANT4 gun
     break;
@@ -111,6 +116,19 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryMonoEnergeticMode()
 	  fAnalysis->SetGammaE(fMaxPhotonEnergy/MeV);
 	  fAnalysis->SetTheta(0.0);
 	  fAnalysis->SetPhi(0.0);
+}
+
+void ComptonG4PrimaryGeneratorAction::GeneratePrimaryOpticalMode()
+{
+  G4ThreeVector opticalDirection = G4ThreeVector(0.0,0.0,1.0);
+  opticalDirection.setRThetaPhi(1.0,
+      CLHEP::RandFlat::shoot(pi/4.0)/radian,
+      CLHEP::RandFlat::shoot(2.0*pi)/radian);
+  fParticleGun->SetParticleEnergy(fMaxPhotonEnergy);
+  fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
+  fParticleGun->SetParticleMomentumDirection(opticalDirection);
+  fParticleGun->SetParticlePolarization(opticalDirection);
+  fParticleGun->SetParticleDefinition(G4OpticalPhoton::Definition());
 }
 
 void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()

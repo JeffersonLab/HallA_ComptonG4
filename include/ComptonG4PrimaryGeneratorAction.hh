@@ -73,12 +73,14 @@ private:
   // Hold the particle definitions
   G4ParticleDefinition* fGammaDef;    // Gamma definition pointer
   G4ParticleDefinition* fElectronDef; // Electron definition pointer
+  G4ParticleDefinition* fOpticalDef;  // Optical photon definition pointer
 
   // Hold CX arrays
   G4double fCXdSig_dRho[10000];
 
   // Generate custom Primaries
   void GeneratePrimaryComptonMode();
+  void GeneratePrimaryOpticalMode();
   void GeneratePrimaryMonoEnergeticMode();
 };
 
