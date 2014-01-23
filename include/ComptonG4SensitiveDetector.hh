@@ -9,6 +9,8 @@
 #define COMPTONG4SENSITIVEDETECTOR_HH_
 
 #include <G4VSensitiveDetector.hh>
+#include <map>
+#include <vector>
 
 class ComptonG4Analysis;
 class G4HCofThisEvent;
@@ -26,7 +28,9 @@ public:
 
 private:
   ComptonG4Analysis *fAnalysis;
-  G4int fHits;
+  std::vector<G4int> fHits;
+  std::vector<G4String> fVolumeNames;
+  std::map<G4String,G4int> fVolumeIndices;
 };
 
 #endif /* COMPTONG4SENSITIVEDETECTOR_HH_ */

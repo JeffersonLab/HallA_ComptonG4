@@ -12,7 +12,7 @@
 ComptonG4SensitiveDetector::ComptonG4SensitiveDetector(
     G4String name, ComptonG4Analysis *analysis) :
   G4VSensitiveDetector(name),
-  fAnalysis(analysis),fHits(0)
+  fAnalysis(analysis)
 {
 
 }
@@ -24,7 +24,9 @@ ComptonG4SensitiveDetector::~ComptonG4SensitiveDetector()
 
 void ComptonG4SensitiveDetector::Initialize(G4HCofThisEvent *)
 {
-  fHits = 0;
+  fHits.clear();
+  fVolumeNames.clear();
+  fVolumeIndices.clear();
 }
 
 G4bool ComptonG4SensitiveDetector::ProcessHits(G4Step* aStep,
@@ -36,16 +38,26 @@ G4bool ComptonG4SensitiveDetector::ProcessHits(G4Step* aStep,
   G4String str = aTrack->GetDefinition()->GetParticleName();
 
   if( aTrack->GetDefinition() == G4OpticalPhoton::Definition() ) {
-    fHits++;
+    G4String vol = aTrack->GetVolume()->GetName();
+    if(fVolumeIndices.find(vol) == fVolumeIndices.end()) {
+      // New physical volume in our list
+      fVolumeIndices[vol] = fHits.size();
+      fHits.push_back(1);
+      fVolumeNames.push_back(vol);
+    } else {
+      fHits[fVolumeIndices[vol]]++;
+    }
   }
   return true;
 }
 
 void ComptonG4SensitiveDetector::EndOfEvent(G4HCofThisEvent*)
 {
-/*  G4cout << "End of event, found " << fHits << " hits in "
-   << GetName() << G4endl;
-   */
+  G4cout << "Events in " << GetName() << ":" << G4endl;
+  for(int i = 0; i < fVolumeNames.size(); i++ ) {
+    G4cout << "\tVol: " << fVolumeNames[i] << " has " << fHits[i]
+      << " hits." << G4endl;
+  }
 }
 
 
