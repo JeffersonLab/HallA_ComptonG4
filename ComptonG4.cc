@@ -49,7 +49,8 @@ int main( int argc, char **argv)
   G4String geometry_file;
   G4String config_file;
   G4String batch_file;
-  bool use_optical;
+  G4bool use_optical;
+  G4double random_seed;
 
   // Prepare the command line options
   // Generic command line options
@@ -66,8 +67,10 @@ int main( int argc, char **argv)
     ("geometry-file",po::value<std::string>(),"Geometry filename")
     ("batch-file",po::value<std::string>(),"Batch filename")
     ("output-dir",po::value<std::string>(),"path output directory")
-    ("enable-optical", po::value<bool>()->default_value(false)
+    ("enable-optical", po::value<G4bool>()->default_value(false)
      ->implicit_value(true),"Enable/Disable optical photons")
+    ("random-seed",po::value<G4double>()->default_value(17760704.),
+     "Set the random seed")
     ;
 
   // Finally, add them to boost
@@ -110,8 +113,9 @@ int main( int argc, char **argv)
     geometry_file = vm["geometry-file"].as<std::string>();
   }
 
-  // Process optical photons
-  use_optical = vm["geometry-file"].as<bool>();
+  // Process optional parameters
+  use_optical = vm["enable-optical"].as<G4bool>();
+  random_seed = vm["random-seed"].as<G4double>();
 
 #ifdef COMPTONG4_BATCH_MODE // We are in batch mode
   // Process the batch file
@@ -126,8 +130,8 @@ int main( int argc, char **argv)
 
   // Seed the random number generator with a constant seed...cause, you know,
   // confusion is great!!!
-  // TODO: Seriously, change this to something else!
-  CLHEP::HepRandom::setTheSeed(20091010.);
+  G4cout << "Initializing random seed to " << std::fixed << random_seed << G4endl;
+  CLHEP::HepRandom::setTheSeed(random_seed);
   //CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
 
   // Run Manager
