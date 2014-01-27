@@ -66,8 +66,8 @@ int main( int argc, char **argv)
     ("geometry-file",po::value<std::string>(),"Geometry filename")
     ("batch-file",po::value<std::string>(),"Batch filename")
     ("output-dir",po::value<std::string>(),"path output directory")
-    ("enable-optical", po::value<bool>()->default_value(false),
-      "Enable/Disable optical photons")
+    ("enable-optical", po::value<bool>()->default_value(false)
+     ->implicit_value(true),"Enable/Disable optical photons")
     ;
 
   // Finally, add them to boost
