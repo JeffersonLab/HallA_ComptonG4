@@ -49,6 +49,7 @@ int main( int argc, char **argv)
   G4String geometry_file;
   G4String config_file;
   G4String batch_file;
+  bool use_optical;
 
   // Prepare the command line options
   // Generic command line options
@@ -65,6 +66,8 @@ int main( int argc, char **argv)
     ("geometry-file",po::value<std::string>(),"Geometry filename")
     ("batch-file",po::value<std::string>(),"Batch filename")
     ("output-dir",po::value<std::string>(),"path output directory")
+    ("enable-optical", po::value<bool>()->default_value(false),
+      "Enable/Disable optical photons")
     ;
 
   // Finally, add them to boost
@@ -95,6 +98,7 @@ int main( int argc, char **argv)
   // Process help
   if(vm.count("help")) {
     std::cout << generic << "\n";
+    std::cout << config << "\n";
     return 1;
   }
 
@@ -105,6 +109,9 @@ int main( int argc, char **argv)
   } else {
     geometry_file = vm["geometry-file"].as<std::string>();
   }
+
+  // Process optical photons
+  use_optical = vm["geometry-file"].as<bool>();
 
 #ifdef COMPTONG4_BATCH_MODE // We are in batch mode
   // Process the batch file
@@ -119,6 +126,7 @@ int main( int argc, char **argv)
 
   // Seed the random number generator with a constant seed...cause, you know,
   // confusion is great!!!
+  // TODO: Seriously, change this to something else!
   CLHEP::HepRandom::setTheSeed(20091010.);
   //CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
 
@@ -140,7 +148,10 @@ int main( int argc, char **argv)
   runManager->SetUserInitialization(new ComptonG4DetectorConstruction(geometry_file,sensManager));
   //runManager->SetUserInitialization( new QGSP_BERT() );
   FTFP_BERT *physicsList = new FTFP_BERT();
-  physicsList->RegisterPhysics(new G4OpticalPhysics() );
+  // Optical photons controlled by command line flag
+  if( use_optical ) {
+    physicsList->RegisterPhysics(new G4OpticalPhysics() );
+  }
   runManager->SetUserInitialization( physicsList );
   if(physicsList->GetPhysics("Optical") ){
     G4cout << "***Optical Processes ON***" << G4endl;
