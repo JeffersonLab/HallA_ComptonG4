@@ -128,8 +128,7 @@ int main( int argc, char **argv)
 #endif
 
 
-  // Seed the random number generator with a constant seed...cause, you know,
-  // confusion is great!!!
+  // Seed the random number generator with the command line option
   G4cout << "Initializing random seed to " << std::fixed << random_seed << G4endl;
   CLHEP::HepRandom::setTheSeed(random_seed);
   //CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
