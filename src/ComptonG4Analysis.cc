@@ -112,7 +112,7 @@ void ComptonG4Analysis::Initialize( G4int runnum )
   // Create detector branches
   for(size_t i = 0; i < fDetectorNames.size(); i++ ) {
     fTree->Branch(fDetectorNames[i].c_str(),&(fDetectors[i]),
-        "eDep/D:nOpticalPhotonsWhat/D");
+        "eDep/D:nOpticalPhotons/D");
   }
 
   CleanEvent();
