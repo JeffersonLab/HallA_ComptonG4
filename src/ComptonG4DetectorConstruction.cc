@@ -6,6 +6,7 @@
 #include "ComptonG4DetectorConstruction.hh"
 #include "ComptonG4DetectorConstructionMessenger.hh"
 #include "ComptonG4SensitiveDetectorManager.hh"
+#include "ComptonG4Analysis.hh"
 #include <G4VPhysicalVolume.hh>
 #include <G4PVPlacement.hh>
 #include <G4ThreeVector.hh>
@@ -32,8 +33,9 @@
 #include <boost/algorithm/string/regex.hpp>
 
 ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
-    G4String geometry_file, ComptonG4SensitiveDetectorManager* senseManager) :
-  fPhysicsWorld(0)
+    G4String geometry_file, ComptonG4SensitiveDetectorManager* senseManager,
+    ComptonG4Analysis *analysis) :
+  fPhysicsWorld(0),fAnalysis(analysis)
 {
   G4GDMLParser parser;
   parser.Read(geometry_file);
@@ -67,6 +69,16 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
   G4cout << "Parsing through physical volumes" << G4endl;
   for( pvciter = pvs->begin(); pvciter != pvs->end(); pvciter++ ) {
     G4cout << (*pvciter)->GetName() << G4endl;
+    G4GDMLAuxListType auxInfo = parser.GetVolumeAuxiliaryInformation(
+      (*pvciter)->GetLogicalVolume());
+    std::vector<G4GDMLAuxPairType>::const_iterator ipair = auxInfo.begin();
+    for( ipair = auxInfo.begin(); ipair != auxInfo.end(); ipair++ ) {
+      G4String str=ipair->type;
+      G4String val=ipair->value;
+      if( str == "SensDet" ) {
+        fAnalysis->AddDetector((*pvciter)->GetName());
+      }
+    }
   }
   G4cout << "Parsing through logical volumes" << G4endl;
   for( lvciter = lvs->begin(); lvciter != lvs->end(); lvciter++ )

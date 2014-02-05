@@ -7,6 +7,10 @@
 // ROOT Includes
 #include <Rtypes.h>
 
+// General includes
+#include <vector>
+#include <string>
+
 // Pre-defined classes
 class TTree;
 class TFile;
@@ -27,6 +31,12 @@ public:
   ComptonG4Analysis();
   ~ComptonG4Analysis();
 
+  // Detector structure
+  typedef struct {
+    Double_t eDep;
+    Double_t nOpticalPhotons;
+  } DetectorStruct;
+
   // Public G4 Analyzer functions
   void Initialize(G4int runnum = 0001);
   void StartOfEvent();
@@ -36,30 +46,41 @@ public:
   void SetAsym(Double_t asym) { fAsym = asym; }
   void SetGammaE(Double_t e) { fGammaE = e; }
   void SetRho(Double_t rho) { fRho = rho; }
-  void AddEDep(Double_t e) { fEDep += e; }
-  void AddStepSize(Double_t size) { fStepSize += size; }
-  void AddEDepAllCharges(Double_t e) { fEDepAll += e; }
-  void AddStepSizeAllCharges(Double_t size) { fStepSizeAll += size; }
   void SetTheta(Double_t theta) { fTheta = theta; }
   void SetPhi(Double_t phi) { fPhi = phi; }
+  void AddDetector(std::string name);
+
+  void AddEDep(std::string name,Double_t e);
+  void AddOpticalHits(std::string name,Double_t hits);
+
+  /*
+  void AddStepSize(std::string name,Double_t size) {
+    fStepSize[fDetectorIndices[name]] += size;
+  }
+  void AddEDepAllCharges(std::string name,Double_t e) {
+    fEDepAll[fDetectorIndices[name]] += e;
+  }
+  void AddStepSizeAllCharges(std::string name,Double_t size) {
+    fStepSizeAll[fDetectorIndices[name]] += size;
+  }*/
 
 private:
   TTree               *fTree;         // Generated TTree
   TFile               *fFile;         // Output TFile
-  G4String            fOutputPath;    // Path to output rootfiles
+  std::string            fOutputPath;    // Path to output rootfiles
+  std::vector<std::string> fDetectorNames; // Names of detectors
+  std::vector<DetectorStruct> fDetectors;  // Detectors
 
-  // Tree variables per event
+  // Global tree variables per event
   Double_t            fAsym;          // Theoretical asymmetry
   Double_t            fRho;           // Normalized Gamma scattering energy
   Double_t            fGammaE;        // Absolute Gamma energy
-  Double_t            fEDep;          // Energy deposited in the crystal
-  Double_t            fStepSize;      // Total step size
-  Double_t            fEDepAll;       // Energy deposited in the crystal due to *all* charges
-  Double_t            fStepSizeAll;   // Total step size due o *all* charges
   Double_t            fTheta;         // The scattering angle in Degrees
   Double_t            fPhi;           // The azimuthal angle
 
-  int               fNumberOfEvents;
+  Int_t               fNumberOfEvents;
+
+  G4int DetectorIndex(std::string name);
 };
 
 #endif

@@ -6,6 +6,7 @@
 // Predefine classes
 class ComptonG4DetectorConstructionMessenger;
 class ComptonG4SensitiveDetectorManager;
+class ComptonG4Analysis;
 
 /*!
  * @class ComptonG4DetectorConstruction
@@ -20,7 +21,8 @@ class ComptonG4SensitiveDetectorManager;
  !*/
 class ComptonG4DetectorConstruction : public G4VUserDetectorConstruction {
 public:
-  ComptonG4DetectorConstruction(G4String geometry_file, ComptonG4SensitiveDetectorManager*);
+  ComptonG4DetectorConstruction(G4String geometry_file,
+      ComptonG4SensitiveDetectorManager* manager,ComptonG4Analysis *analysis);
   ~ComptonG4DetectorConstruction();
 
   G4VPhysicalVolume* Construct();
@@ -29,6 +31,7 @@ private:
   G4VPhysicalVolume* fPhysicsWorld;
 
   ComptonG4DetectorConstructionMessenger *fMessenger;
+  ComptonG4Analysis *fAnalysis;
 };
 
 #endif

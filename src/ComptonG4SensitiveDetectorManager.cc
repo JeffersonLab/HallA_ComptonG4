@@ -13,7 +13,7 @@
 ComptonG4SensitiveDetectorManager::ComptonG4SensitiveDetectorManager(ComptonG4Analysis *analysis) :
     fAnalysis(analysis)
 {
-
+  ComptonG4SensitiveDetector::SetAnalysis(analysis);
 }
 
 ComptonG4SensitiveDetectorManager::~ComptonG4SensitiveDetectorManager()

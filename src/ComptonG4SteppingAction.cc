@@ -36,7 +36,7 @@ void ComptonG4SteppingAction::UserSteppingAction(const G4Step* step)
       << G4endl;*/
   // TODO: The detector should not be hard coded!! Use the Active Detectors
   // command to specify which detector to use
-  if (//track->GetDefinition()->GetPDGCharge() != 0. &&
+  /*if (//track->GetDefinition()->GetPDGCharge() != 0. &&
       !strcmp(volume->GetName(),"LeadTungstateCrystal_Logical_PV")) {
     if(track->GetDefinition()->GetPDGCharge() != 0 ) {
       fAnalysis->AddEDep(step->GetTotalEnergyDeposit()/MeV);
@@ -48,5 +48,5 @@ void ComptonG4SteppingAction::UserSteppingAction(const G4Step* step)
   }// else {
   //  std::cout << "At volume: " << volume->GetName() << " \tEDep: "
   //      << step->GetTotalEnergyDeposit()/MeV << "\n";
-  //}
+  //}*/
 }

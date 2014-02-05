@@ -148,7 +148,8 @@ int main( int argc, char **argv)
 
   // Mandatory Detector Constructor
 
-  runManager->SetUserInitialization(new ComptonG4DetectorConstruction(geometry_file,sensManager));
+  runManager->SetUserInitialization(new
+      ComptonG4DetectorConstruction(geometry_file,sensManager,analysis));
   //runManager->SetUserInitialization( new QGSP_BERT() );
   FTFP_BERT *physicsList = new FTFP_BERT();
   // Optical photons controlled by command line flag
