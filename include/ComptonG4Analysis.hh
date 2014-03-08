@@ -49,6 +49,7 @@ public:
   void SetTheta(Double_t theta) { fTheta = theta; }
   void SetPhi(Double_t phi) { fPhi = phi; }
   void AddDetector(std::string name);
+  void SetOutputPath(std::string path);
 
   void AddEDep(std::string name,Double_t e);
   void AddOpticalHits(std::string name,Double_t hits);

@@ -51,6 +51,7 @@ int main( int argc, char **argv)
   G4String batch_file;
   G4bool use_optical;
   G4double random_seed;
+  G4String output_dir;
 
   // Prepare the command line options
   // Generic command line options
@@ -66,7 +67,8 @@ int main( int argc, char **argv)
   config.add_options()
     ("geometry-file",po::value<std::string>(),"Geometry filename")
     ("batch-file",po::value<std::string>(),"Batch filename")
-    ("output-dir",po::value<std::string>(),"path output directory")
+    ("output-dir",po::value<std::string>()->default_value("./")
+     ,"path output directory")
     ("enable-optical", po::value<G4bool>()->default_value(false)
      ->implicit_value(true),"Enable/Disable optical photons")
     ("random-seed",po::value<G4double>()->default_value(17760704.),
@@ -116,6 +118,7 @@ int main( int argc, char **argv)
   // Process optional parameters
   use_optical = vm["enable-optical"].as<G4bool>();
   random_seed = vm["random-seed"].as<G4double>();
+  output_dir = vm["output-dir"].as<G4String>();
 
 #ifdef COMPTONG4_BATCH_MODE // We are in batch mode
   // Process the batch file
@@ -138,6 +141,7 @@ int main( int argc, char **argv)
 
   // Auxiliary DataIO class
   ComptonG4Analysis *analysis = new ComptonG4Analysis();
+  analysis->SetOutputPath(output_dir);
 
   // Sensitive Detector Manager
   ComptonG4SensitiveDetectorManager* sensManager = new ComptonG4SensitiveDetectorManager(analysis);

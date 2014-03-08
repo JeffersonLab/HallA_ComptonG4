@@ -19,15 +19,15 @@
 ComptonG4Analysis::ComptonG4Analysis() : fTree(0),fFile(0),fAsym(0.0),
   fRho(0.0),fGammaE(0.0),fTheta(0.0),fPhi(0.0),fNumberOfEvents(0)
 {
-  char *out = getenv("CG4_OUTPUT_PATH");
-  if(out!=NULL) {
-    fOutputPath = G4String(out)+"/";
-  } else {
-    fOutputPath = "";
-  }
-
   // Empty out vectors and stuff
   CleanEvent();
+
+  fOutputPath = "";
+}
+
+void ComptonG4Analysis::SetOutputPath( std::string path )
+{
+  fOutputPath = path+"/";
 }
 
 /**
