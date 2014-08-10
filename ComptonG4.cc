@@ -118,7 +118,7 @@ int main( int argc, char **argv)
   // Process optional parameters
   use_optical = vm["enable-optical"].as<G4bool>();
   random_seed = vm["random-seed"].as<G4double>();
-  output_dir = vm["output-dir"].as<G4String>();
+  output_dir = vm["output-dir"].as<std::string>();
 
 #ifdef COMPTONG4_BATCH_MODE // We are in batch mode
   // Process the batch file
