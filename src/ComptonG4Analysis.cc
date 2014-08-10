@@ -80,7 +80,7 @@ void ComptonG4Analysis::AddOpticalHits(std::string name, Double_t hits)
  */
 int ComptonG4Analysis::DetectorIndex(std::string name)
 {
-  for(int i = 0; i < fDetectorNames.size(); i++ ) {
+  for(unsigned int i = 0; i < fDetectorNames.size(); i++ ) {
     if(fDetectorNames[i].compare(name)==0) {
       return i;
     }

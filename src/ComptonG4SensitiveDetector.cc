@@ -61,7 +61,7 @@ G4bool ComptonG4SensitiveDetector::ProcessHits(G4Step* step,
 void ComptonG4SensitiveDetector::EndOfEvent(G4HCofThisEvent*)
 {
   //G4cout << "Events in " << GetName() << ":" << G4endl;
-  for(int i = 0; i < fVolumeNames.size(); i++ ) {
+  for(unsigned int i = 0; i < fVolumeNames.size(); i++ ) {
 //    G4cout << "\tVol: " << fVolumeNames[i] << " has " << fOpticalHits[i]
 //      << " hits." << G4endl;
     fAnalysis->AddEDep(fVolumeNames[i],fEDeps[i]/MeV);
