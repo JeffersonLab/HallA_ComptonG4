@@ -39,7 +39,7 @@
 #
 # Set surface
 #
-/vis/viewer/set/style wire
+/vis/viewer/set/style surface
 
 #
 # Event action
@@ -50,3 +50,6 @@
 # Run action
 #
 /vis/scene/endOfRunAction refresh
+
+/vis/modeling/trajectories/create/drawByParticleID 
+/vis/modeling/trajectories/drawByParticleID-0/set opticalphoton red

@@ -1,2 +1,3 @@
 /vis/open OGLIQt
 /control/execute vis/vis.mac
+/vis/viewer/set/viewpointThetaPhi 0 0 deg
