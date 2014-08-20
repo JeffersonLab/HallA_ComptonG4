@@ -13,7 +13,7 @@
     hostname
     pwd
 
-    export localdir=`pwd`
+    setenv localdir `pwd`
     source /home/cornejo/hallccompton.env
     cd /home/cornejo/qweak/Simulation/working
     ComptonG4_batch \
@@ -21,7 +21,7 @@
        --geometry-file=geometries/ComptonGeometry_1thin_lead.xml \
        --enable-optical=yes \
        --random-seed=3829RUNNUM \
-       --output-dir=${localdir}
+       --output-dir=$localdir
 
     ]]></Command>
 
