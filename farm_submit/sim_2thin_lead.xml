@@ -13,14 +13,20 @@
     hostname
     pwd
 
+    export localdir=`pwd`
     source /home/cornejo/hallccompton.env
     cd /home/cornejo/qweak/Simulation/working
-    ComptonG4_batch --batch-file=farm_submit/pbs/sim_2thin_lead_RUNNUM.mac --geometry-file=geometries/ComptonGeometry_2thin_lead.xml --enable-optical=yes --random-seed=3829RUNNUM
+    ComptonG4_batch \
+       --batch-file=farm_submit/pbs/sim_2thin_lead_RUNNUM.mac \
+       --geometry-file=geometries/ComptonGeometry_no_thin_lead.xml \
+       --enable-optical=yes \
+       --random-seed=3829RUNNUM \
+       --output-dir=${localdir}
 
     ]]></Command>
 
   <Job>
-    <Output src="/home/cornejo/qweak/Simulation/working/ComptonG4_RUNNUM.root" dest="/home/cornejo/scratch/rootfiles/simulation/" />
+    <Output src="ComptonG4_RUNNUM.root" dest="/home/cornejo/scratch/rootfiles/simulation/" />
     <Stdout dest="/home/cornejo/scratch/logs/simulation/sim_2thin_lead_RUNNUM.out" />
     <Stderr dest="/home/cornejo/scratch/logs/simulation/sim_2thin_lead_RUNNUM.err" />
   </Job>

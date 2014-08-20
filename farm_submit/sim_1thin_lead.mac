@@ -5,4 +5,4 @@
 /Compton/gun/PhotonVertexZ 0.0 mm
 /Compton/gun/Initialize
 
-/run/beamOn 1000
+/run/beamOn 10000
