@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd" >-->
-  <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="geometries/schema/gdml.xsd" >
+  <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd" >
   <define>
     <position name="WorldCenter" unit="m" x="0" y="0" z="0" />
     <!-- LeadTungstate Optical Properties -->
@@ -407,6 +407,17 @@
         <volumeref ref="ComptonBeamlineContainerLogical"/>
         <positionref ref="WorldCenter" />
       </physvol>
+
+      <physvol>
+        <volumeref ref="ThinLead1Logical" />
+        <position name="ThinLead1_Position" unit="mm" x="0" y="0" z="1535" />
+      </physvol>
+
+      <physvol>
+        <volumeref ref="ThinLead2Logical" />
+        <position name="ThinLead2_Position" unit="mm" x="0" y="0" z="1541" />
+      </physvol>
+
     </volume>
 
     <!-- Now define the optical surfaces (skin/border) -->
