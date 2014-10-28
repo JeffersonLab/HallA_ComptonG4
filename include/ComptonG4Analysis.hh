@@ -54,6 +54,8 @@ public:
   void AddEDep(std::string name,Double_t e);
   void AddOpticalHits(std::string name,Double_t hits);
 
+  void StoreRandomSeed(G4String seed);
+
   /*
   void AddStepSize(std::string name,Double_t size) {
     fStepSize[fDetectorIndices[name]] += size;
@@ -82,6 +84,7 @@ private:
   Int_t               fNumberOfEvents;
 
   G4int DetectorIndex(std::string name);
+  G4String fRandomSeed;
 };
 
 #endif

@@ -3,9 +3,11 @@
 
 // GEANT4 includes
 #include <G4UserEventAction.hh>
+#include <G4Types.hh>
 
 // Pre-defined classes
 class ComptonG4Analysis;
+class G4Timer;
 
 /*!
  * @class ComptonG4EventAction
@@ -30,6 +32,11 @@ public:
 
 private:
   ComptonG4Analysis   *fAnalysis;    // Pointer to the Data IO instance
+  unsigned int fEventCounter;
+  G4Timer *fEventTimer;
+  G4double fRealElapsedTime;
+  G4double fSystemElapsedTime;
+  G4double fUserElapsedTime;
 };
 
 #endif

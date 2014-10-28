@@ -167,6 +167,9 @@ int main( int argc, char **argv)
     G4cout << "***Optical Processes OFF***" << G4endl;
   }
 
+  // Ensure that the random number status is properly stored on each event
+  runManager->StoreRandomNumberStatusToG4Event(1);
+
   // Are we in interactive mode (GUI) or batch-mode?
 #ifndef COMPTONG4_BATCH_MODE // Interactive mode
 

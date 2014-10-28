@@ -8,9 +8,12 @@
 
 // GEANT4 Includes
 #include <G4Event.hh>
+#include <G4Timer.hh>
+#include <Randomize.hh>
 
 ComptonG4EventAction::ComptonG4EventAction(ComptonG4Analysis *analysis) :
-  fAnalysis(analysis)
+  fAnalysis(analysis), fEventCounter(0),fEventTimer(new G4Timer),
+  fRealElapsedTime(0),fSystemElapsedTime(0),fUserElapsedTime(0)
 {
 
 }
@@ -22,9 +25,33 @@ ComptonG4EventAction::~ComptonG4EventAction()
 void ComptonG4EventAction::BeginOfEventAction(const G4Event*)
 {
   fAnalysis->StartOfEvent();
+  if(fEventCounter%100==0) {
+    if(fEventCounter==0) {
+      fEventTimer->Start();
+    } else {
+      fEventTimer->Stop();
+      G4double real = fEventTimer->GetRealElapsed();
+      G4double system = fEventTimer->GetSystemElapsed();
+      G4double user = fEventTimer->GetUserElapsed();
+      fRealElapsedTime += real;
+      fSystemElapsedTime += system;
+      fUserElapsedTime += user;
+      G4cout << "Processing event: " << fEventCounter
+        << " for 100 events (real,system,user): ("
+        << real << ", " << system << ", " << user << ") per event: ("
+        << real/100. << ", " << system/100. << ", " << user/100. << ")"
+        << " total: (" << fRealElapsedTime << ", " << fSystemElapsedTime
+        << ", " << fUserElapsedTime << ")"
+        << G4endl;
+      fEventTimer->Start();
+    }
+  }
+  fEventCounter++;
 }
 
-void ComptonG4EventAction::EndOfEventAction(const G4Event*)
+void ComptonG4EventAction::EndOfEventAction(const G4Event* evt)
 {
+  // Store the random seed
+  fAnalysis->StoreRandomSeed(evt->GetRandomNumberStatus());
   fAnalysis->EndOfEvent();
 }

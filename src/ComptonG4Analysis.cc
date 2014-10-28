@@ -13,6 +13,10 @@
 #include <TFile.h>
 #include <TTree.h>
 
+// system includes
+#include <sstream>
+#include <fstream>
+
 /**
  *
  */
@@ -50,6 +54,8 @@ void ComptonG4Analysis::AddDetector(std::string name)
   if(DetectorIndex(name) < 0 ) {
     fDetectorNames.push_back(name);
     fDetectors.push_back(det);
+  } else {
+    std::cout << "Already have " << name << " on the list!" << std::endl;
   }
 }
 
@@ -158,6 +164,18 @@ void ComptonG4Analysis::CleanEvent()
 void ComptonG4Analysis::Finished()
 {
   fFile->Write();
+  // Now save the random seed
+  std::stringstream name;
+  name << "seeds/event" << fNumberOfEvents << ".rndm";
+  std::ofstream file(name.str().c_str()); // why can't fstream take a string?
+  TString seed(fRandomSeed); // copy
+  seed.Remove(0,TString(fRandomSeed).First('\n') + 1); // remove first line with garbage
+  file << seed; // write to file
 }
 
 
+
+void ComptonG4Analysis::StoreRandomSeed(G4String seed)
+{
+  fRandomSeed = seed;
+}
