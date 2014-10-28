@@ -8,6 +8,7 @@
 #include "ComptonG4SensitiveDetector.hh"
 #include "ComptonG4Analysis.hh"
 #include <G4OpticalPhoton.hh>
+#include <G4TrackStatus.hh>
 
 // Set it to nothing for now
 ComptonG4Analysis *ComptonG4SensitiveDetector::fAnalysis = 0;
@@ -51,7 +52,14 @@ G4bool ComptonG4SensitiveDetector::ProcessHits(G4Step* step,
   }
 
   if( track->GetDefinition() == G4OpticalPhoton::Definition() ) {
+    // Only increment photon count if the particle is stopped here
+    // (meaning, it likely got absorbed)
+    G4TrackStatus tStatus = track->GetTrackStatus();
+    if(tStatus == fStopButAlive ||
+        tStatus == fStopAndKill ) {
       fOpticalHits[volIndex] += 1.0;
+    }
+    fEDeps[fVolumeIndices[volIndex]] += step->GetTotalEnergyDeposit()/MeV;
   } else {
     fEDeps[fVolumeIndices[volIndex]] += step->GetTotalEnergyDeposit()/MeV;
   }
