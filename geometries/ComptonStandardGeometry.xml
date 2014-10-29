@@ -1,0 +1,38 @@
+<define>
+  <position name="WorldCenter" unit="m" x="0" y="0" z="0" />
+</define>
+
+<!-- Load external materials file -->
+&ComptonMaterials;
+
+<!-- Load the external solids file -->
+&ComptonSolids;
+
+<structure>
+  <!-- Load the shared volume definitions -->
+  &ComptonVolumes;
+
+  <!-- World Volume Reference -->
+  <volume name="World" >
+    <materialref ref="Air" />
+    <solidref ref="TunnelSolid" />
+
+    <!-- Load Standard Lead Tungstate definition -->
+    &ComptonLeadTungstateDetector;
+
+    <!-- Load Standard Beamline definition -->
+    &ComptonBeamline;
+
+    <!-- Load Defined Thin Lead Definition -->
+    &ComptonThinLead;
+
+  </volume>
+
+  <!-- Load Standard Optical Surfaces -->
+  &ComptonOpticalSurfaces;
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="World"/>
+</setup>

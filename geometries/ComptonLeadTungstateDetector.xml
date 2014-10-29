@@ -1,0 +1,5 @@
+<physvol name="LeadTungstateDetectorContainerPhysical">
+  <volumeref ref="LeadTungstateDetectorContainerLogical" />
+  <position name="LeadTungstateDetectorContainer_Position" unit="mm" x="0" y="0" z="1654" />
+</physvol>
+

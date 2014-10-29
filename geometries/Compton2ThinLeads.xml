@@ -1,0 +1,10 @@
+<physvol>
+  <volumeref ref="ThinLead1Logical" />
+  <position name="ThinLead1_Position" unit="mm" x="0" y="0" z="1535" />
+</physvol>
+
+<physvol>
+  <volumeref ref="ThinLead2Logical" />
+  <position name="ThinLead2_Position" unit="mm" x="0" y="0" z="1541" />
+</physvol>
+
