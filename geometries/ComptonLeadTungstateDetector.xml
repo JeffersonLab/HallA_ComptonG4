@@ -3,3 +3,8 @@
   <position name="LeadTungstateDetectorContainer_Position" unit="mm" x="0" y="0" z="1654" />
 </physvol>
 
+
+<physvol name="ComptonPMTPhysical">
+  <volumeref ref="ComptonPMTLogical" />
+  <position name="ComptonPMT_Position" unit="mm" x="0" y="0" z="1856.506" />
+</physvol>

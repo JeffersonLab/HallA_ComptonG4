@@ -4,7 +4,7 @@
   <box lunit="mm" name="ThinLead3Solid" x="104" y="181" z="2.4469" />
   <box lunit="mm" name="ThinLead4Solid" x="097" y="177" z="2.3389" />
 
-  <box lunit="mm" name="LeadTungstateDetectorSolid" x="61" y="61" z="210" />
+  <box lunit="mm" name="LeadTungstateDetectorSolid" x="60.022" y="60.022" z="200.011" />
   <box lunit="m" name="TunnelSolid" x="2" y="2" z="12" />
   <box lunit="mm" name="LeadTungstateCrystalSolid" x="30" y="30" z="200" />
   <box lunit="mm" name="LeadTungstateCrystalsSideXSolid" x="60" y="0.01" z="200" />

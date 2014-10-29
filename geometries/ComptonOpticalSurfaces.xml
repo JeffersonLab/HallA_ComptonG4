@@ -1,13 +1,4 @@
 <!-- Now define the optical surfaces (skin/border) -->
-<!--
-  <skinsurface name="skinsrf1" surfaceproperty="LeadTungstateFoilSurface" >
-    <volumeref ref="LeadTungstateCrystalLogical" />
-    </skinsurface>
-
-    <skinsurface name="skinsrf2" surfaceproperty="LeadTungstatePolishedSurface" >
-      <volumeref ref="ComptonPMTLogical" />
-      </skinsurface>
-    -->
 <bordersurface name="LeadTungstateCrystalBorder12" surfaceproperty="LeadTungstatePolishedSurface" >
   <physvolref ref="LeadTungstateCrystal1Physical"/>
   <physvolref ref="LeadTungstateCrystal2Physical"/>

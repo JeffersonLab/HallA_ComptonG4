@@ -1,4 +1,4 @@
-<physvol>
-  <volumeref ref="ComptonBeamlineContainerLogical"/>
-  <positionref ref="WorldCenter" />
+<physvol name="ComptonBeamlineContainer_Physical">
+  <volumeref ref="ComptonBeamlineContainerLogical" />
+  <position name="ComptonBeamlineContainer_Position" unit="mm" x="0" y="0" z="0" />
 </physvol>

@@ -42,7 +42,6 @@
 <volume name="ComptonPMTLogical" >
   <materialref ref="AirVacuumOptical" />
   <solidref ref="ComptonPMTSolid" />
-  <auxiliary auxtype="Color" auxvalue="#ABABAB00" />
   <physvol name="ComptonPMTGlassSide1">
     <volumeref ref="ComptonPMTGlassSideLogical" />
     <position name="ComptonPMTGlassSide1Position" unit="mm" x="0" y="0" z="-102" />
@@ -61,6 +60,7 @@
     <position name="ComptonPMTGlassPosition" unit="mm" x="0" y="0" z="0.0" />
   </physvol>
 
+  <auxiliary auxtype="Color" auxvalue="#ABABAB00" />
 </volume>
 
 <!-- Start: Define LeadTungstate 4crystal detector used in QWeak 2011-2012 -->
@@ -87,50 +87,44 @@
 </volume>
 
 <volume name="LeadTungstateDetectorContainerLogical" >
-  <materialref ref="LeadTungstate" />
+  <materialref ref="AirVacuumOptical" />
   <solidref ref="LeadTungstateDetectorSolid" />
   <physvol name="LeadTungstateCrystal1Physical">
     <volumeref ref="LeadTungstateCrystalLogical" />
-    <position name="LeadTungstateCrystal1_Position" unit="mm" x="-15" y="15" z="0" />
+    <position name="LeadTungstateCrystal1_Position" unit="mm" x="-15.001" y="15.001" z="0.0055" />
   </physvol>
   <physvol name="LeadTungstateCrystal2Physical">
     <volumeref ref="LeadTungstateCrystalLogical" />
-    <position name="LeadTungstateCrystal2_Position" unit="mm" x="15" y="15" z="0" />
+    <position name="LeadTungstateCrystal2_Position" unit="mm" x="15.001" y="15.001" z="0.0055" />
   </physvol>
   <physvol name="LeadTungstateCrystal3Physical">
     <volumeref ref="LeadTungstateCrystalLogical" />
-    <position name="LeadTungstateCrystal3_Position" unit="mm" x="-15" y="-15" z="0" />
+    <position name="LeadTungstateCrystal3_Position" unit="mm" x="-15.001" y="-15.001" z="0.0055" />
   </physvol>
   <physvol name="LeadTungstateCrystal4Physical">
     <volumeref ref="LeadTungstateCrystalLogical" />
-    <position name="LeadTungstateCrystal4_Position" unit="mm" x="15" y="-15" z="0" />
+    <position name="LeadTungstateCrystal4_Position" unit="mm" x="15.001" y="-15.001" z="0.0055" />
   </physvol>
   <physvol name="LeadTungstateCrystalsSideX1Physical">
     <volumeref ref="LeadTungstateCrystalsSideXLogical" />
-    <position name="LeadTungstateCrystalsSideX1_Position" unit="mm" x="0" y="30.05" z="0" />
+    <position name="LeadTungstateCrystalsSideX1_Position" unit="mm" x="0" y="30.006" z="0.0055" />
   </physvol>
   <physvol name="LeadTungstateCrystalsSideX2Physical">
     <volumeref ref="LeadTungstateCrystalsSideXLogical" />
-    <position name="LeadTungstateCrystalsSideX2_Position" unit="mm" x="0" y="-30.05" z="0" />
+    <position name="LeadTungstateCrystalsSideX2_Position" unit="mm" x="0" y="-30.006" z="0.0055" />
   </physvol>
   <physvol name="LeadTungstateCrystalsSideY1Physical">
     <volumeref ref="LeadTungstateCrystalsSideYLogical" />
-    <position name="LeadTungstateCrystalsSideY1_Position" unit="mm" x="30.05" y="0" z="0" />
+    <position name="LeadTungstateCrystalsSideY1_Position" unit="mm" x="30.006" y="0" z="0.0055" />
   </physvol>
   <physvol name="LeadTungstateCrystalsSideY2Physical">
     <volumeref ref="LeadTungstateCrystalsSideYLogical" />
-    <position name="LeadTungstateCrystalsSideY2_Position" unit="mm" x="-30.05" y="0" z="0" />
+    <position name="LeadTungstateCrystalsSideY2_Position" unit="mm" x="-30.006" y="0" z="0.0055" />
   </physvol>
   <physvol name="LeadTungstateCrystalsSideZPhysical">
     <volumeref ref="LeadTungstateCrystalsSideZLogical" />
-    <position name="LeadTungstateCrystalsSideY_Position" unit="mm" x="0" y="0" z="-100.05" />
+    <position name="LeadTungstateCrystalsSideY_Position" unit="mm" x="0" y="0" z="-100.00" />
   </physvol>
-
-  <physvol name="ComptonPMTPhysical">
-    <volumeref ref="ComptonPMTLogical" />
-    <position name="ComptonPMT_Position" unit="mm" x="0" y="0" z="202.5" />
-  </physvol>
-
   <auxiliary auxtype="Color" auxvalue="#FFFFFF00"/>
 </volume>
 <!-- End: Define LeadTungstate 4crystal detector used in QWeak 2011-2012 -->
