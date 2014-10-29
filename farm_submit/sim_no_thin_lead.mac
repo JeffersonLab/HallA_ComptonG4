@@ -1,6 +1,6 @@
 /Compton/gun/mode 3
 /Compton/run/runnumber RUNNUM
-/Compton/gun/ElectronEnergy 1.159 GeV
+/Compton/gun/ElectronEnergy 1.160 GeV
 /Compton/gun/LaserWavelenght 532 nm
 /Compton/gun/PhotonVertexZ 0.0 mm
 /Compton/gun/Initialize

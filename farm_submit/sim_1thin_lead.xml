@@ -3,7 +3,7 @@
   <Project name="qweak" />
   <Track name="simulation" />
   <Name name="compton_simulation_phdet_RUNNUM" />
-  <TimeLimit unit="minutes" time="1000" />
+  <TimeLimit unit="minutes" time="1440" />
   <DiskSpace space="2048" unit="MB" />
   <Memory space="1024" unit="MB" />
   <OS name="centos62" />
