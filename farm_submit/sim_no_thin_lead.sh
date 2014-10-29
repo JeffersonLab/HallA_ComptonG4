@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for i in `seq 9000 9099`;
+for i in `seq 9000 9049`;
 do
   cp sim_no_thin_lead.mac pbs/sim_no_thin_lead_${i}.mac
   cp sim_no_thin_lead.xml pbs/sim_no_thin_lead_${i}.xml
