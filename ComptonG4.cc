@@ -87,7 +87,13 @@ int main( int argc, char **argv)
 
   // Now process them generic options
   po::variables_map vm;
-  po::store(po::parse_command_line(argc,argv,cmdline_options),vm);
+  // This commented out method does not allow unrecognized options to be
+  // passed onto other programs
+  //po::store(po::parse_command_line(argc,argv,cmdline_options),vm);
+  // This line allows unrecognized options to be parsed by other programs
+  // i.e. GEANT
+  po::store(po::command_line_parser(argc,argv)
+    .options(cmdline_options).allow_unregistered().run(),vm);
   po::notify(vm);
   // First, check for the config file before parsing
   if(vm.count("config")) { // was specified!
