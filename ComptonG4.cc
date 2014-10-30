@@ -37,6 +37,7 @@
 #include "ComptonG4RunAction.hh"
 #include "ComptonG4SteppingAction.hh"
 #include "ComptonG4SensitiveDetectorManager.hh"
+#include "ComptonG4StackingAction.hh"
 
 // Include BOOST headers and setup boost namespace
 #include <boost/program_options.hpp>
@@ -212,6 +213,7 @@ int main( int argc, char **argv)
   runManager->SetUserAction(new ComptonG4SteppingAction(analysis));
   runManager->SetUserAction(new ComptonG4EventAction(analysis));
   runManager->SetUserAction(new ComptonG4RunAction(analysis));
+  runManager->SetUserAction(new ComptonG4StackingAction());
 
   // Initialize G4 kernel
   runManager->Initialize();
