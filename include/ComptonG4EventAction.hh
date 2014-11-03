@@ -7,6 +7,7 @@
 
 // Pre-defined classes
 class ComptonG4Analysis;
+class ComptonG4EventMessenger;
 class G4Timer;
 
 /*!
@@ -28,6 +29,9 @@ public:
   // G4UserEventAction related classes
   void BeginOfEventAction(const G4Event* evt);
   void EndOfEventAction(const G4Event* evt);
+  void SetEventPrintNumber(const unsigned int evt) {
+    fEventPrintNumber = evt;
+  }
 
 
 private:
@@ -37,6 +41,8 @@ private:
   G4double fRealElapsedTime;
   G4double fSystemElapsedTime;
   G4double fUserElapsedTime;
+  unsigned int fEventPrintNumber;
+  ComptonG4EventMessenger *fEventMessenger;
 };
 
 #endif
