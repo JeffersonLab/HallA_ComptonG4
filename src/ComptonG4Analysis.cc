@@ -172,6 +172,9 @@ void ComptonG4Analysis::EndOfEvent()
   if ( ( fNumberOfEvents % 10000 ) == 0) {
     G4cout << "Processed event: " << fNumberOfEvents << G4endl;
   }
+
+  // Clean the events (otherwise those vectors quickly add up!!
+  CleanEvent();
 }
 
 void ComptonG4Analysis::CleanEvent()
