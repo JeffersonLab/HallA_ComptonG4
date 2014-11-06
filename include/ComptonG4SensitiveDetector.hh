@@ -46,7 +46,6 @@ private:
   std::vector<std::vector<G4double> > fGlobalTimes;
   std::vector<G4double> fEDeps;
   std::vector<G4VPhysicalVolume*> fVolumes;
-  std::vector<G4int> fTrackIDs;
 
   void CleanEvent();
   int GetIndex(G4VPhysicalVolume* vol);

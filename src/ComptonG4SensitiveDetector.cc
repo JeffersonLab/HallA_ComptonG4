@@ -59,18 +59,7 @@ G4bool ComptonG4SensitiveDetector::ProcessHits(G4Step* step,
     }
     fEDeps[volIndex] += step->GetTotalEnergyDeposit()/MeV;
 
-    G4int id = track->GetTrackID();
-    Bool_t found = false;
-    for(UInt_t i = 0; i < fTrackIDs.size() && !found; i++ ) {
-      if(id==fTrackIDs[i]) {
-        found = true;
-      }
-    }
-
-    if(!found) {
-      fAnalysis->NewOpticalPhoton();
-      fTrackIDs.push_back(id);
-    }
+    fAnalysis->ProcessOpticalTrackID(track->GetTrackID());
 
     // Kill photons that travel too far
     // TODO: Make this be UI command
@@ -103,7 +92,6 @@ void ComptonG4SensitiveDetector::CleanEvent()
     fEDeps[i] = 0.0;
     fGlobalTimes[i].clear();
   }
-  fTrackIDs.clear();
 }
 
 int ComptonG4SensitiveDetector::GetIndex(G4VPhysicalVolume *vol)

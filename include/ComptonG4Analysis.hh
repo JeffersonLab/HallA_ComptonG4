@@ -61,9 +61,7 @@ public:
     fNumberOfOpticalPhotonsStopped+=1.0;
   }
 
-  void NewOpticalPhoton() {
-    fNumberOfOpticalPhotonsProduced+=1.0;
-  }
+  void ProcessOpticalTrackID(G4int id);
 
   void OpticalHit() {
     fTotalNumberOfOpticalPhotonsAbsorbed+=1.0;
@@ -108,6 +106,9 @@ private:
 
   // Auto Save rootfile?
   unsigned int fAutoSaveEntry;        // Auto save tree every n>0 entries
+
+  // Keep track of track IDs
+  std::vector<Int_t> fOpticalTrackIDs;
 };
 
 #endif

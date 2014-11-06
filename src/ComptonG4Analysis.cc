@@ -185,6 +185,7 @@ void ComptonG4Analysis::CleanEvent()
     fDetectors[i].nOpticalPhotons = 0.0;
     fDetectorTimes[i].clear();
   }
+  fOpticalTrackIDs.clear();
 }
 
 /**
@@ -216,4 +217,23 @@ void ComptonG4Analysis::WriteRandomSeed()
   TString seed(fRandomSeed); // copy
   seed.Remove(0,TString(fRandomSeed).First('\n') + 1); // remove first line with garbage
   file << seed; // write to file
+}
+
+/*
+ *
+ */
+void ComptonG4Analysis::ProcessOpticalTrackID(G4int id)
+{
+  Bool_t found = false;
+  for(UInt_t i = 0; i < fOpticalTrackIDs.size() && !found; i++ ) {
+    if(id==fOpticalTrackIDs[i]) {
+      found = true;
+    }
+  }
+
+  if(!found) {
+    fNumberOfOpticalPhotonsProduced += 1.0;
+    fOpticalTrackIDs.push_back(id);
+  }
+
 }
