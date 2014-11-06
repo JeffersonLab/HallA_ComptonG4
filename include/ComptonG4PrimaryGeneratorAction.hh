@@ -44,6 +44,14 @@ public:
   void SetPhotonDivergence(G4double val) { fPhotonDivergence = val; }
   void SetPhotonTrackStart(G4double val) { fPhotonTrackStart = val; }
 
+  void SetVerbose(int level) {
+    fVerbose = level;
+  }
+
+  int GetVerbose() {
+    return fVerbose;
+  }
+
   void Initialize();
 
   // Compton Process helpers
@@ -82,6 +90,8 @@ private:
   void GeneratePrimaryComptonMode();
   void GeneratePrimaryOpticalMode();
   void GeneratePrimaryMonoEnergeticMode();
+
+  int fVerbose;
 };
 
 #endif

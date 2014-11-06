@@ -168,8 +168,9 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
   fAnalysis->SetGammaE(gammaE/MeV);
   fAnalysis->SetTheta(57.2957795*gammaTheta/radian);
   fAnalysis->SetPhi(57.2957795*gammaPhi/radian);
-  G4cout << "Shooting photon with energy: " << gammaE/CLHEP::MeV << " MeV"
-    << G4endl;
+  if(fVerbose>0)
+    G4cout << "Shooting photon with energy: " << gammaE/CLHEP::MeV << " MeV"
+      << G4endl;
 }
 
 /**

@@ -53,6 +53,13 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
   fSetIncidentEnergyCmd->SetUnitCategory("Energy");
   fSetIncidentEnergyCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+  // Set Verbose Level
+  fSetVerboseCmd = new G4UIcmdWithAnInteger("/Compton/gun/verbose",this);
+  fSetVerboseCmd->SetGuidance("Controls verbose level");
+  fSetVerboseCmd->SetParameterName("verbose",0);
+  fSetVerboseCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+
   fInitializeCmd = new G4UIcmdWithoutParameter(
       "/Compton/gun/Initialize",this);
 }
@@ -81,6 +88,8 @@ void ComptonG4PrimaryGeneratorMessenger::SetNewValue(
     fAction->SetLaserWavelength(fSetLaserWavelengthCmd->GetNewDoubleValue(newValue));
   } else if ( command == fSetPhotonVertexZCmd ) {
     fAction->SetPhotonZ(fSetPhotonVertexZCmd->GetNewDoubleValue(newValue));
+  } else if ( command == fSetVerboseCmd ) {
+    fAction->SetVerbose(fSetVerboseCmd->GetNewIntValue(newValue));
   } else if ( command == fInitializeCmd ) {
     fAction->Initialize();
   }

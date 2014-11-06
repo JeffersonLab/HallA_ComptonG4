@@ -36,6 +36,7 @@ private:
   G4UIcmdWithADoubleAndUnit  *fSetElectronEnergyCmd;
   G4UIcmdWithADoubleAndUnit  *fSetLaserWavelengthCmd;
   G4UIcmdWithADoubleAndUnit  *fSetPhotonVertexZCmd;
+  G4UIcmdWithAnInteger       *fSetVerboseCmd;
   G4UIcmdWithoutParameter    *fInitializeCmd;
 };
 
