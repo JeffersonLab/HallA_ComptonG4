@@ -1,13 +1,13 @@
-Right now this may or may not compile. Please don't use this repo
-for simulations the moment. I'm trying to build it in a more sane manner :)
+# GEANT4 Simulation for The Qweak Compton Photon Detector
 
+```
+Warning: This is actively in development - use at your own risk.
+```
 
-For API reference to GEANT4 use: http://www-geant4.kek.jp/Reference/
-
-
-Compiling
+## Compiling
 
 In a separate build directory type:
-
-cmake -DCMAKE_BUILD_TYPE=ReleaseWithDebugInfo /path/to/source/code
+```
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX /path/to/install /path/to/source/code
 make
+```
