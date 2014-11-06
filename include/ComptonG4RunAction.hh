@@ -25,6 +25,9 @@ public:
   ~ComptonG4RunAction();
 
   void SetRunNumber(int run) { fRunNumber = run; }
+  void SetAutoSave(unsigned int entry) {
+    fAutoSaveEntry = entry;
+  }
 
   // G4UserRunAction related classes
   void BeginOfRunAction(const G4Run* run);
@@ -33,6 +36,7 @@ public:
 private:
   ComptonG4Analysis     *fAnalysis;   // Pointer to the Data IO instance
   ComptonG4RunMessenger *fMessenger;  // Pointer to the run messenger
+  unsigned int fAutoSaveEntry;        // Enable auto-save every n entries
 
   int fRunNumber;    // The run number specified by user
 };

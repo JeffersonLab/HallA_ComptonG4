@@ -19,11 +19,17 @@ ComptonG4RunMessenger::ComptonG4RunMessenger(
   fRunDir = new G4UIdirectory("/Compton/run/");
   fRunDir->SetGuidance("Controls the setup of the run");
 
-  // Set the primary detector specified in the GDML geometry file
+  // Set the run number
   fRunNumberCmd = new G4UIcmdWithAnInteger("/Compton/run/runnumber",this);
   fRunNumberCmd->SetGuidance(
       "Set the runnumber");
   fRunNumberCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  // Set wheter to auto save
+  fRunAutoSaveCmd = new G4UIcmdWithAnInteger("/Compton/run/autosave",this);
+  fRunAutoSaveCmd->SetGuidance("Autosave every n entries");
+  fRunAutoSaveCmd->SetGuidance("Disabled if n == 0");
+  fRunAutoSaveCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 }
 
 ComptonG4RunMessenger::~ComptonG4RunMessenger()
@@ -36,6 +42,7 @@ void ComptonG4RunMessenger::SetNewValue(
 {
   if( command == fRunNumberCmd ) {
     fRun->SetRunNumber(fRunNumberCmd->GetNewIntValue(newValue));
+  } else if ( command == fRunAutoSaveCmd) {
+    fRun->SetAutoSave(fRunAutoSaveCmd->GetNewIntValue(newValue));
   }
 }
-

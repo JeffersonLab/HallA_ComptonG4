@@ -6,6 +6,7 @@
 #include "ComptonG4DetectorConstruction.hh"
 #include "ComptonG4DetectorConstructionMessenger.hh"
 #include "ComptonG4SensitiveDetectorManager.hh"
+#include "ComptonG4SensitiveDetector.hh"
 #include "ComptonG4Analysis.hh"
 #include <G4VPhysicalVolume.hh>
 #include <G4PVPlacement.hh>
@@ -22,6 +23,7 @@
 #include <G4MaterialPropertiesTable.hh>
 #include <G4SurfaceProperty.hh>
 #include <G4OpticalSurface.hh>
+#include <G4SDManager.hh>
 
 // GEANT4 Geometry related includes
 #include <G4GDMLParser.hh>
@@ -66,20 +68,6 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
     G4cout << (*soliter)->GetName() << G4endl;
   }
 
-  G4cout << "Parsing through physical volumes" << G4endl;
-  for( pvciter = pvs->begin(); pvciter != pvs->end(); pvciter++ ) {
-    G4cout << (*pvciter)->GetName() << G4endl;
-    G4GDMLAuxListType auxInfo = parser.GetVolumeAuxiliaryInformation(
-      (*pvciter)->GetLogicalVolume());
-    std::vector<G4GDMLAuxPairType>::const_iterator ipair = auxInfo.begin();
-    for( ipair = auxInfo.begin(); ipair != auxInfo.end(); ipair++ ) {
-      G4String str=ipair->type;
-      G4String val=ipair->value;
-      if( str == "SensDet" ) {
-        fAnalysis->AddDetector((*pvciter)->GetName());
-      }
-    }
-  }
   G4cout << "Parsing through logical volumes" << G4endl;
   for( lvciter = lvs->begin(); lvciter != lvs->end(); lvciter++ )
   {
@@ -145,6 +133,24 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
           color = G4Colour(red,green,blue,alpha);
         }
         (*lvciter)->SetVisAttributes(new G4VisAttributes(color));
+      }
+    }
+  }
+
+  G4cout << "Parsing through physical volumes" << G4endl;
+  for( pvciter = pvs->begin(); pvciter != pvs->end(); pvciter++ ) {
+    G4cout << (*pvciter)->GetName() << G4endl;
+    G4GDMLAuxListType auxInfo = parser.GetVolumeAuxiliaryInformation(
+      (*pvciter)->GetLogicalVolume());
+    std::vector<G4GDMLAuxPairType>::const_iterator ipair = auxInfo.begin();
+    for( ipair = auxInfo.begin(); ipair != auxInfo.end(); ipair++ ) {
+      G4String str=ipair->type;
+      G4String val=ipair->value;
+      if( str == "SensDet" ) {
+        fAnalysis->AddDetector((*pvciter)->GetName());
+        ((ComptonG4SensitiveDetector*)
+            (*pvciter)->GetLogicalVolume()->GetSensitiveDetector())
+          ->AddVolume(*pvciter);
       }
     }
   }

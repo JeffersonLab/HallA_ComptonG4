@@ -38,7 +38,7 @@ public:
   } DetectorStruct;
 
   // Public G4 Analyzer functions
-  void Initialize(G4int runnum = 0001);
+  void Initialize(G4int runnum = 1, unsigned int auto_save = 0);
   void StartOfEvent();
   void EndOfEvent();
   void Finished();
@@ -51,10 +51,25 @@ public:
   void AddDetector(std::string name);
   void SetOutputPath(std::string path);
 
-  void AddEDep(std::string name,Double_t e);
-  void AddOpticalHits(std::string name,Double_t hits);
+  void SetEDep(std::string name,Double_t e);
+  void SetOpticalHits(std::string name,Double_t hits);
+  void SetGlobalTimes(std::string name,std::vector<Double_t> times);
 
   void StoreRandomSeed(G4String seed);
+
+  void StoppedOpticalPhoton() {
+    fNumberOfOpticalPhotonsStopped+=1.0;
+  }
+
+  void NewOpticalPhoton() {
+    fNumberOfOpticalPhotonsProduced+=1.0;
+  }
+
+  void OpticalHit() {
+    fTotalNumberOfOpticalPhotonsAbsorbed+=1.0;
+  }
+
+  void WriteRandomSeed();
 
   /*
   void AddStepSize(std::string name,Double_t size) {
@@ -68,11 +83,13 @@ public:
   }*/
 
 private:
+  Int_t               fRunNumber;     // Run number
   TTree               *fTree;         // Generated TTree
   TFile               *fFile;         // Output TFile
   std::string            fOutputPath;    // Path to output rootfiles
   std::vector<std::string> fDetectorNames; // Names of detectors
   std::vector<DetectorStruct> fDetectors;  // Detectors
+  std::vector<std::vector<Double_t> > fDetectorTimes;  // Detector Times
 
   // Global tree variables per event
   Double_t            fAsym;          // Theoretical asymmetry
@@ -80,11 +97,17 @@ private:
   Double_t            fGammaE;        // Absolute Gamma energy
   Double_t            fTheta;         // The scattering angle in Degrees
   Double_t            fPhi;           // The azimuthal angle
+  Double_t            fNumberOfOpticalPhotonsStopped; // Number of forced stopped optical photons
+  Double_t            fNumberOfOpticalPhotonsProduced; // Number of total stopped optical photons
+  Double_t            fTotalNumberOfOpticalPhotonsAbsorbed; // Number of total stopped optical photons
 
   Int_t               fNumberOfEvents;
 
   G4int DetectorIndex(std::string name);
   G4String fRandomSeed;
+
+  // Auto Save rootfile?
+  unsigned int fAutoSaveEntry;        // Auto save tree every n>0 entries
 };
 
 #endif

@@ -37,6 +37,7 @@ private:
 
   G4UIdirectory         *fRunDir;
   G4UIcmdWithAnInteger  *fRunNumberCmd;
+  G4UIcmdWithAnInteger  *fRunAutoSaveCmd;
 };
 
 #endif /* COMPTONG4RUNMESSENGER_HH */

@@ -26,6 +26,13 @@ public:
   G4bool ProcessHits(G4Step*, G4TouchableHistory*);
   void EndOfEvent(G4HCofThisEvent*);
 
+  void AddVolume(G4VPhysicalVolume* vol) {
+    fVolumes.push_back(vol);
+    fEDeps.push_back(0.0);
+    fOpticalHits.push_back(0);
+    fGlobalTimes.resize(fVolumes.size());
+  }
+
   // Provide a way to set the Analysis pointer
   static void SetAnalysis(ComptonG4Analysis *ptr) {
     fAnalysis = ptr;
@@ -36,11 +43,13 @@ public:
 private:
   static ComptonG4Analysis *fAnalysis;
   std::vector<G4int> fOpticalHits;
+  std::vector<std::vector<G4double> > fGlobalTimes;
   std::vector<G4double> fEDeps;
-  std::vector<G4String> fVolumeNames;
-  std::map<G4String,G4int> fVolumeIndices;
+  std::vector<G4VPhysicalVolume*> fVolumes;
+  std::vector<G4int> fTrackIDs;
 
   void CleanEvent();
+  int GetIndex(G4VPhysicalVolume* vol);
 };
 
 #endif /* COMPTONG4SENSITIVEDETECTOR_HH_ */
