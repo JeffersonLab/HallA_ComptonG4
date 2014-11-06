@@ -3,8 +3,8 @@
   <Project name="qweak" />
   <Track name="simulation" />
   <Name name="compton_simulation_phdet_RUNNUM" />
-  <TimeLimit unit="minutes" time="1440" />
-  <DiskSpace space="2048" unit="MB" />
+  <TimeLimit unit="minutes" time="500" />
+  <DiskSpace space="1024" unit="MB" />
   <Memory space="1024" unit="MB" />
   <OS name="centos62" />
   <Command><![CDATA[
@@ -26,7 +26,7 @@
     ]]></Command>
 
   <Job>
-    <Output src="ComptonG4_RUNNUM.root" dest="/home/cornejo/scratch/rootfiles/simulation/" />
+    <Output src="ComptonG4_RUNNUM.root" dest="/work/hallc/compton/users/cornejo/simulation/rootfiles/" />
     <Stdout dest="/home/cornejo/scratch/logs/simulation/sim_1thin_lead_RUNNUM.out" />
     <Stderr dest="/home/cornejo/scratch/logs/simulation/sim_1thin_lead_RUNNUM.err" />
   </Job>
