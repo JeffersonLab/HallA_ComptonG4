@@ -15,7 +15,7 @@
 
 ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analysis *analysis) :
 
-  fAnalysis(analysis)
+  fAnalysis(analysis),fVerbose(0)
 {
   G4int n_particle = 1; // Gun shoots photons ( and may shoot electrons too)
   fParticleGun = new G4ParticleGun(n_particle);
