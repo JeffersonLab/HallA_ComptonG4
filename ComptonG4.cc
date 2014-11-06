@@ -157,15 +157,13 @@ int main( int argc, char **argv)
   G4UIdirectory *compDir = new G4UIdirectory("/Compton/");
   compDir->SetGuidance("UI commands for the ComptonG4 simulation");
 
-  // Mandatory Detector Constructor
-
-  runManager->SetUserInitialization(new
-      ComptonG4DetectorConstruction(geometry_file,sensManager,analysis));
   //runManager->SetUserInitialization( new QGSP_BERT() );
   FTFP_BERT *physicsList = new FTFP_BERT();
   // Optical photons controlled by command line flag
   if( use_optical ) {
-    physicsList->RegisterPhysics(new G4OpticalPhysics() );
+    G4OpticalPhysics *optical = new G4OpticalPhysics(0);
+    optical->SetFiniteRiseTime(true);
+    physicsList->RegisterPhysics(optical);
   }
   runManager->SetUserInitialization( physicsList );
   if(physicsList->GetPhysics("Optical") ){
@@ -173,6 +171,11 @@ int main( int argc, char **argv)
   } else {
     G4cout << "***Optical Processes OFF***" << G4endl;
   }
+
+  // Mandatory Detector Constructor
+  runManager->SetUserInitialization(new
+      ComptonG4DetectorConstruction(geometry_file,sensManager,analysis));
+
 
   // Ensure that the random number status is properly stored on each event
   runManager->StoreRandomNumberStatusToG4Event(1);
