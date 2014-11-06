@@ -22,7 +22,8 @@ public:
 
   virtual G4ClassificationOfNewTrack ClassifyNewTrack(const G4Track* track);
 private:
-  G4double fOpticalPhotonCutoffEnergy;
+  G4double fOpticalPhotonMinEnergy;
+  G4double fOpticalPhotonMaxEnergy;
 };
 
 #endif
