@@ -5,11 +5,10 @@
      only file you need to specify. -->
 <!ENTITY ComptonThinLead SYSTEM "ComptonNoThinLeads.xml">
 
-
 <!-- Do not change the following unless you know what you are doing -->
 
-<!-- File Containing Materials definition -->
-<!ENTITY ComptonMaterials SYSTEM "ComptonMaterials.xml">
+<!-- File Containing commonn definitions -->
+<!ENTITY ComptonDefinitions SYSTEM "ComptonDefinitions.xml">
 
 <!-- File Containing Materials definition -->
 <!ENTITY ComptonMaterials SYSTEM "ComptonMaterials.xml">

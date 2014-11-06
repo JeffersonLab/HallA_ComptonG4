@@ -1,3 +1,6 @@
+<!-- Load external definitions file -->
+&ComptonDefinitions;
+
 <!-- Load external materials file -->
 &ComptonMaterials;
 
@@ -25,7 +28,7 @@
   </volume>
 
   <!-- Load Standard Optical Surfaces -->
-  &ComptonOpticalSurfaces;
+  <!--&-ComptonOpticalSurfaces ;-->
 
 </structure>
 

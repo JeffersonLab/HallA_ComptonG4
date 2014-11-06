@@ -1,110 +1,53 @@
-<!-- Now define the optical surfaces (skin/border) -->
-<bordersurface name="LeadTungstateCrystalBorder12" surfaceproperty="LeadTungstatePolishedSurface" >
-  <physvolref ref="LeadTungstateCrystal1Physical"/>
-  <physvolref ref="LeadTungstateCrystal2Physical"/>
-</bordersurface>
+<!-- Define the surface between LeadTungstate crystals and the OpticalAir -->
 
-<bordersurface name="LeadTungstateCrystalBorder21" surfaceproperty="LeadTungstatePolishedSurface" >
-  <physvolref ref="LeadTungstateCrystal2Physical"/>
+<bordersurface name="LeadTungstateCrystalBorder1Air" surfaceproperty="LeadTungstatePolishedSurface" >
+  <physvolref ref="LeadTungstateStackPhysical"/>
   <physvolref ref="LeadTungstateCrystal1Physical"/>
 </bordersurface>
 
-<bordersurface name="LeadTungstateCrystalBorder13" surfaceproperty="LeadTungstatePolishedSurface" >
-  <physvolref ref="LeadTungstateCrystal1Physical"/>
+<bordersurface name="LeadTungstateCrystalBorder2Air" surfaceproperty="LeadTungstatePolishedSurface" >
+  <physvolref ref="LeadTungstateStackPhysical"/>
+  <physvolref ref="LeadTungstateCrystal2Physical"/>
+</bordersurface>
+
+<bordersurface name="LeadTungstateCrystalBorder3Air" surfaceproperty="LeadTungstatePolishedSurface" >
+  <physvolref ref="LeadTungstateStackPhysical"/>
   <physvolref ref="LeadTungstateCrystal3Physical"/>
 </bordersurface>
 
-<bordersurface name="LeadTungstateCrystalBorder24" surfaceproperty="LeadTungstatePolishedSurface" >
-  <physvolref ref="LeadTungstateCrystal2Physical"/>
+<bordersurface name="LeadTungstateCrystalBorder4Air" surfaceproperty="LeadTungstatePolishedSurface" >
+  <physvolref ref="LeadTungstateStackPhysical"/>
   <physvolref ref="LeadTungstateCrystal4Physical"/>
 </bordersurface>
 
-<bordersurface name="LeadTungstateCrystalBorder34" surfaceproperty="LeadTungstatePolishedSurface" >
-  <physvolref ref="LeadTungstateCrystal3Physical"/>
-  <physvolref ref="LeadTungstateCrystal4Physical"/>
+<!-- Define the surface between Mylar Wrap and Optical Air -->
+<bordersurface name="LeadTungstateMylarAirBorder" surfaceproperty="LeadTungstateFoilSurface" >
+  <physvolref ref="LeadTungstateStackPhysical"/>
+  <physvolref ref="LeadTungstateFoilWrapPhysical"/>
 </bordersurface>
 
-<bordersurface name="LeadTungstateCrystalPMTBorder1" surfaceproperty="LeadTungstatePolishedSurface" >
-  <physvolref ref="LeadTungstateCrystal1Physical"/>
-  <physvolref ref="ComptonPMTPhysical"/>
+<!-- Define the surface between BlackTape and Optical Air -->
+<bordersurface name="LeadTungstateBlackTapeAirBorder" surfaceproperty="LeadTungstateBlackTapeSurface" >
+  <physvolref ref="LeadTungstateFoilWrapPhysical"/>
+  <physvolref ref="LeadTungstateDetectorBlackTapeWrapPhysical"/>
 </bordersurface>
 
-<bordersurface name="LeadTungstateCrystalPMTBorder2" surfaceproperty="LeadTungstatePolishedSurface" >
-  <physvolref ref="LeadTungstateCrystal2Physical"/>
-  <physvolref ref="ComptonPMTPhysical"/>
+<!-- Define the surface between Stack and Optical Air -->
+<bordersurface name="LeadTungstateStackAirBorder" surfaceproperty="LeadTungstatePolishedSurface" >
+  <physvolref ref="LeadTungstateStackPhysical" />
+  <physvolref ref="ComptonPhotonDetectorPhysical" />
 </bordersurface>
 
-<bordersurface name="LeadTungstateCrystalPMTBorder3" surfaceproperty="LeadTungstatePolishedSurface" >
-  <physvolref ref="LeadTungstateCrystal3Physical"/>
-  <physvolref ref="ComptonPMTPhysical"/>
+<!-- Define the surface between Grease and Optical Air -->
+<bordersurface name="LeadTungstatePMTGreaseBorder" surfaceproperty="LeadTungstateGreaseSurface" >
+  <physvolref ref="ComptonPhotonDetectorPhysical" />
+  <physvolref ref="LeadTungstatePMTGreasePhysical" />
 </bordersurface>
 
-<bordersurface name="LeadTungstateCrystalPMTBorder4" surfaceproperty="LeadTungstatePolishedSurface" >
-  <physvolref ref="LeadTungstateCrystal4Physical"/>
-  <physvolref ref="ComptonPMTPhysical"/>
-</bordersurface>
-
-<!-- Foils around crystal borders (Top and Bottom) -->
-<bordersurface name="LeadTungstateDetectorCrystal1X" surfaceproperty="LeadTungstateFoilSurface" >
-  <physvolref ref="LeadTungstateCrystal1Physical"/>
-  <physvolref ref="LeadTungstateCrystalsSideX1Physical"/>
-</bordersurface>
-
-<bordersurface name="LeadTungstateDetectorCrystal2X" surfaceproperty="LeadTungstateFoilSurface" >
-  <physvolref ref="LeadTungstateCrystal2Physical"/>
-  <physvolref ref="LeadTungstateCrystalsSideX1Physical"/>
-</bordersurface>
-
-<bordersurface name="LeadTungstateDetectorBorder3X" surfaceproperty="LeadTungstateFoilSurface" >
-  <physvolref ref="LeadTungstateCrystal3Physical"/>
-  <physvolref ref="LeadTungstateCrystalsSideX2Physical"/>
-</bordersurface>
-
-<bordersurface name="LeadTungstateDetectorCrystal4X" surfaceproperty="LeadTungstateFoilSurface" >
-  <physvolref ref="LeadTungstateCrystal4Physical"/>
-  <physvolref ref="LeadTungstateCrystalsSideX2Physical"/>
-</bordersurface>
-
-<!-- Foils around crystal borders (Left and Right) -->
-<bordersurface name="LeadTungstateDetectorCrystal1Y" surfaceproperty="LeadTungstateFoilSurface" >
-  <physvolref ref="LeadTungstateCrystal1Physical"/>
-  <physvolref ref="LeadTungstateCrystalsSideY1Physical"/>
-</bordersurface>
-
-<bordersurface name="LeadTungstateDetectorCrystal2Y" surfaceproperty="LeadTungstateFoilSurface" >
-  <physvolref ref="LeadTungstateCrystal2Physical"/>
-  <physvolref ref="LeadTungstateCrystalsSideY2Physical"/>
-</bordersurface>
-
-<bordersurface name="LeadTungstateDetectorBorder3Y" surfaceproperty="LeadTungstateFoilSurface" >
-  <physvolref ref="LeadTungstateCrystal3Physical"/>
-  <physvolref ref="LeadTungstateCrystalsSideY1Physical"/>
-</bordersurface>
-
-<bordersurface name="LeadTungstateDetectorCrystal4Y" surfaceproperty="LeadTungstateFoilSurface" >
-  <physvolref ref="LeadTungstateCrystal4Physical"/>
-  <physvolref ref="LeadTungstateCrystalsSideY2Physical"/>
-</bordersurface>
-
-<!-- Foils around crystal borders (Upstream) -->
-<bordersurface name="LeadTungstateDetectorCrystal1Z" surfaceproperty="LeadTungstateFoilSurface" >
-  <physvolref ref="LeadTungstateCrystal1Physical"/>
-  <physvolref ref="LeadTungstateCrystalsSideZPhysical"/>
-</bordersurface>
-
-<bordersurface name="LeadTungstateDetectorCrystal2Z" surfaceproperty="LeadTungstateFoilSurface" >
-  <physvolref ref="LeadTungstateCrystal2Physical"/>
-  <physvolref ref="LeadTungstateCrystalsSideZPhysical"/>
-</bordersurface>
-
-<bordersurface name="LeadTungstateDetectorBorder3Z" surfaceproperty="LeadTungstateFoilSurface" >
-  <physvolref ref="LeadTungstateCrystal3Physical"/>
-  <physvolref ref="LeadTungstateCrystalsSideZPhysical"/>
-</bordersurface>
-
-<bordersurface name="LeadTungstateDetectorCrystal4Z" surfaceproperty="LeadTungstateFoilSurface" >
-  <physvolref ref="LeadTungstateCrystal4Physical"/>
-  <physvolref ref="LeadTungstateCrystalsSideZPhysical"/>
+<!-- Define the surface between Grease and Optical Air -->
+<bordersurface name="PMTAirBorder" surfaceproperty="ComptonPMTGreaseSurface" >
+  <physvolref ref="ComptonPhotonDetectorPhysical" />
+  <physvolref ref="ComptonPMTPhysical" />
 </bordersurface>
 
 
@@ -118,4 +61,5 @@
   <physvolref ref="ComptonPMTCathode" />
   <physvolref ref="ComptonPMTGlassSide1" />
 </bordersurface>
+
 

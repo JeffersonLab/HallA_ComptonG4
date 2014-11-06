@@ -1,15 +1,80 @@
 <solids>
+  <box lunit="m" name="TunnelSolid" x="2" y="2" z="12" />
+
   <box lunit="mm" name="ThinLead1Solid" x="103" y="176" z="2.3681" />
   <box lunit="mm" name="ThinLead2Solid" x="101" y="182" z="2.8756" />
   <box lunit="mm" name="ThinLead3Solid" x="104" y="181" z="2.4469" />
   <box lunit="mm" name="ThinLead4Solid" x="097" y="177" z="2.3389" />
 
-  <box lunit="mm" name="LeadTungstateDetectorSolid" x="60.022" y="60.022" z="200.011" />
-  <box lunit="m" name="TunnelSolid" x="2" y="2" z="12" />
-  <box lunit="mm" name="LeadTungstateCrystalSolid" x="30" y="30" z="200" />
-  <box lunit="mm" name="LeadTungstateCrystalsSideXSolid" x="60" y="0.01" z="200" />
-  <box lunit="mm" name="LeadTungstateCrystalsSideYSolid" x="0.01" y="60" z="200" />
-  <box lunit="mm" name="LeadTungstateCrystalsSideZSolid" x="60" y="60" z="0.01" />
+  <!-- Lead Tungstate Photon Detector Solids
+         - Includes Crystal Stack
+         - Air gaps between volumes
+         - MyLar wrap
+         - Blacktape wrap
+         - Optical grease on PMT-LeadTungstate border
+         - PMT
+       -->
+  <box lunit="mm" name="LeadTungstateCrystalSolid"
+      x="LeadTungstateCrystalDimX"
+      y="LeadTungstateCrystalDimY"
+      z="LeadTungstateCrystalDimZ"
+    />
+  <box lunit="mm" name="LeadTungstateStackSolid"
+      x="LeadTungstateStackDimX"
+      y="LeadTungstateStackDimY"
+      z="LeadTungstateStackDimZ"
+    />
+  <box lunit="mm" name="LeadTungstateStackAirWrapSolid"
+      x="LeadTungstateStackAirWrapDimX"
+      y="LeadTungstateStackAirWrapDimY"
+      z="LeadTungstateStackAirWrapDimZ"
+    />
+  <box lunit="mm" name="LeadTungstateFoilWrapSolid"
+      x="LeadTungstateFoilWrapDimX"
+      y="LeadTungstateFoilWrapDimY"
+      z="LeadTungstateFoilWrapDimZ"
+    />
+  <box lunit="mm" name="LeadTungstateFoilAirWrapSolid"
+      x="LeadTungstateFoilAirWrapDimX"
+      y="LeadTungstateFoilAirWrapDimY"
+      z="LeadTungstateFoilAirWrapDimZ"
+    />
+  <box lunit="mm" name="LeadTungstateDetectorSolid"
+      x="LeadTungstateDetectorDimX"
+      y="LeadTungstateDetectorDimY"
+      z="LeadTungstateDetectorDimZ"
+    />
+  <subtraction name="LeadTungstateFoilWrapSolidSubtraction" >
+    <first ref="LeadTungstateFoilWrapSolid" />
+    <second ref="LeadTungstateStackAirWrapSolid" />
+    <position name="LeadTungstateFoilWrapSolidPosition" unit="mm"
+        x="0.000"
+        y="0.000"
+        z="(LeadTungstateFoilWrapDimZ-LeadTungstateStackAirWrapDimZ)/2.0" />
+  </subtraction>
+  <subtraction name="LeadTungstateBlackTapeWrapSolidSubtraction" >
+    <first ref="LeadTungstateDetectorSolid" />
+    <second ref="LeadTungstateFoilAirWrapSolid" />
+    <position name="LeadTungstateBlackTapeWrapSolidPosition" unit="mm"
+        x="0"
+        y="0"
+        z="(LeadTungstateDetectorDimZ-LeadTungstateFoilAirWrapDimZ)/2.0" />
+  </subtraction>
+  <box lunit="mm" name="LeadTungstatePMTGreaseSolid"
+      x="LeadTungstatePMTGreaseDimX"
+      y="LeadTungstatePMTGreaseDimY"
+      z="LeadTungstatePMTGreaseDimZ"
+    />
+  <box lunit="mm" name="ComptonPhotonDetectorSolid"
+      x="ComptonPhotonDetectorDimX"
+      y="ComptonPhotonDetectorDimY"
+      z="ComptonPhotonDetectorDimZ"
+    />
+  <tube lunit="mm" name="ComptonPMTSolid"
+      rmin="ComptonPMTDimRMin"
+      rmax="ComptonPMTDimRMax"
+      z="ComptonPMTDimZ"
+      startphi="0" deltaphi="360" aunit="degree" />
 
   <box lunit="mm" name="ComptonBeamlineSolid" x="140" y="140" z="2854" />
   <tube lunit="mm" name="ComptonBeampipeSolid" rmin="68" rmax="70" z="2850" startphi="0" deltaphi="360" aunit="degree" />
@@ -17,10 +82,12 @@
   <tube lunit="mm" name="ComptonPMTCathodeSolid" rmin="0" rmax="38.5" z="0.1" startphi="0" deltaphi="360" aunit="degree" />
   <tube lunit="mm" name="ComptonPMTGlassSolid" rmin="41.25" rmax="42.25" z="205.0" startphi="0" deltaphi="360" aunit="degree" />
   <tube lunit="mm" name="ComptonPMTGlassSideSolid" rmin="0.0" rmax="41.25" z="1.0" startphi="0" deltaphi="360" aunit="degree" />
-  <tube lunit="mm" name="ComptonPMTSolid" rmin="0.0" rmax="42.25" z="205.0" startphi="0" deltaphi="360" aunit="degree" />
 
-  <opticalsurface name="LeadTungstatePolishedSurface" model="UNIFIED" finish="polished" type="dielectric_dielectric" value="1.0"/>
-  <opticalsurface name="LeadTungstateFoilSurface" model="UNIFIED" finish="polishedbackpainted" type="dielectric_dielectric" value="1.0"/>
-  <opticalsurface name="PMTGlassSurface" model="UNIFIED" finish="polished" type="dielectric_dielectric" value="1.0" />
-  <opticalsurface name="PMTCathodeSurface" model="UNIFIED" finish="polished" type="dielectric_metal" value="1.0" />
+  <opticalsurface name="LeadTungstatePolishedSurface" model="UNIFIED" finish="polished" type="dielectric_dielectric" value="0.1"/>
+  <opticalsurface name="LeadTungstateFoilSurface" model="UNIFIED" finish="polished" type="dielectric_metal" value="0.1"/>
+  <opticalsurface name="LeadTungstateBlackTapeSurface" model="UNIFIED" finish="ground" type="dielectric_dielectric" value="0.1"/>
+  <opticalsurface name="LeadTungstateGreaseSurface" model="UNIFIED" finish="polished" type="dielectric_dielectric" value="0.1"/>
+  <opticalsurface name="PMTGlassSurface" model="UNIFIED" finish="polished" type="dielectric_dielectric" value="0.1" />
+  <opticalsurface name="PMTCathodeSurface" model="UNIFIED" finish="polished" type="dielectric_metal" value="0.1" />
+  <opticalsurface name="ComptonPMTGreaseSurface" model="UNIFIED" finish="polished" type="dielectric_dielectric" value="0.1"/>
 </solids>

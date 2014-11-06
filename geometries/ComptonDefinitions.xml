@@ -1,0 +1,138 @@
+<define>
+  <!-- Define common variables -->
+  <variable name="AirGap" value="0.0000" />
+  <variable name="MyLarTickness" value="0.025" />
+  <variable name="BlackTapeTickness" value="3.000" />
+
+  <!-- Individual LeadTungstate Crystals -->
+  <variable name="LeadTungstateCrystalDimX" value="30" />
+  <variable name="LeadTungstateCrystalDimY" value="30" />
+  <variable name="LeadTungstateCrystalDimZ" value="200" />
+
+  <!-- The stack of 4 LeadTungstate Crystals -->
+  <variable name="LeadTungstateStackDimX" value="2*(LeadTungstateCrystalDimX+AirGap)" />
+  <variable name="LeadTungstateStackDimY" value="2*(LeadTungstateCrystalDimY+AirGap)" />
+  <variable name="LeadTungstateStackDimZ" value="LeadTungstateCrystalDimZ+AirGap" />
+
+  <!-- Air gap around LeadTungstate Stack -->
+  <variable name="LeadTungstateStackAirWrapDimX" value="LeadTungstateStackDimX+2*AirGap" />
+  <variable name="LeadTungstateStackAirWrapDimY" value="LeadTungstateStackDimY+2*AirGap" />
+  <variable name="LeadTungstateStackAirWrapDimZ" value="LeadTungstateStackDimZ+AirGap" />
+
+  <!-- MyLar Foil wrap around LeadTungsstate Crystals -->
+  <variable name="LeadTungstateFoilWrapDimX" value="LeadTungstateStackAirWrapDimX+2*(MyLarTickness+AirGap)" />
+  <variable name="LeadTungstateFoilWrapDimY" value="LeadTungstateStackAirWrapDimY+2*(MyLarTickness+AirGap)" />
+  <variable name="LeadTungstateFoilWrapDimZ" value="LeadTungstateStackAirWrapDimZ+MyLarTickness+AirGap" />
+
+  <!-- AirGap around MyLar Foil wrap around LeadTungsstate Crystals -->
+  <variable name="LeadTungstateFoilAirWrapDimX" value="LeadTungstateFoilWrapDimX+2*AirGap" />
+  <variable name="LeadTungstateFoilAirWrapDimY" value="LeadTungstateFoilWrapDimY+2*AirGap" />
+  <variable name="LeadTungstateFoilAirWrapDimZ" value="LeadTungstateFoilWrapDimZ+AirGap" />
+
+  <!-- LeadTungsate Detector Wrapped Stack -->
+  <variable name="LeadTungstateDetectorDimX" value="LeadTungstateFoilAirWrapDimX+2*(BlackTapeTickness+AirGap)" />
+  <variable name="LeadTungstateDetectorDimY" value="LeadTungstateFoilAirWrapDimY+2*(BlackTapeTickness+AirGap)" />
+  <variable name="LeadTungstateDetectorDimZ" value="LeadTungstateFoilAirWrapDimZ+BlackTapeTickness+AirGap" />
+
+  <!-- LeadTungsate-PMT Optical Grease -->
+  <variable name="LeadTungstatePMTGreaseDimX" value="LeadTungstateDetectorDimX" />
+  <variable name="LeadTungstatePMTGreaseDimY" value="LeadTungstateDetectorDimY" />
+  <variable name="LeadTungstatePMTGreaseDimZ" value="1.0" />
+
+  <!-- PMT Dimmensions -->
+  <variable name="ComptonPMTDimRMin" value="0.0" />
+  <variable name="ComptonPMTDimRMax" value="40.25" />
+  <variable name="ComptonPMTDimZ" value="205.00" />
+
+  <!-- Compton Photon Detector -->
+  <variable name="ComptonPhotonDetectorDimX" value="2*ComptonPMTDimRMax" />
+  <variable name="ComptonPhotonDetectorDimY" value="2*ComptonPMTDimRMax" />
+  <variable name="ComptonPhotonDetectorDimZ" value="ComptonPMTDimZ+AirGap+LeadTungstatePMTGreaseDimZ+AirGap+LeadTungstateDetectorDimZ" />
+
+
+  <!-- LeadTungstate Optical Properties -->
+  <matrix name="LeadTungstateAbsLength" coldim="2" values="1.5*eV 1.0*m 10.0*eV 1.0*m" />
+  <matrix name="LeadTungstateIndexNOPE" coldim="2"
+      values="1.771*eV 2.221 1.837*eV 2.226 1.907*eV 2.230 1.984*eV 2.236 2.066*eV 2.242 2.156*eV 2.250 2.254*eV 2.259 2.362*eV 2.270 2.480*eV 2.284 2.611*eV 2.301 2.755*eV 2.323 2.917*eV 2.353 3.100*eV 2.393 3.306*eV 2.452"/>
+  <matrix name="LeadTungstateRayleigh" coldim="2"
+      values="1.771*eV 55*cm 3.306*eV 55*cm" />
+  <matrix name="LeadTungstateSpecularLobe" coldim="2"
+      values="1.771*eV 1.0 3.306*eV 1.0" />
+  <matrix name="LeadTungstateSpecularSpike" coldim="2"
+      values="1.771*eV 0.0 3.306*eV 0.0" />
+  <matrix name="LeadTungstateBackscatter" coldim="2"
+      values="1.771*eV 0.0 3.306*eV 0.0" />
+  <matrix name="LeadTungstateTransmittance" coldim="2"
+      values="1.771*eV 0.70 3.55*eV 0.00 10.0*eV 0.00" />
+
+  <!-- Corresponding wavelengths:
+    700nm           650nm           600nm           550nm           500nm           450nm           400nm           350nm -->
+  <matrix name="LeadTungstateReflectivity" coldim="2"
+      values="1.77*eV 0.142   1.91*eV 0.145   2.07*eV 0.145   2.25*eV 0.150   2.48*eV 0.155   2.76*eV 0.160   3.10*eV 0.170   3.55*eV 0.185" />
+
+  <matrix name="LeadTungstateRIndex" coldim="2"
+      values="1.771*eV 2.24   1.91*eV 2.250   2.07*eV 2.26    2.25*eV 2.270   2.48*eV 2.290   2.76*eV 2.340   3.10*eV 2.400   3.55*eV 2.510" />
+
+  <matrix name="LeadTungstateAbsorptionLength" coldim="2"
+      values="1.771*eV 338*cm  1.91*eV 355**cm   2.07*eV 375*cm    2.25*eV 396*cm   2.48*eV 448*cm   2.76*eV 659*cm  3.10*eV 238*cm  3.55*eV 16.6*cm" />
+
+  <matrix name="LeadTungstateFastComponent" coldim="2"
+      values="1.771*eV 0.39  3.55*eV 0.39" />
+
+  <matrix name="LeadTungstateSlowComponent" coldim="2"
+      values="1.771*eV 0.61  3.55*eV 0.61" />
+
+  <matrix name="LeadTungstateFastTimeConstant" coldim="1"
+      values="10*ns" />
+
+  <matrix name="LeadTungstateSlowTimeConstant" coldim="1"
+      values="30*ns" />
+
+  <!-- Based on the slow component having a relative ratio of 0.3 @ 30 ns cooled by 10% to gain ~20% light yield gain -->
+  <matrix name="LeadTungstateScintillationYield" coldim="1"
+      values="1.25*120./MeV" />
+
+  <matrix name="LeadTungstateYieldRatio" coldim="1"
+      values="0.257" />
+
+  <matrix name="LeadTungstateResolutionScale" coldim="1"
+      values="0.30" />
+
+  <matrix name="LeadTungstateRiseTime" coldim="1"
+      values="1*ns" />
+
+  <!-- Air and Vaccuum Optical Properties -->
+  <matrix name="AirIndex" coldim="2" values="1.77*eV 1.0 5.0*eV 1.0" />
+  <matrix name="AirReflectivity" coldim="2" values="1.77*eV 0.0001 5.0*eV 0.0001" />
+
+  <!-- Optical Grease (estimated) -->
+  <matrix name="OpticalGreaseIndex" coldim="2" values="1.77*eV 1.405 5.0*eV 1.405" />
+
+  <!-- MyLar BoPET Optical Properties -->
+  <matrix name="BoPETIndex" coldim="2" values="1.77*eV 1.68 5.0*eV 1.63" />
+  <matrix name="BoPETReflectivity" coldim="2" values="1.77*eV 0.85 5.0*eV 0.85" />
+
+  <!-- PMT Optical Properties -->
+  <matrix name="BorosilicateGlassIndex" coldim="2"
+      values="1.889*eV 1.46916 1.1926*eV 1.46953 2.104*eV 1.47133 2.270*eV 1.47311 2.584*eV 1.47676 2.845*eV 1.48015"/>
+  <matrix name="ComptonPMTGlassEfficiency" coldim="2" values="1.5*eV 1.0 5.0*eV 1.0"/>
+
+  <matrix name="FusedSilicaGlassIndex" coldim="2"
+      values="0.3823*eV 1.4131 0.6025*eV 1.4372 0.7255*eV 1.4421 0.8889*eV 1.4458 1.1450*eV 1.4494 1.4383*eV 1.4525 1.8894*eV 1.4564 1.9261*eV 1.4567 2.1042*eV 1.4584 2.1103*eV 1.4585 2.2706*eV 1.4601 2.8453*eV 1.4666 3.0648*eV 1.4696 3.3973*eV 1.4745 4.1046*eV 1.4872 4.4238*eV 1.4940 5.7836*eV 1.5337 6.200*eV 1.5500 6.7027*eV 1.5750 7.2941*eV 1.6150" />
+
+  <matrix name="SbKCsCathodeIndex" coldim="2"
+      values="1.8235*eV 2.9600 1.8647*eV 2.955 1.9077*eV 2.95 1.9528*eV 2.9500 2.000*eV 2.9600 2.0462*eV 2.9800 2.1017*eV 3.0100 2.1565*eV 3.0600 2.2143*eV 3.1200 2.2752*eV 3.2000 2.3396*eV 3.2600 2.4078*eV 3.0900 2.4800*eV 3.0000 2.5567*eV 3.0000 2.6383*eV 3.0000 2.7253*eV 2.8700 2.8182*eV 2.7000 2.9176*eV 2.6100 3.0244*eV 2.3800 3.1392*eV 2.1800 3.2632*eV 1.9200" />
+
+  <matrix name="SbKCsCathodeEfficiency" coldim="2"
+      values="1.7*eV 1.0 5.0*eV 1.0" />
+
+  <matrix name="SbKCsCathodeAbsorption" coldim="2"
+      values="1.7*eV 0.0000001*mm  5.0*eV 0.0000001*mm" />
+
+  <matrix name="TedlarAbsorption" coldim="2"
+      values="1.7*eV 0.001*mm  5.0*eV 0.001*mm" />
+
+  <matrix name="TedlarEfficiency" coldim="2"
+      values="1.7*eV 0.85 5.0*eV 0.85" />
+</define>
+

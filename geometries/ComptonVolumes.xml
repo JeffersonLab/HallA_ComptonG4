@@ -25,7 +25,7 @@
 <volume name="ComptonPMTCathodeLogical" >
   <materialref ref="Bialkali" />
   <solidref ref="ComptonPMTCathodeSolid" />
-  <auxiliary auxtype="Color" auxvalue="#111111AA" />
+  <auxiliary auxtype="Color" auxvalue="#54545455" />
   <auxiliary auxtype="SensDet" auxvalue="ComptonPMTCathode" />
 </volume>
 <volume name="ComptonPMTGlassSideLogical" >
@@ -37,11 +37,12 @@
 <volume name="ComptonPMTGlassLogical" >
   <materialref ref="Silica" />
   <solidref ref="ComptonPMTGlassSolid" />
-  <auxiliary auxtype="Color" auxvalue="#ABABAB55" />
+  <auxiliary auxtype="Color" auxvalue="#ABABAB22" />
 </volume>
 <volume name="ComptonPMTLogical" >
   <materialref ref="AirVacuumOptical" />
   <solidref ref="ComptonPMTSolid" />
+
   <physvol name="ComptonPMTGlassSide1">
     <volumeref ref="ComptonPMTGlassSideLogical" />
     <position name="ComptonPMTGlassSide1Position" unit="mm" x="0" y="0" z="-102" />
@@ -64,74 +65,146 @@
 </volume>
 
 <!-- Start: Define LeadTungstate 4crystal detector used in QWeak 2011-2012 -->
+
+<!-- Start with the MyLar Foil definition -->
+<volume name="LeadTungstateFoilWrapLogical" >
+  <materialref ref="BoPET" />
+  <solidref ref="LeadTungstateFoilWrapSolidSubtraction" />
+  <auxiliary auxtype="Color" auxvalue="#C0C0C055"/>
+</volume>
+
+<!-- The blackout tape covering the crystals -->
+<volume name="LeadTungstateDetectorBlackTapeWrapLogical" >
+  <materialref ref="Tedlar" />
+  <solidref ref="LeadTungstateBlackTapeWrapSolidSubtraction" />
+  <auxiliary auxtype="Color" auxvalue="#00000022"/>
+</volume>
+
+<!-- The Sensitive LeadTungstate crystal -->
 <volume name="LeadTungstateCrystalLogical" >
   <materialref ref="LeadTungstate" />
   <solidref ref="LeadTungstateCrystalSolid" />
-  <auxiliary auxtype="Color" auxvalue="#A6755577"/>
+  <auxiliary auxtype="Color" auxvalue="#9B111E77"/>
   <auxiliary auxtype="SensDet" auxvalue="ComptonCrystal" />
 </volume>
-<volume name="LeadTungstateCrystalsSideXLogical" >
-  <materialref ref="BoPET" />
-  <solidref ref="LeadTungstateCrystalsSideXSolid" />
-  <auxiliary auxtype="Color" auxvalue="#00AACC33"/>
-</volume>
-<volume name="LeadTungstateCrystalsSideYLogical" >
-  <materialref ref="BoPET" />
-  <solidref ref="LeadTungstateCrystalsSideYSolid" />
-  <auxiliary auxtype="Color" auxvalue="#00AACC33"/>
-</volume>
-<volume name="LeadTungstateCrystalsSideZLogical" >
-  <materialref ref="BoPET" />
-  <solidref ref="LeadTungstateCrystalsSideZSolid" />
-  <auxiliary auxtype="Color" auxvalue="#00AACC33"/>
+
+<!-- The Optical OpticalGrease between LeadTungstate stack and PMT -->
+<volume name="LeadTungstatePMTGreaseLogical" >
+  <materialref ref="OpticalGrease" />
+  <solidref ref="LeadTungstatePMTGreaseSolid" />
+  <auxiliary auxtype="Color" auxvalue="#00FF0033"/>
 </volume>
 
-<volume name="LeadTungstateDetectorContainerLogical" >
-  <materialref ref="AirVacuumOptical" />
-  <solidref ref="LeadTungstateDetectorSolid" />
+<!-- The four LeadTungstate crystal array -->
+<volume name="LeadTungstateStackLogical" >
+  <materialref ref="AirOptical" />
+  <solidref ref="LeadTungstateStackSolid" />
+
   <physvol name="LeadTungstateCrystal1Physical">
     <volumeref ref="LeadTungstateCrystalLogical" />
-    <position name="LeadTungstateCrystal1_Position" unit="mm" x="-15.001" y="15.001" z="0.0055" />
+    <position name="LeadTungstateCrystal1Position" unit="mm"
+        x="-(LeadTungstateCrystalDimX+AirGap)/2.0"
+        y="-(LeadTungstateCrystalDimY+AirGap)/2.0"
+        z="+AirGap/2.0" />
   </physvol>
   <physvol name="LeadTungstateCrystal2Physical">
     <volumeref ref="LeadTungstateCrystalLogical" />
-    <position name="LeadTungstateCrystal2_Position" unit="mm" x="15.001" y="15.001" z="0.0055" />
+    <position name="LeadTungstateCrystal2Position" unit="mm"
+        x="-(LeadTungstateCrystalDimX+AirGap)/2.0"
+        y="+(LeadTungstateCrystalDimY+AirGap)/2.0"
+        z="+AirGap/2.0" />
   </physvol>
   <physvol name="LeadTungstateCrystal3Physical">
     <volumeref ref="LeadTungstateCrystalLogical" />
-    <position name="LeadTungstateCrystal3_Position" unit="mm" x="-15.001" y="-15.001" z="0.0055" />
+    <position name="LeadTungstateCrystal3Position" unit="mm"
+        x="+(LeadTungstateCrystalDimX+AirGap)/2.0"
+        y="-(LeadTungstateCrystalDimY+AirGap)/2.0"
+        z="+AirGap/2.0" />
   </physvol>
   <physvol name="LeadTungstateCrystal4Physical">
     <volumeref ref="LeadTungstateCrystalLogical" />
-    <position name="LeadTungstateCrystal4_Position" unit="mm" x="15.001" y="-15.001" z="0.0055" />
+    <position name="LeadTungstateCrystal4Position" unit="mm"
+        x="+(LeadTungstateCrystalDimX+AirGap)/2.0"
+        y="+(LeadTungstateCrystalDimY+AirGap)/2.0"
+        z="+AirGap/2.0" />
   </physvol>
-  <physvol name="LeadTungstateCrystalsSideX1Physical">
-    <volumeref ref="LeadTungstateCrystalsSideXLogical" />
-    <position name="LeadTungstateCrystalsSideX1_Position" unit="mm" x="0" y="30.006" z="0.0055" />
+  <auxiliary auxtype="Color" auxvalue="#9B111E00"/>
+</volume>
+
+
+<!-- This is the 4 Lead Crystals wrapped with Mylar and black tape -->
+<volume name="LeadTungstateDetectorContainerLogical" >
+  <materialref ref="AirOptical" />
+  <solidref ref="LeadTungstateDetectorSolid" />
+
+  <!-- Crystals Stack -->
+  <physvol name="LeadTungstateStackPhysical">
+    <volumeref ref="LeadTungstateStackLogical" />
+    <position name="LeadTungstateStackPosition"
+        unit="mm"
+        x="0.000"
+        y="0.000"
+        z="(LeadTungstateDetectorDimZ-LeadTungstateStackDimZ)/2.0" />
   </physvol>
-  <physvol name="LeadTungstateCrystalsSideX2Physical">
-    <volumeref ref="LeadTungstateCrystalsSideXLogical" />
-    <position name="LeadTungstateCrystalsSideX2_Position" unit="mm" x="0" y="-30.006" z="0.0055" />
+
+  <!-- Mylar Foil wrap -->
+  <physvol name="LeadTungstateFoilWrapPhysical">
+    <volumeref ref="LeadTungstateFoilWrapLogical" />
+    <position name="LeadTungstateFoilWrapPosition"
+        unit="mm"
+        x="0.0"
+        y="0.0"
+        z="(LeadTungstateDetectorDimZ-LeadTungstateFoilWrapDimZ)/2.0" />
   </physvol>
-  <physvol name="LeadTungstateCrystalsSideY1Physical">
-    <volumeref ref="LeadTungstateCrystalsSideYLogical" />
-    <position name="LeadTungstateCrystalsSideY1_Position" unit="mm" x="30.006" y="0" z="0.0055" />
+
+  <!-- BlackTape wrap -->
+  <physvol name="LeadTungstateDetectorBlackTapeWrapPhysical">
+    <volumeref ref="LeadTungstateDetectorBlackTapeWrapLogical" />
+    <position name="LeadTungstateDetectorBlackTapeWrapPosition"
+        unit="mm"
+        x="0.0"
+        y="0.0"
+        z="0.0" />
   </physvol>
-  <physvol name="LeadTungstateCrystalsSideY2Physical">
-    <volumeref ref="LeadTungstateCrystalsSideYLogical" />
-    <position name="LeadTungstateCrystalsSideY2_Position" unit="mm" x="-30.006" y="0" z="0.0055" />
+  <auxiliary auxtype="Color" auxvalue="#FFFFFF99"/>
+</volume>
+
+
+<!-- Lead Tungstated wrapped crystals with PMT -->
+<volume name="ComptonPhotonDetectorLogical">
+  <materialref ref="AirOptical" />
+  <solidref ref="ComptonPhotonDetectorSolid" />
+  <physvol name="LeadTungstateDetectorContainerPhysical">
+    <volumeref ref="LeadTungstateDetectorContainerLogical" />
+    <position name="LeadTungstateDetectorContainer_Position" unit="mm"
+        x="0"
+        y="0"
+        z="-(ComptonPhotonDetectorDimZ-LeadTungstateDetectorDimZ)/2.0"/>
   </physvol>
-  <physvol name="LeadTungstateCrystalsSideZPhysical">
-    <volumeref ref="LeadTungstateCrystalsSideZLogical" />
-    <position name="LeadTungstateCrystalsSideY_Position" unit="mm" x="0" y="0" z="-100.00" />
+
+  <physvol name="LeadTungstatePMTGreasePhysical">
+    <volumeref ref="LeadTungstatePMTGreaseLogical" />
+    <position name="LeadTungstatePMTGrease_Position" unit="mm"
+        x="0"
+        y="0"
+        z="(ComptonPhotonDetectorDimZ-(2*ComptonPMTDimZ+AirGap+LeadTungstatePMTGreaseDimZ))/2.0" />
   </physvol>
-  <auxiliary auxtype="Color" auxvalue="#FFFFFF00"/>
+
+  <physvol name="ComptonPMTPhysical">
+    <volumeref ref="ComptonPMTLogical" />
+    <position name="ComptonPMT_Position" unit="mm"
+        x="0"
+        y="0"
+        z="(ComptonPhotonDetectorDimZ-ComptonPMTDimZ)/2.0" />
+  </physvol>
+
+  <auxiliary auxtype="Color" auxvalue="#00336600"/>
 </volume>
 <!-- End: Define LeadTungstate 4crystal detector used in QWeak 2011-2012 -->
 
 <!-- Start: Define Beampipe -->
 <volume name="ComptonBeampipeLogical" >
-  <materialref ref="Aluminum" />
+  <materialref ref="AluminumMaterial" />
   <solidref ref="ComptonBeampipeSolid" />
   <auxiliary auxtype="Color" auxvalue="#ADB2BD"/>
 </volume>
@@ -139,7 +212,7 @@
 <volume name="ComptonBeampipeEndLogical" >
   <materialref ref="Copper" />
   <solidref ref="ComptonBeampipeEndSolid" />
-  <auxiliary auxtype="Color" auxvalue="#C87533"/>
+  <auxiliary auxtype="Color" auxvalue="#B87333"/>
 </volume>
 
 <volume name="ComptonBeamlineContainerLogical">
