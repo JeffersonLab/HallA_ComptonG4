@@ -124,7 +124,9 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryOpticalMode()
   opticalDirection.setRThetaPhi(1.0,
       CLHEP::RandFlat::shoot(pi/4.0)/radian,
       CLHEP::RandFlat::shoot(2.0*pi)/radian);
-  fParticleGun->SetParticleEnergy(fMaxPhotonEnergy);
+  fParticleGun->SetParticleEnergy(
+      CLHEP::RandFlat::shoot(1.0)*
+      fMaxPhotonEnergy);
   fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
   fParticleGun->SetParticleMomentumDirection(opticalDirection);
   fParticleGun->SetParticlePolarization(opticalDirection);
@@ -166,6 +168,8 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
   fAnalysis->SetGammaE(gammaE/MeV);
   fAnalysis->SetTheta(57.2957795*gammaTheta/radian);
   fAnalysis->SetPhi(57.2957795*gammaPhi/radian);
+  G4cout << "Shooting photon with energy: " << gammaE/CLHEP::MeV << " MeV"
+    << G4endl;
 }
 
 /**
