@@ -1,9 +1,11 @@
 /Compton/gun/mode 3
+/Compton/gun/verbose 0
 /Compton/run/runnumber RUNNUM
 # Energy reading taken from https://hallcweb.jlab.org/hclog/1204_archive/120412131015.html
 /Compton/gun/ElectronEnergy  878.8 MeV
 /Compton/gun/LaserWavelenght 532 nm
 /Compton/gun/PhotonVertexZ 0.0 mm
 /Compton/gun/Initialize
+/Compton/event/printevent 100
 
-/run/beamOn 10000
+/run/beamOn 2500
