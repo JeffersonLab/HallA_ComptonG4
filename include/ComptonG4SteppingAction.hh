@@ -2,8 +2,10 @@
 #define COMPTONG4STEPPINGACTION_H
 
 #include <G4UserSteppingAction.hh>
+#include <G4Types.hh>
 
 class ComptonG4Analysis;
+class ComptonG4SteppingMessenger;
 
 /*!
  * @class ComptonG4SteppingAction
@@ -23,9 +25,18 @@ public:
 
   // G4UserSteppingAction related functions
   void UserSteppingAction(const G4Step* step);
+  void SetOpticalMaxStepTime(G4double time) {
+    fOpticalMaxStepTime = time;
+  }
+  void SetVerbose(G4int verbose) {
+    fVerbose = verbose;
+  }
 
 private:
   ComptonG4Analysis *fAnalysis;
+  ComptonG4SteppingMessenger *fStepMessenger;
+  G4double fOpticalMaxStepTime;
+  G4int fVerbose;
 };
 
 #endif

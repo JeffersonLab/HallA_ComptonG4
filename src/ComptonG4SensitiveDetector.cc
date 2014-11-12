@@ -60,14 +60,6 @@ G4bool ComptonG4SensitiveDetector::ProcessHits(G4Step* step,
     fEDeps[volIndex] += step->GetTotalEnergyDeposit()/MeV;
 
     fAnalysis->ProcessOpticalTrackID(track->GetTrackID());
-
-    // Kill photons that travel too far
-    // TODO: Make this be UI command
-    if ( track->GetGlobalTime() > 1e-6*CLHEP::s) {
-      track->SetTrackStatus(fStopAndKill);
-      fAnalysis->StoppedOpticalPhoton();
-    }
-
   }
 
   fEDeps[volIndex] += step->GetTotalEnergyDeposit()/MeV;
