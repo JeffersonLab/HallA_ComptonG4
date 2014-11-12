@@ -129,7 +129,7 @@ int main( int argc, char **argv)
 
 #ifdef COMPTONG4_BATCH_MODE // We are in batch mode
   // Process the batch file
-  if(!vm.count("geometry-file")){
+  if(!vm.count("batch-file")){
     G4cerr << "Did not specify a batch file!" << G4endl;
     return -1;
   } else {
