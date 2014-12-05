@@ -70,7 +70,7 @@ int main( int argc, char **argv)
     ("batch-file",po::value<std::string>(),"Batch filename")
     ("output-dir",po::value<std::string>()->default_value("./")
      ,"path output directory")
-    ("enable-optical", po::value<G4bool>()->default_value(false)
+    ("enable-optical", po::value<G4bool>()->default_value(true)
      ->implicit_value(true),"Enable/Disable optical photons")
     ("random-seed",po::value<G4double>()->default_value(17760704.),
      "Set the random seed")
