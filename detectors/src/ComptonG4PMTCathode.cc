@@ -1,37 +1,39 @@
 /*
- * ComptonG4SensitiveDetector.cc
+ * ComptonG4PMTCathode.cc
  *
- *  Created on: Oct 12, 2013
+ *  Created on: Dec 03, 2014
  *      Author: Juan Carlos Cornejo <cornejo@jlab.org>
  */
 
-#include "ComptonG4SensitiveDetector.hh"
+#include "ComptonG4PMTCathode.hh"
 #include "ComptonG4Analysis.hh"
 #include <G4OpticalPhoton.hh>
 #include <G4TrackStatus.hh>
 #include <G4VProcess.hh>
 
-// Set it to nothing for now
-ComptonG4Analysis *ComptonG4SensitiveDetector::fAnalysis = 0;
-
-ComptonG4SensitiveDetector::ComptonG4SensitiveDetector(
+ComptonG4PMTCathode::ComptonG4PMTCathode(
     G4String name) :
-  G4VSensitiveDetector(name)
+  VComptonG4SensitiveDetector(name)
 {
 }
 
 
-ComptonG4SensitiveDetector::~ComptonG4SensitiveDetector()
+ComptonG4PMTCathode::~ComptonG4PMTCathode()
 {
   // TODO Auto-generated destructor stub
 }
 
-void ComptonG4SensitiveDetector::Initialize(G4HCofThisEvent *)
+void ComptonG4PMTCathode::Initialize(G4HCofThisEvent *)
 {
+  for(UInt_t i = 0; i < fVolumes.size(); i++ ) {
+    fOpticalHits.push_back(0.0);
+    fEDeps.push_back(0.0);
+  }
+  fGlobalTimes.resize(fVolumes.size());
   CleanEvent();
 }
 
-G4bool ComptonG4SensitiveDetector::ProcessHits(G4Step* step,
+G4bool ComptonG4PMTCathode::ProcessHits(G4Step* step,
     G4TouchableHistory*)
 {
   G4Track *track = step->GetTrack();
@@ -66,7 +68,7 @@ G4bool ComptonG4SensitiveDetector::ProcessHits(G4Step* step,
   return true;
 }
 
-void ComptonG4SensitiveDetector::EndOfEvent(G4HCofThisEvent*)
+void ComptonG4PMTCathode::EndOfEvent(G4HCofThisEvent*)
 {
   // Send info to Analysis instance
   for(unsigned int i = 0; i < fVolumes.size(); i++ ) {
@@ -77,7 +79,7 @@ void ComptonG4SensitiveDetector::EndOfEvent(G4HCofThisEvent*)
   CleanEvent();
 }
 
-void ComptonG4SensitiveDetector::CleanEvent()
+void ComptonG4PMTCathode::CleanEvent()
 {
   for(unsigned int i = 0; i < fVolumes.size(); i++ ) {
     fOpticalHits[i] = 0.0;
@@ -86,12 +88,5 @@ void ComptonG4SensitiveDetector::CleanEvent()
   }
 }
 
-int ComptonG4SensitiveDetector::GetIndex(G4VPhysicalVolume *vol)
-{
-  for(unsigned int i = 0; i < fVolumes.size(); i++ ) {
-    if(vol==fVolumes[i])
-      return i;
-  }
-
-  return -1;
-}
+// Finally register the class
+COMPTONG4_SD_REGISTER(ComptonG4PMTCathode)

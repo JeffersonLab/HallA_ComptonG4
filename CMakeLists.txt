@@ -5,9 +5,12 @@ cmake_minimum_required(VERSION 2.6.0 FATAL_ERROR)
 project(ComptonG4_Project)
 
 # Add the project include directory and put all source files in my_project_sources
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-file(GLOB my_project_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
-file(GLOB my_project_headers ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hh)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/detectors/include)
+file(GLOB my_project_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc
+  ${CMAKE_CURRENT_SOURCE_DIR}/detectors/src/*.cc)
+file(GLOB my_project_headers ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/detectors/include/*.hh)
 
 # Local path for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")

@@ -12,7 +12,6 @@
 #include <G4String.hh>
 
 class ComptonG4Analysis;
-class ComptonG4SensitiveDetector;
 class VComptonG4SensitiveDetector;
 class G4VSensitiveDetector;
 class G4LogicalVolume;

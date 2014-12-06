@@ -6,7 +6,6 @@
 #include "ComptonG4DetectorConstruction.hh"
 #include "ComptonG4DetectorConstructionMessenger.hh"
 #include "ComptonG4SensitiveDetectorManager.hh"
-#include "ComptonG4SensitiveDetector.hh"
 #include "ComptonG4Analysis.hh"
 #include <G4VPhysicalVolume.hh>
 #include <G4PVPlacement.hh>

@@ -6,7 +6,6 @@
  */
 
 #include "ComptonG4SensitiveDetectorManager.hh"
-#include "ComptonG4SensitiveDetector.hh"
 #include "VComptonG4SensitiveDetector.hh"
 #include "ComptonG4SensitiveDetectorFactory.hh"
 #include <G4INCLGeant4Compat.hh>
@@ -15,7 +14,6 @@
 ComptonG4SensitiveDetectorManager::ComptonG4SensitiveDetectorManager(ComptonG4Analysis *analysis) :
     fAnalysis(analysis)
 {
-  ComptonG4SensitiveDetector::SetAnalysis(analysis);
 }
 
 ComptonG4SensitiveDetectorManager::~ComptonG4SensitiveDetectorManager()
@@ -32,6 +30,7 @@ void ComptonG4SensitiveDetectorManager::RegisterDetector(
   VComptonG4SensitiveDetector *sd = ComptonG4SensitiveDetectorFactory::
     Create(detType,name);
   if(sd) {
+    sd->SetAnalysis(fAnalysis);
     volume->SetSensitiveDetector(sd);
     G4cout << "Registered SD of type: " << detType
       << " on volume: " << name << G4endl;

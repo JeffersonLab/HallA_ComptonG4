@@ -11,12 +11,9 @@
 #include <G4TrackStatus.hh>
 #include <G4VProcess.hh>
 
-// Set it to nothing for now
-ComptonG4Analysis *VComptonG4SensitiveDetector::fAnalysis = 0;
-
 VComptonG4SensitiveDetector::VComptonG4SensitiveDetector(
     G4String name) :
-  G4VSensitiveDetector(name)
+  G4VSensitiveDetector(name), fAnalysis(0)
 {
 }
 

@@ -32,19 +32,19 @@ public:
     fVolumes.push_back(vol);
   }
 
-  // Provide a way to set the Analysis pointer
-  static void SetAnalysis(ComptonG4Analysis *ptr) {
+
+  /*
+   * Specify analyzer
+   */
+  void SetAnalysis(ComptonG4Analysis *ptr) {
     fAnalysis = ptr;
   }
 
-  static ComptonG4Analysis* Analysis() { return fAnalysis; }
-
-private:
-  static ComptonG4Analysis *fAnalysis;
-  std::vector<G4VPhysicalVolume*> fVolumes;
-
+protected:
   void CleanEvent();
   int GetIndex(G4VPhysicalVolume* vol);
+  ComptonG4Analysis *fAnalysis;
+  std::vector<G4VPhysicalVolume*> fVolumes;
 };
 
 #endif /* COMPTONG4SENSITIVEDETECTOR_HH_ */
