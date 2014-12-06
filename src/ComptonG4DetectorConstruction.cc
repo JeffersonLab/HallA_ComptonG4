@@ -80,7 +80,9 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
       G4String str=ipair->type;
       G4String val=ipair->value;
       if( str == "SensDet" ) {
-        (*lvciter)->SetSensitiveDetector(senseManager->RegisterDetector(val));
+        // Register this new sensitive detector
+        //(*lvciter)->SetSensitiveDetector(senseManager->RegisterDetector(val));
+        senseManager->RegisterDetector(*lvciter,val);
       } else if ( str == "Color" ) {
         double red = 1.0;
         double green = 1.0;
@@ -147,10 +149,12 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
       G4String str=ipair->type;
       G4String val=ipair->value;
       if( str == "SensDet" ) {
-        fAnalysis->AddDetector((*pvciter)->GetName());
-        ((ComptonG4SensitiveDetector*)
-            (*pvciter)->GetLogicalVolume()->GetSensitiveDetector())
-          ->AddVolume(*pvciter);
+        senseManager->AddVolume((*pvciter)->GetLogicalVolume()->GetName(),
+            *pvciter);
+        //fAnalysis->AddDetector((*pvciter)->GetName());
+        //((ComptonG4SensitiveDetector*)
+        //    (*pvciter)->GetLogicalVolume()->GetSensitiveDetector())
+        //  ->AddVolume(*pvciter);
       }
     }
   }

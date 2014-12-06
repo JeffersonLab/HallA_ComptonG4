@@ -13,19 +13,34 @@
 
 class ComptonG4Analysis;
 class ComptonG4SensitiveDetector;
+class VComptonG4SensitiveDetector;
 class G4VSensitiveDetector;
+class G4LogicalVolume;
+class G4VPhysicalVolume;
 
 class ComptonG4SensitiveDetectorManager {
 public:
   ComptonG4SensitiveDetectorManager(ComptonG4Analysis*);
   virtual ~ComptonG4SensitiveDetectorManager();
 
-  // Register new detector
-  G4VSensitiveDetector* RegisterDetector(G4String name);
+  /*
+   * Register new detector
+   */
+  void RegisterDetector(G4LogicalVolume *volume, G4String type);
+
+  /*
+   * Add Physical volume to sensitive detector
+   */
+  void AddVolume(G4String detName, G4VPhysicalVolume *vol);
+
+  /*
+   * Get detector by name
+   */
+  VComptonG4SensitiveDetector* GetDetector(G4String name);
 
 private:
   ComptonG4Analysis *fAnalysis;
-  std::vector<ComptonG4SensitiveDetector*> fDetectors;
+  std::vector<VComptonG4SensitiveDetector*> fDetectors;
 };
 
 #endif /* COMPTONG4SENSITIVEDETECTORMANAGER_HH_ */
