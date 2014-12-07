@@ -50,6 +50,9 @@ public:
   void SetPhi(Double_t phi) { fPhi = phi; }
   void AddDetector(std::string name);
   void SetOutputPath(std::string path);
+  void SetRootfilePrefix(std::string prefix) {
+    fRootfilePrefix = prefix;
+  }
 
   void SetEDep(std::string name,Double_t e);
   void SetOpticalHits(std::string name,Double_t hits);
@@ -84,7 +87,8 @@ private:
   Int_t               fRunNumber;     // Run number
   TTree               *fTree;         // Generated TTree
   TFile               *fFile;         // Output TFile
-  std::string            fOutputPath;    // Path to output rootfiles
+  std::string         fOutputPath;    // Path to output rootfiles
+  std::string         fRootfilePrefix;// Rootfile prefix (default: ComptonG4_)
   std::vector<std::string> fDetectorNames; // Names of detectors
   std::vector<DetectorStruct> fDetectors;  // Detectors
   std::vector<std::vector<Double_t> > fDetectorTimes;  // Detector Times

@@ -53,6 +53,7 @@ int main( int argc, char **argv)
   G4bool use_optical;
   G4double random_seed;
   G4String output_dir;
+  G4String rootfile_prefix;
 
   // Prepare the command line options
   // Generic command line options
@@ -70,6 +71,8 @@ int main( int argc, char **argv)
     ("batch-file",po::value<std::string>(),"Batch filename")
     ("output-dir",po::value<std::string>()->default_value("./")
      ,"path output directory")
+    ("rootfile-prefix",po::value<std::string>()->default_value("ComptonG4_")
+     ,"Output ROOT File Prefix, ex: ComptonG4_")
     ("enable-optical", po::value<G4bool>()->default_value(true)
      ->implicit_value(true),"Enable/Disable optical photons")
     ("random-seed",po::value<G4double>()->default_value(17760704.),
@@ -126,6 +129,7 @@ int main( int argc, char **argv)
   use_optical = vm["enable-optical"].as<G4bool>();
   random_seed = vm["random-seed"].as<G4double>();
   output_dir = vm["output-dir"].as<std::string>();
+  rootfile_prefix = vm["rootfile-prefix"].as<std::string>();
 
 #ifdef COMPTONG4_BATCH_MODE // We are in batch mode
   // Process the batch file
@@ -149,6 +153,7 @@ int main( int argc, char **argv)
   // Auxiliary DataIO class
   ComptonG4Analysis *analysis = new ComptonG4Analysis();
   analysis->SetOutputPath(output_dir);
+  analysis->SetRootfilePrefix(rootfile_prefix);
 
   // Sensitive Detector Manager
   ComptonG4SensitiveDetectorManager* sensManager = new ComptonG4SensitiveDetectorManager(analysis);

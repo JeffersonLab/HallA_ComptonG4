@@ -30,6 +30,7 @@ ComptonG4Analysis::ComptonG4Analysis() : fTree(0),fFile(0),fAsym(0.0),
   CleanEvent();
 
   fOutputPath = "";
+  fRootfilePrefix = "ComptonG4_";
 }
 
 void ComptonG4Analysis::SetOutputPath( std::string path )
@@ -121,7 +122,7 @@ void ComptonG4Analysis::Initialize( G4int runnum, unsigned int auto_save)
 {
   fRunNumber = runnum;
   fAutoSaveEntry = auto_save;
-  std::string outFile = fOutputPath + "ComptonG4_"+
+  std::string outFile = fOutputPath + fRootfilePrefix +
       G4UIcommand::ConvertToString(runnum)+".root";
   fFile = new TFile(outFile.c_str(),"RECREATE");
   fTree = new TTree("ComptonG4","Compton GEANT4 Simulation Results");
