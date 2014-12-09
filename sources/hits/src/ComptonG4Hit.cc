@@ -8,7 +8,8 @@
  */
 ComptonG4Hit::ComptonG4Hit() : fData(0)
 {
-  ComptonG4Hit(new ComptonG4Data());
+  fData = new ComptonG4Data();
+  ClearHit();
 }
 
 /*
