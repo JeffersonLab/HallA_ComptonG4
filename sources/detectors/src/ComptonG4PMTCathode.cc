@@ -10,6 +10,7 @@
 #include <G4OpticalPhoton.hh>
 #include <G4TrackStatus.hh>
 #include <G4VProcess.hh>
+#include <TTree.h>
 
 ComptonG4PMTCathode::ComptonG4PMTCathode(
     G4String name) :
@@ -25,11 +26,6 @@ ComptonG4PMTCathode::~ComptonG4PMTCathode()
 
 void ComptonG4PMTCathode::Initialize(G4HCofThisEvent *)
 {
-  for(UInt_t i = 0; i < fVolumes.size(); i++ ) {
-    fOpticalHits.push_back(0.0);
-    fEDeps.push_back(0.0);
-  }
-  fGlobalTimes.resize(fVolumes.size());
   CleanEvent();
 }
 
@@ -54,37 +50,45 @@ G4bool ComptonG4PMTCathode::ProcessHits(G4Step* step,
     G4TrackStatus tStatus = track->GetTrackStatus();
     if(tStatus == fStopButAlive ||
         tStatus == fStopAndKill ) {
-      fOpticalHits[volIndex] += 1.0;
-      //G4cout << "Creator process: " << track->GetCreatorProcess()->GetProcessName() << G4endl;
-      fGlobalTimes[volIndex].push_back(track->GetGlobalTime());
+      fTotalOpticalPhotons[volIndex]++;
+      ComptonG4OpticalHit hit;
+      hit.ProcessStep(step);
+      fOpticalHits[volIndex].push_back(hit);
+      fOpticalData[volIndex].push_back(hit.GetData());
       fAnalysis->OpticalHit();
     }
-    fEDeps[volIndex] += step->GetTotalEnergyDeposit()/MeV;
-
     fAnalysis->ProcessOpticalTrackID(track->GetTrackID());
   }
-
-  fEDeps[volIndex] += step->GetTotalEnergyDeposit()/MeV;
   return true;
 }
 
 void ComptonG4PMTCathode::EndOfEvent(G4HCofThisEvent*)
 {
-  // Send info to Analysis instance
+  // Ensure the pointers point to the correct data vectors
   for(unsigned int i = 0; i < fVolumes.size(); i++ ) {
-    fAnalysis->SetEDep(fVolumes[i]->GetName(),fEDeps[i]);
-    fAnalysis->SetOpticalHits(fVolumes[i]->GetName(),fOpticalHits[i]);
-    fAnalysis->SetGlobalTimes(fVolumes[i]->GetName(),fGlobalTimes[i]);
+    fOpticalDataPtr[i] = &fOpticalData[i];
   }
-  CleanEvent();
 }
 
 void ComptonG4PMTCathode::CleanEvent()
 {
   for(unsigned int i = 0; i < fVolumes.size(); i++ ) {
-    fOpticalHits[i] = 0.0;
-    fEDeps[i] = 0.0;
-    fGlobalTimes[i].clear();
+    fTotalOpticalPhotons[i] = 0.0;
+    fOpticalHits[i].clear();
+    fOpticalData[i].clear();
+  }
+}
+
+
+void ComptonG4PMTCathode::CreateTreeBranch(TTree* tree)
+{
+  // Create detector branches
+  for(size_t i = 0; i < fVolumes.size(); i++ ) {
+    tree->Branch(Form("%s_num_photons",fVolumes[i]->GetName().c_str()),
+        &(fTotalOpticalPhotons[i]));
+
+    tree->Branch(Form("%s_optical_hits",fVolumes[i]->GetName().c_str()),
+        &(fOpticalDataPtr[i]));
   }
 }
 

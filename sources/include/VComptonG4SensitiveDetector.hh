@@ -11,14 +11,20 @@
 #include <G4VSensitiveDetector.hh>
 #include <map>
 #include <vector>
+#include <Rtypes.h>
 
 #include "ComptonG4SensitiveDetectorFactory.hh"
 
+// Forward declarations
 class ComptonG4Analysis;
 class G4HCofThisEvent;
 class G4Step;
 class G4TouchableHistory;
+class TTree;
 
+/*
+ *
+ */
 class VComptonG4SensitiveDetector: public G4VSensitiveDetector {
 public:
   VComptonG4SensitiveDetector(G4String name);
@@ -28,7 +34,7 @@ public:
   G4bool ProcessHits(G4Step*, G4TouchableHistory*) = 0;
   void EndOfEvent(G4HCofThisEvent*) = 0;
 
-  void AddVolume(G4VPhysicalVolume* vol) {
+  virtual void AddVolume(G4VPhysicalVolume* vol) {
     fVolumes.push_back(vol);
   }
 
@@ -39,6 +45,11 @@ public:
   void SetAnalysis(ComptonG4Analysis *ptr) {
     fAnalysis = ptr;
   }
+
+  /*
+   * Create and initialize the Output Branch
+   */
+  virtual void CreateTreeBranch(TTree *branch) = 0;
 
 protected:
   void CleanEvent();

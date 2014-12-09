@@ -9,6 +9,7 @@
 #define COMPTONG4PMTCATHODE_HH_
 
 #include <VComptonG4SensitiveDetector.hh>
+#include <ComptonG4OpticalHit.hh>
 #include <map>
 #include <vector>
 
@@ -27,10 +28,29 @@ public:
   void EndOfEvent(G4HCofThisEvent*);
   void CleanEvent();
 
+  /*
+   * Create and initialize the Output Branch
+   */
+  virtual void CreateTreeBranch(TTree *branch);
+
+  /*
+   * Add a managed volume to this SD
+   */
+  virtual void AddVolume(G4VPhysicalVolume* vol) {
+    VComptonG4SensitiveDetector::AddVolume(vol);
+    std::vector<ComptonG4OpticalHit> hit_optical;
+    fOpticalHits.push_back(hit_optical);
+    std::vector<ComptonG4OpticalData> data_optical;
+    fOpticalData.push_back(data_optical);
+    fOpticalDataPtr.push_back(&fOpticalData.back());
+    fTotalOpticalPhotons.push_back(0);
+  }
+
 private:
-  std::vector<G4int> fOpticalHits;
-  std::vector<std::vector<G4double> > fGlobalTimes;
-  std::vector<G4double> fEDeps;
+  std::vector<std::vector<ComptonG4OpticalHit> > fOpticalHits;
+  std::vector<std::vector<ComptonG4OpticalData> > fOpticalData;
+  std::vector<std::vector<ComptonG4OpticalData>* > fOpticalDataPtr;
+  std::vector<G4int> fTotalOpticalPhotons;
 };
 
 #endif /* COMPTONG4PMTCATHODE_HH_ */

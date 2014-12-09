@@ -156,7 +156,9 @@ int main( int argc, char **argv)
   analysis->SetRootfilePrefix(rootfile_prefix);
 
   // Sensitive Detector Manager
-  ComptonG4SensitiveDetectorManager* sensManager = new ComptonG4SensitiveDetectorManager(analysis);
+  ComptonG4SensitiveDetectorManager* sensManager =
+    new ComptonG4SensitiveDetectorManager(analysis);
+  analysis->SetSDManager(sensManager);
 
   // Create the default /Compton directory for all messengers
   G4UIdirectory *compDir = new G4UIdirectory("/Compton/");

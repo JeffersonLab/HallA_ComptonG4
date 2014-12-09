@@ -11,9 +11,10 @@
 #include <vector>
 #include <string>
 
-// Pre-defined classes
+// Forward declarations
 class TTree;
 class TFile;
+class ComptonG4SensitiveDetectorManager;
 
 /*!
  * @class ComptonG4Analysis
@@ -52,6 +53,9 @@ public:
   void SetOutputPath(std::string path);
   void SetRootfilePrefix(std::string prefix) {
     fRootfilePrefix = prefix;
+  }
+  void SetSDManager(ComptonG4SensitiveDetectorManager *manager) {
+    fSDManager = manager;
   }
 
   void SetEDep(std::string name,Double_t e);
@@ -107,6 +111,9 @@ private:
 
   G4int DetectorIndex(std::string name);
   G4String fRandomSeed;
+
+  // Keep track of the SD Manager
+  ComptonG4SensitiveDetectorManager *fSDManager;
 
   // Auto Save rootfile?
   unsigned int fAutoSaveEntry;        // Auto save tree every n>0 entries

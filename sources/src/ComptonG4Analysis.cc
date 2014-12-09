@@ -8,10 +8,14 @@
 
 // Local includes
 #include "ComptonG4Analysis.hh"
+#include "VComptonG4SensitiveDetector.hh"
+#include "ComptonG4SensitiveDetectorManager.hh"
 
 // ROOT Includes
 #include <TFile.h>
 #include <TTree.h>
+#include <TSystem.h>
+#include <TROOT.h>
 
 // system includes
 #include <sstream>
@@ -24,7 +28,7 @@ ComptonG4Analysis::ComptonG4Analysis() : fTree(0),fFile(0),fAsym(0.0),
   fRho(0.0),fGammaE(0.0),fTheta(0.0),fPhi(0.0),
   fNumberOfOpticalPhotonsStopped(0.0),fNumberOfOpticalPhotonsProduced(0.0),
   fTotalNumberOfOpticalPhotonsAbsorbed(0.0),fNumberOfEvents(0),
-  fAutoSaveEntry(0)
+  fSDManager(0),fAutoSaveEntry(0)
 {
   // Empty out vectors and stuff
   CleanEvent();
@@ -120,6 +124,11 @@ int ComptonG4Analysis::DetectorIndex(std::string name)
  */
 void ComptonG4Analysis::Initialize( G4int runnum, unsigned int auto_save)
 {
+  // Ask ROOT to load our library
+  gSystem->Load("libCint.so");
+  gSystem->Load("libComptonG4.so");
+  gROOT->ProcessLine("#include <string>");
+  gROOT->ProcessLine("#include <vector>");
   fRunNumber = runnum;
   fAutoSaveEntry = auto_save;
   std::string outFile = fOutputPath + fRootfilePrefix +
@@ -135,13 +144,12 @@ void ComptonG4Analysis::Initialize( G4int runnum, unsigned int auto_save)
   fTree->Branch("nPhotonsProduced",&fNumberOfOpticalPhotonsProduced,"nPhotonsProduced/D");
   fTree->Branch("nTotalPhotonsAbsorbed",&fTotalNumberOfOpticalPhotonsAbsorbed,"nTotalPhotonsAbsorbed/D");
 
-  // Create detector branches
-  for(size_t i = 0; i < fDetectorNames.size(); i++ ) {
-    fTree->Branch(fDetectorNames[i].c_str(),&(fDetectors[i].eDep),
-        "eDep/D:nOpticalPhotons/D");
-
-    fTree->Branch(Form("%s%s",fDetectorNames[i].c_str(),"Times"),
-          &(fDetectorTimes[i]));
+  // Initialize SD Tree Branches
+  std::vector<VComptonG4SensitiveDetector*> sds =
+    fSDManager->GetSensitiveDetectors();
+  for(std::vector<VComptonG4SensitiveDetector*>::iterator it = sds.begin();
+      it != sds.end(); it++ ) {
+    (*it)->CreateTreeBranch(fTree);
   }
 
   CleanEvent();
@@ -184,11 +192,6 @@ void ComptonG4Analysis::CleanEvent()
   fAsym = fRho = fGammaE = fTheta = fPhi = fNumberOfOpticalPhotonsStopped
     = fNumberOfOpticalPhotonsProduced = fTotalNumberOfOpticalPhotonsAbsorbed
     = 0.0;
-  for(size_t i = 0; i < fDetectors.size(); i++ ) {
-    fDetectors[i].eDep = 0.0;
-    fDetectors[i].nOpticalPhotons = 0.0;
-    fDetectorTimes[i].clear();
-  }
   fOpticalTrackIDs.clear();
 }
 

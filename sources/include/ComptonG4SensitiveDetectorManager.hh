@@ -37,6 +37,13 @@ public:
    */
   VComptonG4SensitiveDetector* GetDetector(G4String name);
 
+  /*
+   * Get list of Sensitive Detectors
+   */
+  std::vector<VComptonG4SensitiveDetector*> GetSensitiveDetectors() {
+    return fDetectors;
+  }
+
 private:
   ComptonG4Analysis *fAnalysis;
   std::vector<VComptonG4SensitiveDetector*> fDetectors;

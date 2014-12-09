@@ -7,6 +7,7 @@ project(ComptonG4_Project)
 # Add all the project source files and header files to the respective variables
 file(GLOB_RECURSE my_project_sources ${CMAKE_CURRENT_SOURCE_DIR}/sources/*.cc)
 file(GLOB_RECURSE my_project_headers ${CMAKE_CURRENT_SOURCE_DIR}/sources/*.hh)
+file(GLOB_RECURSE my_project_linkdefs ${CMAKE_CURRENT_SOURCE_DIR}/sources/*LinkDef.h)
 
 # Now add the proper include directories
 set(my_project_headers_dirlist "")
@@ -23,7 +24,32 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 # Load ROOT and setup include directory
 find_package(ROOT REQUIRED)
 include_directories(${ROOT_INCLUDE_DIR})
+# Create dictionary for headers if ROOT version < 5.90
+set(my_project_sources_dictionary "")
+if(ROOT_VERSION VERSION_LESS 5.90)
+message("Generating dictionaries for ROOT ${ROOT_VERSION}...")
+# Loop over all found LinkDef.h header files
+set(my_project_linkdefs_files "")
+set(my_project_linkdefs_header_files "")
+foreach( _linkdef ${my_project_linkdefs})
+  get_filename_component( _file ${_linkdef} NAME)
+  set(my_project_linkdefs_files ${my_project_linkdefs_files} ${_file})
+  string(REGEX REPLACE "LinkDef.h" ".hh" _header ${_file})
+  string(REGEX REPLACE "LinkDef.h" "" _prefix ${_file})
+  set(ROOTPWA_DICTIONARY ${CMAKE_CURRENT_BINARY_DIR}/${_prefix}Dictionary)
+ROOT_GENERATE_DICTIONARY(
+  "${ROOTPWA_DICTIONARY}"
+  "${_header}"
+  LINKDEF "${_file}"
+  OPTIONS "-f"
+  )
+set(my_project_sources_dictionary ${my_project_sources_dictionary} ${ROOTPWA_DICTIONARY})
+endforeach()
+else()
+message("No dictionaries needed for ROOT ${ROOT_VERSION}.")
+endif()
 #set(ROOT_LIBRARIES ${ROOT_LIBRARIES} -lGui)
+message("All project sources: ${my_project_sources_dictionary}")
 
 # Find Boost libraries
 # There is a bug in CMAke 2.8's internal find boost process
@@ -37,7 +63,8 @@ add_definitions(${Geant4_DEFINITIONS})              # Add -D type defs
 set(CMAKE_CXX_FLAGS ${Geant4_CXX_FLAGS})            # Optional
 
 # Create a shared library to make compilations faster
-add_library(ComptonG4Lib SHARED ${my_project_sources} ${my_project_headers})
+add_library(ComptonG4Lib SHARED ${my_project_sources} ${my_project_headers}
+  ${my_project_sources_dictionary})
 target_link_libraries(ComptonG4Lib ${Geant4_LIBRARIES} ${ROOT_LIBRARIES}
   ${Boost_LIBRARIES})
 # We want the output library to have the same name as the main exec
@@ -47,6 +74,8 @@ set_target_properties(ComptonG4Lib PROPERTIES OUTPUT_NAME ComptonG4)
 add_executable(ComptonG4 ComptonG4.cc ${my_project_headers})
 add_executable(ComptonG4_batch ComptonG4.cc ${my_project_headers})
 set_target_properties(ComptonG4_batch PROPERTIES COMPILE_DEFINITIONS "COMPTONG4_BATCH_MODE=1")
+add_executable(ComptonG4Root ComptonG4Root.cc)
+set_target_properties(ComptonG4Root PROPERTIES OUTPUT_NAME cg4root)
 
 # Find Boost libraries
 # Though, there seems to be a bug in version 2.8 of CMake's boost
@@ -65,8 +94,10 @@ target_link_libraries(ComptonG4 ComptonG4Lib ${Geant4_LIBRARIES}
   ${ROOT_LIBRARIES} ${Boost_LIBRARIES})
 target_link_libraries(ComptonG4_batch ComptonG4Lib ${Geant4_LIBRARIES}
   ${ROOT_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(ComptonG4Root ${ROOT_LIBRARIES})
 
 # Now install the executables
 install (TARGETS ComptonG4 DESTINATION bin)
 install (TARGETS ComptonG4_batch DESTINATION bin)
+install (TARGETS ComptonG4Root DESTINATION bin)
 install (TARGETS ComptonG4Lib DESTINATION lib)
