@@ -56,4 +56,5 @@ void ComptonG4OpticalHit::ClearHit()
 void ComptonG4OpticalHit::ProcessStep(G4Step *step)
 {
   ComptonG4Hit::ProcessStep(step);
+  NewPhoton();
 }
