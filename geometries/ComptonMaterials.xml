@@ -71,7 +71,7 @@
     <atom unit="g/mole" value="26.9815" />
   </material>
 
-  <material name="LeadTungstate" formula="PbWO4" >
+  <material name="LeadTungstate" formula="PbWO4" state="solid">
     <property name="RINDEX" ref="LeadTungstateRIndex" />
     <property name="REFLECTIVITY" ref="LeadTungstateReflectivity" />
     <property name="ABSLENGTH" ref="LeadTungstateAbsorptionLength" />
@@ -84,6 +84,7 @@
     <property name="SLOWCOMPONENT" ref="LeadTungstateSlowComponent" />
     <property name="FASTSCINTILLATIONRISETIME" ref="LeadTungstateRiseTime" />
     <property name="SLOWSCINTILLATIONRISETIME" ref="LeadTungstateRiseTime" />
+    <T value="287.15" unit="K" />
     <D value="8.3" unit="g/cm3" />
     <composite n="1" ref="Lead" />
     <composite n="1" ref="Tungsten" />
