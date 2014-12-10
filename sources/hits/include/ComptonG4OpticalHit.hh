@@ -22,22 +22,19 @@ public:
   ComptonG4OpticalHit(const ComptonG4OpticalHit &right);
   virtual ~ComptonG4OpticalHit();
   virtual void ClearHit();
-  virtual VComptonG4Data* GetDataRef() { return fData; };
-  void SetDataRef(ComptonG4OpticalData *data) { fData = data; }
-  void CopyData(ComptonG4OpticalData &data) { *fData = data; }
-  ComptonG4OpticalData GetData() { return *fData; }
+  ComptonG4OpticalData GetData() { return data(); }
 
   virtual void ProcessStep(G4Step* step);
+  virtual ComptonG4OpticalData& data() { return
+    dynamic_cast<ComptonG4OpticalData&>(ComptonG4Hit::data()); }
 
   // Increase photon count as a new photon came
-  void NewPhoton() { fData->num_photons++; };
+  void NewPhoton() { data().num_photons++; };
 
   /* Getters */
-  G4int GetNumPhotons() { return fData->num_photons; }
+  G4int GetNumPhotons() { return data().num_photons; }
   /*  Setters */
-  void SetNumPhotons(G4int num) { fData->num_photons = num; }
-private:
-  ComptonG4OpticalData *fData;
+  void SetNumPhotons(G4int num) { data().num_photons = num; }
 };
 
 #endif /* COMPTONG4HIT_HH */

@@ -3,59 +3,60 @@
 #include <G4Step.hh>
 #include <G4VProcess.hh>
 
+
 /*
- *
+ * Default constructor
  */
-ComptonG4Hit::ComptonG4Hit() : fData(0)
+ComptonG4Hit::ComptonG4Hit() : VComptonG4Hit(new ComptonG4Data())
 {
-  fData = new ComptonG4Data();
   ClearHit();
+}
+
+/*
+ * Constructor where we initialize from already defined
+ */
+ComptonG4Hit::ComptonG4Hit(ComptonG4Data *ptr) : VComptonG4Hit(ptr)
+{
+  if(GetDataRef())
+    ClearHit();
 }
 
 /*
  * Copy constructor
  */
-ComptonG4Hit::ComptonG4Hit(const ComptonG4Hit &right) : VComptonG4Hit(right),
-  fData(0)
+ComptonG4Hit::ComptonG4Hit(const ComptonG4Hit &right) :
+  VComptonG4Hit(new ComptonG4Data())
 {
-  fData = new ComptonG4Data();
-  CopyData(*right.fData);
+  Clone(&right);
 }
 
 
-/*
- *
- */
-ComptonG4Hit::ComptonG4Hit(ComptonG4Data *data) : VComptonG4Hit(),
-  fData(data)
-{
-  ClearHit();
-}
+
 
 /*
  * ClearHit
  */
 void ComptonG4Hit::ClearHit()
 {
-  if(!fData)
+  if(!GetDataRef())
     return;
 
   for(UInt_t i = 0; i < 3; i++ ) {
-    fData->position[i] = 0.0;
-    fData->direction[i] = 0.0;
-    fData->momentum[i] = 0.0;
-    fData->vertex_position[i] = 0.0;
-    fData->vertex_direction[i] = 0.0;
+    data().position[i] = 0.0;
+    data().direction[i] = 0.0;
+    data().momentum[i] = 0.0;
+    data().vertex_position[i] = 0.0;
+    data().vertex_direction[i] = 0.0;
   }
-  fData->global_time = 0.0*CLHEP::ns;
-  fData->local_time = 0.0*CLHEP::ns;
-  fData->kinetic_energy = 0.0*CLHEP::MeV;
-  fData->total_length = 0.0;
-  fData->particle_id = -1;
-  fData->track_id = -1;
-  fData->parent_id = -1;
-  fData->vertex_kinetic_energy = 0.0;
-  fData->creation_process = "";
+  data().global_time = 0.0*CLHEP::ns;
+  data().local_time = 0.0*CLHEP::ns;
+  data().kinetic_energy = 0.0*CLHEP::MeV;
+  data().total_length = 0.0;
+  data().particle_id = -1;
+  data().track_id = -1;
+  data().parent_id = -1;
+  data().vertex_kinetic_energy = 0.0;
+  data().creation_process = "";
 }
 
 /*

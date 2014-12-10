@@ -20,12 +20,20 @@
  */
 class VComptonG4Hit : public G4VHit {
 public:
-  VComptonG4Hit();
-  VComptonG4Hit(const VComptonG4Hit &){};
+  VComptonG4Hit(VComptonG4Data *data = 0);
+
   virtual ~VComptonG4Hit();
   virtual void ClearHit() = 0;
+  VComptonG4Data GetData() const { return *fData; }
 
-  virtual VComptonG4Data* GetDataRef() = 0;
+  virtual VComptonG4Data& data() { return *fData; }
+  virtual VComptonG4Data* GetDataRef() { return fData; }
+  void SetData(VComptonG4Data* data) { fData = data; }
+protected:
+  const VComptonG4Data* ConstPointer() const { return fData; }
+  void Clone(const VComptonG4Hit* other);
+private:
+  VComptonG4Data *fData;
 };
 
 #endif /* VCOMPTONG4HIT_HH */

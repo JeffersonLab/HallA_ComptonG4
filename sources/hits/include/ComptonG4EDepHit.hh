@@ -11,6 +11,7 @@
 #include "ComptonG4Hit.hh"
 #include "ComptonG4EDepData.hh"
 class G4Step;
+class G4Track;
 
 /*
  *
@@ -22,21 +23,19 @@ public:
   ComptonG4EDepHit(const ComptonG4EDepHit &right);
   virtual ~ComptonG4EDepHit();
   virtual void ClearHit();
-  virtual VComptonG4Data* GetDataRef() { return fData; };
-  void CopyData(ComptonG4EDepData &data) { *fData = data; }
-  ComptonG4EDepData GetData() { return *fData; }
+  ComptonG4EDepData GetData() { return data(); }
+  virtual ComptonG4EDepData& data() { return dynamic_cast<ComptonG4EDepData&>(
+      ComptonG4Hit::data()); }
 
   virtual void ProcessStep(G4Step* step);
+  virtual void ProcessTrack(G4Track* track);
 
   /*  Setters */
   void SetEnergyDeposited(G4double edep) {
-    fData->energy_deposited = edep/CLHEP::MeV; }
+    data().energy_deposited = edep/CLHEP::MeV; }
   /* Getters */
   G4double GetEnergyDeposited() { return G4double(
-      fData->energy_deposited*CLHEP::MeV); }
-
-private:
-  ComptonG4EDepData *fData;
+      data().energy_deposited*CLHEP::MeV); }
 };
 
 #endif /* COMPTONG4HIT_HH */
