@@ -26,13 +26,12 @@
   <materialref ref="Bialkali" />
   <solidref ref="ComptonPMTCathodeSolid" />
   <auxiliary auxtype="Color" auxvalue="#54545455" />
-  <auxiliary auxtype="SensDet" auxvalue="ComptonPMTCathode" />
+  <auxiliary auxtype="SensDet" auxvalue="ComptonG4PMTCathode" />
 </volume>
 <volume name="ComptonPMTGlassSideLogical" >
   <materialref ref="Silica" />
   <solidref ref="ComptonPMTGlassSideSolid" />
   <auxiliary auxtype="Color" auxvalue="#ABABAB77" />
-  <auxiliary auxtype="SensDet" auxvalue="ComptonPMTGlassSide" />
 </volume>
 <volume name="ComptonPMTGlassLogical" >
   <materialref ref="Silica" />
@@ -43,20 +42,20 @@
   <materialref ref="AirVacuumOptical" />
   <solidref ref="ComptonPMTSolid" />
 
-  <physvol name="ComptonPMTGlassSide1">
+  <physvol name="PMTGlassSide1">
     <volumeref ref="ComptonPMTGlassSideLogical" />
     <position name="ComptonPMTGlassSide1Position" unit="mm" x="0" y="0" z="-102" />
   </physvol>
-  <physvol name="ComptonPMTGlassSide2">
+  <physvol name="PMTGlassSide2">
     <volumeref ref="ComptonPMTGlassSideLogical" />
     <position name="ComptonPMTGlassSide2Position" unit="mm" x="0" y="0" z="102" />
   </physvol>
-  <physvol name="ComptonPMTCathode">
+  <physvol name="PMTCathode">
     <volumeref ref="ComptonPMTCathodeLogical" />
     <position name="ComptonPMTCathodePosition" unit="mm" x="0" y="0" z="-101.45" />
   </physvol>
 
-  <physvol name="ComptonPMTGlass">
+  <physvol name="PMTGlass">
     <volumeref ref="ComptonPMTGlassLogical" />
     <position name="ComptonPMTGlassPosition" unit="mm" x="0" y="0" z="0.0" />
   </physvol>
@@ -85,7 +84,7 @@
   <materialref ref="LeadTungstate" />
   <solidref ref="LeadTungstateCrystalSolid" />
   <auxiliary auxtype="Color" auxvalue="#9B111E77"/>
-  <auxiliary auxtype="SensDet" auxvalue="ComptonCrystal" />
+  <auxiliary auxtype="SensDet" auxvalue="ComptonG4Crystal" />
 </volume>
 
 <!-- The Optical OpticalGrease between LeadTungstate stack and PMT -->
@@ -100,28 +99,28 @@
   <materialref ref="AirOptical" />
   <solidref ref="LeadTungstateStackSolid" />
 
-  <physvol name="LeadTungstateCrystal1Physical">
+  <physvol name="Crystal1">
     <volumeref ref="LeadTungstateCrystalLogical" />
     <position name="LeadTungstateCrystal1Position" unit="mm"
         x="-(LeadTungstateCrystalDimX+AirGap)/2.0"
         y="-(LeadTungstateCrystalDimY+AirGap)/2.0"
         z="+AirGap/2.0" />
   </physvol>
-  <physvol name="LeadTungstateCrystal2Physical">
+  <physvol name="Crystal2">
     <volumeref ref="LeadTungstateCrystalLogical" />
     <position name="LeadTungstateCrystal2Position" unit="mm"
         x="-(LeadTungstateCrystalDimX+AirGap)/2.0"
         y="+(LeadTungstateCrystalDimY+AirGap)/2.0"
         z="+AirGap/2.0" />
   </physvol>
-  <physvol name="LeadTungstateCrystal3Physical">
+  <physvol name="Crystal3">
     <volumeref ref="LeadTungstateCrystalLogical" />
     <position name="LeadTungstateCrystal3Position" unit="mm"
         x="+(LeadTungstateCrystalDimX+AirGap)/2.0"
         y="-(LeadTungstateCrystalDimY+AirGap)/2.0"
         z="+AirGap/2.0" />
   </physvol>
-  <physvol name="LeadTungstateCrystal4Physical">
+  <physvol name="Crystal4">
     <volumeref ref="LeadTungstateCrystalLogical" />
     <position name="LeadTungstateCrystal4Position" unit="mm"
         x="+(LeadTungstateCrystalDimX+AirGap)/2.0"
