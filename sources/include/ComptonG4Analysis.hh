@@ -15,6 +15,7 @@
 class TTree;
 class TFile;
 class ComptonG4SensitiveDetectorManager;
+class ComptonG4SteppingAction;
 
 /*!
  * @class ComptonG4Analysis
@@ -56,6 +57,9 @@ public:
   }
   void SetSDManager(ComptonG4SensitiveDetectorManager *manager) {
     fSDManager = manager;
+  }
+  void SetSteppingAction(ComptonG4SteppingAction *action) {
+    fSteppingAction = action;
   }
 
   void SetEDep(std::string name,Double_t e);
@@ -114,6 +118,9 @@ private:
 
   // Keep track of the SD Manager
   ComptonG4SensitiveDetectorManager *fSDManager;
+
+  // Keep track of the stepping action
+  ComptonG4SteppingAction *fSteppingAction;
 
   // Auto Save rootfile?
   unsigned int fAutoSaveEntry;        // Auto save tree every n>0 entries

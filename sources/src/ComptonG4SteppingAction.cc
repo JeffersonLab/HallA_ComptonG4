@@ -13,9 +13,18 @@
 #include <G4VProcess.hh>
 #include <G4OpticalPhoton.hh>
 
+// ROOT includes
+#include <TTree.h>
+
 ComptonG4SteppingAction::ComptonG4SteppingAction(ComptonG4Analysis *analysis) :
 fAnalysis(analysis),fOpticalMaxStepTime(1.0e-6*CLHEP::s),fVerbose(0)
 {
+  // Initialize the stored data pointer
+  fPrimaryDataPtr = new std::vector<ComptonG4PrimaryData>;
+
+  // Tell the analyzer about us
+  analysis->SetSteppingAction(this);
+
   // Messenger class
   fStepMessenger = new ComptonG4SteppingMessenger(this);
 }
@@ -31,10 +40,35 @@ void ComptonG4SteppingAction::UserSteppingAction(const G4Step* step)
   if( !track )
     return;
 
+  // We want to track the primary particle all the way through
+  if( track->GetParentID() == 0 ) {
+    ComptonG4PrimaryHit hit;
+    hit.ProcessTrack(track);
+    hit.SetEnergyDeposited(step->GetTotalEnergyDeposit());
+    fPrimaryHits.push_back(hit);
+    fPrimaryDataPtr->push_back(hit.GetData());
+  }
+
   if( track->GetDefinition() == G4OpticalPhoton::Definition() ) {
     if ( track->GetGlobalTime() > fOpticalMaxStepTime ) {
       track->SetTrackStatus(fStopAndKill);
       fAnalysis->StoppedOpticalPhoton();
     }
   }
+}
+
+/*
+ *
+ */
+void ComptonG4SteppingAction::CreateTreeBranch(TTree* tree)
+{
+  // Create detector branches
+  tree->Branch("Primary",&(fPrimaryDataPtr));
+}
+
+
+void ComptonG4SteppingAction::ClearPrimary()
+{
+  fPrimaryHits.clear();
+  fPrimaryDataPtr->clear();
 }

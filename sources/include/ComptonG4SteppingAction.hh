@@ -3,9 +3,11 @@
 
 #include <G4UserSteppingAction.hh>
 #include <G4Types.hh>
+#include "ComptonG4PrimaryHit.hh"
 
 class ComptonG4Analysis;
 class ComptonG4SteppingMessenger;
+class TTree;
 
 /*!
  * @class ComptonG4SteppingAction
@@ -32,11 +34,21 @@ public:
     fVerbose = verbose;
   }
 
+  void ClearPrimary();
+
+  /*
+   * Create and initialize the Output Branch
+   */
+  virtual void CreateTreeBranch(TTree *branch);
+
+
 private:
   ComptonG4Analysis *fAnalysis;
   ComptonG4SteppingMessenger *fStepMessenger;
   G4double fOpticalMaxStepTime;
   G4int fVerbose;
+  std::vector<ComptonG4PrimaryHit> fPrimaryHits;
+  std::vector<ComptonG4PrimaryData>* fPrimaryDataPtr;
 };
 
 #endif

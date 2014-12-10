@@ -10,6 +10,7 @@
 #include "ComptonG4Analysis.hh"
 #include "VComptonG4SensitiveDetector.hh"
 #include "ComptonG4SensitiveDetectorManager.hh"
+#include "ComptonG4SteppingAction.hh"
 
 // ROOT Includes
 #include <TFile.h>
@@ -28,7 +29,7 @@ ComptonG4Analysis::ComptonG4Analysis() : fTree(0),fFile(0),fAsym(0.0),
   fRho(0.0),fGammaE(0.0),fTheta(0.0),fPhi(0.0),
   fNumberOfOpticalPhotonsStopped(0.0),fNumberOfOpticalPhotonsProduced(0.0),
   fTotalNumberOfOpticalPhotonsAbsorbed(0.0),fNumberOfEvents(0),
-  fSDManager(0),fAutoSaveEntry(0)
+  fSDManager(0),fSteppingAction(0),fAutoSaveEntry(0)
 {
   // Empty out vectors and stuff
   CleanEvent();
@@ -152,6 +153,10 @@ void ComptonG4Analysis::Initialize( G4int runnum, unsigned int auto_save)
     (*it)->CreateTreeBranch(fTree);
   }
 
+  // Initialize stepping action branches
+  if(fSteppingAction)
+    fSteppingAction->CreateTreeBranch(fTree);
+
   CleanEvent();
   fNumberOfEvents = 0;
 }
@@ -193,6 +198,9 @@ void ComptonG4Analysis::CleanEvent()
     = fNumberOfOpticalPhotonsProduced = fTotalNumberOfOpticalPhotonsAbsorbed
     = 0.0;
   fOpticalTrackIDs.clear();
+
+  if(fSteppingAction)
+    fSteppingAction->ClearPrimary();
 }
 
 /**
