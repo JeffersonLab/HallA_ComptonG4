@@ -38,7 +38,6 @@ public:
     fVolumes.push_back(vol);
   }
 
-
   /*
    * Specify analyzer
    */
@@ -51,11 +50,24 @@ public:
    */
   virtual void CreateTreeBranch(TTree *branch) = 0;
 
+  /*
+   * Set sensitive detector options
+   *
+   * \param options The options to parse, separated by a semicolon
+   */
+  virtual void SetOptions(std::map<G4String, G4String> options,
+      bool ignore_unknown) = 0;
+
 protected:
   void CleanEvent();
   int GetIndex(G4VPhysicalVolume* vol);
   ComptonG4Analysis *fAnalysis;
   std::vector<G4VPhysicalVolume*> fVolumes;
+
+  G4bool ProcessOptionBool(G4String param, G4String value, G4String option_name,
+      G4bool &result);
+
+  void UnknownOption(G4String param, G4String value);
 };
 
 #endif /* COMPTONG4SENSITIVEDETECTOR_HH_ */

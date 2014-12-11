@@ -12,9 +12,11 @@
 #include <G4VProcess.hh>
 #include <TTree.h>
 
+#include "ComptonG4Utils.hh"
+
 ComptonG4Crystal::ComptonG4Crystal(
     G4String name) :
-  VComptonG4SensitiveDetector(name)
+  VComptonG4SensitiveDetector(name), fStoreEDepHits(false)
 {
 }
 
@@ -60,10 +62,12 @@ G4bool ComptonG4Crystal::ProcessHits(G4Step* step,
     }
     fAnalysis->ProcessOpticalTrackID(track->GetTrackID());
   }
-  ComptonG4EDepHit hit;
-  hit.ProcessStep(step);
-  fEDepHits[volIndex].push_back(hit);
-  fEDepData[volIndex].push_back(hit.GetData());
+  if(fStoreEDepHits) {
+    ComptonG4EDepHit hit;
+    hit.ProcessStep(step);
+    fEDepHits[volIndex].push_back(hit);
+    fEDepData[volIndex].push_back(hit.GetData());
+  }
   fTotalEnergyDeposited[volIndex] += step->GetTotalEnergyDeposit()/MeV;
   return true;
 }
@@ -100,11 +104,26 @@ void ComptonG4Crystal::CreateTreeBranch(TTree* tree)
     tree->Branch(Form("%s_num_photons",fVolumes[i]->GetName().c_str()),
         &(fTotalOpticalPhotons[i]));
 
-    tree->Branch(Form("%s_eDep_hits",fVolumes[i]->GetName().c_str()),
+    if(fStoreEDepHits)
+      tree->Branch(Form("%s_eDep_hits",fVolumes[i]->GetName().c_str()),
           &(fEDepData[i]));
 
     tree->Branch(Form("%s_optical_hits",fVolumes[i]->GetName().c_str()),
         &(fOpticalDataPtr[i]));
+  }
+}
+
+void ComptonG4Crystal::SetOptions(std::map<G4String,G4String> options,
+    bool ignore_unknown)
+{
+  std::map<G4String,G4String>::iterator it;
+  for(it = options.begin(); it != options.end(); it++ ) {
+    if( ProcessOptionBool(it->first,
+          it->second,"store_edep_hits",fStoreEDepHits) ) {
+    } else if (ignore_unknown) { // Okay, fine, ignore it
+    } else { // Uknown option passed, complain!
+      UnknownOption(it->first,it->second);
+    }
   }
 }
 

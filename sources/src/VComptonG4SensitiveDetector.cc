@@ -7,6 +7,7 @@
 
 #include "VComptonG4SensitiveDetector.hh"
 #include "ComptonG4Analysis.hh"
+#include "ComptonG4Utils.hh"
 #include <G4OpticalPhoton.hh>
 #include <G4TrackStatus.hh>
 #include <G4VProcess.hh>
@@ -31,4 +32,36 @@ int VComptonG4SensitiveDetector::GetIndex(G4VPhysicalVolume *vol)
   }
 
   return -1;
+}
+
+
+G4bool VComptonG4SensitiveDetector::ProcessOptionBool(G4String param,
+    G4String value, G4String option_name, G4bool &result)
+{
+  G4bool found = false;
+  if( ComptonG4Utils::SameIgnore(param,option_name) ) {
+    found = true;
+    G4bool boolean;
+    if( ComptonG4Utils::GetBool(value,boolean) == 0 ) {
+      result = boolean;
+      G4cout << "Detector " << GetName() << " option '" <<
+        option_name << "' set to '" << (result? "true" : "false") << "'."
+        << G4endl;
+    } else {
+      G4cerr << "Error in Detector " <<  GetName() <<
+        ": 'option' " << option_name <<  " should be boolean, but got '"
+         << value << "' instead." << G4endl;
+    }
+  }
+
+  return found;
+}
+
+void VComptonG4SensitiveDetector::UnknownOption(G4String param, G4String value)
+{
+  G4cerr << "Error in Detector " << GetName() << ": Unknown option '" <<
+    param << "' ";
+  if(!value.empty())
+    G4cerr << "with value '" << value << "' ";
+  G4cerr << "detected." << G4endl;
 }

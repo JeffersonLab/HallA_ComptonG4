@@ -30,6 +30,15 @@ public:
   void CleanEvent();
 
   /*
+   * Set sensitive detector options
+   *
+   * \param options The options to parse, separated by a semicolon
+   */
+  virtual void SetOptions(std::map<G4String,G4String> options,
+      bool ignore_unknown);
+
+
+  /*
    * Create and initialize the Output Branch
    */
   virtual void CreateTreeBranch(TTree *branch);
@@ -62,6 +71,7 @@ private:
   std::vector<std::vector<ComptonG4OpticalData>* > fOpticalDataPtr;
   std::vector<G4double> fTotalEnergyDeposited;
   std::vector<G4int> fTotalOpticalPhotons;
+  bool fStoreEDepHits;
 };
 
 #endif /* COMPTONG4CRYSTAL_HH_ */
