@@ -13,7 +13,7 @@ int main(int argc, char** argv)
   // Start ComptonG4 ROOT command lined
   TRint* rint = new TRint("ComptonG4 ROOT Analyzer", &argc, argv);
   // Set some paths
-  TString path = getenv("ComptonG4");
+  TString path = getenv("COMPTONG4");
   // So that it can work with the installed version too
   gROOT->ProcessLine(".include " + path + "/include");
   gROOT->ProcessLine("gSystem->Load(\"libCint.so\");");
