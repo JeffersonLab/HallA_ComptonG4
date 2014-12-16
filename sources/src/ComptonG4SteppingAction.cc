@@ -51,6 +51,10 @@ void ComptonG4SteppingAction::UserSteppingAction(const G4Step* step)
 
   if( track->GetDefinition() == G4OpticalPhoton::Definition() ) {
     if ( track->GetGlobalTime() > fOpticalMaxStepTime ) {
+      ComptonG4Hit hit;
+      hit.ProcessTrack(track);
+      fStoppedOpticalHits.push_back(hit);
+      fStoppedOpticalDataPtr->push_back(hit.GetData());
       track->SetTrackStatus(fStopAndKill);
       fAnalysis->StoppedOpticalPhoton();
     }
@@ -64,6 +68,7 @@ void ComptonG4SteppingAction::CreateTreeBranch(TTree* tree)
 {
   // Create detector branches
   tree->Branch("Primary",&(fPrimaryDataPtr));
+  tree->Branch("OpticalPhotons_stopped",&(fStoppedOpticalDataPtr));
 }
 
 
@@ -71,4 +76,6 @@ void ComptonG4SteppingAction::ClearPrimary()
 {
   fPrimaryHits.clear();
   fPrimaryDataPtr->clear();
+  fStoppedOpticalHits.clear();
+  fStoppedOpticalDataPtr->clear();
 }

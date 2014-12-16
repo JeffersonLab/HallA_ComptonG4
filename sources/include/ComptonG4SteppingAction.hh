@@ -49,6 +49,8 @@ private:
   G4int fVerbose;
   std::vector<ComptonG4PrimaryHit> fPrimaryHits;
   std::vector<ComptonG4PrimaryData>* fPrimaryDataPtr;
+  std::vector<ComptonG4Hit> fStoppedOpticalHits;
+  std::vector<ComptonG4Data>* fStoppedOpticalDataPtr;
 };
 
 #endif
