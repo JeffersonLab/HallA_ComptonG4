@@ -177,7 +177,8 @@ void ComptonG4Analysis::EndOfEvent()
   fTree->Fill();
 
   // AutoSave?
-  if(fAutoSaveEntry&& fNumberOfEvents%fAutoSaveEntry == 0) {
+  if( fAutoSaveEntry > 0 && fNumberOfEvents >= fAutoSaveEntry &&
+      fNumberOfEvents % fAutoSaveEntry == 0) {
     G4cout << "Auto saving..." << G4endl;
     fTree->AutoSave("SaveSelf");
     WriteRandomSeed();
