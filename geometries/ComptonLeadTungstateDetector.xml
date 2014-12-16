@@ -1,4 +1,5 @@
 <physvol name="ComptonPhotonDetectorPhysical">
   <volumeref ref="ComptonPhotonDetectorLogical" />
-  <position name="ComptonPhotonDetector_Position" unit="mm" x="0" y="0" z="1756.506" />
+  <position name="ComptonPhotonDetector_Position" unit="mm" x="0" y="0"
+      z="LeadTungstateDistanceFromIP+ComptonPhotonDetectorDimZ/2." />
 </physvol>

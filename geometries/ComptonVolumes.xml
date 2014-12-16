@@ -208,27 +208,31 @@
   <auxiliary auxtype="Color" auxvalue="#ADB2BD"/>
 </volume>
 
-<volume name="ComptonBeampipeEndLogical" >
+<volume name="ComptonBeampipeExitWindowLogical" >
   <materialref ref="Copper" />
-  <solidref ref="ComptonBeampipeEndSolid" />
+  <solidref ref="ComptonBeampipeExitWindowSolid" />
   <auxiliary auxtype="Color" auxvalue="#B87333"/>
 </volume>
 
-<volume name="ComptonBeamlineContainerLogical">
+<volume name="ComptonBeamlineLogical" >
   <materialref ref="AirVacuum" />
   <solidref ref="ComptonBeamlineSolid" />
   <physvol>
     <volumeref ref="ComptonBeampipeLogical" />
-    <position name="ComptonBeampipe_Position" unit="mm" x="0" y="0" z="0" />
+    <position name="ComptonBeampipe_Position"
+        unit="mm" x="0." y="0." z="0." />
   </physvol>
   <physvol>
-    <volumeref ref="ComptonBeampipeEndLogical" />
-    <position name="ComptonBeampipeEndUpstream_Position" unit="mm" x="0" y="0" z="-1426" />
+    <volumeref ref="ComptonBeampipeExitWindowLogical" />
+    <position name="ComptonBeampipeExitWindowUpstream_Position"
+        unit="mm" x="0" y="0" z="-(BeampipeDimZ-BeampipeExitWindowDimZ-AirGap)/2." />
   </physvol>
   <physvol>
-    <volumeref ref="ComptonBeampipeEndLogical" />
-    <position name="ComptonBeampipeEndDownstream_Position" unit="mm" x="0" y="0" z="1426" />
+    <volumeref ref="ComptonBeampipeExitWindowLogical" />
+    <position name="ComptonBeampipeExitWindowDownstream_Position"
+        unit="mm" x="0" y="0" z="(BeampipeDimZ-BeampipeExitWindowDimZ-AirGap)/2." />
   </physvol>
+
   <auxiliary auxtype="Color" auxvalue="#00000000" />
 </volume>
 <!-- End: Define Beampipe -->
