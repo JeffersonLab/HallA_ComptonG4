@@ -15,7 +15,7 @@ ComptonG4RunAction::ComptonG4RunAction(ComptonG4Analysis *analysis) :
 
 ComptonG4RunAction::~ComptonG4RunAction()
 {
-  delete fAnalysis;
+  delete fMessenger;
 }
 
 void ComptonG4RunAction::BeginOfRunAction(const G4Run*)

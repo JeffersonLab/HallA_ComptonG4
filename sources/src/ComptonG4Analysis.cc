@@ -50,6 +50,12 @@ ComptonG4Analysis::~ComptonG4Analysis()
 {
   fDetectors.clear();
   fDetectorNames.clear();
+
+  if(fTree)
+    delete fTree;
+
+  if(fFile)
+    delete fFile;
 }
 
 /**

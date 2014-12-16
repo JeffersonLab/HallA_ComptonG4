@@ -29,7 +29,11 @@ ComptonG4DetectorConstructionMessenger::ComptonG4DetectorConstructionMessenger(
 
 ComptonG4DetectorConstructionMessenger::~ComptonG4DetectorConstructionMessenger()
 {
-  // TODO Cleanup detector messenger
+  if(fActivateDetectorCmd)
+    delete fActivateDetectorCmd;
+
+  if(fGeometryDir)
+    delete fGeometryDir;
 }
 
 void ComptonG4DetectorConstructionMessenger::SetNewValue(

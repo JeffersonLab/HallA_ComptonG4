@@ -26,6 +26,9 @@ ComptonG4EventAction::~ComptonG4EventAction()
 {
   if(fEventMessenger)
     delete fEventMessenger;
+
+  if(fEventTimer)
+    delete fEventTimer;
 }
 
 void ComptonG4EventAction::BeginOfEventAction(const G4Event*)

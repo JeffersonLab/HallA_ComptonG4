@@ -30,8 +30,11 @@ ComptonG4EventMessenger::ComptonG4EventMessenger(
 
 ComptonG4EventMessenger::~ComptonG4EventMessenger()
 {
-  delete fEventPrintCmd;
-  delete fEventDir;
+  if(fEventPrintCmd)
+    delete fEventPrintCmd;
+
+  if(fEventDir)
+    delete fEventDir;
 }
 
 void ComptonG4EventMessenger::SetNewValue(

@@ -47,8 +47,11 @@ ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analys
 
 ComptonG4PrimaryGeneratorAction::~ComptonG4PrimaryGeneratorAction()
 {
-  delete fParticleGun;
-  delete fGunMessenger;
+  if(fParticleGun)
+    delete fParticleGun;
+
+  if(fGunMessenger)
+    delete fGunMessenger;
 }
 
 
