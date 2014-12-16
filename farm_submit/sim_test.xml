@@ -4,7 +4,7 @@
   <Track name="test" />
   <Name name="compton_simulation_phdet_Test_0" />
   <TimeLimit unit="minutes" time="30" />
-  <DiskSpace space="1024" unit="MB" />
+  <DiskSpace space="2500" unit="MB" />
   <Memory space="2048" unit="MB" />
   <OS name="centos62" />
   <Command><![CDATA[

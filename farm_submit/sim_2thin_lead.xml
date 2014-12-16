@@ -4,8 +4,8 @@
   <Track name="simulation" />
   <Name name="compton_simulation_phdet_RUNNUM" />
   <TimeLimit unit="minutes" time="720" />
-  <DiskSpace space="1024" unit="MB" />
-  <Memory space="1024" unit="MB" />
+  <DiskSpace space="2500" unit="MB" />
+  <Memory space="2048" unit="MB" />
   <OS name="centos62" />
   <Command><![CDATA[
     date
@@ -21,12 +21,13 @@
        --geometry-file=geometries/ComptonGeometry_2thin_lead.xml \
        --enable-optical=yes \
        --random-seed=3829RUNNUM \
+       --rootfile-prefix=ComptonG4_2thin_lead_ \
        --output-dir=$localdir
 
     ]]></Command>
 
   <Job>
-    <Output src="ComptonG4_RUNNUM.root" dest="/work/hallc/compton/users/cornejo/simulation/rootfiles/" />
+    <Output src="ComptonG4_2thin_lead_RUNNUM.root" dest="/work/hallc/compton/users/cornejo/simulation/rootfiles/" />
     <Stdout dest="/home/cornejo/scratch/logs/simulation/sim_2thin_lead_RUNNUM.out" />
     <Stderr dest="/home/cornejo/scratch/logs/simulation/sim_2thin_lead_RUNNUM.err" />
   </Job>

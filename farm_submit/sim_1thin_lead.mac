@@ -6,5 +6,6 @@
 /Compton/gun/PhotonVertexZ 0.0 mm
 /Compton/gun/Initialize
 /Compton/event/printevent 100
+/Compton/step/OpticalMaxStepTime 250 ns
 
 /run/beamOn 2500
