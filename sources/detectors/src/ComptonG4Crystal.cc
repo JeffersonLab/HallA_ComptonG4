@@ -61,6 +61,7 @@ G4bool ComptonG4Crystal::ProcessHits(G4Step* step,
       fAnalysis->OpticalHit();
     }
     fAnalysis->ProcessOpticalTrackID(track->GetTrackID());
+    CheckUniqueTrack(track);
   }
   if(fStoreEDepHits) {
     ComptonG4EDepHit hit;
@@ -91,6 +92,13 @@ void ComptonG4Crystal::CleanEvent()
     fEDepData[i].clear();
     fOpticalData[i].clear();
   }
+
+  // Summary variables
+  fTotalOpticalCerenkov = 0;
+  fTotalOpticalScintillation = 0;
+  fTotalOpticalOther = 0;
+  fOpticalProducedTrackID.clear();
+  fOpticalProducedProcess.clear();
 }
 
 
@@ -110,6 +118,13 @@ void ComptonG4Crystal::CreateTreeBranch(TTree* tree)
 
     tree->Branch(Form("%s_optical_hits",fVolumes[i]->GetName().c_str()),
         &(fOpticalDataPtr[i]));
+
+    tree->Branch("Crystals_produced_optical_cerenkov",
+        &fTotalOpticalCerenkov );
+    tree->Branch("Crystals_produced_optical_scintillation",
+        &fTotalOpticalScintillation);
+    tree->Branch("Crystals_produced_optical_other",
+        &fTotalOpticalOther);
   }
 }
 
@@ -124,6 +139,43 @@ void ComptonG4Crystal::SetOptions(std::map<G4String,G4String> options,
     } else { // Uknown option passed, complain!
       UnknownOption(it->first,it->second);
     }
+  }
+}
+
+
+void ComptonG4Crystal::CheckUniqueTrack(G4Track *track)
+{
+  if(!track->GetCreatorProcess())
+    return;
+
+  G4String process = track->GetCreatorProcess()->GetProcessName();
+
+  G4int id = track->GetTrackID();
+  G4int processInt = -1;
+  if( ComptonG4Utils::SameIgnore("Cerenkov",process) ) {
+    processInt = 0;
+  } else if ( ComptonG4Utils::SameIgnore("Scintillation",process) ) {
+    processInt = 1;
+  }
+  for(size_t i = 0; i < fOpticalProducedTrackID.size(); i++ ) {
+    if( id == fOpticalProducedTrackID[i]
+        && fOpticalProducedProcess[i] == processInt )
+      return;
+  }
+
+  // Alright, new track it seems
+  fOpticalProducedTrackID.push_back(id);
+  fOpticalProducedProcess.push_back(processInt);
+  switch(processInt) {
+    case 0:
+      fTotalOpticalCerenkov++;
+      break;
+    case 1:
+      fTotalOpticalScintillation++;
+      break;
+    default:
+      fTotalOpticalOther++;
+      break;
   }
 }
 

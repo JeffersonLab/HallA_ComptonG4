@@ -17,6 +17,7 @@
 class ComptonG4Analysis;
 class G4HCofThisEvent;
 class G4Step;
+class G4Track;
 class G4TouchableHistory;
 
 class ComptonG4Crystal: public VComptonG4SensitiveDetector {
@@ -62,6 +63,8 @@ public:
     fTotalOpticalPhotons.push_back(0);
   }
 
+  virtual void CheckUniqueTrack(G4Track *track);
+
 private:
   std::vector<std::vector<ComptonG4EDepHit> > fEDepHits;
   std::vector<std::vector<ComptonG4OpticalHit> > fOpticalHits;
@@ -71,6 +74,11 @@ private:
   std::vector<std::vector<ComptonG4OpticalData>* > fOpticalDataPtr;
   std::vector<G4double> fTotalEnergyDeposited;
   std::vector<G4int> fTotalOpticalPhotons;
+  G4int fTotalOpticalCerenkov;
+  G4int fTotalOpticalScintillation;
+  G4int fTotalOpticalOther;
+  std::vector<G4int> fOpticalProducedTrackID;
+  std::vector<G4int> fOpticalProducedProcess;
   bool fStoreEDepHits;
 };
 
