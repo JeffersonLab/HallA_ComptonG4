@@ -1,10 +1,15 @@
 <solids>
   <box lunit="m" name="TunnelSolid" x="2" y="2" z="12" />
 
-  <box lunit="mm" name="ThinLead1Solid" x="103" y="176" z="2.3681" />
-  <box lunit="mm" name="ThinLead2Solid" x="101" y="182" z="2.8756" />
-  <box lunit="mm" name="ThinLead3Solid" x="104" y="181" z="2.4469" />
-  <box lunit="mm" name="ThinLead4Solid" x="097" y="177" z="2.3389" />
+  <!-- Thin Lead shielding infront of photon detector stack -->
+  <box lunit="mm" name="ThinLead1Solid"
+      x="ThinLead1DimX" y="ThinLead1DimY" z="ThinLead1DimZ" />
+  <box lunit="mm" name="ThinLead2Solid"
+      x="ThinLead2DimX" y="ThinLead2DimY" z="ThinLead2DimZ" />
+  <box lunit="mm" name="ThinLead3Solid"
+      x="ThinLead3DimX" y="ThinLead3DimY" z="ThinLead3DimZ" />
+  <box lunit="mm" name="ThinLead4Solid"
+      x="ThinLead4DimX" y="ThinLead4DimY" z="ThinLead4DimZ" />
 
   <!-- Lead Tungstate Photon Detector Solids
          - Includes Crystal Stack
@@ -76,9 +81,17 @@
       z="ComptonPMTDimZ"
       startphi="0" deltaphi="360" aunit="degree" />
 
-  <box lunit="mm" name="ComptonBeamlineSolid" x="140" y="140" z="2854" />
-  <tube lunit="mm" name="ComptonBeampipeSolid" rmin="68" rmax="70" z="2850" startphi="0" deltaphi="360" aunit="degree" />
-  <tube lunit="mm" name="ComptonBeampipeEndSolid" rmin="0" rmax="70" z="2" startphi="0" deltaphi="360" aunit="degree" />
+  <!-- Beamline solids -->
+  <tube lunit="mm" name="ComptonBeamlineSolid"
+      rmin="0." rmax="BeampipeDimRMax" z="BeampipeDimZ"
+      startphi="0" deltaphi="360" aunit="degree" />
+  <tube lunit="mm" name="ComptonBeampipeSolid"
+      rmin="BeampipeDimRMin" rmax="BeampipeDimRMax" z="BeampipeDimZ"
+      startphi="0" deltaphi="360" aunit="degree" />
+  <tube lunit="mm" name="ComptonBeampipeExitWindowSolid"
+      rmin="BeampipeExitWindowDimRMin" rmax="BeampipeExitWindowDimRMax" z="BeampipeExitWindowDimZ"
+      startphi="0" deltaphi="360" aunit="degree" />
+
   <tube lunit="mm" name="ComptonPMTCathodeSolid" rmin="0" rmax="38.5" z="0.1" startphi="0" deltaphi="360" aunit="degree" />
   <tube lunit="mm" name="ComptonPMTGlassSolid" rmin="41.25" rmax="42.25" z="205.0" startphi="0" deltaphi="360" aunit="degree" />
   <tube lunit="mm" name="ComptonPMTGlassSideSolid" rmin="0.0" rmax="41.25" z="1.0" startphi="0" deltaphi="360" aunit="degree" />
