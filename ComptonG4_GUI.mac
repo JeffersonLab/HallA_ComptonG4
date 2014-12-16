@@ -7,5 +7,9 @@
 /gui/addButton viewer "Run 1 optical"          "/control/execute test_optical.mac"
 /gui/addButton viewer "Run 1 optical random"          "/control/execute test_optical_random.mac"
 
+
+/gui/addMenu   viewer Tests
+/gui/addButton viewer "Test Geometry"          "/control/execute test_geometry.mac"
+
 #/control/execute vis/Qt.mac
 #/vis/viewer/set/viewpointThetaPhi 0 0 deg

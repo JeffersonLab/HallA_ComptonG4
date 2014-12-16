@@ -1,4 +1,11 @@
-/geometry/test/tolerance 10 mm
+/geometry/test/tolerance 0.01 mm
 /geometry/test/grid_test true
-#/geometry/test/cylinder_test true
-#/geometry/test/line_test true
+/geometry/test/cylinder_test true
+/geometry/test/line_test true
+
+/vis/open DAWNFILE
+/vis/drawVolume
+/vis/viewer/flush
+/vis/scene/add/trajectories
+/vis/scene/add/hits
+/run/beamOn 1
