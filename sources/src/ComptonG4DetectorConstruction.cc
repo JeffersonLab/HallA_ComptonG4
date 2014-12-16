@@ -186,6 +186,8 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
 
 ComptonG4DetectorConstruction::~ComptonG4DetectorConstruction()
 {
+  if(fMessenger)
+    delete fMessenger;
 }
 
 

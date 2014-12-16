@@ -34,7 +34,7 @@ public:
     fVerbose = verbose;
   }
 
-  void ClearPrimary();
+  void ClearEvent();
 
   /*
    * Create and initialize the Output Branch
@@ -49,6 +49,14 @@ private:
   G4int fVerbose;
   std::vector<ComptonG4PrimaryHit> fPrimaryHits;
   std::vector<ComptonG4PrimaryData>* fPrimaryDataPtr;
+  std::vector<ComptonG4Hit> fStoppedOpticalHits;
+  std::vector<ComptonG4Data>* fStoppedOpticalDataPtr;
+
+  bool fStoreFullOpticalStopped;
+  G4int fStoppedOpticalCerenkov;
+  G4int fStoppedOpticalScintillation;
+  G4int fStoppedOpticalOther;
+  G4int fStoppedOpticalTotal;
 };
 
 #endif

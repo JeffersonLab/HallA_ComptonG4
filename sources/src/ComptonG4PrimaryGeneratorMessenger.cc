@@ -71,6 +71,7 @@ ComptonG4PrimaryGeneratorMessenger::~ComptonG4PrimaryGeneratorMessenger()
   delete fSetLaserWavelengthCmd;
   delete fSetPhotonVertexZCmd;
   delete fSetIncidentEnergyCmd;
+  delete fSetVerboseCmd;
   delete fGunDir;
   delete fInitializeCmd;
 }

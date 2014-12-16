@@ -34,7 +34,14 @@ ComptonG4RunMessenger::ComptonG4RunMessenger(
 
 ComptonG4RunMessenger::~ComptonG4RunMessenger()
 {
-  // TODO Cleanup detector messenger
+  if(fRunAutoSaveCmd)
+    delete fRunAutoSaveCmd;
+
+  if(fRunNumberCmd)
+    delete fRunNumberCmd;
+
+  if(fRunDir)
+    delete fRunDir;
 }
 
 void ComptonG4RunMessenger::SetNewValue(

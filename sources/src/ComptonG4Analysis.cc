@@ -50,6 +50,12 @@ ComptonG4Analysis::~ComptonG4Analysis()
 {
   fDetectors.clear();
   fDetectorNames.clear();
+
+  if(fTree)
+    delete fTree;
+
+  if(fFile)
+    delete fFile;
 }
 
 /**
@@ -177,7 +183,8 @@ void ComptonG4Analysis::EndOfEvent()
   fTree->Fill();
 
   // AutoSave?
-  if(fAutoSaveEntry&& fNumberOfEvents%fAutoSaveEntry == 0) {
+  if( fAutoSaveEntry > 0 && fNumberOfEvents >= fAutoSaveEntry &&
+      fNumberOfEvents % fAutoSaveEntry == 0) {
     G4cout << "Auto saving..." << G4endl;
     fTree->AutoSave("SaveSelf");
     WriteRandomSeed();
@@ -200,7 +207,7 @@ void ComptonG4Analysis::CleanEvent()
   fOpticalTrackIDs.clear();
 
   if(fSteppingAction)
-    fSteppingAction->ClearPrimary();
+    fSteppingAction->ClearEvent();
 }
 
 /**

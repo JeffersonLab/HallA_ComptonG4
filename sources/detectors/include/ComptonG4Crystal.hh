@@ -17,6 +17,7 @@
 class ComptonG4Analysis;
 class G4HCofThisEvent;
 class G4Step;
+class G4Track;
 class G4TouchableHistory;
 
 class ComptonG4Crystal: public VComptonG4SensitiveDetector {
@@ -28,6 +29,15 @@ public:
   G4bool ProcessHits(G4Step*, G4TouchableHistory*);
   void EndOfEvent(G4HCofThisEvent*);
   void CleanEvent();
+
+  /*
+   * Set sensitive detector options
+   *
+   * \param options The options to parse, separated by a semicolon
+   */
+  virtual void SetOptions(std::map<G4String,G4String> options,
+      bool ignore_unknown);
+
 
   /*
    * Create and initialize the Output Branch
@@ -53,6 +63,8 @@ public:
     fTotalOpticalPhotons.push_back(0);
   }
 
+  virtual void CheckUniqueTrack(G4Track *track);
+
 private:
   std::vector<std::vector<ComptonG4EDepHit> > fEDepHits;
   std::vector<std::vector<ComptonG4OpticalHit> > fOpticalHits;
@@ -62,6 +74,12 @@ private:
   std::vector<std::vector<ComptonG4OpticalData>* > fOpticalDataPtr;
   std::vector<G4double> fTotalEnergyDeposited;
   std::vector<G4int> fTotalOpticalPhotons;
+  G4int fTotalOpticalCerenkov;
+  G4int fTotalOpticalScintillation;
+  G4int fTotalOpticalOther;
+  std::vector<G4int> fOpticalProducedTrackID;
+  std::vector<G4int> fOpticalProducedProcess;
+  bool fStoreEDepHits;
 };
 
 #endif /* COMPTONG4CRYSTAL_HH_ */

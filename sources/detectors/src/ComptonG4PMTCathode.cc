@@ -92,5 +92,10 @@ void ComptonG4PMTCathode::CreateTreeBranch(TTree* tree)
   }
 }
 
+
+void ComptonG4PMTCathode::SetOptions(std::map<G4String,G4String>,bool)
+{
+}
+
 // Finally register the class
 COMPTONG4_SD_REGISTER(ComptonG4PMTCathode)
