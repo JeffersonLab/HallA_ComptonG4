@@ -200,7 +200,7 @@ void ComptonG4Analysis::CleanEvent()
   fOpticalTrackIDs.clear();
 
   if(fSteppingAction)
-    fSteppingAction->ClearPrimary();
+    fSteppingAction->ClearEvent();
 }
 
 /**

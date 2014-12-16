@@ -6,6 +6,7 @@
 #include "ComptonG4SteppingAction.hh"
 #include "ComptonG4SteppingMessenger.hh"
 #include "ComptonG4Analysis.hh"
+#include "ComptonG4Utils.hh"
 
 // GEANT4 Includes
 #include <G4VPhysicalVolume.hh>
@@ -17,10 +18,14 @@
 #include <TTree.h>
 
 ComptonG4SteppingAction::ComptonG4SteppingAction(ComptonG4Analysis *analysis) :
-fAnalysis(analysis),fOpticalMaxStepTime(1.0e-6*CLHEP::s),fVerbose(0)
+fAnalysis(analysis),fOpticalMaxStepTime(1.0e-6*CLHEP::s),fVerbose(0),
+  fStoreFullOpticalStopped(false),fStoppedOpticalCerenkov(0),
+  fStoppedOpticalScintillation(0),fStoppedOpticalOther(0),
+  fStoppedOpticalTotal(0)
 {
   // Initialize the stored data pointer
   fPrimaryDataPtr = new std::vector<ComptonG4PrimaryData>;
+  fStoppedOpticalDataPtr = new std::vector<ComptonG4Data>;
 
   // Tell the analyzer about us
   analysis->SetSteppingAction(this);
@@ -51,12 +56,25 @@ void ComptonG4SteppingAction::UserSteppingAction(const G4Step* step)
 
   if( track->GetDefinition() == G4OpticalPhoton::Definition() ) {
     if ( track->GetGlobalTime() > fOpticalMaxStepTime ) {
-      ComptonG4Hit hit;
-      hit.ProcessTrack(track);
-      fStoppedOpticalHits.push_back(hit);
-      fStoppedOpticalDataPtr->push_back(hit.GetData());
+      if(fStoreFullOpticalStopped) {
+        ComptonG4Hit hit;
+        hit.ProcessTrack(track);
+        fStoppedOpticalHits.push_back(hit);
+        fStoppedOpticalDataPtr->push_back(hit.GetData());
+      }
+      const G4VProcess *process = track->GetCreatorProcess();
+      if(process) {
+        if(ComptonG4Utils::SameIgnore("Cerenkov",process->GetProcessName())) {
+          fStoppedOpticalCerenkov++;
+        } else {
+          fStoppedOpticalScintillation++;
+        }
+      } else {
+      fStoppedOpticalOther++;
+      }
+      fStoppedOpticalTotal++;
       track->SetTrackStatus(fStopAndKill);
-      fAnalysis->StoppedOpticalPhoton();
+      //fAnalysis->StoppedOpticalPhoton();
     }
   }
 }
@@ -68,14 +86,26 @@ void ComptonG4SteppingAction::CreateTreeBranch(TTree* tree)
 {
   // Create detector branches
   tree->Branch("Primary",&(fPrimaryDataPtr));
-  tree->Branch("OpticalPhotons_stopped",&(fStoppedOpticalDataPtr));
+  if(fStoreFullOpticalStopped)
+    tree->Branch("OpticalPhotons_stopped",&(fStoppedOpticalDataPtr));
+
+  tree->Branch("nOpticalStopped_cerenkov",&fStoppedOpticalCerenkov);
+  tree->Branch("nOpticalStopped_scintillation",&fStoppedOpticalScintillation);
+  tree->Branch("nOpticalStopped_other",&fStoppedOpticalOther);
+  tree->Branch("nOpticalStopped_total",&fStoppedOpticalTotal);
 }
 
 
-void ComptonG4SteppingAction::ClearPrimary()
+void ComptonG4SteppingAction::ClearEvent()
 {
   fPrimaryHits.clear();
   fPrimaryDataPtr->clear();
   fStoppedOpticalHits.clear();
   fStoppedOpticalDataPtr->clear();
+
+  // Also clear the stopped optical photon count
+  fStoppedOpticalCerenkov = 0;
+  fStoppedOpticalScintillation = 0;
+  fStoppedOpticalOther = 0;
+  fStoppedOpticalTotal = 0;
 }
