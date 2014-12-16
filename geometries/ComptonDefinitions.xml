@@ -93,7 +93,7 @@
 
   <!-- Beampipe exit window -->
   <variable name="BeampipeExitWindowDimRMin" value="0." />
-  <variable name="BeampipeExitWindowDimRMax" value="BeampipeDimRMin-AirGap" />
+  <variable name="BeampipeExitWindowDimRMax" value="BeampipeDimRMin-(AirGap)" />
   <variable name="BeampipeExitWindowDimZ" value="2.0" />
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
