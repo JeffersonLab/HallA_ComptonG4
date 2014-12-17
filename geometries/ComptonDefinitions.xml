@@ -5,7 +5,7 @@
     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <!-- Define common variables -->
-  <variable name="AirGap" value="0.010" />
+  <variable name="AirGap" value="0.000" />
   <variable name="MyLarTickness" value="0.025" />
   <variable name="BlackTapeTickness" value="3.000" />
 
