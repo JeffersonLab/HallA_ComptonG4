@@ -4,8 +4,10 @@
 // GEANT4 includes
 #include <G4UserRunAction.hh>
 
+// Local includes
+#include <ComptonG4Analysis.hh>
+
 // Pre-defined classes
-class ComptonG4Analysis;
 class ComptonG4RunMessenger;
 
 /*!
@@ -24,10 +26,9 @@ public:
   ComptonG4RunAction(ComptonG4Analysis *analysis);
   ~ComptonG4RunAction();
 
-  void SetRunNumber(int run) { fRunNumber = run; }
-  void SetAutoSave(unsigned int entry) {
-    fAutoSaveEntry = entry;
-  }
+  void SetRunNumber(int run) { fAnalysis->SetRunNumber(run); }
+  void SetRunMinDigits(int min) { fAnalysis->SetRunMinDigits(min); }
+  void SetAutoSave(unsigned int entry) { fAnalysis->SetAutoSave(entry); };
 
   // G4UserRunAction related classes
   void BeginOfRunAction(const G4Run* run);
@@ -36,9 +37,6 @@ public:
 private:
   ComptonG4Analysis     *fAnalysis;   // Pointer to the Data IO instance
   ComptonG4RunMessenger *fMessenger;  // Pointer to the run messenger
-  unsigned int fAutoSaveEntry;        // Enable auto-save every n entries
-
-  int fRunNumber;    // The run number specified by user
 };
 
 #endif

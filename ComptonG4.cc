@@ -55,6 +55,8 @@ int main( int argc, char **argv)
   G4String output_dir;
   G4String rootfile_prefix;
   std::vector<std::string> ui_cmds;
+  G4int run;
+  G4int run_min_digits;
 
   // Prepare the command line options
   // Generic command line options
@@ -80,6 +82,10 @@ int main( int argc, char **argv)
      "Set the random seed")
     ("command",po::value<std::vector<std::string> >(),
      "ordered list of commands to process")
+    ("run,r",po::value<G4int>()->default_value(0),
+     "Set the run number (can also be set in a macro)")
+    ("run-min-digits",po::value<G4int>()->default_value(5),
+     "Minimum number of digits for run number (pad with zeros for smaller runs numbers)")
     ;
 
   // Finally, add them to boost
@@ -129,6 +135,8 @@ int main( int argc, char **argv)
   }
 
   // Process optional parameters
+  run = vm["run"].as<G4int>();
+  run_min_digits = vm["run-min-digits"].as<G4int>();
   use_optical = vm["enable-optical"].as<G4bool>();
   random_seed = vm["random-seed"].as<G4double>();
   output_dir = vm["output-dir"].as<std::string>();
@@ -228,7 +236,10 @@ int main( int argc, char **argv)
   runManager->SetUserAction(new ComptonG4PrimaryGeneratorAction(analysis));
   runManager->SetUserAction(new ComptonG4SteppingAction(analysis));
   runManager->SetUserAction(new ComptonG4EventAction(analysis));
-  runManager->SetUserAction(new ComptonG4RunAction(analysis));
+  ComptonG4RunAction *runAction = new ComptonG4RunAction(analysis);
+  runAction->SetRunNumber(run);
+  runAction->SetRunMinDigits(run_min_digits);
+  runManager->SetUserAction(runAction);
   runManager->SetUserAction(new ComptonG4StackingAction());
 
   // Initialize G4 kernel
@@ -272,6 +283,7 @@ int main( int argc, char **argv)
 
   delete compDir;
   delete runManager;
+  delete runAction;
 
   return 0;
 }

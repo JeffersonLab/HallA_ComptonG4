@@ -40,7 +40,10 @@ public:
   } DetectorStruct;
 
   // Public G4 Analyzer functions
-  void Initialize(G4int runnum = 1, unsigned int auto_save = 0);
+  void SetRunNumber(G4int runnum) { fRunNumber = runnum; }
+  void SetRunMinDigits(G4int min) { fRunMinDigits = min; }
+  void SetAutoSave(G4int auto_save) { fAutoSaveEntry = auto_save; }
+  void Initialize();
   void StartOfEvent();
   void EndOfEvent();
   void Finished();
@@ -93,6 +96,7 @@ public:
 
 private:
   Int_t               fRunNumber;     // Run number
+  UInt_t               fRunMinDigits;  // Minum number of digits for run number
   TTree               *fTree;         // Generated TTree
   TFile               *fFile;         // Output TFile
   std::string         fOutputPath;    // Path to output rootfiles

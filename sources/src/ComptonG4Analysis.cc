@@ -25,7 +25,8 @@
 /**
  *
  */
-ComptonG4Analysis::ComptonG4Analysis() : fTree(0),fFile(0),fAsym(0.0),
+ComptonG4Analysis::ComptonG4Analysis() : fRunNumber(0), fRunMinDigits(0),
+  fTree(0),fFile(0),fAsym(0.0),
   fRho(0.0),fGammaE(0.0),fTheta(0.0),fPhi(0.0),
   fNumberOfOpticalPhotonsStopped(0.0),fNumberOfOpticalPhotonsProduced(0.0),
   fTotalNumberOfOpticalPhotonsAbsorbed(0.0),fNumberOfEvents(0),
@@ -126,20 +127,21 @@ int ComptonG4Analysis::DetectorIndex(std::string name)
   return -1;
 }
 /**
- * Initialize the Analyzer with the specified run number
- * @param runnum
+ * Initialize the Analyzer (and create the output rootfile)
  */
-void ComptonG4Analysis::Initialize( G4int runnum, unsigned int auto_save)
+void ComptonG4Analysis::Initialize()
 {
   // Ask ROOT to load our library
   gSystem->Load("libCint.so");
   gSystem->Load("libComptonG4.so");
   gROOT->ProcessLine("#include <string>");
   gROOT->ProcessLine("#include <vector>");
-  fRunNumber = runnum;
-  fAutoSaveEntry = auto_save;
+  G4String runString = G4UIcommand::ConvertToString(fRunNumber);
+  while( runString.length() < fRunMinDigits ) {
+    runString.prepend("0");
+  }
   std::string outFile = fOutputPath + fRootfilePrefix +
-      G4UIcommand::ConvertToString(runnum)+".root";
+      runString+".root";
   fFile = new TFile(outFile.c_str(),"RECREATE");
   fTree = new TTree("ComptonG4","Compton GEANT4 Simulation Results");
   fTree->Branch("asym",&fAsym,"asym/D");
