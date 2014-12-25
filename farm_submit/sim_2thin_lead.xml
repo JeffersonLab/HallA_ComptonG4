@@ -22,12 +22,11 @@
        --enable-optical=yes \
        --random-seed=3829RUNNUM \
        --rootfile-prefix=ComptonG4_2thin_lead_ \
-       --output-dir=$localdir
+       --output-dir=/work/hallc/compton/users/cornejo/simulation/rootfiles/
 
     ]]></Command>
 
   <Job>
-    <Output src="ComptonG4_2thin_lead_RUNNUM.root" dest="/work/hallc/compton/users/cornejo/simulation/rootfiles/" />
     <Stdout dest="/home/cornejo/scratch/logs/simulation/sim_2thin_lead_RUNNUM.out" />
     <Stderr dest="/home/cornejo/scratch/logs/simulation/sim_2thin_lead_RUNNUM.err" />
   </Job>

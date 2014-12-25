@@ -12,7 +12,7 @@ then
   exit;
 fi
 
-for i in `seq 8$1 8$2`;
+for i in `seq -f %05g $1 $2`;
 do
   cp sim_2thin_lead.mac pbs/sim_2thin_lead_${i}.mac
   cp sim_2thin_lead.xml pbs/sim_2thin_lead_${i}.xml
