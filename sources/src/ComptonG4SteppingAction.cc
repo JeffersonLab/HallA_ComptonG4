@@ -48,7 +48,7 @@ void ComptonG4SteppingAction::UserSteppingAction(const G4Step* step)
   // We want to track the primary particle all the way through
   if( track->GetParentID() == 0 ) {
     ComptonG4PrimaryHit hit;
-    hit.ProcessTrack(track);
+    hit.ProcessStep(step);
     hit.SetEnergyDeposited(step->GetTotalEnergyDeposit());
     fPrimaryHits.push_back(hit);
     fPrimaryDataPtr->push_back(hit.GetData());

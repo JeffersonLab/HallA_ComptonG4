@@ -8,7 +8,7 @@
 #include "ComptonG4RunMessenger.hh"
 
 ComptonG4RunAction::ComptonG4RunAction(ComptonG4Analysis *analysis) :
-  fAnalysis(analysis), fAutoSaveEntry(0), fRunNumber(0)
+  fAnalysis(analysis)
 {
   fMessenger = new ComptonG4RunMessenger(this);
 }
@@ -20,7 +20,7 @@ ComptonG4RunAction::~ComptonG4RunAction()
 
 void ComptonG4RunAction::BeginOfRunAction(const G4Run*)
 {
-  fAnalysis->Initialize(fRunNumber,fAutoSaveEntry);
+  fAnalysis->Initialize();
 }
 
 void ComptonG4RunAction::EndOfRunAction(const G4Run*)

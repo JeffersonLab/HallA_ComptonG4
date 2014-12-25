@@ -52,9 +52,7 @@ void ComptonG4PrimaryHit::ClearHit()
  */
 void ComptonG4PrimaryHit::ProcessStep(G4Step *step)
 {
-  G4Track *track = step->GetTrack();
-  if(track)
-    ProcessTrack(track);
+  ProcessStep(const_cast<G4Step*>(step));
 }
 
 /*
@@ -65,3 +63,25 @@ void ComptonG4PrimaryHit::ProcessTrack(G4Track *track)
   ComptonG4EDepHit::ProcessTrack(track);
   data().volume = track->GetVolume()->GetName();
 }
+
+/*
+ * Process step information
+ */
+void ComptonG4PrimaryHit::ProcessStep(const G4Step *step)
+{
+  G4Track *track = step->GetTrack();
+  if(track)
+    ProcessTrack(track);
+  G4StepPoint *pre = step->GetPreStepPoint();
+  SetPrePosition(pre->GetPosition());
+  SetPreDirection(pre->GetMomentumDirection());
+  SetPreKineticEnergy(pre->GetKineticEnergy());
+  SetPreStatus(pre->GetStepStatus());
+
+  G4StepPoint *post = step->GetPostStepPoint();
+  SetPostPosition(post->GetPosition());
+  SetPostDirection(post->GetMomentumDirection());
+  SetPostKineticEnergy(post->GetKineticEnergy());
+  SetPostStatus(post->GetStepStatus());
+}
+
