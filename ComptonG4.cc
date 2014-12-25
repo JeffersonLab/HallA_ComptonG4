@@ -54,6 +54,7 @@ int main( int argc, char **argv)
   G4double random_seed;
   G4String output_dir;
   G4String rootfile_prefix;
+  std::vector<std::string> ui_cmds;
 
   // Prepare the command line options
   // Generic command line options
@@ -77,6 +78,8 @@ int main( int argc, char **argv)
      ->implicit_value(true),"Enable/Disable optical photons")
     ("random-seed",po::value<G4double>()->default_value(17760704.),
      "Set the random seed")
+    ("command",po::value<std::vector<std::string> >(),
+     "ordered list of commands to process")
     ;
 
   // Finally, add them to boost
@@ -130,6 +133,9 @@ int main( int argc, char **argv)
   random_seed = vm["random-seed"].as<G4double>();
   output_dir = vm["output-dir"].as<std::string>();
   rootfile_prefix = vm["rootfile-prefix"].as<std::string>();
+  if(vm.count("command")){
+    ui_cmds = vm["command"].as<std::vector<std::string> >();
+  }
 
 #ifdef COMPTONG4_BATCH_MODE // We are in batch mode
   // Process the batch file
@@ -230,6 +236,11 @@ int main( int argc, char **argv)
 
   // get the pointer to the User Interface manager
   G4UImanager* UI = G4UImanager::GetUIpointer();
+
+  // Execute any commands the user passed as parameter
+  for(size_t i = 0; i < ui_cmds.size(); i++ ) {
+    UI->ApplyCommand(ui_cmds[i]);
+  }
 
 #ifndef COMPTONG4_BATCH_MODE // Interactive mode
 
