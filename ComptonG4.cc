@@ -283,7 +283,6 @@ int main( int argc, char **argv)
 
   delete compDir;
   delete runManager;
-  delete runAction;
 
   return 0;
 }
