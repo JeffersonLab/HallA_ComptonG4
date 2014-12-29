@@ -53,6 +53,8 @@ public:
     fOpticalData.push_back(data_optical);
     fOpticalDataPtr.push_back(&fOpticalData.back());
     fTotalOpticalPhotons.push_back(0);
+    fMaterialProperties.push_back(
+        vol->GetLogicalVolume()->GetMaterial()->GetMaterialPropertiesTable());
   }
 
 private:
@@ -60,6 +62,7 @@ private:
   std::vector<std::vector<ComptonG4OpticalData> > fOpticalData;
   std::vector<std::vector<ComptonG4OpticalData>* > fOpticalDataPtr;
   std::vector<G4int> fTotalOpticalPhotons;
+  std::vector<G4MaterialPropertiesTable*> fMaterialProperties;
 };
 
 #endif /* COMPTONG4PMTCATHODE_HH_ */

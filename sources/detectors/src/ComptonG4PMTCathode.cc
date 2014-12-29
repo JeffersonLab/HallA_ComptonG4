@@ -45,17 +45,28 @@ G4bool ComptonG4PMTCathode::ProcessHits(G4Step* step,
 
   // Treat special for optical photons
   if( track->GetDefinition() == G4OpticalPhoton::Definition() ) {
-    // Only increment photon count if the particle is stopped here
-    // (meaning, it likely got absorbed)
+    // We only care about particles that have stopped here (and likely
+    // got absorbed)
     G4TrackStatus tStatus = track->GetTrackStatus();
-    if(tStatus == fStopButAlive ||
-        tStatus == fStopAndKill ) {
-      fTotalOpticalPhotons[volIndex]++;
-      ComptonG4OpticalHit hit;
-      hit.ProcessStep(step);
-      fOpticalHits[volIndex].push_back(hit);
-      fOpticalData[volIndex].push_back(hit.GetData());
-      fAnalysis->OpticalHit();
+    if( tStatus == fStopAndKill ) {
+
+      // But was it a true hit?
+      G4MaterialPropertyVector *efficiencyVector =
+        fMaterialProperties[volIndex]->GetProperty("EFFICIENCY");
+      G4double efficiency = 0.0;
+      if(efficiencyVector) {
+        efficiency = efficiencyVector->Value(
+            track->GetKineticEnergy());
+      }
+
+      if(G4UniformRand() < efficiency) { // That's a hit!!
+        fTotalOpticalPhotons[volIndex]++;
+        ComptonG4OpticalHit hit;
+        hit.ProcessStep(step);
+        fOpticalHits[volIndex].push_back(hit);
+        fOpticalData[volIndex].push_back(hit.GetData());
+        fAnalysis->OpticalHit();
+      }
     }
     fAnalysis->ProcessOpticalTrackID(track->GetTrackID());
   }
