@@ -159,11 +159,22 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
   }
 
   G4cout << "Logical Skin surface info: " << G4endl;
-  /*const G4LogicalSkinSurfaceTable *surfaces =
+  const G4LogicalSkinSurfaceTable *surfaces =
     G4LogicalSkinSurface::GetSurfaceTable ();
-  for(size_t i = 0; i < surfaces.size(); i++ ) {
+  G4LogicalSkinSurface *surf = 0;
+  for(size_t i = 0; i < surfaces->size(); i++ ) {
+    surf = surfaces->at(i);
+    G4OpticalSurface *op =
+      dynamic_cast<G4OpticalSurface*>(surf->GetSurfaceProperty());
+    if(op) { // Looks like an optical surface. Will need to update property
+      // tables
+      op->SetMaterialPropertiesTable(
+          surf->GetLogicalVolume()->GetMaterial()->GetMaterialPropertiesTable());
+      G4cout << "Set surface to logical volume: " << surf->GetLogicalVolume()->GetName() << G4endl;
+    }
+    //surf->GetLogicalVolume()->GetMaterial()->
 
-  }*/
+  }
   G4LogicalSkinSurface::DumpInfo();
   G4cout << "Logical border surface info: " << G4endl;
   G4LogicalBorderSurface::DumpInfo();
