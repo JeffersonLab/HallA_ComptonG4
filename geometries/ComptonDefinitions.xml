@@ -146,7 +146,7 @@
       values="0.257" />
 
   <matrix name="LeadTungstateResolutionScale" coldim="1"
-      values="0.30" />
+      values="1.0" />
 
   <matrix name="LeadTungstateRiseTime" coldim="1"
       values="1*ns" />
