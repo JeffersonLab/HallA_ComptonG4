@@ -1,9 +1,9 @@
  <Request>
   <Email email="cornejo@jlab.org" request="false" job="true" />
   <Project name="qweak" />
-  <Track name="test" />
+  <Track name="simulation" />
   <Name name="compton_simulation_phdet_scintyield_SETTING_RUNNUM" />
-  <TimeLimit unit="minutes" time="30" />
+  <TimeLimit unit="minutes" time="720" />
   <DiskSpace space="2500" unit="MB" />
   <Memory space="1024" unit="MB" />
   <OS name="centos65" />
@@ -14,7 +14,7 @@
     pwd
 
     setenv localdir `pwd`
-    source /home/cornejo/hallccompton_centos65.env
+    source /home/cornejo/hallccompton.env
     cd /home/cornejo/qweak/Simulation/working/tests/scintyield
     ComptonG4_batch \
        -r RUNNUM \

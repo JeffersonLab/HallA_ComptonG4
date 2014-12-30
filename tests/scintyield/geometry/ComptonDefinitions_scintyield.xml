@@ -140,13 +140,13 @@
 
   <!-- Based on the slow component having a relative ratio of 0.3 @ 30 ns cooled by 10% to gain ~20% light yield gain -->
   <matrix name="LeadTungstateScintillationYield" coldim="1"
-      values="&ScintYield;/MeV" />
+    values="&ScintYield;/MeV" />
 
   <matrix name="LeadTungstateYieldRatio" coldim="1"
       values="0.257" />
 
   <matrix name="LeadTungstateResolutionScale" coldim="1"
-      values="1.0" />
+      values="0.30" />
 
   <matrix name="LeadTungstateRiseTime" coldim="1"
       values="1*ns" />
