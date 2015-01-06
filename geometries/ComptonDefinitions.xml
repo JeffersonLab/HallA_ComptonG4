@@ -155,8 +155,13 @@
   <matrix name="AirIndex" coldim="2" values="1.77*eV 1.0 5.0*eV 1.0" />
   <matrix name="AirReflectivity" coldim="2" values="1.77*eV 0.0001 5.0*eV 0.0001" />
 
-  <!-- Optical Grease (estimated) -->
-  <matrix name="OpticalGreaseIndex" coldim="2" values="1.77*eV 1.405 5.0*eV 1.405" />
+  <!-- Bicron Optical Grease (Saint-Gobian BC-630)
+    http://www.crystals.saint-gobain.com/uploadedFiles/SG-Crystals/Documents/Organic%20Product%20Accessories%20Data%20Sheet.pdf
+  -->
+  <matrix name="OpticalGreaseIndex" coldim="2"
+      values="1.77*eV 1.465 4.27*eV 1.465" />
+  <matrix name="OpticalGreaseTransmittance" coldim="2"
+      values="1.75*eV 0.0 1.77*eV 0.95 4.27*eV 0.95 4.28*eV 0.0" />
 
   <!-- MyLar BoPET Optical Properties -->
   <matrix name="BoPETIndex" coldim="2" values="1.77*eV 1.68 5.0*eV 1.63" />

@@ -95,6 +95,7 @@
   <!-- Bicron Optical Grease (Saint-Gobian BC-630) -->
   <material name="OpticalGrease" >
     <property name="RINDEX" ref="OpticalGreaseIndex" />
+    <property name="TRANSMITTANCE" ref="OpticalGreaseTransmittance" />
     <D unit="g/cm3" value="1.060" />
     <composite n="2" ref="Carbon" />
     <compsoite n="6" ref="Hydrogen" />
