@@ -91,11 +91,15 @@
     <composite n="4" ref="Oxygen" />
   </material>
 
+
+  <!-- Bicron Optical Grease (Saint-Gobian BC-630) -->
   <material name="OpticalGrease" >
     <property name="RINDEX" ref="OpticalGreaseIndex" />
     <D unit="g/cm3" value="1.060" />
+    <composite n="2" ref="Carbon" />
+    <compsoite n="6" ref="Hydrogen" />
     <composite n="1" ref="Silicon" />
-    <composite n="2" ref="Oxygen" />
+    <composite n="1" ref="Oxygen" />
   </material>
 
   <material name="AirOptical" >
