@@ -20,7 +20,8 @@ void average(std::vector<Double_t> &xs,std::vector<Double_t> &ys,
     TGraph *graph1, TGraph *graph2, Double_t lowX, Double_t highX);
 TGraph* normalizeIntegral(TGraph *graph, Double_t scale = 1.0);
 
-void save(const char *prefix, TGraph *graph, bool save_xml = true);
+void save(const char *prefix, TGraph *graph, bool save_xml = true,
+    const char *unit = 0, Int_t limit = 0);
 
 void process_data()
 {
@@ -187,6 +188,238 @@ void process_data()
   // Save canvas
   canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_rindex.svg");
   canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_rindex.png");
+
+  // Clear the previous stuff
+  h->Delete();
+  legend->Clear();
+
+  // Setup the histogram now
+  h = new TH2F("h","PbWO_{4} Ordinary & Extra-ordinary Absorption Coefficients;"
+      "Wavelength (nm);Absorption Coefficient #alpha (cm^{-1})",1,kLowWavelength-50,
+      kHighWavelength+50,1,0.0,0.08);
+  h->GetYaxis()->SetTitleOffset(1.75);
+  h->SetStats(kFALSE);
+  h->Draw();
+
+  // Setup Absorption Coefficient and Length variables
+  std::vector<Double_t> pbwo4_abscoefficient_ordinary_xs;
+  std::vector<Double_t> pbwo4_abscoefficient_ordinary_ys;
+  std::vector<Double_t> pbwo4_abscoefficient_extra_xs;
+  std::vector<Double_t> pbwo4_abscoefficient_extra_ys;
+  std::vector<Double_t> pbwo4_abscoefficient_average_xs;
+  std::vector<Double_t> pbwo4_abscoefficient_average_ys;
+
+  // Process PbWO4 abscoefficient_ordinary spectrum
+  read("pbwo4_abscoefficient_ordinary.dat",pbwo4_abscoefficient_ordinary_xs,
+      pbwo4_abscoefficient_ordinary_ys,kLowWavelength,
+      kHighWavelength);
+  TGraphSmooth *pbwo4_abscoefficient_ordinary_graph_smoother = new TGraphSmooth("supsmu");
+  TGraph *pbwo4_abscoefficient_ordinary_graph_raw = new TGraph(pbwo4_abscoefficient_ordinary_xs.size(),
+      pbwo4_abscoefficient_ordinary_xs.data(),pbwo4_abscoefficient_ordinary_ys.data());
+  TGraph *pbwo4_abscoefficient_ordinary_graph = pbwo4_abscoefficient_ordinary_graph_smoother->SmoothSuper(
+      pbwo4_abscoefficient_ordinary_graph_raw);
+  pbwo4_abscoefficient_ordinary_graph->SetLineColor(kRed);
+  pbwo4_abscoefficient_ordinary_graph->SetMarkerColor(kRed);
+  pbwo4_abscoefficient_ordinary_graph->SetLineWidth(3.0);
+  pbwo4_abscoefficient_ordinary_graph->SetFillColor(0);
+  pbwo4_abscoefficient_ordinary_graph->Draw("SAMEC");
+  save("sim_pbwo4_abscoefficient_ordinary",pbwo4_abscoefficient_ordinary_graph,false);
+  legend->AddEntry(pbwo4_abscoefficient_ordinary_graph,"n ordinary");
+
+  // Process PbWO4 abscoefficient_extra spectrum
+  read("pbwo4_abscoefficient_extra.dat",pbwo4_abscoefficient_extra_xs,
+      pbwo4_abscoefficient_extra_ys,kLowWavelength,
+      kHighWavelength);
+  TGraphSmooth *pbwo4_abscoefficient_extra_graph_smoother = new TGraphSmooth("supsmu");
+  TGraph *pbwo4_abscoefficient_extra_graph_raw = new TGraph(pbwo4_abscoefficient_extra_xs.size(),
+      pbwo4_abscoefficient_extra_xs.data(),pbwo4_abscoefficient_extra_ys.data());
+  TGraph *pbwo4_abscoefficient_extra_graph = pbwo4_abscoefficient_extra_graph_smoother->SmoothSuper(
+      pbwo4_abscoefficient_extra_graph_raw);
+  pbwo4_abscoefficient_extra_graph->SetLineColor(kBlue);
+  pbwo4_abscoefficient_extra_graph->SetMarkerColor(kBlue);
+  pbwo4_abscoefficient_extra_graph->SetLineWidth(3.0);
+  pbwo4_abscoefficient_extra_graph->SetFillColor(0);
+  pbwo4_abscoefficient_extra_graph->Draw("SAMEC");
+  save("sim_pbwo4_abscoefficient_extra",pbwo4_abscoefficient_extra_graph,false);
+  legend->AddEntry(pbwo4_abscoefficient_extra_graph,"n extraordinary");
+
+  // Process PbWO4 abscoefficient_average spectrum
+  average(pbwo4_abscoefficient_average_xs,pbwo4_abscoefficient_average_ys,
+      pbwo4_abscoefficient_ordinary_graph,pbwo4_abscoefficient_extra_graph,
+      360.0,650.0);
+  TGraphSmooth *pbwo4_abscoefficient_average_graph_smoother = new TGraphSmooth("supsmu");
+  TGraph *pbwo4_abscoefficient_average_graph_raw = new TGraph(pbwo4_abscoefficient_average_xs.size(),
+      pbwo4_abscoefficient_average_xs.data(),pbwo4_abscoefficient_average_ys.data());
+  TGraph *pbwo4_abscoefficient_average_graph = pbwo4_abscoefficient_average_graph_smoother->SmoothSuper(
+      pbwo4_abscoefficient_average_graph_raw);
+  pbwo4_abscoefficient_average_graph->SetLineColor(kMagenta);
+  pbwo4_abscoefficient_average_graph->SetMarkerColor(kMagenta);
+  pbwo4_abscoefficient_average_graph->SetLineWidth(3.0);
+  pbwo4_abscoefficient_average_graph->SetFillColor(0);
+  pbwo4_abscoefficient_average_graph->Draw("SAMEC");
+  save("sim_pbwo4_abscoefficient_average",pbwo4_abscoefficient_average_graph,
+      false);
+  legend->AddEntry(pbwo4_abscoefficient_average_graph,"n average");
+
+  // Draw the legend
+  legend->Draw();
+
+  // Save canvas
+  canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_abscoefficient.svg");
+  canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_abscoefficient.png");
+
+  // Clear the previous stuff
+  h->Delete();
+  legend->Clear();
+
+  // Setup the histogram now
+  h = new TH2F("h","PbWO_{4} Ordinary & Extra-ordinary Absorption Lengths;"
+      "Wavelength (nm);Absorption Length #lambda (cm)",1,kLowWavelength-50,
+      kHighWavelength+50,1,10.0,1600.0);
+  h->GetYaxis()->SetTitleOffset(1.75);
+  h->SetStats(kFALSE);
+  h->Draw();
+
+
+  // Setup Absorption Coefficient and Length variables
+  std::vector<Double_t> pbwo4_abslength_ordinary_xs;
+  std::vector<Double_t> pbwo4_abslength_ordinary_ys;
+  std::vector<Double_t> pbwo4_abslength_extra_xs;
+  std::vector<Double_t> pbwo4_abslength_extra_ys;
+  std::vector<Double_t> pbwo4_abslength_average_xs;
+  std::vector<Double_t> pbwo4_abslength_average_ys;
+
+  // Process PbWO4 abslength_ordinary spectrum
+  for(Int_t i = 0; i < pbwo4_abscoefficient_ordinary_graph->GetN(); i++) {
+    pbwo4_abslength_ordinary_xs.push_back(
+        pbwo4_abscoefficient_ordinary_graph->GetX()[i]);
+    pbwo4_abslength_ordinary_ys.push_back(1.0/
+        pbwo4_abscoefficient_ordinary_graph->GetY()[i]);
+  }
+  TGraph *pbwo4_abslength_ordinary_graph = new TGraph(
+      pbwo4_abslength_ordinary_xs.size(),
+      pbwo4_abslength_ordinary_xs.data(),
+      pbwo4_abslength_ordinary_ys.data());
+  pbwo4_abslength_ordinary_graph->SetLineColor(kRed);
+  pbwo4_abslength_ordinary_graph->SetMarkerColor(kRed);
+  pbwo4_abslength_ordinary_graph->SetLineWidth(3.0);
+  pbwo4_abslength_ordinary_graph->SetFillColor(0);
+  pbwo4_abslength_ordinary_graph->Draw("SAMEC");
+  save("sim_pbwo4_abslength_ordinary",pbwo4_abslength_ordinary_graph,false);
+  legend->AddEntry(pbwo4_abslength_ordinary_graph,"n ordinary");
+
+  // Process PbWO4 abslength_extra spectrum
+  for(Int_t i = 0; i < pbwo4_abscoefficient_extra_graph->GetN(); i++) {
+    pbwo4_abslength_extra_xs.push_back(
+        pbwo4_abscoefficient_extra_graph->GetX()[i]);
+    pbwo4_abslength_extra_ys.push_back(1.0/
+        pbwo4_abscoefficient_extra_graph->GetY()[i]);
+  }
+  TGraph *pbwo4_abslength_extra_graph = new TGraph(
+      pbwo4_abslength_extra_xs.size(),
+      pbwo4_abslength_extra_xs.data(),
+      pbwo4_abslength_extra_ys.data());
+  pbwo4_abslength_extra_graph->SetLineColor(kBlue);
+  pbwo4_abslength_extra_graph->SetMarkerColor(kBlue);
+  pbwo4_abslength_extra_graph->SetLineWidth(3.0);
+  pbwo4_abslength_extra_graph->SetFillColor(0);
+  pbwo4_abslength_extra_graph->Draw("SAMEC");
+  save("sim_pbwo4_abslength_extra",pbwo4_abslength_extra_graph,false,"1./cm");
+  legend->AddEntry(pbwo4_abslength_extra_graph,"n extraordinary");
+
+  // Process PbWO4 abslength_average spectrum
+  for(Int_t i = 0; i < pbwo4_abscoefficient_average_graph->GetN(); i++) {
+    pbwo4_abslength_average_xs.push_back(
+        pbwo4_abscoefficient_average_graph->GetX()[i]);
+    pbwo4_abslength_average_ys.push_back(1.0/
+        pbwo4_abscoefficient_average_graph->GetY()[i]);
+  }
+  TGraph *pbwo4_abslength_average_graph = new TGraph(
+      pbwo4_abslength_average_xs.size(),
+      pbwo4_abslength_average_xs.data(),
+      pbwo4_abslength_average_ys.data());
+  pbwo4_abslength_average_graph->SetLineColor(kMagenta);
+  pbwo4_abslength_average_graph->SetMarkerColor(kMagenta);
+  pbwo4_abslength_average_graph->SetLineWidth(3.0);
+  pbwo4_abslength_average_graph->SetFillColor(0);
+  pbwo4_abslength_average_graph->Draw("SAMEC");
+  save("sim_pbwo4_abslength_average",pbwo4_abslength_average_graph,true,"cm");
+  legend->AddEntry(pbwo4_abslength_average_graph,"n average");
+
+  // Draw the legend
+  legend->Draw();
+
+  // Save canvas
+  canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_abslength.svg");
+  canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_abslength.png");
+
+  // Clear the previous stuff
+  h->Delete();
+  legend->Clear();
+
+  // Setup the histogram now
+  h = new TH2F("h","MyLar (BoPET) Index Of Refraction;"
+      "Wavelength (nm);Index of Refraction",1,kLowWavelength-50,
+      kHighWavelength+50,1,1.62,1.7);
+  h->SetStats(kFALSE);
+  h->Draw();
+
+  // Setup RINDEX variables
+  std::vector<Double_t> mylar_rindex_xs;
+  std::vector<Double_t> mylar_rindex_ys;
+
+  // Process PbWO4 rindex_ordinary spectrum
+  read("mylar_rindex.dat",mylar_rindex_xs,
+      mylar_rindex_ys,kLowWavelength,
+      kHighWavelength);
+  TGraph *mylar_rindex_graph = new TGraph(mylar_rindex_xs.size(),
+      mylar_rindex_xs.data(),mylar_rindex_ys.data());
+  mylar_rindex_graph->SetLineColor(kRed);
+  mylar_rindex_graph->SetMarkerColor(kRed);
+  mylar_rindex_graph->SetLineWidth(3.0);
+  mylar_rindex_graph->SetFillColor(0);
+  mylar_rindex_graph->Draw("SAMEC");
+  save("sim_mylar_rindex",mylar_rindex_graph,true,0,25);
+  //legend->AddEntry(mylar_rindex_graph,"n ordinary");
+
+  // Save canvas
+  canvas->SaveAs("/home/cornejo/public_html/psim/mylar_rindex.svg");
+  canvas->SaveAs("/home/cornejo/public_html/psim/mylar_rindex.png");
+
+  // Clear the previous stuff
+  h->Delete();
+  legend->Clear();
+
+  // Setup the histogram now
+  h = new TH2F("h","Air Index Of Refraction;"
+      "Wavelength (nm);Index of Refraction",1,kLowWavelength-50,
+      kHighWavelength+50,1,1.00027,1.00030);
+  h->SetStats(kFALSE);
+  h->Draw();
+
+  // Setup RINDEX variables
+  std::vector<Double_t> air_rindex_xs;
+  std::vector<Double_t> air_rindex_ys;
+
+  // Process PbWO4 rindex_ordinary spectrum
+  read("air_rindex.dat",air_rindex_xs,
+      air_rindex_ys,kLowWavelength,
+      kHighWavelength);
+  TGraph *air_rindex_graph = new TGraph(air_rindex_xs.size(),
+      air_rindex_xs.data(),air_rindex_ys.data());
+  air_rindex_graph->SetLineColor(kRed);
+  air_rindex_graph->SetMarkerColor(kRed);
+  air_rindex_graph->SetLineWidth(3.0);
+  air_rindex_graph->SetFillColor(0);
+  air_rindex_graph->Draw("SAMEC");
+  save("sim_air_rindex",air_rindex_graph,true,0);
+  //legend->AddEntry(air_rindex_graph,"n ordinary");
+
+  // Save canvas
+  canvas->SaveAs("/home/cornejo/public_html/psim/air_rindex.svg");
+  canvas->SaveAs("/home/cornejo/public_html/psim/air_rindex.png");
+
+
 }
 
 
@@ -250,7 +483,8 @@ void average(std::vector<Double_t> &xs,std::vector<Double_t> &ys,
 
 
 
-void save(const char *prefix, TGraph *graph, bool save_xml)
+void save(const char *prefix, TGraph *graph, bool save_xml, const char *unit,
+    Int_t limit)
 {
   if(!graph)
     return;
@@ -261,6 +495,9 @@ void save(const char *prefix, TGraph *graph, bool save_xml)
   std::cout << "Saving data to " << Form("%s.dat",prefix) << std::endl;
 
   Int_t n = graph->GetN();
+  Int_t step = 1;
+  if(limit>0 && n>limit)
+    step = n/limit;
   Double_t *xs = graph->GetX();
   Double_t *ys = graph->GetY();
   Double_t hc = 1239.84193; // eV*nm
@@ -270,20 +507,22 @@ void save(const char *prefix, TGraph *graph, bool save_xml)
   }
   out.close();
 
-
+  const char* unitPrefix = !unit ? "" : Form("*%s",unit);
   // Now save the XML
   if(save_xml) {
     out.open(Form("%s.xml",prefix),std::ios::out);
     std::cout << "Generating XML file: " << Form("%s.xml",prefix) << std::endl;
     e = hc/(xs[n-1]+0.5);
-    out << Form("<matrix name=\"%s\"  coldim=\"2\" values=\"",prefix);
-    out << Form("%g*eV %g",e,0.0);
-    for(Int_t i = n-1; i >= 0; i-- ) {
+    out << Form("<matrix name=\"%s\" coldim=\"2\"",prefix);
+    out << std::endl;
+    out << Form("  values=\"");
+    //out << Form("%g*eV %g%s",e,0.0,unitPrefix);
+    for(Int_t i = n-1; i >= 0; i-=step ) {
       e = hc/xs[i];
-      out <<  Form(" %g*eV %g",e,ys[i]);
+      out <<  Form(" %g*eV %g%s",e,ys[i],unitPrefix);
     }
     e = hc/(xs[0]-0.5);
-    out <<  Form("%g*eV %g",e,0.0);
+    //out <<  Form(" %g*eV %g%s",e,0.0,unitPrefix);
     out << "\" />";
   }
 }
