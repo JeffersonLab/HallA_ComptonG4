@@ -73,18 +73,18 @@
 
   <material name="LeadTungstate" formula="PbWO4" state="solid">
     <property name="RINDEX" ref="LeadTungstateRIndex" />
-    <property name="REFLECTIVITY" ref="LeadTungstateReflectivity" />
+    <property name="TRANSMITTANCE" ref="LeadTungstateTransmittance" />
     <property name="ABSLENGTH" ref="LeadTungstateAbsorptionLength" />
     <property name="FASTTIMECONSTANT" ref="LeadTungstateFastTimeConstant" />
     <property name="SLOWTIMECONSTANT" ref="LeadTungstateSlowTimeConstant" />
     <property name="SCINTILLATIONYIELD" ref="LeadTungstateScintillationYield" />
     <property name="YIELDRATIO" ref="LeadTungstateYieldRatio" />
     <property name="RESOLUTIONSCALE" ref="LeadTungstateResolutionScale" />
-    <property name="FASTCOMPONENT" ref="LeadTungstateFastComponent" />
-    <property name="SLOWCOMPONENT" ref="LeadTungstateSlowComponent" />
+    <property name="FASTCOMPONENT" ref="LeadTungstateEmission" />
+    <property name="SLOWCOMPONENT" ref="LeadTungstateEmission" />
     <property name="FASTSCINTILLATIONRISETIME" ref="LeadTungstateRiseTime" />
     <property name="SLOWSCINTILLATIONRISETIME" ref="LeadTungstateRiseTime" />
-    <T value="287.15" unit="K" />
+    <!-- <T value="287.15" unit="K" /> -->
     <D value="8.3" unit="g/cm3" />
     <composite n="1" ref="Lead" />
     <composite n="1" ref="Tungsten" />
@@ -98,7 +98,7 @@
     <property name="TRANSMITTANCE" ref="OpticalGreaseTransmittance" />
     <D unit="g/cm3" value="1.060" />
     <composite n="2" ref="Carbon" />
-    <compsoite n="6" ref="Hydrogen" />
+    <composite n="6" ref="Hydrogen" />
     <composite n="1" ref="Silicon" />
     <composite n="1" ref="Oxygen" />
   </material>
