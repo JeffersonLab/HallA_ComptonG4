@@ -8,4 +8,4 @@
 /Compton/event/printevent 100
 /Compton/step/OpticalMaxStepTime 250 ns
 
-/run/beamOn 2500
+/run/beamOn 100

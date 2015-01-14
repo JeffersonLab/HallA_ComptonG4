@@ -6,7 +6,7 @@
   <TimeLimit unit="minutes" time="720" />
   <DiskSpace space="2500" unit="MB" />
   <Memory space="2048" unit="MB" />
-  <OS name="centos62" />
+  <OS name="centos65" />
   <Command><![CDATA[
     date
     whoami

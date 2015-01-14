@@ -6,7 +6,7 @@
   <TimeLimit unit="minutes" time="720" />
   <DiskSpace space="2500" unit="MB" />
   <Memory space="2038" unit="MB" />
-  <OS name="centos62" />
+  <OS name="centos65" />
   <Command><![CDATA[
     date
     whoami
@@ -17,7 +17,8 @@
     source /home/cornejo/hallccompton.env
     cd /home/cornejo/qweak/Simulation/working
     ComptonG4_batch \
-       --batch-file=farm_submit/pbs/sim_no_thin_lead_RUNNUM.mac \
+       -r RUNNUM \
+       --batch-file=farm_submit/sim_no_thin_lead.mac \
        --geometry-file=geometries/ComptonGeometry_no_thin_lead.xml \
        --enable-optical=yes \
        --random-seed=3829RUNNUM \

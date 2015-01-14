@@ -1,0 +1,33 @@
+ <Request>
+  <Email email="cornejo@jlab.org" request="false" job="true" />
+  <Project name="qweak" />
+  <Track name="TRACKNAME" />
+  <Name name="ComptonG4_SETTING_RUNNUM" />
+  <TimeLimit unit="minutes" time="TIMEMINUTES" />
+  <DiskSpace space="2500" unit="MB" />
+  <Memory space="1024" unit="MB" />
+  <OS name="centos65" />
+  <Command><![CDATA[
+    date
+    whoami
+    hostname
+    pwd
+
+    source /home/cornejo/hallccompton.env
+    cd /home/cornejo/qweak/Simulation/working
+    ComptonG4_batch \
+       -r RUNNUM \
+       --batch-file=farm_submit/MACROFILE \
+       --geometry-file=geometry/ComptonGeometry_SETTING.xml \
+       --enable-optical=yes \
+       --random-seed=3829RUNNUM \
+       --rootfile-prefix=ComptonG4_SETTING_ \
+       --output-dir=/work/hallc/compton/users/cornejo/simulation/rootfiles
+
+    ]]></Command>
+
+  <Job>
+    <Stdout dest="/home/cornejo/scratch/logs/simulation/sim_SETTING_RUNNUM.out" />
+    <Stderr dest="/home/cornejo/scratch/logs/simulation/sim_SETTING_RUNNUM.err" />
+  </Job>
+</Request>
