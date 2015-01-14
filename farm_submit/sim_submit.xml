@@ -18,7 +18,7 @@
     ComptonG4_batch \
        -r RUNNUM \
        --batch-file=farm_submit/MACROFILE \
-       --geometry-file=geometry/ComptonGeometry_SETTING.xml \
+       --geometry-file=geometries/ComptonGeometry_SETTING.xml \
        --enable-optical=yes \
        --random-seed=3829RUNNUM \
        --rootfile-prefix=ComptonG4_SETTING_ \
