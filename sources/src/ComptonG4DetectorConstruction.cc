@@ -161,8 +161,8 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
   G4cout << "Logical Skin surface info: " << G4endl;
   const G4LogicalSkinSurfaceTable *surfaces =
     G4LogicalSkinSurface::GetSurfaceTable ();
-  G4LogicalSkinSurface *surf = 0;
   for(size_t i = 0; i < surfaces->size(); i++ ) {
+    G4LogicalSkinSurface *surf = 0;
     surf = surfaces->at(i);
     G4OpticalSurface *op =
       dynamic_cast<G4OpticalSurface*>(surf->GetSurfaceProperty());

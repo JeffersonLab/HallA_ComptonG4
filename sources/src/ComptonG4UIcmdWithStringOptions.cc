@@ -1,8 +1,8 @@
 #include "ComptonG4UIcmdWithStringOptions.hh"
 
 ComptonG4UIcmdWithStringOptions::ComptonG4UIcmdWithStringOptions(
-    const char *command_path, G4UImessenger *messenger, bool with_receiver ) :
-  G4UIcommand(command_path,messenger),
+    const char *command_path, G4UImessenger *mssgr, bool with_receiver ) :
+  G4UIcommand(command_path,mssgr),
   fWithReceiver(with_receiver)
 {
   SetOptionsSplitDelimiter(); // Specify default delimiter
