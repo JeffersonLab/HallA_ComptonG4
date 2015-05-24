@@ -127,7 +127,7 @@ private:
   ComptonG4SteppingAction *fSteppingAction;
 
   // Auto Save rootfile?
-  unsigned int fAutoSaveEntry;        // Auto save tree every n>0 entries
+  int fAutoSaveEntry;        // Auto save tree every n>0 entries
 
   // Keep track of track IDs
   std::vector<Int_t> fOpticalTrackIDs;
