@@ -69,7 +69,7 @@ G4bool ComptonG4Crystal::ProcessHits(G4Step* step,
     fEDepHits[volIndex].push_back(hit);
     fEDepData[volIndex].push_back(hit.GetData());
   }
-  fTotalEnergyDeposited[volIndex] += step->GetTotalEnergyDeposit()/MeV;
+  fTotalEnergyDeposited[volIndex] += step->GetTotalEnergyDeposit()/CLHEP::MeV;
   return true;
 }
 

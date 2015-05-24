@@ -12,6 +12,7 @@
 #include <G4ThreeVector.hh>
 #include <TObject.h>
 #include <ComptonG4Data.hh>
+#include <CLHEP/Units/SystemOfUnits.h>
 
 // Forward declarations
 class G4Track;

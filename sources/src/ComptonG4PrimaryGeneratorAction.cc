@@ -42,7 +42,7 @@ ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analys
   fOpticalDef = particleTable->FindParticle("optical");
 
   // Set a default primary Z vertex
-  fPrimaryVertexLocation = G4ThreeVector(0*mm,0*mm,0*mm);
+  fPrimaryVertexLocation = G4ThreeVector(0*CLHEP::mm,0*CLHEP::mm,0*CLHEP::mm);
 }
 
 ComptonG4PrimaryGeneratorAction::~ComptonG4PrimaryGeneratorAction()
@@ -85,21 +85,22 @@ void ComptonG4PrimaryGeneratorAction::Initialize()
   if( fGeneratorMode == 3 ) {
     // Variables used in the Compton mode
 
-    fLaserEnergy = h_Planck *c_light/fLaserWavelength;
+    fLaserEnergy = CLHEP::h_Planck * CLHEP::c_light/fLaserWavelength;
     fAParameter = 1/(1+(4*fLaserEnergy*fElectronEnergy)/
-        (electron_mass_c2*electron_mass_c2));
+        (CLHEP::electron_mass_c2*CLHEP::electron_mass_c2));
     fMaxPhotonEnergy = fElectronEnergy*(1-fAParameter);
     G4double am1 = fAParameter-1.0;
     for(int i = 0; i < 10000; i++ ) {
       G4double rho = G4double(i/10000.0);
       G4double term1 = rho*rho*am1*am1/(1.+rho*am1);
       G4double term3 = (1.-rho*(1.0+fAParameter))/(1.+rho*am1);
-      fCXdSig_dRho[i] = 2*pi*classic_electr_radius*
-        classic_electr_radius*fAParameter*(term1+1.0+term3*term3);
+      fCXdSig_dRho[i] = 2*CLHEP::pi*CLHEP::classic_electr_radius*
+        CLHEP::classic_electr_radius*fAParameter*(term1+1.0+term3*term3);
     }
   }
 
-  G4cout << "Max Scattered Photon Energy: " << fMaxPhotonEnergy/MeV << " MeV" << G4endl;
+  G4cout << "Max Scattered Photon Energy: "
+    << fMaxPhotonEnergy/CLHEP::MeV << " MeV" << G4endl;
 }
 
 G4double ComptonG4PrimaryGeneratorAction::GetRandomRho()
@@ -116,7 +117,7 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryMonoEnergeticMode()
 	  fParticleGun->SetParticleDefinition(fGammaDef);
 	  fAnalysis->SetAsym(0.0);
 	  fAnalysis->SetRho(0.0);
-	  fAnalysis->SetGammaE(fMaxPhotonEnergy/MeV);
+	  fAnalysis->SetGammaE(fMaxPhotonEnergy/CLHEP::MeV);
 	  fAnalysis->SetTheta(0.0);
 	  fAnalysis->SetPhi(0.0);
 }
@@ -125,8 +126,8 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryOpticalMode()
 {
   G4ThreeVector opticalDirection = G4ThreeVector(0.0,0.0,1.0);
   opticalDirection.setRThetaPhi(1.0,
-      CLHEP::RandFlat::shoot(pi/4.0)/radian,
-      CLHEP::RandFlat::shoot(2.0*pi)/radian);
+      CLHEP::RandFlat::shoot(CLHEP::pi/4.0)/CLHEP::radian,
+      CLHEP::RandFlat::shoot(2.0*CLHEP::pi)/CLHEP::radian);
   fParticleGun->SetParticleEnergy(
       CLHEP::RandFlat::shoot(1.0)*
       fMaxPhotonEnergy);
@@ -150,16 +151,17 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
   rho = GetRandomRho();
   gammaE = rho*fMaxPhotonEnergy;
   // I took the following for theta from Megan Friend's CompCal code
-  G4double tmp = electron_mass_c2/fElectronEnergy;
+  G4double tmp = CLHEP::electron_mass_c2/fElectronEnergy;
   tmp = tmp*tmp +4*gammaE/fElectronEnergy;
   // TODO: Fix this! Why are these values so large?!?!
   gammaTheta = std::acos( 1.0- 0.5*tmp*((1./rho)-1.0));
   // Since the above did not work, I reworked the equation myself
-  tmp = electron_mass_c2/fElectronEnergy;
+  tmp = CLHEP::electron_mass_c2/fElectronEnergy;
   gammaTheta = std::sqrt(4*fLaserEnergy*fAParameter/gammaE-(tmp*tmp));
 
-  gammaPhi=CLHEP::RandFlat::shoot(2.0*pi);
-  gammaDirection.setRThetaPhi(1.0,gammaTheta/radian,gammaPhi/radian);
+  gammaPhi=CLHEP::RandFlat::shoot(2.0*CLHEP::pi);
+  gammaDirection.setRThetaPhi(1.0,gammaTheta/CLHEP::radian,
+      gammaPhi/CLHEP::radian);
   fParticleGun->SetParticleEnergy(gammaE);
   fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
   fParticleGun->SetParticleMomentumDirection(gammaDirection);
@@ -168,9 +170,9 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
   //    << gammaDirection.getY()/mm << "," << gammaDirection.getZ()/mm << ")\n";
   fAnalysis->SetAsym(GetComptonAsym(rho));
   fAnalysis->SetRho(rho);
-  fAnalysis->SetGammaE(gammaE/MeV);
-  fAnalysis->SetTheta(57.2957795*gammaTheta/radian);
-  fAnalysis->SetPhi(57.2957795*gammaPhi/radian);
+  fAnalysis->SetGammaE(gammaE/CLHEP::MeV);
+  fAnalysis->SetTheta(57.2957795*gammaTheta/CLHEP::radian);
+  fAnalysis->SetPhi(57.2957795*gammaPhi/CLHEP::radian);
   if(fVerbose>0)
     G4cout << "Shooting photon with energy: " << gammaE/CLHEP::MeV << " MeV"
       << G4endl;
