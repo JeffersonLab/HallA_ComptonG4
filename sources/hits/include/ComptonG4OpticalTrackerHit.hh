@@ -5,8 +5,8 @@
  *      Author: Juan Carlos Cornejo <cornejo@jlab.org>
  */
 
-#ifndef COMPTONG4HIT_HH
-#define COMPTONG4HIT_HH
+#ifndef COMPTONG4OPTICALTRACKERHIT_HH
+#define COMPTONG4OPTICALTRACKERHIT_HH
 
 #include "VComptonG4Hit.hh"
 #include <G4ThreeVector.hh>
@@ -122,4 +122,4 @@ public:
   }
 };
 
-#endif /* COMPTONG4HIT_HH */
+#endif /* COMPTONG4OPTICALTRACKERHIT_HH */
