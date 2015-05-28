@@ -59,6 +59,7 @@ G4bool ComptonG4Crystal::ProcessHits(G4Step* step,
       fOpticalHits[volIndex].push_back(hit);
       fOpticalData[volIndex].push_back(hit.GetData());
       fAnalysis->OpticalHit();
+      ToOpticalTracker(track,false);
     }
     fAnalysis->ProcessOpticalTrackID(track->GetTrackID());
     CheckUniqueTrack(track);

@@ -140,7 +140,8 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
 
   G4cout << "Parsing through physical volumes" << G4endl;
   for( pvciter = pvs->begin(); pvciter != pvs->end(); pvciter++ ) {
-    G4cout << (*pvciter)->GetName() << G4endl;
+    G4cout << "Physical Volume: " << (*pvciter)->GetName() << " \tHash ID: "
+      << (*pvciter)->GetName().hash(G4String::exact) << G4endl;
     G4GDMLAuxListType auxInfo = parser.GetVolumeAuxiliaryInformation(
       (*pvciter)->GetLogicalVolume());
     std::vector<G4GDMLAuxPairType>::const_iterator ipair = auxInfo.begin();

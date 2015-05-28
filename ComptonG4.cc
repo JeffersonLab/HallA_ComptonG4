@@ -38,6 +38,7 @@
 #include "ComptonG4SteppingAction.hh"
 #include "ComptonG4SensitiveDetectorManager.hh"
 #include "ComptonG4StackingAction.hh"
+#include "ComptonG4OpticalTracker.hh"
 
 // Include BOOST headers and setup boost namespace
 #include <boost/program_options.hpp>
@@ -51,6 +52,7 @@ int main( int argc, char **argv)
   G4String config_file;
   G4String batch_file;
   G4bool use_optical;
+  G4bool global_optical_tracking;
   G4double random_seed;
   G4String output_dir;
   G4String rootfile_prefix;
@@ -78,6 +80,8 @@ int main( int argc, char **argv)
      ,"Output ROOT File Prefix, ex: ComptonG4_")
     ("enable-optical", po::value<G4bool>()->default_value(true)
      ->implicit_value(true),"Enable/Disable optical photons")
+    ("enable-opticaltracker", po::value<G4bool>()->default_value(true)
+     ->implicit_value(true),"Enable/Disable Global tracking of optical photons")
     ("random-seed",po::value<G4double>()->default_value(17760704.),
      "Set the random seed")
     ("command",po::value<std::vector<std::string> >(),
@@ -138,6 +142,7 @@ int main( int argc, char **argv)
   run = vm["run"].as<G4int>();
   run_min_digits = vm["run-min-digits"].as<G4int>();
   use_optical = vm["enable-optical"].as<G4bool>();
+  global_optical_tracking = vm["enable-optical"].as<G4bool>();
   random_seed = vm["random-seed"].as<G4double>();
   output_dir = vm["output-dir"].as<std::string>();
   rootfile_prefix = vm["rootfile-prefix"].as<std::string>();
@@ -164,14 +169,18 @@ int main( int argc, char **argv)
   // Run Manager
   G4RunManager *runManager = new G4RunManager();
 
+  // Create the global optical tracker
+  ComptonG4OpticalTracker *optical_tracker = new ComptonG4OpticalTracker(
+      global_optical_tracking);
+
   // Auxiliary DataIO class
-  ComptonG4Analysis *analysis = new ComptonG4Analysis();
+  ComptonG4Analysis *analysis = new ComptonG4Analysis(optical_tracker);
   analysis->SetOutputPath(output_dir);
   analysis->SetRootfilePrefix(rootfile_prefix);
 
   // Sensitive Detector Manager
   ComptonG4SensitiveDetectorManager* sensManager =
-    new ComptonG4SensitiveDetectorManager(analysis);
+    new ComptonG4SensitiveDetectorManager(analysis,optical_tracker);
   analysis->SetSDManager(sensManager);
 
   // Create the default /Compton directory for all messengers
@@ -240,7 +249,7 @@ int main( int argc, char **argv)
   runAction->SetRunNumber(run);
   runAction->SetRunMinDigits(run_min_digits);
   runManager->SetUserAction(runAction);
-  runManager->SetUserAction(new ComptonG4StackingAction());
+  runManager->SetUserAction(new ComptonG4StackingAction(optical_tracker));
 
   // Initialize G4 kernel
   runManager->Initialize();

@@ -59,14 +59,20 @@ G4bool ComptonG4PMTCathode::ProcessHits(G4Step* step,
             track->GetKineticEnergy());
       }
 
-      if(G4UniformRand() < efficiency) { // That's a hit!!
+      G4bool detected = false;
+      // It seems efficiency is now defined in 0-100 range, despite
+      // the fractional input on the GDML files. Great. I wish it was mentioned
+      // somewhere :/
+      if(G4UniformRand()*100. < efficiency) { // That's a hit!!
         fTotalOpticalPhotons[volIndex]++;
         ComptonG4OpticalHit hit;
         hit.ProcessStep(step);
         fOpticalHits[volIndex].push_back(hit);
         fOpticalData[volIndex].push_back(hit.GetData());
         fAnalysis->OpticalHit();
+        detected = true;
       }
+      ToOpticalTracker(track,detected);
     }
     fAnalysis->ProcessOpticalTrackID(track->GetTrackID());
   }

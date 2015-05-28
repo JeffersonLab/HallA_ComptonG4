@@ -16,6 +16,7 @@ class TTree;
 class TFile;
 class ComptonG4SensitiveDetectorManager;
 class ComptonG4SteppingAction;
+class ComptonG4OpticalTracker;
 
 /*!
  * @class ComptonG4Analysis
@@ -30,7 +31,7 @@ class ComptonG4SteppingAction;
  !*/
 class ComptonG4Analysis {
 public:
-  ComptonG4Analysis();
+  ComptonG4Analysis(ComptonG4OpticalTracker *optical_tracker);
   ~ComptonG4Analysis();
 
   // Detector structure
@@ -131,6 +132,9 @@ private:
 
   // Keep track of track IDs
   std::vector<Int_t> fOpticalTrackIDs;
+
+  // Pointer to optical tracker
+  ComptonG4OpticalTracker *fOpticalTracker;
 };
 
 #endif

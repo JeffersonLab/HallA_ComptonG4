@@ -1,4 +1,5 @@
 #include "ComptonG4StackingAction.hh"
+#include "ComptonG4OpticalTracker.hh"
 
 // GEANT4 Includes
 #include <G4Track.hh>
@@ -7,9 +8,11 @@
 /*
  *
  */
-ComptonG4StackingAction::ComptonG4StackingAction() :
+ComptonG4StackingAction::ComptonG4StackingAction(
+    ComptonG4OpticalTracker *optical_tracker ) :
   fOpticalPhotonMinEnergy(0*CLHEP::eV),
-  fOpticalPhotonMaxEnergy(0*CLHEP::eV)
+  fOpticalPhotonMaxEnergy(0*CLHEP::eV),
+  fOpticalTracker(optical_tracker)
 {
   // TODO: Don't hard code this in! It should be set by a messenger
   fOpticalPhotonMinEnergy = 0.0*CLHEP::eV;
@@ -45,6 +48,9 @@ G4ClassificationOfNewTrack ComptonG4StackingAction::ClassifyNewTrack(
       return fKill;
     }
 
+    // Now notify the analyzer of a new optical photon
+    if(fOpticalTracker)
+      fOpticalTracker->ProcessNewTrack(track);
   }
 
   // Do the default GEANT4 thing

@@ -4,6 +4,8 @@
 #include "G4UserStackingAction.hh"
 #include "globals.hh"
 
+class ComptonG4OpticalTracker;
+
 /*!
  * @class ComptonG4StackingAction
  *
@@ -17,13 +19,17 @@
  !*/
 class ComptonG4StackingAction : public G4UserStackingAction {
 public:
-  ComptonG4StackingAction();
+  ComptonG4StackingAction(ComptonG4OpticalTracker *optical_tracker = 0);
   virtual ~ComptonG4StackingAction();
 
   virtual G4ClassificationOfNewTrack ClassifyNewTrack(const G4Track* track);
+  void SetAnalysis(ComptonG4OpticalTracker *optical_tracker) {
+    fOpticalTracker = optical_tracker;
+  }
 private:
   G4double fOpticalPhotonMinEnergy;
   G4double fOpticalPhotonMaxEnergy;
+  ComptonG4OpticalTracker *fOpticalTracker;
 };
 
 #endif

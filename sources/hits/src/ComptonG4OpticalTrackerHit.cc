@@ -44,16 +44,20 @@ void ComptonG4OpticalTrackerHit::ClearHit()
   SetStartPosition(G4ThreeVector(0.0,0.0,0.0));
   SetStartDirection(G4ThreeVector(0.0,0.0,0.0));
   SetStartMomentum(G4ThreeVector(0.0,0.0,0.0));
+  SetStartVolumeID(0);
 
   SetEndPosition(G4ThreeVector(0.0,0.0,0.0));
   SetEndDirection(G4ThreeVector(0.0,0.0,0.0));
   SetEndMomentum(G4ThreeVector(0.0,0.0,0.0));
+  SetEndVolumeID(0);
 
   SetKineticEnergy(0.0*CLHEP::MeV);
   SetTotalLength(0.0*CLHEP::nm);
   SetTrackID(-1);
   SetParentID(-1);
   SetCreationProcess(ComptonG4GenericOptical);
+  SetDetected(false);
+  SetRecordedEnd(false);
 }
 
 /*
@@ -76,12 +80,14 @@ void ComptonG4OpticalTrackerHit::ProcessStep(G4Step *step)
 /*
  * Process track information
  */
-void ComptonG4OpticalTrackerHit::ProcessTrack(G4Track *track, G4bool start)
+void ComptonG4OpticalTrackerHit::ProcessTrack(const G4Track *track,
+    G4bool start, G4bool detected)
 {
   if(start) {
     SetStartPosition(track->GetPosition());
     SetStartDirection(track->GetMomentumDirection());
     SetStartMomentum(track->GetMomentum());
+    SetStartVolumeID(track->GetVolume()->GetName().hash(G4String::exact));
     SetTotalLength(track->GetTrackLength());
     SetKineticEnergy(track->GetKineticEnergy());
     SetTrackID(track->GetTrackID());
@@ -105,8 +111,11 @@ void ComptonG4OpticalTrackerHit::ProcessTrack(G4Track *track, G4bool start)
     }
     SetCreationProcess(p);
   } else {
-    SetStartPosition(track->GetPosition());
-    SetStartDirection(track->GetMomentumDirection());
-    SetStartMomentum(track->GetMomentum());
+    SetEndPosition(track->GetPosition());
+    SetEndDirection(track->GetMomentumDirection());
+    SetEndMomentum(track->GetMomentum());
+    SetEndVolumeID(track->GetVolume()->GetName().hash(G4String::exact));
+    SetRecordedEnd(true);
+    SetDetected(detected);
   }
 }

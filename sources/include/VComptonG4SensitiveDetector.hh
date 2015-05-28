@@ -19,8 +19,10 @@
 class ComptonG4Analysis;
 class G4HCofThisEvent;
 class G4Step;
+class G4Track;
 class G4TouchableHistory;
 class TTree;
+class ComptonG4OpticalTracker;
 
 /*
  *
@@ -36,6 +38,10 @@ public:
 
   virtual void AddVolume(G4VPhysicalVolume* vol) {
     fVolumes.push_back(vol);
+  }
+
+  virtual void SetOpticalTracker(ComptonG4OpticalTracker *tracker) {
+    fOpticalTracker = tracker;
   }
 
   /*
@@ -58,6 +64,11 @@ public:
   virtual void SetOptions(std::map<G4String, G4String> options,
       bool ignore_unknown) = 0;
 
+  /*
+   * Send info to the global optical tracker
+   */
+  void ToOpticalTracker(G4Track *track, G4bool detected);
+
 protected:
   void CleanEvent();
   int GetIndex(G4VPhysicalVolume* vol);
@@ -68,6 +79,7 @@ protected:
       G4bool &result);
 
   void UnknownOption(G4String param, G4String value);
+  ComptonG4OpticalTracker *fOpticalTracker;
 };
 
 #endif /* COMPTONG4SENSITIVEDETECTOR_HH_ */

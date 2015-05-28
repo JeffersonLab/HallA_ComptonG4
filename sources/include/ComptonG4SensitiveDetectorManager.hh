@@ -13,6 +13,7 @@
 #include <G4String.hh>
 
 class ComptonG4Analysis;
+class ComptonG4OpticalTracker;
 class VComptonG4SensitiveDetector;
 class G4VSensitiveDetector;
 class G4LogicalVolume;
@@ -21,7 +22,8 @@ class ComptonG4SensitiveDetectorMessenger;
 
 class ComptonG4SensitiveDetectorManager {
 public:
-  ComptonG4SensitiveDetectorManager(ComptonG4Analysis*);
+  ComptonG4SensitiveDetectorManager(ComptonG4Analysis *analysis,
+      ComptonG4OpticalTracker *optical_tracker);
   virtual ~ComptonG4SensitiveDetectorManager();
 
   /*
@@ -58,6 +60,7 @@ public:
 private:
   ComptonG4SensitiveDetectorMessenger *fMessenger;
   ComptonG4Analysis *fAnalysis;
+  ComptonG4OpticalTracker *fOpticalTracker;
   std::vector<VComptonG4SensitiveDetector*> fDetectors;
 
   // Strings of special option specifiers

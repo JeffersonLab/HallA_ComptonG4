@@ -29,11 +29,13 @@ public:
   Double_t  start_position[3];      // [mm] End position in mm (x,y,z)
   Double_t  start_direction[3];     // [unitless] Momentum direction
   Double_t  start_momentum[3];      // [MeV/c] Momentum
+  UInt_t    start_volume_id;        // [unitless] id of start volume
 
   // Ending Information
   Double_t  end_position[3];      // [mm] End position in mm (x,y,z)
   Double_t  end_direction[3];     // [unitless] Momentum direction
   Double_t  end_momentum[3];      // [MeV/c] Momentum
+  UInt_t    end_volume_id;        // [unitless] id of end volume
 
   Bool_t    detected;         // [unitless] Was this particle detected?
 
@@ -43,6 +45,9 @@ public:
   Int_t     parent_id;        // [unitelss] ID of parent track
   Int_t     step_number;      // [unitless] Step number
   ComptonG4OpticalProcess  creation_process;// [enum] Process that created track
+
+  Bool_t    recorded_end;     // Whether we cleanly recorded the end of this
+                              // track (as opposed to just loosing it)
 
   // ROOT stuff
   ComptonG4OpticalTrackerData(){}

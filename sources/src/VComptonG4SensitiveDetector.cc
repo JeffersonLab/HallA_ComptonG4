@@ -7,6 +7,7 @@
 
 #include "VComptonG4SensitiveDetector.hh"
 #include "ComptonG4Analysis.hh"
+#include "ComptonG4OpticalTracker.hh"
 #include "ComptonG4Utils.hh"
 #include <G4OpticalPhoton.hh>
 #include <G4TrackStatus.hh>
@@ -14,7 +15,7 @@
 
 VComptonG4SensitiveDetector::VComptonG4SensitiveDetector(
     G4String name) :
-  G4VSensitiveDetector(name), fAnalysis(0)
+  G4VSensitiveDetector(name), fAnalysis(0), fOpticalTracker(0)
 {
 }
 
@@ -64,4 +65,11 @@ void VComptonG4SensitiveDetector::UnknownOption(G4String param, G4String value)
   if(!value.empty())
     G4cerr << "with value '" << value << "' ";
   G4cerr << "detected." << G4endl;
+}
+
+void VComptonG4SensitiveDetector::ToOpticalTracker(G4Track *track,
+    G4bool detected)
+{
+  if(fOpticalTracker)
+    fOpticalTracker->ProcessTrack(track,detected);
 }

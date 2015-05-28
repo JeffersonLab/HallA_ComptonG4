@@ -8,6 +8,7 @@
 
 // Local includes
 #include "ComptonG4Analysis.hh"
+#include "ComptonG4OpticalTracker.hh"
 #include "VComptonG4SensitiveDetector.hh"
 #include "ComptonG4SensitiveDetectorManager.hh"
 #include "ComptonG4SteppingAction.hh"
@@ -25,12 +26,14 @@
 /**
  *
  */
-ComptonG4Analysis::ComptonG4Analysis() : fRunNumber(0), fRunMinDigits(0),
+ComptonG4Analysis::ComptonG4Analysis(ComptonG4OpticalTracker *optical_tracker) :
+  fRunNumber(0), fRunMinDigits(0),
   fTree(0),fFile(0),fAsym(0.0),
   fRho(0.0),fGammaE(0.0),fTheta(0.0),fPhi(0.0),
   fNumberOfOpticalPhotonsStopped(0.0),fNumberOfOpticalPhotonsProduced(0.0),
   fTotalNumberOfOpticalPhotonsAbsorbed(0.0),fNumberOfEvents(0),
-  fSDManager(0),fSteppingAction(0),fAutoSaveEntry(0)
+  fSDManager(0),fSteppingAction(0),fAutoSaveEntry(0),
+  fOpticalTracker(optical_tracker)
 {
   // Empty out vectors and stuff
   CleanEvent();
@@ -165,6 +168,9 @@ void ComptonG4Analysis::Initialize()
   if(fSteppingAction)
     fSteppingAction->CreateTreeBranch(fTree);
 
+  if(fOpticalTracker)
+    fOpticalTracker->CreateTreeBranch(fTree);
+
   CleanEvent();
   fNumberOfEvents = 0;
 }
@@ -174,6 +180,7 @@ void ComptonG4Analysis::Initialize()
  */
 void ComptonG4Analysis::StartOfEvent()
 {
+  fOpticalTracker->StartOfEvent();
 }
 
 /**
@@ -181,6 +188,8 @@ void ComptonG4Analysis::StartOfEvent()
  */
 void ComptonG4Analysis::EndOfEvent()
 {
+  fOpticalTracker->EndOfEvent();
+
   // Fill the tree
   fTree->Fill();
 

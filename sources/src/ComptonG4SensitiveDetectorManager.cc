@@ -21,7 +21,8 @@ const G4String ComptonG4SensitiveDetectorManager::fOptionsAllIgnore =
   ":ALL_IGNORE:"; // Apply to all (ignore uknown)
 
 ComptonG4SensitiveDetectorManager::ComptonG4SensitiveDetectorManager(
-    ComptonG4Analysis *analysis) : fMessenger(0), fAnalysis(analysis)
+    ComptonG4Analysis *analysis, ComptonG4OpticalTracker *optical_tracker) :
+  fMessenger(0), fAnalysis(analysis), fOpticalTracker(optical_tracker)
 {
   fMessenger = new ComptonG4SensitiveDetectorMessenger(this);
 }
@@ -44,6 +45,7 @@ void ComptonG4SensitiveDetectorManager::RegisterDetector(
     Create(detType,name);
   if(sd) {
     sd->SetAnalysis(fAnalysis);
+    sd->SetOpticalTracker(fOpticalTracker);
     volume->SetSensitiveDetector(sd);
     G4cout << "Registered SD of type: " << detType
       << " on volume: " << name << G4endl;
