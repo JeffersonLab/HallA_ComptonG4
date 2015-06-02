@@ -142,7 +142,7 @@ int main( int argc, char **argv)
   run = vm["run"].as<G4int>();
   run_min_digits = vm["run-min-digits"].as<G4int>();
   use_optical = vm["enable-optical"].as<G4bool>();
-  global_optical_tracking = vm["enable-optical"].as<G4bool>();
+  global_optical_tracking = vm["enable-opticaltracker"].as<G4bool>();
   random_seed = vm["random-seed"].as<G4double>();
   output_dir = vm["output-dir"].as<std::string>();
   rootfile_prefix = vm["rootfile-prefix"].as<std::string>();
