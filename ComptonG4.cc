@@ -80,7 +80,7 @@ int main( int argc, char **argv)
      ,"Output ROOT File Prefix, ex: ComptonG4_")
     ("enable-optical", po::value<G4bool>()->default_value(true)
      ->implicit_value(true),"Enable/Disable optical photons")
-    ("enable-opticaltracker", po::value<G4bool>()->default_value(true)
+    ("enable-opticaltracker", po::value<G4bool>()->default_value(false)
      ->implicit_value(true),"Enable/Disable Global tracking of optical photons")
     ("random-seed",po::value<G4double>()->default_value(17760704.),
      "Set the random seed")
