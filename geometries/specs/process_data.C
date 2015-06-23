@@ -38,7 +38,7 @@ void process_data()
   h->Draw();
 
   // Setup the legend
-  TLegend *legend = new TLegend(0.5,0.775,0.89,0.925);
+  TLegend *legend = new TLegend(0.51,0.775,0.90,0.925);
   legend->SetFillColor(0);
 
   // Setup variables
@@ -60,8 +60,8 @@ void process_data()
       pbwo4_emission_graph_raw);
   TGraph *pbwo4_emission_graph = normalizeIntegral(pbwo4_emission_graph_unorm,
       pbwo4_emission_scale);
-  pbwo4_emission_graph->SetLineColor(kRed);
-  pbwo4_emission_graph->SetMarkerColor(kRed);
+  pbwo4_emission_graph->SetLineColor(1757);
+  pbwo4_emission_graph->SetMarkerColor(1757);
   pbwo4_emission_graph->SetLineWidth(3.0);
   pbwo4_emission_graph->SetFillColor(0);
   pbwo4_emission_graph->Draw("SAMEC");
@@ -79,8 +79,8 @@ void process_data()
       pbwo4_transmission_xs.data(),pbwo4_transmission_ys.data());
   TGraph *pbwo4_transmission_graph = pbwo4_transmission_graph_smoother->
     SmoothSuper(pbwo4_transmission_graph_raw);
-  pbwo4_transmission_graph->SetLineColor(kGreen);
-  pbwo4_transmission_graph->SetMarkerColor(kGreen);
+  pbwo4_transmission_graph->SetLineColor(1759);
+  pbwo4_transmission_graph->SetMarkerColor(1759);
   pbwo4_transmission_graph->SetLineWidth(3.0);
   pbwo4_transmission_graph->SetFillColor(0);
   pbwo4_transmission_graph->Draw("SAMEC");
@@ -96,8 +96,8 @@ void process_data()
       pmt_efficiency_xs.data(),pmt_efficiency_ys.data());
   TGraph *pmt_efficiency_graph  = pmt_efficiency_graph_smoother->SmoothSuper(
       pmt_efficiency_graph_raw);
-  pmt_efficiency_graph->SetLineColor(kBlue);
-  pmt_efficiency_graph->SetMarkerColor(kBlue);
+  pmt_efficiency_graph->SetLineColor(1756);
+  pmt_efficiency_graph->SetMarkerColor(1756);
   pmt_efficiency_graph->SetLineWidth(3.0);
   pmt_efficiency_graph->SetFillColor(0);
   pmt_efficiency_graph->Draw("SAMEC");
@@ -108,7 +108,7 @@ void process_data()
   legend->Draw();
 
   // Save canvas
-  canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_optical_properties.svg");
+  canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_optical_properties.pdf");
   canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_optical_properties.png");
 
 
@@ -140,8 +140,8 @@ void process_data()
       pbwo4_rindex_ordinary_xs.data(),pbwo4_rindex_ordinary_ys.data());
   TGraph *pbwo4_rindex_ordinary_graph = pbwo4_rindex_ordinary_graph_smoother->SmoothSuper(
       pbwo4_rindex_ordinary_graph_raw);
-  pbwo4_rindex_ordinary_graph->SetLineColor(kRed);
-  pbwo4_rindex_ordinary_graph->SetMarkerColor(kRed);
+  pbwo4_rindex_ordinary_graph->SetLineColor(1757);
+  pbwo4_rindex_ordinary_graph->SetMarkerColor(1757);
   pbwo4_rindex_ordinary_graph->SetLineWidth(3.0);
   pbwo4_rindex_ordinary_graph->SetFillColor(0);
   pbwo4_rindex_ordinary_graph->Draw("SAMEC");
@@ -157,8 +157,8 @@ void process_data()
       pbwo4_rindex_extra_xs.data(),pbwo4_rindex_extra_ys.data());
   TGraph *pbwo4_rindex_extra_graph = pbwo4_rindex_extra_graph_smoother->SmoothSuper(
       pbwo4_rindex_extra_graph_raw);
-  pbwo4_rindex_extra_graph->SetLineColor(kBlue);
-  pbwo4_rindex_extra_graph->SetMarkerColor(kBlue);
+  pbwo4_rindex_extra_graph->SetLineColor(1756);
+  pbwo4_rindex_extra_graph->SetMarkerColor(1756);
   pbwo4_rindex_extra_graph->SetLineWidth(3.0);
   pbwo4_rindex_extra_graph->SetFillColor(0);
   pbwo4_rindex_extra_graph->Draw("SAMEC");
@@ -174,8 +174,9 @@ void process_data()
       pbwo4_rindex_average_xs.data(),pbwo4_rindex_average_ys.data());
   TGraph *pbwo4_rindex_average_graph = pbwo4_rindex_average_graph_smoother->SmoothSuper(
       pbwo4_rindex_average_graph_raw);
-  pbwo4_rindex_average_graph->SetLineColor(kMagenta);
-  pbwo4_rindex_average_graph->SetMarkerColor(kMagenta);
+  pbwo4_rindex_average_graph->SetLineColor(1758);
+  pbwo4_rindex_average_graph->SetMarkerColor(1758);
+  pbwo4_rindex_average_graph->SetLineStyle(2);
   pbwo4_rindex_average_graph->SetLineWidth(3.0);
   pbwo4_rindex_average_graph->SetFillColor(0);
   pbwo4_rindex_average_graph->Draw("SAMEC");
@@ -186,7 +187,7 @@ void process_data()
   legend->Draw();
 
   // Save canvas
-  canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_rindex.svg");
+  canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_rindex.pdf");
   canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_rindex.png");
 
   // Clear the previous stuff
@@ -218,8 +219,8 @@ void process_data()
       pbwo4_abscoefficient_ordinary_xs.data(),pbwo4_abscoefficient_ordinary_ys.data());
   TGraph *pbwo4_abscoefficient_ordinary_graph = pbwo4_abscoefficient_ordinary_graph_smoother->SmoothSuper(
       pbwo4_abscoefficient_ordinary_graph_raw);
-  pbwo4_abscoefficient_ordinary_graph->SetLineColor(kRed);
-  pbwo4_abscoefficient_ordinary_graph->SetMarkerColor(kRed);
+  pbwo4_abscoefficient_ordinary_graph->SetLineColor(1757);
+  pbwo4_abscoefficient_ordinary_graph->SetMarkerColor(1757);
   pbwo4_abscoefficient_ordinary_graph->SetLineWidth(3.0);
   pbwo4_abscoefficient_ordinary_graph->SetFillColor(0);
   pbwo4_abscoefficient_ordinary_graph->Draw("SAMEC");
@@ -235,8 +236,8 @@ void process_data()
       pbwo4_abscoefficient_extra_xs.data(),pbwo4_abscoefficient_extra_ys.data());
   TGraph *pbwo4_abscoefficient_extra_graph = pbwo4_abscoefficient_extra_graph_smoother->SmoothSuper(
       pbwo4_abscoefficient_extra_graph_raw);
-  pbwo4_abscoefficient_extra_graph->SetLineColor(kBlue);
-  pbwo4_abscoefficient_extra_graph->SetMarkerColor(kBlue);
+  pbwo4_abscoefficient_extra_graph->SetLineColor(1756);
+  pbwo4_abscoefficient_extra_graph->SetMarkerColor(1756);
   pbwo4_abscoefficient_extra_graph->SetLineWidth(3.0);
   pbwo4_abscoefficient_extra_graph->SetFillColor(0);
   pbwo4_abscoefficient_extra_graph->Draw("SAMEC");
@@ -252,8 +253,8 @@ void process_data()
       pbwo4_abscoefficient_average_xs.data(),pbwo4_abscoefficient_average_ys.data());
   TGraph *pbwo4_abscoefficient_average_graph = pbwo4_abscoefficient_average_graph_smoother->SmoothSuper(
       pbwo4_abscoefficient_average_graph_raw);
-  pbwo4_abscoefficient_average_graph->SetLineColor(kMagenta);
-  pbwo4_abscoefficient_average_graph->SetMarkerColor(kMagenta);
+  pbwo4_abscoefficient_average_graph->SetLineColor(1758);
+  pbwo4_abscoefficient_average_graph->SetMarkerColor(1758);
   pbwo4_abscoefficient_average_graph->SetLineWidth(3.0);
   pbwo4_abscoefficient_average_graph->SetFillColor(0);
   pbwo4_abscoefficient_average_graph->Draw("SAMEC");
@@ -265,7 +266,7 @@ void process_data()
   legend->Draw();
 
   // Save canvas
-  canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_abscoefficient.svg");
+  canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_abscoefficient.pdf");
   canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_abscoefficient.png");
 
   // Clear the previous stuff
@@ -300,8 +301,8 @@ void process_data()
       pbwo4_abslength_ordinary_xs.size(),
       pbwo4_abslength_ordinary_xs.data(),
       pbwo4_abslength_ordinary_ys.data());
-  pbwo4_abslength_ordinary_graph->SetLineColor(kRed);
-  pbwo4_abslength_ordinary_graph->SetMarkerColor(kRed);
+  pbwo4_abslength_ordinary_graph->SetLineColor(1757);
+  pbwo4_abslength_ordinary_graph->SetMarkerColor(1757);
   pbwo4_abslength_ordinary_graph->SetLineWidth(3.0);
   pbwo4_abslength_ordinary_graph->SetFillColor(0);
   pbwo4_abslength_ordinary_graph->Draw("SAMEC");
@@ -319,8 +320,8 @@ void process_data()
       pbwo4_abslength_extra_xs.size(),
       pbwo4_abslength_extra_xs.data(),
       pbwo4_abslength_extra_ys.data());
-  pbwo4_abslength_extra_graph->SetLineColor(kBlue);
-  pbwo4_abslength_extra_graph->SetMarkerColor(kBlue);
+  pbwo4_abslength_extra_graph->SetLineColor(1756);
+  pbwo4_abslength_extra_graph->SetMarkerColor(1756);
   pbwo4_abslength_extra_graph->SetLineWidth(3.0);
   pbwo4_abslength_extra_graph->SetFillColor(0);
   pbwo4_abslength_extra_graph->Draw("SAMEC");
@@ -338,8 +339,8 @@ void process_data()
       pbwo4_abslength_average_xs.size(),
       pbwo4_abslength_average_xs.data(),
       pbwo4_abslength_average_ys.data());
-  pbwo4_abslength_average_graph->SetLineColor(kMagenta);
-  pbwo4_abslength_average_graph->SetMarkerColor(kMagenta);
+  pbwo4_abslength_average_graph->SetLineColor(1758);
+  pbwo4_abslength_average_graph->SetMarkerColor(1758);
   pbwo4_abslength_average_graph->SetLineWidth(3.0);
   pbwo4_abslength_average_graph->SetFillColor(0);
   pbwo4_abslength_average_graph->Draw("SAMEC");
@@ -350,7 +351,7 @@ void process_data()
   legend->Draw();
 
   // Save canvas
-  canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_abslength.svg");
+  canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_abslength.pdf");
   canvas->SaveAs("/home/cornejo/public_html/psim/pbwo4_abslength.png");
 
   // Clear the previous stuff
@@ -374,8 +375,8 @@ void process_data()
       kHighWavelength);
   TGraph *mylar_rindex_graph = new TGraph(mylar_rindex_xs.size(),
       mylar_rindex_xs.data(),mylar_rindex_ys.data());
-  mylar_rindex_graph->SetLineColor(kRed);
-  mylar_rindex_graph->SetMarkerColor(kRed);
+  mylar_rindex_graph->SetLineColor(1757);
+  mylar_rindex_graph->SetMarkerColor(1757);
   mylar_rindex_graph->SetLineWidth(3.0);
   mylar_rindex_graph->SetFillColor(0);
   mylar_rindex_graph->Draw("SAMEC");
@@ -383,7 +384,7 @@ void process_data()
   //legend->AddEntry(mylar_rindex_graph,"n ordinary");
 
   // Save canvas
-  canvas->SaveAs("/home/cornejo/public_html/psim/mylar_rindex.svg");
+  canvas->SaveAs("/home/cornejo/public_html/psim/mylar_rindex.pdf");
   canvas->SaveAs("/home/cornejo/public_html/psim/mylar_rindex.png");
 
   // Clear the previous stuff
@@ -407,8 +408,8 @@ void process_data()
       kHighWavelength);
   TGraph *air_rindex_graph = new TGraph(air_rindex_xs.size(),
       air_rindex_xs.data(),air_rindex_ys.data());
-  air_rindex_graph->SetLineColor(kRed);
-  air_rindex_graph->SetMarkerColor(kRed);
+  air_rindex_graph->SetLineColor(1757);
+  air_rindex_graph->SetMarkerColor(1757);
   air_rindex_graph->SetLineWidth(3.0);
   air_rindex_graph->SetFillColor(0);
   air_rindex_graph->Draw("SAMEC");
@@ -416,10 +417,8 @@ void process_data()
   //legend->AddEntry(air_rindex_graph,"n ordinary");
 
   // Save canvas
-  canvas->SaveAs("/home/cornejo/public_html/psim/air_rindex.svg");
+  canvas->SaveAs("/home/cornejo/public_html/psim/air_rindex.pdf");
   canvas->SaveAs("/home/cornejo/public_html/psim/air_rindex.png");
-
-
 }
 
 
