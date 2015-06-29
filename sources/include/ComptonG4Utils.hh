@@ -16,6 +16,11 @@ namespace ComptonG4Utils {
   G4int GetBool(G4String string, G4bool &result);
 
   /*
+   * Determine if string is a G4double and if so, parse it
+   */
+  G4double GetDouble(G4String string);
+
+  /*
    * Determine if two strings are the same (while ignoring case)
    */
   G4bool SameIgnore(G4String left, G4String right);

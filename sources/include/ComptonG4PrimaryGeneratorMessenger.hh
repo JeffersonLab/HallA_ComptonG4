@@ -8,6 +8,7 @@ class ComptonG4PrimaryGeneratorAction;
 class G4UIdirectory;
 class G4UIcmdWithAnInteger;
 class G4UIcmdWithADoubleAndUnit;
+class G4UIcmdWithADouble;
 class G4UIcmdWithoutParameter;
 
 /*!
@@ -38,6 +39,7 @@ private:
   G4UIcmdWithADoubleAndUnit  *fSetPhotonVertexZCmd;
   G4UIcmdWithAnInteger       *fSetVerboseCmd;
   G4UIcmdWithoutParameter    *fInitializeCmd;
+  G4UIcmdWithADouble         *fSetTransversePolCmd;
 };
 
 #endif
