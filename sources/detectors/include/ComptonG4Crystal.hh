@@ -80,6 +80,7 @@ private:
   std::vector<G4int> fOpticalProducedTrackID;
   std::vector<G4int> fOpticalProducedProcess;
   bool fStoreEDepHits;
+  bool fStoreOpticalHits;
 };
 
 #endif /* COMPTONG4CRYSTAL_HH_ */

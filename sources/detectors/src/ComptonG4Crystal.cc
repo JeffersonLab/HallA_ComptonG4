@@ -16,7 +16,8 @@
 
 ComptonG4Crystal::ComptonG4Crystal(
     G4String name) :
-  VComptonG4SensitiveDetector(name), fStoreEDepHits(false)
+  VComptonG4SensitiveDetector(name), fStoreEDepHits(false),
+  fStoreOpticalHits(false)
 {
 }
 
@@ -53,11 +54,14 @@ G4bool ComptonG4Crystal::ProcessHits(G4Step* step,
     if(tStatus == fStopButAlive ||
         tStatus == fStopAndKill ) {
       fTotalOpticalPhotons[volIndex]++;
-      //G4cout << "Creator process: " << track->GetCreatorProcess()->GetProcessName() << G4endl;
-      ComptonG4OpticalHit hit;
-      hit.ProcessStep(step);
-      fOpticalHits[volIndex].push_back(hit);
-      fOpticalData[volIndex].push_back(hit.GetData());
+
+      // Only store optical hits if asked to
+      if(fStoreOpticalHits) {
+        ComptonG4OpticalHit hit;
+        hit.ProcessStep(step);
+        fOpticalHits[volIndex].push_back(hit);
+        fOpticalData[volIndex].push_back(hit.GetData());
+      }
       fAnalysis->OpticalHit();
       ToOpticalTracker(track,false);
     }
@@ -117,8 +121,9 @@ void ComptonG4Crystal::CreateTreeBranch(TTree* tree)
       tree->Branch(Form("%s_eDep_hits",fVolumes[i]->GetName().c_str()),
           &(fEDepData[i]));
 
-    tree->Branch(Form("%s_optical_hits",fVolumes[i]->GetName().c_str()),
-        &(fOpticalDataPtr[i]));
+    if(fStoreOpticalHits)
+      tree->Branch(Form("%s_optical_hits",fVolumes[i]->GetName().c_str()),
+          &(fOpticalDataPtr[i]));
 
     tree->Branch("Crystals_produced_optical_cerenkov",
         &fTotalOpticalCerenkov );
@@ -136,6 +141,8 @@ void ComptonG4Crystal::SetOptions(std::map<G4String,G4String> options,
   for(it = options.begin(); it != options.end(); it++ ) {
     if( ProcessOptionBool(it->first,
           it->second,"store_edep_hits",fStoreEDepHits) ) {
+    } else if ( ProcessOptionBool(it->first,
+          it->second,"store_optical_hits",fStoreOpticalHits) ) {
     } else if (ignore_unknown) { // Okay, fine, ignore it
     } else { // Uknown option passed, complain!
       UnknownOption(it->first,it->second);
