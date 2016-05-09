@@ -1,4 +1,5 @@
 #include "ComptonG4Utils.hh"
+#include <stdlib.h>
 
 namespace ComptonG4Utils {
 
@@ -17,6 +18,11 @@ namespace ComptonG4Utils {
     }
 
     return rc;
+  }
+
+  G4double GetDouble(G4String string)
+  {
+    return strtod(string.data(),NULL);
   }
 
   G4bool SameIgnore(G4String left, G4String right)

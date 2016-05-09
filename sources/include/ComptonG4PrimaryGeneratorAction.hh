@@ -43,6 +43,8 @@ public:
   void SetPhotonVertex(G4ThreeVector vec) { fPrimaryVertexLocation = vec; }
   void SetPhotonDivergence(G4double val) { fPhotonDivergence = val; }
   void SetPhotonTrackStart(G4double val) { fPhotonTrackStart = val; }
+  void SetTransversePol(G4double val) { fTransversePol = val; }
+  void SetLongitudinalPol(G4double val) { fLongitudinalPol = val; }
 
   void SetVerbose(int level) {
     fVerbose = level;
@@ -72,6 +74,8 @@ private:
   G4double fPhotonDivergence;     // Photon divergence
   G4double fPhotonTrackStart;     // Length he photon is tracked
   G4int fGeneratorMode;           // Gun generator mode
+  G4double fTransversePol;        // Transverse polarization for e beam
+  G4double fLongitudinalPol;      // Longitudinal polarization for e beam
 
   // Compton Mode settings
   G4double fLaserEnergy;               // Laser energy
@@ -90,6 +94,7 @@ private:
   void GeneratePrimaryComptonMode();
   void GeneratePrimaryOpticalMode();
   void GeneratePrimaryMonoEnergeticMode();
+  void GeneratePrimaryPolarizedElectronsMode();
 
   int fVerbose;
 };

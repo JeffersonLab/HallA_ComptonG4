@@ -7,6 +7,9 @@
 #include "ComptonG4DetectorConstructionMessenger.hh"
 #include "ComptonG4SensitiveDetectorManager.hh"
 #include "ComptonG4Analysis.hh"
+#include "ComptonG4Utils.hh"
+#include "ComptonG4DipoleField.hh"
+
 #include <G4VPhysicalVolume.hh>
 #include <G4PVPlacement.hh>
 #include <G4ThreeVector.hh>
@@ -23,6 +26,17 @@
 #include <G4SurfaceProperty.hh>
 #include <G4OpticalSurface.hh>
 #include <G4SDManager.hh>
+
+// Magnetic fields stuff
+#include <G4FieldManager.hh>
+#include <G4UniformMagField.hh>
+#include <G4Mag_SpinEqRhs.hh>
+#include <G4MagIntegratorStepper.hh>
+#include <G4MagIntegratorDriver.hh>
+#include <G4ChordFinder.hh>
+#include <G4SimpleRunge.hh>
+#include <G4ExplicitEuler.hh>
+#include <G4ClassicalRK4.hh>
 
 // GEANT4 Geometry related includes
 #include <G4GDMLParser.hh>
@@ -134,6 +148,9 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
           color = G4Colour(red,green,blue,alpha);
         }
         (*lvciter)->SetVisAttributes(new G4VisAttributes(color));
+      } else if ( str == "Magnetic" ) { // For now only support the standard
+        // Compton Dipole xwidth = 3 cm is fixed
+        RegisterMagneticVolume(*lvciter);
       }
     }
   }
@@ -155,6 +172,8 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
         //((ComptonG4SensitiveDetector*)
         //    (*pvciter)->GetLogicalVolume()->GetSensitiveDetector())
         //  ->AddVolume(*pvciter);
+      } else if( str == "Magnetic" ) {
+        RegisterMagneticPhysical(*pvciter,(*pvciter)->GetLogicalVolume());
       }
     }
   }
@@ -210,4 +229,88 @@ G4VPhysicalVolume*  ComptonG4DetectorConstruction::Construct()
 
 void ComptonG4DetectorConstruction::ActivateDetector(G4String)
 {
+}
+
+void ComptonG4DetectorConstruction::RegisterMagneticVolume(G4LogicalVolume *v)
+{
+  fMagneticFields.push_back(new ComptonG4DipoleField());
+  fMagneticVolumes.push_back(v);
+}
+
+void ComptonG4DetectorConstruction::RegisterMagneticPhysical(
+    G4VPhysicalVolume *p, G4LogicalVolume *v)
+{
+  G4int index = -1;
+  for(size_t i = 0; i < fMagneticVolumes.size(); i++ ) {
+    if( fMagneticVolumes[i] == v ) {
+      index = i;
+    }
+  }
+
+  // Seems like a new logical volume...how did it slip through the cracks?
+  if( index < 0 )
+    return;
+
+  fMagneticFields[index]->AddNewActiveRegion( p->GetTranslation(),
+      p->GetRotation() );
+}
+
+
+
+void ComptonG4DetectorConstruction::ProcessMagneticVolumeOptions(G4String name,
+    std::map<G4String, G4String> options)
+{
+  G4int volIndex = -1;
+  for(size_t i = 0; i < fMagneticVolumes.size() && volIndex == -1; i++ ) {
+    if( fMagneticVolumes[i]->GetName() == name) {
+      volIndex = i;
+    }
+  }
+
+  if( volIndex < 0 ) { // Ignore unknown volumes!
+  G4cerr << "NOT FOUND: " << name << G4endl;
+    return;
+  }
+  G4cerr << "FOUND: " << name << G4endl;
+
+  G4LogicalVolume *vol = fMagneticVolumes[volIndex];
+  ComptonG4DipoleField *magField = fMagneticFields[volIndex];
+
+  // Need just the file name
+  G4String file_name;
+
+  std::map<G4String,G4String>::iterator it;
+  for(it = options.begin(); it != options.end(); it++ ) {
+    if( ComptonG4Utils::SameIgnore(it->first,"file_name") ) {
+      file_name = it->second;
+    } else { // Uknown option passed, complain!
+      //UnknownOption(it->first,it->second);
+    }
+  }
+
+  magField->InitFromFile(file_name);
+  G4FieldManager *fieldMan =
+    new G4FieldManager(magField);
+  G4Mag_EqRhs *eqn = new G4Mag_SpinEqRhs(magField);
+  //G4MagIntegratorStepper *stepper = new G4ClassicalRK4(eqn,12);
+  //G4MagIntegratorStepper *stepper = new G4SimpleRunge(eqn, 12);
+  G4MagIntegratorStepper *stepper = new G4ExplicitEuler(eqn, 12);
+  G4MagInt_Driver *int_driver = new G4MagInt_Driver(0.01*CLHEP::mm,
+      stepper,stepper->GetNumberOfVariables());
+  G4ChordFinder* finder = new G4ChordFinder(int_driver);
+  fieldMan->SetChordFinder(finder);
+
+  vol->SetFieldManager(fieldMan,true);
+}
+
+G4LogicalVolume* ComptonG4DetectorConstruction::GetMagneticVolume(G4String name)
+{
+  std::vector<G4LogicalVolume*>::iterator it;
+  for( it = fMagneticVolumes.begin(); it != fMagneticVolumes.end(); it++) {
+    if((*it)->GetName() == name)
+      return *it;
+  }
+
+  // Not found? Boo!
+  return 0;
 }

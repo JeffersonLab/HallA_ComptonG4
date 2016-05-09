@@ -14,7 +14,7 @@
 class ComptonG4DetectorConstruction;
 class G4UIdirectory;
 class G4UIcmdWithAString;
-class G4UIcmdWithoutParameter;
+class ComptonG4UIcmdWithStringOptions;
 
 /*!
  * @class ComptonG4PDetectorConstructionMessenger
@@ -37,6 +37,7 @@ private:
 
   G4UIdirectory                 *fGeometryDir;
   G4UIcmdWithAString            *fActivateDetectorCmd;
+  ComptonG4UIcmdWithStringOptions *fMagneticCmd;
 };
 
 #endif /* COMPTONG4DETECTORCONSTRUCTIONMESSENGER_HH_ */

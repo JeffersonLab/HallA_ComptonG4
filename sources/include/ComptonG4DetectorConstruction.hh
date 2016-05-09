@@ -2,11 +2,15 @@
 #define _COMPTONDETECTORCONSTRUCTION_H
 
 #include <G4VUserDetectorConstruction.hh>
+#include <map>
 
 // Predefine classes
 class ComptonG4DetectorConstructionMessenger;
 class ComptonG4SensitiveDetectorManager;
 class ComptonG4Analysis;
+class ComptonG4DipoleField;
+class G4LogicalVolume;
+class G4VPhysicalVolume;
 
 /*!
  * @class ComptonG4DetectorConstruction
@@ -27,11 +31,18 @@ public:
 
   G4VPhysicalVolume* Construct();
   void ActivateDetector(G4String det);
+  void RegisterMagneticVolume(G4LogicalVolume *v);
+  void RegisterMagneticPhysical(G4VPhysicalVolume *p, G4LogicalVolume *v);
+  void ProcessMagneticVolumeOptions(G4String name,
+      std::map<G4String, G4String> options);
+  G4LogicalVolume* GetMagneticVolume(G4String name);
 private:
   G4VPhysicalVolume* fPhysicsWorld;
 
   ComptonG4DetectorConstructionMessenger *fMessenger;
   ComptonG4Analysis *fAnalysis;
+  std::vector<G4LogicalVolume*> fMagneticVolumes;
+  std::vector<ComptonG4DipoleField *> fMagneticFields;
 };
 
 #endif

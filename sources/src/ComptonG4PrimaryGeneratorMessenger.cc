@@ -6,6 +6,7 @@
 #include <G4UIcmdWithoutParameter.hh>
 #include <G4UIcmdWithAnInteger.hh>
 #include <G4UIcmdWithADoubleAndUnit.hh>
+#include <G4UIcmdWithADouble.hh>
 
 ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
     ComptonG4PrimaryGeneratorAction *action) :
@@ -73,6 +74,12 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
   fSetVerboseCmd->SetParameterName("verbose",0);
   fSetVerboseCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+  // Set the maximum transverse polarization in beam mode
+  fSetTransversePolCmd = new G4UIcmdWithADouble(
+      "/Compton/gun/TransversePol",this);
+  fSetTransversePolCmd->SetGuidance("Maximum Transverse Polarization in Beam Mode");
+  fSetTransversePolCmd->SetParameterName("MaxTransversePol",false);
+  fSetTransversePolCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   fInitializeCmd = new G4UIcmdWithoutParameter(
       "/Compton/gun/Initialize",this);
@@ -111,5 +118,8 @@ void ComptonG4PrimaryGeneratorMessenger::SetNewValue(
     fAction->SetPhotonX(fSetPhotonVertexXCmd->GetNewDoubleValue(newValue));
   } else if ( command == fSetPhotonVertexYCmd ) {
     fAction->SetPhotonY(fSetPhotonVertexXCmd->GetNewDoubleValue(newValue));
+  } else if ( command == fSetTransversePolCmd ) {
+    fAction->SetTransversePol(
+        fSetTransversePolCmd->GetNewDoubleValue(newValue));
   }
 }

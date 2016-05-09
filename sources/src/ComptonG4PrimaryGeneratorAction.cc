@@ -15,7 +15,7 @@
 
 ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analysis *analysis) :
 
-  fAnalysis(analysis),fVerbose(0)
+  fAnalysis(analysis),fTransversePol(0.0),fLongitudinalPol(1.0),fVerbose(0)
 {
   G4int n_particle = 1; // Gun shoots photons ( and may shoot electrons too)
   fParticleGun = new G4ParticleGun(n_particle);
@@ -69,6 +69,9 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaries(G4Event *event)
     break;
   case 4: // Optical photon mode
     GeneratePrimaryOpticalMode();
+    break;
+  case 5: // Polarized Electrons mode
+    GeneratePrimaryPolarizedElectronsMode();
     break;
   default: // Do nothing, use the default GEANT4 gun
     break;
@@ -176,6 +179,25 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
   if(fVerbose>0)
     G4cout << "Shooting photon with energy: " << gammaE/CLHEP::MeV << " MeV"
       << G4endl;
+}
+
+void ComptonG4PrimaryGeneratorAction::GeneratePrimaryPolarizedElectronsMode()
+{
+  fParticleGun->SetParticleEnergy(fElectronEnergy);
+  fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
+  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.0,0.0,1.0));
+  G4double transAngle = CLHEP::RandFlat::shoot(2*CLHEP::pi)/CLHEP::radian;
+  fParticleGun->SetParticlePolarization(G4ThreeVector(
+        fTransversePol*std::cos(transAngle),
+        fTransversePol*std::sin(transAngle),
+        std::sqrt(1.0-(fTransversePol*fTransversePol))));
+        //fLongitudinalPol));
+  fParticleGun->SetParticleDefinition(fElectronDef);
+  fAnalysis->SetAsym(0.0);
+  fAnalysis->SetRho(0.0);
+  fAnalysis->SetGammaE(0.0);
+  fAnalysis->SetTheta(0.0);
+  fAnalysis->SetPhi(0.0);
 }
 
 /**
