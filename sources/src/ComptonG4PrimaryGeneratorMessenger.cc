@@ -38,6 +38,20 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
   fSetLaserWavelengthCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   // Set Initial Photon Vertex
+  fSetPhotonVertexXCmd = new G4UIcmdWithADoubleAndUnit(
+      "/Compton/gun/PhotonVertexX",this);
+  fSetPhotonVertexXCmd->SetGuidance("Initial photon vertex");
+  fSetPhotonVertexXCmd->SetParameterName("PhotonVertexX",false);
+  fSetPhotonVertexXCmd->SetUnitCategory("Length");
+  fSetPhotonVertexXCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  fSetPhotonVertexYCmd = new G4UIcmdWithADoubleAndUnit(
+      "/Compton/gun/PhotonVertexY",this);
+  fSetPhotonVertexYCmd->SetGuidance("Initial photon vertex");
+  fSetPhotonVertexYCmd->SetParameterName("PhotonVertexY",false);
+  fSetPhotonVertexYCmd->SetUnitCategory("Length");
+  fSetPhotonVertexYCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
   fSetPhotonVertexZCmd = new G4UIcmdWithADoubleAndUnit(
       "/Compton/gun/PhotonVertexZ",this);
   fSetPhotonVertexZCmd->SetGuidance("Initial photon vertex");
@@ -93,5 +107,9 @@ void ComptonG4PrimaryGeneratorMessenger::SetNewValue(
     fAction->SetVerbose(fSetVerboseCmd->GetNewIntValue(newValue));
   } else if ( command == fInitializeCmd ) {
     fAction->Initialize();
+  } else if ( command == fSetPhotonVertexXCmd ) {
+    fAction->SetPhotonX(fSetPhotonVertexXCmd->GetNewDoubleValue(newValue));
+  } else if ( command == fSetPhotonVertexYCmd ) {
+    fAction->SetPhotonY(fSetPhotonVertexXCmd->GetNewDoubleValue(newValue));
   }
 }
