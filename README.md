@@ -1,8 +1,7 @@
 # GEANT4 Simulation for The Qweak Compton Photon Detector
 
-```
-Warning: This is actively in development - use at your own risk.
-```
+Simulation package used to extract an electron beam polarization via detection
+of Compton Scattered photons.
 
 ## Compiling
 
