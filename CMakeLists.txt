@@ -53,9 +53,11 @@ message("All project sources: ${my_project_sources_dictionary}")
 
 # Find Boost libraries
 # There is a bug in CMAke 2.8's internal find boost process
-if(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} EQUAL 2.8)
+# (jc2 2016-05-09: seems to also apply to version 3.2, so new
+# check will just use greater than 2.7)
+if(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} GREATER 2.7)
   SET( Boost_NO_BOOST_CMAKE ON)
-endif(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} EQUAL 2.8)
+endif(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} GREATER 2.7)
 
 find_package(Geant4 REQUIRED COMPONENTS gdml qt ui_all vis_all)                       # Find Geant4
 include_directories(${Geant4_INCLUDE_DIRS})         # Add -I type paths
