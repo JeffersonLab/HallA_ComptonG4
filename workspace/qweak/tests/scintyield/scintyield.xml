@@ -1,0 +1,34 @@
+ <Request>
+  <Email email="cornejo@jlab.org" request="false" job="true" />
+  <Project name="qweak" />
+  <Track name="simulation" />
+  <Name name="compton_simulation_phdet_scintyield_SETTING_RUNNUM" />
+  <TimeLimit unit="minutes" time="720" />
+  <DiskSpace space="2500" unit="MB" />
+  <Memory space="1024" unit="MB" />
+  <OS name="centos65" />
+  <Command><![CDATA[
+    date
+    whoami
+    hostname
+    pwd
+
+    setenv localdir `pwd`
+    source /home/cornejo/hallccompton.env
+    cd /home/cornejo/qweak/Simulation/working/tests/scintyield
+    ComptonG4_batch \
+       -r RUNNUM \
+       --batch-file=scintyield.mac \
+       --geometry-file=geometry/ComptonGeometry_scintyield_setting_SETTING.xml \
+       --enable-optical=yes \
+       --random-seed=3829RUNNUM \
+       --rootfile-prefix=ComptonG4_tst_scintyield_SETTING_ \
+       --output-dir=/work/hallc/compton/users/cornejo/simulation/rootfiles
+
+    ]]></Command>
+
+  <Job>
+    <Stdout dest="/home/cornejo/scratch/logs/simulation/scintyield_SETTING_RUNNUM.out" />
+    <Stderr dest="/home/cornejo/scratch/logs/simulation/scintyield_SETTING_RUNNUM.err" />
+  </Job>
+</Request>

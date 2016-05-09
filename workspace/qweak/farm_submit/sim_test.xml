@@ -1,0 +1,34 @@
+ <Request>
+  <Email email="cornejo@jlab.org" request="false" job="true" />
+  <Project name="qweak" />
+  <Track name="test" />
+  <Name name="compton_simulation_phdet_Test_0" />
+  <TimeLimit unit="minutes" time="30" />
+  <DiskSpace space="2500" unit="MB" />
+  <Memory space="2048" unit="MB" />
+  <OS name="centos62" />
+  <Command><![CDATA[
+    date
+    whoami
+    hostname
+    pwd
+
+    setenv localdir `pwd`
+    source /home/cornejo/hallccompton.env
+    cd /home/cornejo/qweak/Simulation/working
+    ComptonG4_batch \
+       --batch-file=farm_submit/sim_test.mac \
+       --geometry-file=geometries/ComptonGeometry_2thin_lead.xml \
+       --enable-optical=yes \
+       --random-seed=17760704 \
+       --rootfile-prefix=ComptonG4_Test_ \
+       --output-dir=$localdir 
+
+    ]]></Command>
+
+  <Job>
+    <Output src="ComptonG4_Test_0.root" dest="/work/hallc/compton/users/cornejo/simulation/rootfiles/" />
+    <Stdout dest="/home/cornejo/scratch/logs/simulation/sim_Test_0.out" />
+    <Stderr dest="/home/cornejo/scratch/logs/simulation/sim_Test_0.err" />
+  </Job>
+</Request>

@@ -1,0 +1,28 @@
+<!-- File Containing ThinLead definition. Ideally, this should be the
+     only file you need to specify. -->
+<!ENTITY ComptonThinLead SYSTEM "../../../geometries/Compton2ThinLeads.xml">
+
+<!-- File Containing commonn definitions -->
+<!ENTITY ComptonDefinitions SYSTEM "ComptonDefinitions_scintyield.xml">
+
+<!-- File Containing Materials definition -->
+<!ENTITY ComptonMaterials SYSTEM "../../../geometries/ComptonMaterials.xml">
+
+<!-- File Containing Solids definition -->
+<!ENTITY ComptonSolids SYSTEM "../../../geometries/ComptonSolids.xml">
+
+<!-- File Containing Volumes definition -->
+<!ENTITY ComptonVolumes SYSTEM "../../../geometries/ComptonVolumes.xml">
+
+<!-- File Containing LeadTungstateDetector definition -->
+<!ENTITY ComptonLeadTungstateDetector SYSTEM "../../../geometries/ComptonLeadTungstateDetector.xml">
+
+<!-- File Containing Beamline definition -->
+<!ENTITY ComptonBeamline SYSTEM "../../../geometries/ComptonBeamline.xml">
+
+<!-- File Containing OpticalSurfaces definition -->
+<!ENTITY ComptonOpticalSurfaces SYSTEM "../../../geometries/ComptonOpticalSurfaces.xml">
+
+
+<!-- File Containing the standard world geometry definition -->
+<!ENTITY ComptonStandardGeometry SYSTEM "../../../geometries/ComptonStandardGeometry.xml">

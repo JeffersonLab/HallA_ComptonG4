@@ -1,0 +1,32 @@
+<physvol name="ComptonBeamlineUpstreamPhysical">
+  <volumeref ref="ComptonBeamlineUpstreamLogical" />
+  <position name="ComptonBeamlineUpstream_Position" unit="mm" x="0" y="0" z="0" />
+</physvol>
+
+<physvol name="ComptonBeamlineDownstreamPhysical">
+  <volumeref ref="ComptonBeamlineDownstreamLogical" />
+  <position name="ComptonBeamlineDownstream_Position" unit="mm" x="0" y="0" z="0" />
+</physvol>
+
+
+<physvol name="Dipole3">
+  <volumeref ref="DipoleField" />
+  <!-- <position name="Dipole3FieldPosition" unit="cm" x="0" y="0" z="117.5"/> -->
+  <positionref ref="Dipole3FieldPosition" />
+  <rotation name="Dipole3FieldRotation" unit="deg" z="180" />
+</physvol>
+
+<physvol name="Dipole4">
+  <volumeref ref="DipoleField" />
+  <!-- <position name="Dipole4FieldPosition" unit="cm" x="0" y="57.0" z="437.0" /> -->
+  <positionref ref="Dipole4FieldPosition" />
+  <rotation name="Dipole4FieldRotation" z="0" unit="deg" />
+</physvol>
+
+
+<physvol name="Dipole0">
+  <volumeref ref="DipoleField" />
+  <position name="Dipole0FieldPosition" unit="mm" x="0" y="570.0" z="0.0" />
+  <rotation name="Dipole0FieldRotation" z="0" unit="deg" />
+</physvol>
+
