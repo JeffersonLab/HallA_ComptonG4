@@ -58,6 +58,9 @@ message("All project sources: ${my_project_sources_dictionary}")
 if(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} GREATER 2.7)
   SET( Boost_NO_BOOST_CMAKE ON)
 endif(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} GREATER 2.7)
+find_package(Boost COMPONENTS program_options REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+link_directories(${Boost_LIBRARY_DIR})
 
 find_package(Geant4 REQUIRED COMPONENTS gdml qt ui_all vis_all)                       # Find Geant4
 include_directories(${Geant4_INCLUDE_DIRS})         # Add -I type paths
@@ -81,15 +84,10 @@ set_target_properties(ComptonG4Root PROPERTIES OUTPUT_NAME cg4root)
 
 # Find Boost libraries
 # Though, there seems to be a bug in version 2.8 of CMake's boost
-# finding process. As such, we'll disable it for version 2.8
-if(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} EQUAL 2.8)
-  SET( Boost_NO_BOOST_CMAKE ON )
-endif(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} EQUAL 2.8)
-
-find_package(Boost COMPONENTS program_options REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
-link_directories(${Boost_LIBRARY_DIR})
-
+## finding process. As such, we'll disable it for version 2.8
+#if(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} EQUAL 2.8)
+#  SET( Boost_NO_BOOST_CMAKE ON )
+#endif(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} EQUAL 2.8)
 
 # Link the ROOT and Geant4 libraries
 target_link_libraries(ComptonG4 ComptonG4Lib ${Geant4_LIBRARIES}
