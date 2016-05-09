@@ -1,0 +1,9 @@
+/Compton/gun/mode 3
+/Compton/gun/verbose 0
+/Compton/gun/ElectronEnergy 1.160 GeV
+/Compton/gun/LaserWavelenght 532 nm
+/Compton/gun/PhotonVertexZ 0.0 mm
+/Compton/gun/Initialize
+/Compton/event/printevent 100
+
+/run/beamOn 2500

@@ -1,0 +1,10 @@
+  <!-- Individual LeadTungstate Crystals 
+  <variable name="LeadTungstateCrystalDimX" value="30" />
+  <variable name="LeadTungstateCrystalDimY" value="30" />
+  <variable name="LeadTungstateCrystalDimZ" value="200" />
+  <position name="Dipole3FieldPosition" unit="cm" x="0" y="0" z="117.5"/>
+  <position name="Dipole4FieldPosition" unit="cm" x="0" y="57.0" z="437.0" />
+  -->
+
+  <position name="Dipole3FieldPosition" unit="cm" x="SETX1" y="SETY1" z="SETZ1"/>
+  <position name="Dipole4FieldPosition" unit="cm" x="SETX2" y="SETY2" z="SETZ2" />

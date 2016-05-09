@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd" >-->
+  <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="geometries/schema/gdml.xsd" >
+  <define>
+    <position name="WorldCenter" unit="m" x="0" y="0" z="0" />
+    <!-- LeadTungstate Optical Properties -->
+    <matrix name="LeadTungstateAbsLength" coldim="2" values="0.1*eV 1.0*m 10.0*eV 1.0*m" />
+    <matrix name="LeadTungstateIndex" coldim="2"
+        values="1.771*eV 2.221 1.837*eV 2.226 1.907*eV 2.230 1.984*eV 2.236 2.066*eV 2.242 2.156*eV 2.250 2.254*eV 2.259 2.362*eV 2.270 2.480*eV 2.284 2.611*eV 2.301 2.755*eV 2.323 2.917*eV 2.353 3.100*eV 2.393 3.306*eV 2.452"/>
+    <matrix name="LeadTungstateReflectivity" coldim="2"
+        values="0.1*eV 0.97 10.0*eV 0.97" />
+    <matrix name="LeadTungstateRayleigh" coldim="2"
+        values="1.771*eV 55*cm 3.306*eV 55*cm" />
+    <matrix name="LeadTungstateSpecularLobe" coldim="2"
+        values="1.771*eV 1.0 3.306*eV 1.0" />
+    <matrix name="LeadTungstateSpecularSpike" coldim="2"
+        values="1.771*eV 0.0 3.306*eV 0.0" />
+    <matrix name="LeadTungstateBackscatter" coldim="2"
+        values="1.771*eV 0.0 3.306*eV 0.0" />
+
+    <!-- Air and Vaccuum Optical Properties -->
+    <matrix name="AirIndex" coldim="2" values="0.1*eV 1.0 10.0*eV 1.0" />
+    <matrix name="AirReflectivity" coldim="2" values="0.1*eV 1.0 10.0*eV 1.0" />
+
+    <!-- MyLar BoPET Optical Properties -->
+    <matrix name="BoPETIndex" coldim="2" values="0.1*eV 1.68 10.0*eV 1.63" />
+    <matrix name="BoPETReflectivity" coldim="2" values="0.1*eV 1.0 10.0*eV 1.0" />
+
+    <!-- PMT Optical Properties -->
+    <matrix name="BorosilicateGlassIndex" coldim="2"
+        values="1.889*eV 1.46916 1.1926*eV 1.46953 2.104*eV 1.47133 2.270*eV 1.47311 2.584*eV 1.47676 2.845*eV 1.48015"/>
+    <matrix name="ComptonPMTGlassEfficiency" coldim="2" values="0.1*eV 1.0 10.0*eV 1.0"/>
+
+    <matrix name="FusedSilicaGlassIndex" coldim="2"
+        values="0.3823*eV 1.4131 0.6025*eV 1.4372 0.7255*eV 1.4421 0.8889*eV 1.4458 1.1450*eV 1.4494 1.4383*eV 1.4525 1.8894*eV 1.4564 1.9261*eV 1.4567 2.1042*eV 1.4584 2.1103*eV 1.4585 2.2706*eV 1.4601 2.8453*eV 1.4666 3.0648*eV 1.4696 3.3973*eV 1.4745 4.1046*eV 1.4872 4.4238*eV 1.4940 5.7836*eV 1.5337 6.200*eV 1.5500 6.7027*eV 1.5750 7.2941*eV 1.6150" />
+
+    <matrix name="KCsSbCathodeIndex" coldim="2"
+        values="1.8235*eV 2.9600 1.8647*eV 2.955 1.9077*eV 2.95 1.9528*eV 2.9500 2.000*eV 2.9600 2.0462*eV 2.9800 2.1017*eV 3.0100 2.1565*eV 3.0600 2.2143*eV 3.1200 2.2752*eV 3.2000 2.3396*eV 3.2600 2.4078*eV 3.0900 2.4800*eV 3.0000 2.5567*eV 3.0000 2.6383*eV 3.0000 2.7253*eV 2.8700 2.8182*eV 2.7000 2.9176*eV 2.6100 3.0244*eV 2.3800 3.1392*eV 2.1800 3.2632*eV 1.9200" />
+
+  </define>
+
+  <materials >
+    <element Z="1" formula="H" name="Hydrogen" >
+      <atom value="1.00794" unit="g/mole" />
+    </element>
+
+    <element Z="6" formula="C" name="Carbon" >
+      <atom value="12.011" unit="g/mole" />
+    </element>
+
+    <element Z="8" formula="O" name="Oxygen" >
+      <atom value="16." unit="g/mole" />
+    </element>
+
+    <element Z="14" formula="Si" name="Silicon" >
+      <atom value="28.085" unit="g/mole" />
+    </element>
+
+    <element Z="5" formula="B" name="Boron" >
+      <atom value="10.811" unit="g/mole" />
+    </element>
+
+    <element Z="11" formula="Na" name="Sodium" >
+      <atom value="22.989769" unit="g/mole" />
+    </element>
+
+    <element Z="82" formula="Pb" name="Lead" >
+      <atom value="207.20" unit="g/mole"/>
+    </element>
+
+    <element Z="74" formula="W" name="Tungsten" >
+      <atom value="183.84" unit="g/mole" />
+    </element>
+
+    <element Z="7" formula="N" name="Nitrogen" >
+      <atom value="14" unit="g/mole"/>
+    </element>
+
+    <element Z="51" formula="Sb" name="Antimony">
+      <atom value="121.760" unit="g/mole" />
+    </element>
+
+    <element Z="19" formula="K" name="Potassium">
+      <atom value="39.0983" unit="g/mole" />
+    </element>
+
+    <element Z="55" formula="Cs" name="Caesium">
+      <atom value="132.905" unit="g/mole" />
+    </element>
+
+    <material Z="29" name="Copper" state="solid" >
+      <D unit="g/cm3" value="8.96" />
+      <atom unit="g/mole" value="63.546" />
+    </material>
+    <material name="LeadMaterial" Z="82" formula="Pb" state="solid">
+      <D value="11.35" unit="g/cm3" />
+      <atom unit="g/mole" value="207.20" />
+    </material>
+
+    <material name="Aluminum" Z="13" state="solid">
+      <D unit="g/cm3" value="2.7" />
+      <atom unit="g/mole" value="26.9815" />
+    </material>
+
+    <material name="LeadTungstate" formula="PbWO4" >
+      <property name="RINDEX" ref="LeadTungstateIndex" />
+      <D value="8.3" unit="g/cm3" />
+      <composite n="1" ref="Lead" />
+      <composite n="1" ref="Tungsten" />
+      <composite n="4" ref="Oxygen" />
+    </material>
+
+    <material name="AirOptical" >
+      <property name="RINDEX" ref="AirIndex" />
+      <property name="REFLECTIVITY" ref="AirReflectivity" />
+      <D unit="g/cm3" value="0.00129" />
+      <fraction n="0.7" ref="Nitrogen" />
+      <fraction n="0.3" ref="Oxygen" />
+    </material>
+
+    <material name="Air" >
+      <D unit="g/cm3" value="0.00129" />
+      <fraction n="0.7" ref="Nitrogen" />
+      <fraction n="0.3" ref="Oxygen" />
+    </material>
+
+    <material name="AirVacuum" >
+      <D unit="g/cm3" value="1.0e-25" />
+      <fraction n="0.7" ref="Nitrogen" />
+      <fraction n="0.3" ref="Oxygen" />
+    </material>
+
+    <material name="AirVacuumOptical" >
+      <property name="RINDEX" ref="AirIndex" />
+      <D unit="g/cm3" value="1.0e-25" />
+      <fraction n="0.7" ref="Nitrogen" />
+      <fraction n="0.3" ref="Oxygen" />
+    </material>
+
+
+    <material name="Silica" formula="SiO2" >
+      <property name="RINDEX" ref="FusedSilicaGlassIndex" />
+      <D unit="g/cm3" value="2.65" />
+      <composite n="1" ref="Silicon" />
+      <composite n="2" ref="Oxygen" />
+    </material>
+
+    <material name="BoricOxide" formula="B2O3" >
+      <D unit="g/cm3" value="2.46" />
+      <composite n="2" ref="Boron" />
+      <composite n="3" ref="Oxygen" />
+    </material>
+
+    <material name="SodiumOxide" formula="Na2O" >
+      <D unit="g/cm3" value="2.27" />
+      <composite n="2" ref="Sodium" />
+      <composite n="1" ref="Oxygen" />
+    </material>
+
+
+    <material name="AluminumOxide" formula="Al2O3" >
+      <D unit="g/cm3" value="3.95" />
+      <composite n="2" ref="Aluminum" />
+      <composite n="3" ref="Oxygen" />
+    </material>
+
+
+    <material name="BorosilicateGlass" state="solid" >
+      <property name="RINDEX" ref="BorosilicateGlassIndex" />
+      <!-- From: http://www.camglassblowing.co.uk/gproperties.htm -->
+      <D unit="g/cm3" value="2.23" />
+      <fraction n="0.807" ref="Silica" />
+      <fraction n="0.130" ref="BoricOxide" />
+      <fraction n="0.040" ref="SodiumOxide" />
+      <fraction n="0.023" ref="AluminumOxide" />
+    </material>
+
+    <!-- Mylar definition -->
+    <material name="BoPET" state="solid" formula="C10H8O4">
+      <property name="RINDEX" ref="BoPETIndex" />
+      <property name="REFLECTIVITY" ref="BoPETReflectivity" />
+      <D unit="g/cm3" value="1.38" />
+      <composite n="10" ref="Carbon" />
+      <composite n="8" ref="Hydrogen" />
+      <composite n="4" ref="Oxygen" />
+    </material>
+
+    <!-- Bialkali definition -->
+    <material name="Bialkali" state="solid" formula="KCsSb" >
+      <property name="RINDEX" ref="KCsSbCathodeIndex" />
+      <D unit="g/cm3" value="4.28" /> <!-- Had to look this up! -->
+      <composite n="1" ref="Potassium" />
+      <composite n="1" ref="Caesium" />
+      <composite n="1" ref="Antimony" />
+    </material>
+
+  </materials>
+
+  <solids>
+    <box lunit="mm" name="ThinLead1Solid" x="103" y="176" z="2.3681" />
+    <box lunit="mm" name="ThinLead2Solid" x="101" y="182" z="2.8756" />
+    <box lunit="mm" name="ThinLead3Solid" x="104" y="181" z="2.4469" />
+    <box lunit="mm" name="ThinLead4Solid" x="097" y="177" z="2.3389" />
+
+    <box lunit="mm" name="LeadTungstateDetectorSolid" x="61" y="61" z="210" />
+    <box lunit="m" name="TunnelSolid" x="2" y="2" z="12" />
+    <box lunit="mm" name="LeadTungstateCrystalSolid" x="30" y="30" z="200" />
+    <box lunit="mm" name="LeadTungstateCrystalsSideXSolid" x="60" y="0.01" z="200" />
+    <box lunit="mm" name="LeadTungstateCrystalsSideYSolid" x="0.01" y="60" z="200" />
+    <box lunit="mm" name="LeadTungstateCrystalsSideZSolid" x="60" y="60" z="0.01" />
+
+    <box lunit="mm" name="ComptonBeamlineSolid" x="140" y="140" z="2854" />
+    <tube lunit="mm" name="ComptonBeampipeSolid" rmin="68" rmax="70" z="2850" startphi="0" deltaphi="360" aunit="degree" />
+    <tube lunit="mm" name="ComptonBeampipeEndSolid" rmin="0" rmax="70" z="2" startphi="0" deltaphi="360" aunit="degree" />
+    <tube lunit="mm" name="ComptonPMTCathodeSolid" rmin="0" rmax="38.5" z="0.1" startphi="0" deltaphi="360" aunit="degree" />
+    <tube lunit="mm" name="ComptonPMTGlassSolid" rmin="41.25" rmax="42.25" z="205.0" startphi="0" deltaphi="360" aunit="degree" />
+    <tube lunit="mm" name="ComptonPMTGlassSideSolid" rmin="0.0" rmax="41.25" z="1.0" startphi="0" deltaphi="360" aunit="degree" />
+    <tube lunit="mm" name="ComptonPMTSolid" rmin="0.0" rmax="42.25" z="205.0" startphi="0" deltaphi="360" aunit="degree" />
+
+    <opticalsurface name="LeadTungstatePolishedSurface" model="UNIFIED" finish="polished" type="dielectric_dielectric" value="1.0"/>
+    <opticalsurface name="LeadTungstateFoilSurface" model="UNIFIED" finish="polishedbackpainted" type="dielectric_dielectric" value="1.0"/>
+    <opticalsurface name="PMTGlassSurface" model="UNIFIED" finish="polished" type="dielectric_dielectric" value="1.0" />
+    <opticalsurface name="PMTCathodeSurface" model="UNIFIED" finish="polished" type="dielectric_dielectric" value="1.0" />
+  </solids>
+
+  <structure>
+
+    <!-- Start: Define the Thin Leads  -->
+    <volume name="ThinLead1Logical">
+      <materialref ref="LeadMaterial" />
+      <solidref ref="ThinLead1Solid" />
+      <auxiliary auxtype="Color" auxvalue="#003366"/>
+    </volume>
+    <volume name="ThinLead2Logical">
+      <materialref ref="LeadMaterial" />
+      <solidref ref="ThinLead2Solid" />
+      <auxiliary auxtype="Color" auxvalue="#003366"/>
+    </volume>
+    <volume name="ThinLead3Logical">
+      <materialref ref="LeadMaterial" />
+      <solidref ref="ThinLead3Solid" />
+      <auxiliary auxtype="Color" auxvalue="#003366"/>
+    </volume>
+    <volume name="ThinLead4Logical">
+      <materialref ref="LeadMaterial" />
+      <solidref ref="ThinLead4Solid" />
+      <auxiliary auxtype="Color" auxvalue="#003366"/>
+    </volume>
+    <!-- End: Define the Thin Leads -->
+
+    <!-- PMT Volume -->
+    <volume name="ComptonPMTCathodeLogical" >
+      <materialref ref="Bialkali" />
+      <solidref ref="ComptonPMTCathodeSolid" />
+      <auxiliary auxtype="Color" auxvalue="#111111AA" />
+      <auxiliary auxtype="SensDet" auxvalue="ComptonPMTCathode" />
+    </volume>
+    <volume name="ComptonPMTGlassSideLogical" >
+      <materialref ref="Silica" />
+      <solidref ref="ComptonPMTGlassSideSolid" />
+      <auxiliary auxtype="Color" auxvalue="#ABABAB77" />
+      <auxiliary auxtype="SensDet" auxvalue="ComptonPMTGlassSide" />
+    </volume>
+    <volume name="ComptonPMTGlassLogical" >
+      <materialref ref="Silica" />
+      <solidref ref="ComptonPMTGlassSolid" />
+      <auxiliary auxtype="Color" auxvalue="#ABABAB55" />
+    </volume>
+    <volume name="ComptonPMTLogical" >
+      <materialref ref="AirVacuumOptical" />
+      <solidref ref="ComptonPMTSolid" />
+      <auxiliary auxtype="Color" auxvalue="#ABABAB00" />
+      <physvol name="ComptonPMTGlassSide1">
+        <volumeref ref="ComptonPMTGlassSideLogical" />
+        <position name="ComptonPMTGlassSide1Position" unit="mm" x="0" y="0" z="-102" />
+      </physvol>
+      <physvol name="ComptonPMTGlassSide2">
+        <volumeref ref="ComptonPMTGlassSideLogical" />
+        <position name="ComptonPMTGlassSide2Position" unit="mm" x="0" y="0" z="102" />
+      </physvol>
+      <physvol name="ComptonPMTCathode">
+        <volumeref ref="ComptonPMTCathodeLogical" />
+        <position name="ComptonPMTCathodePosition" unit="mm" x="0" y="0" z="-101.45" />
+      </physvol>
+
+      <physvol name="ComptonPMTGlass">
+        <volumeref ref="ComptonPMTGlassLogical" />
+        <position name="ComptonPMTGlassPosition" unit="mm" x="0" y="0" z="0.0" />
+      </physvol>
+
+    </volume>
+
+    <!-- Start: Define LeadTungstate 4crystal detector used in QWeak 2011-2012 -->
+    <volume name="LeadTungstateCrystalLogical" >
+      <materialref ref="LeadTungstate" />
+      <solidref ref="LeadTungstateCrystalSolid" />
+      <auxiliary auxtype="Color" auxvalue="#A6755577"/>
+      <auxiliary auxtype="SensDet" auxvalue="ComptonCrystal" />
+    </volume>
+    <volume name="LeadTungstateCrystalsSideXLogical" >
+      <materialref ref="BoPET" />
+      <solidref ref="LeadTungstateCrystalsSideXSolid" />
+      <auxiliary auxtype="Color" auxvalue="#00AACC33"/>
+    </volume>
+    <volume name="LeadTungstateCrystalsSideYLogical" >
+      <materialref ref="BoPET" />
+      <solidref ref="LeadTungstateCrystalsSideYSolid" />
+      <auxiliary auxtype="Color" auxvalue="#00AACC33"/>
+    </volume>
+    <volume name="LeadTungstateCrystalsSideZLogical" >
+      <materialref ref="BoPET" />
+      <solidref ref="LeadTungstateCrystalsSideZSolid" />
+      <auxiliary auxtype="Color" auxvalue="#00AACC33"/>
+    </volume>
+
+    <volume name="LeadTungstateDetectorContainerLogical" >
+      <materialref ref="LeadTungstate" />
+      <solidref ref="LeadTungstateDetectorSolid" />
+      <physvol name="LeadTungstateCrystal1Physical">
+        <volumeref ref="LeadTungstateCrystalLogical" />
+        <position name="LeadTungstateCrystal1_Position" unit="mm" x="-15" y="15" z="0" />
+      </physvol>
+      <physvol name="LeadTungstateCrystal2Physical">
+        <volumeref ref="LeadTungstateCrystalLogical" />
+        <position name="LeadTungstateCrystal2_Position" unit="mm" x="15" y="15" z="0" />
+      </physvol>
+      <physvol name="LeadTungstateCrystal3Physical">
+        <volumeref ref="LeadTungstateCrystalLogical" />
+        <position name="LeadTungstateCrystal3_Position" unit="mm" x="-15" y="-15" z="0" />
+      </physvol>
+      <physvol name="LeadTungstateCrystal4Physical">
+        <volumeref ref="LeadTungstateCrystalLogical" />
+        <position name="LeadTungstateCrystal4_Position" unit="mm" x="15" y="-15" z="0" />
+      </physvol>
+      <physvol name="LeadTungstateCrystalsSideX1Physical">
+        <volumeref ref="LeadTungstateCrystalsSideXLogical" />
+        <position name="LeadTungstateCrystalsSideX1_Position" unit="mm" x="0" y="30.05" z="0" />
+      </physvol>
+      <physvol name="LeadTungstateCrystalsSideX2Physical">
+        <volumeref ref="LeadTungstateCrystalsSideXLogical" />
+        <position name="LeadTungstateCrystalsSideX2_Position" unit="mm" x="0" y="-30.05" z="0" />
+      </physvol>
+      <physvol name="LeadTungstateCrystalsSideY1Physical">
+        <volumeref ref="LeadTungstateCrystalsSideYLogical" />
+        <position name="LeadTungstateCrystalsSideY1_Position" unit="mm" x="30.05" y="0" z="0" />
+      </physvol>
+      <physvol name="LeadTungstateCrystalsSideY2Physical">
+        <volumeref ref="LeadTungstateCrystalsSideYLogical" />
+        <position name="LeadTungstateCrystalsSideY2_Position" unit="mm" x="-30.05" y="0" z="0" />
+      </physvol>
+      <physvol name="LeadTungstateCrystalsSideZPhysical">
+        <volumeref ref="LeadTungstateCrystalsSideZLogical" />
+        <position name="LeadTungstateCrystalsSideY_Position" unit="mm" x="0" y="0" z="-100.05" />
+      </physvol>
+
+      <physvol name="ComptonPMTPhysical">
+        <volumeref ref="ComptonPMTLogical" />
+        <position name="ComptonPMT_Position" unit="mm" x="0" y="0" z="202.5" />
+      </physvol>
+
+      <auxiliary auxtype="Color" auxvalue="#FFFFFF00"/>
+    </volume>
+    <!-- End: Define LeadTungstate 4crystal detector used in QWeak 2011-2012 -->
+
+    <!-- Start: Define Beampipe -->
+    <volume name="ComptonBeampipeLogical" >
+      <materialref ref="Aluminum" />
+      <solidref ref="ComptonBeampipeSolid" />
+      <auxiliary auxtype="Color" auxvalue="#ADB2BD"/>
+    </volume>
+
+    <volume name="ComptonBeampipeEndLogical" >
+      <materialref ref="Copper" />
+      <solidref ref="ComptonBeampipeEndSolid" />
+      <auxiliary auxtype="Color" auxvalue="#C87533"/>
+    </volume>
+
+    <volume name="ComptonBeamlineContainerLogical">
+      <materialref ref="AirVacuum" />
+      <solidref ref="ComptonBeamlineSolid" />
+      <physvol>
+        <volumeref ref="ComptonBeampipeLogical" />
+        <position name="ComptonBeampipe_Position" unit="mm" x="0" y="0" z="0" />
+      </physvol>
+      <physvol>
+        <volumeref ref="ComptonBeampipeEndLogical" />
+        <position name="ComptonBeampipeEndUpstream_Position" unit="mm" x="0" y="0" z="-1426" />
+      </physvol>
+      <physvol>
+        <volumeref ref="ComptonBeampipeEndLogical" />
+        <position name="ComptonBeampipeEndDownstream_Position" unit="mm" x="0" y="0" z="1426" />
+      </physvol>
+      <auxiliary auxtype="Color" auxvalue="#00000000" />
+    </volume>
+    <!-- End: Define Beampipe -->
+
+    <!-- World Volume Reference -->
+    <volume name="World" >
+      <materialref ref="Air" />
+      <solidref ref="TunnelSolid" />
+      <physvol name="LeadTungstateDetectorContainerPhysical">
+        <volumeref ref="LeadTungstateDetectorContainerLogical" />
+        <position name="LeadTungstateDetectorContainer_Position" unit="mm" x="0" y="0" z="1654" />
+      </physvol>
+
+      <physvol>
+        <volumeref ref="ComptonBeamlineContainerLogical"/>
+        <positionref ref="WorldCenter" />
+      </physvol>
+    </volume>
+
+    <!-- Now define the optical surfaces (skin/border) -->
+    <!--
+    <skinsurface name="skinsrf1" surfaceproperty="LeadTungstateFoilSurface" >
+      <volumeref ref="LeadTungstateCrystalLogical" />
+    </skinsurface>
+
+    <skinsurface name="skinsrf2" surfaceproperty="LeadTungstatePolishedSurface" >
+      <volumeref ref="ComptonPMTLogical" />
+    </skinsurface>
+  -->
+    <bordersurface name="LeadTungstateCrystalBorder12" surfaceproperty="LeadTungstatePolishedSurface" >
+      <physvolref ref="LeadTungstateCrystal1Physical"/>
+      <physvolref ref="LeadTungstateCrystal2Physical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateCrystalBorder21" surfaceproperty="LeadTungstatePolishedSurface" >
+      <physvolref ref="LeadTungstateCrystal2Physical"/>
+      <physvolref ref="LeadTungstateCrystal1Physical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateCrystalBorder13" surfaceproperty="LeadTungstatePolishedSurface" >
+      <physvolref ref="LeadTungstateCrystal1Physical"/>
+      <physvolref ref="LeadTungstateCrystal3Physical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateCrystalBorder24" surfaceproperty="LeadTungstatePolishedSurface" >
+      <physvolref ref="LeadTungstateCrystal2Physical"/>
+      <physvolref ref="LeadTungstateCrystal4Physical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateCrystalBorder34" surfaceproperty="LeadTungstatePolishedSurface" >
+      <physvolref ref="LeadTungstateCrystal3Physical"/>
+      <physvolref ref="LeadTungstateCrystal4Physical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateCrystalPMTBorder1" surfaceproperty="LeadTungstatePolishedSurface" >
+      <physvolref ref="LeadTungstateCrystal1Physical"/>
+      <physvolref ref="ComptonPMTPhysical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateCrystalPMTBorder2" surfaceproperty="LeadTungstatePolishedSurface" >
+      <physvolref ref="LeadTungstateCrystal2Physical"/>
+      <physvolref ref="ComptonPMTPhysical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateCrystalPMTBorder3" surfaceproperty="LeadTungstatePolishedSurface" >
+      <physvolref ref="LeadTungstateCrystal3Physical"/>
+      <physvolref ref="ComptonPMTPhysical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateCrystalPMTBorder4" surfaceproperty="LeadTungstatePolishedSurface" >
+      <physvolref ref="LeadTungstateCrystal4Physical"/>
+      <physvolref ref="ComptonPMTPhysical"/>
+    </bordersurface>
+
+    <!-- Foils around crystal borders (Top and Bottom) -->
+    <bordersurface name="LeadTungstateDetectorCrystal1X" surfaceproperty="LeadTungstateFoilSurface" >
+      <physvolref ref="LeadTungstateCrystal1Physical"/>
+      <physvolref ref="LeadTungstateCrystalsSideX1Physical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateDetectorCrystal2X" surfaceproperty="LeadTungstateFoilSurface" >
+      <physvolref ref="LeadTungstateCrystal2Physical"/>
+      <physvolref ref="LeadTungstateCrystalsSideX1Physical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateDetectorBorder3X" surfaceproperty="LeadTungstateFoilSurface" >
+      <physvolref ref="LeadTungstateCrystal3Physical"/>
+      <physvolref ref="LeadTungstateCrystalsSideX2Physical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateDetectorCrystal4X" surfaceproperty="LeadTungstateFoilSurface" >
+      <physvolref ref="LeadTungstateCrystal4Physical"/>
+      <physvolref ref="LeadTungstateCrystalsSideX2Physical"/>
+    </bordersurface>
+
+    <!-- Foils around crystal borders (Left and Right) -->
+    <bordersurface name="LeadTungstateDetectorCrystal1Y" surfaceproperty="LeadTungstateFoilSurface" >
+      <physvolref ref="LeadTungstateCrystal1Physical"/>
+      <physvolref ref="LeadTungstateCrystalsSideY1Physical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateDetectorCrystal2Y" surfaceproperty="LeadTungstateFoilSurface" >
+      <physvolref ref="LeadTungstateCrystal2Physical"/>
+      <physvolref ref="LeadTungstateCrystalsSideY2Physical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateDetectorBorder3Y" surfaceproperty="LeadTungstateFoilSurface" >
+      <physvolref ref="LeadTungstateCrystal3Physical"/>
+      <physvolref ref="LeadTungstateCrystalsSideY1Physical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateDetectorCrystal4Y" surfaceproperty="LeadTungstateFoilSurface" >
+      <physvolref ref="LeadTungstateCrystal4Physical"/>
+      <physvolref ref="LeadTungstateCrystalsSideY2Physical"/>
+    </bordersurface>
+
+    <!-- Foils around crystal borders (Upstream) -->
+    <bordersurface name="LeadTungstateDetectorCrystal1Z" surfaceproperty="LeadTungstateFoilSurface" >
+      <physvolref ref="LeadTungstateCrystal1Physical"/>
+      <physvolref ref="LeadTungstateCrystalsSideZPhysical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateDetectorCrystal2Z" surfaceproperty="LeadTungstateFoilSurface" >
+      <physvolref ref="LeadTungstateCrystal2Physical"/>
+      <physvolref ref="LeadTungstateCrystalsSideZPhysical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateDetectorBorder3Z" surfaceproperty="LeadTungstateFoilSurface" >
+      <physvolref ref="LeadTungstateCrystal3Physical"/>
+      <physvolref ref="LeadTungstateCrystalsSideZPhysical"/>
+    </bordersurface>
+
+    <bordersurface name="LeadTungstateDetectorCrystal4Z" surfaceproperty="LeadTungstateFoilSurface" >
+      <physvolref ref="LeadTungstateCrystal4Physical"/>
+      <physvolref ref="LeadTungstateCrystalsSideZPhysical"/>
+    </bordersurface>
+
+
+    <!-- PMT optical borders -->
+    <bordersurface name="PMTSideGlassBorder" surfaceproperty="PMTGlassSurface">
+      <physvolref ref="ComptonPMTPhysical" />
+      <physvolref ref="ComptonPMTGlassSide1" />
+    </bordersurface>
+
+    <bordersurface name="PMTSideCathodeBorder" surfaceproperty="PMTCathodeSurface" >
+      <physvolref ref="ComptonPMTGlassSide1" />
+      <physvolref ref="ComptonPMTCathode" />
+    </bordersurface>
+
+
+  </structure>
+
+  <setup name="Default" version="1.0">
+    <world ref="World"/>
+  </setup>
+
+</gdml>

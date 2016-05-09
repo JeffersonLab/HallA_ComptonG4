@@ -1,0 +1,37 @@
+<!-- Load external definitions file -->
+&ComptonDefinitions;
+
+<!-- Load external materials file -->
+&ComptonMaterials;
+
+<!-- Load the external solids file -->
+&ComptonSolids;
+
+<structure>
+  <!-- Load the shared volume definitions -->
+  &ComptonVolumes;
+
+  <!-- World Volume Reference -->
+  <volume name="World" >
+    <materialref ref="Air" />
+    <solidref ref="TunnelSolid" />
+
+    <!-- Load Standard Lead Tungstate definition -->
+    &ComptonLeadTungstateDetector;
+
+    <!-- Load Standard Beamline definition -->
+    &ComptonBeamline;
+
+    <!-- Load Defined Thin Lead Definition -->
+    &ComptonThinLead;
+
+  </volume>
+
+  <!-- Load Standard Optical Surfaces -->
+  <!--&-ComptonOpticalSurfaces ;-->
+
+</structure>
+
+<setup name="Default" version="1.1">
+  <world ref="World"/>
+</setup>
