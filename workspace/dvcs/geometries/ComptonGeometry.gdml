@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE gdml [
+
+<!--  The ENTITY definition will configure the detector template -->
+<!--  If you do not want to include a component, set the file name
+      to ../Common/blank.gdml -->
+
+<!-- File Containing the World (Tunnel) implementation -->
+<!ENTITY ComptonWorld SYSTEM "Common/ComptonWorld.gdml">
+
+<!-- File Containing the Photon Detector implementation -->
+<!ENTITY ComptonPhotonDetector "geometries/PhotonDetector/ComptonPhotonDetector.gdml">
+
+<!-- File Containing the Electron Detector implementation -->
+<!ENTITY ComptonElectronDetector "ComptonElectronDetector.gdml">
+
+<!-- Standard file containing common materials -->
+<!ENTITY ComptonMaterials SYSTEM "Common/ComptonMaterials.gdml">
+
+<!-- The remainder of the file should be left unmodified. It just sets up
+      the template that pulls from the above defined entities to construct
+      a Photon Detector Geant4 volume. -->
+
+<!-- Standard file containing common materials -->
+<!ENTITY ComptonDefinitions SYSTEM "Common/ComptonDefinitions.gdml">
+]>
+
+<!--<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd" >-->
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd" >
+  &ComptonWorld;
+</gdml>

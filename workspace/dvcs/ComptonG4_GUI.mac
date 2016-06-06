@@ -1,0 +1,15 @@
+/gui/addMenu   viewer Viewer
+/gui/addButton viewer "Qt viewer"            "/control/execute vis/Qt.mac"
+/gui/addButton viewer "Tutor viewer"            "/control/execute vis/vis3.mac"
+/gui/addButton viewer "Update scene"         "/vis/scene/notifyHandlers"
+/gui/addMenu viewer Beam
+/gui/addButton viewer "Run 1 event"          "/control/execute test.mac"
+/gui/addButton viewer "Run 1 optical"          "/control/execute test_optical.mac"
+/gui/addButton viewer "Run 1 optical random"          "/control/execute test_optical_random.mac"
+
+
+/gui/addMenu   viewer Tests
+/gui/addButton viewer "Test Geometry"          "/control/execute test_geometry.mac"
+
+#/control/execute vis/Qt.mac
+#/vis/viewer/set/viewpointThetaPhi 0 0 deg

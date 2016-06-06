@@ -1,0 +1,12 @@
+<physvol name="ThinLead1Physical">
+  <volumeref ref="ThinLead1Logical" />
+  <position name="ThinLead1_Position" unit="mm" x="0" y="0"
+      z="ThinLeadDSDistanceFromIP-ThinLead1DimZ/2." />
+</physvol>
+
+<physvol name="ThinLead2Physical">
+  <volumeref ref="ThinLead2Logical" />
+  <position name="ThinLead2_Position" unit="mm" x="0" y="0"
+      z="(ThinLeadDSDistanceFromIP-ThinLead1DimZ-ThinLeadSeparation-ThinLead2DimZ/2.)" />
+</physvol>
+

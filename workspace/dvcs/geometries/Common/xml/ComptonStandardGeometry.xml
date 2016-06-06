@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE gdml [
+<!-- File Containing the World (Tunnel) implementation -->
+<!ENTITY ComptonWorld SYSTEM "StandardWorld.gdml" />
+
+<!-- File Containing the Photon Detector implementation -->
+<!ENTITY ComptonPhotonDetector "StandardPhotonDetector.gdml" />
+
+<!-- File Containing the Electron Detector implementation -->
+<!-- <!ENTITY ComptonElectronDetector "ComptonElectronDetector.gdml" /> -->
+]>
+
+<!--<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd" >-->
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd" >
+
+
+<!-- Load external definitions file -->
+&ComptonDefinitions;
+
+<!-- Load external materials file -->
+&ComptonMaterials;
+
+<!-- Load the external solids file -->
+&ComptonSolids;
+
+<structure>
+  <!-- Load the shared volume definitions -->
+  &ComptonVolumes;
+
+  <!-- World Volume Reference -->
+  <volume name="World" >
+    <materialref ref="Air" />
+    <solidref ref="TunnelSolid" />
+
+    <!-- Load Standard Lead Tungstate definition -->
+    &ComptonLeadTungstateDetector;
+
+    <!-- Load Standard Beamline definition -->
+    &ComptonBeamline;
+
+    <!-- Load Defined Thin Lead Definition -->
+    &ComptonThinLead;
+
+  </volume>
+
+  <!-- Load Standard Optical Surfaces -->
+  <!--&-ComptonOpticalSurfaces ;-->
+
+</structure>
+
+<setup name="Default" version="1.1">
+  <world ref="World"/>
+</setup>
+
+
+</gdml>

@@ -1,0 +1,9 @@
+/vis/open OGLIQt
+/control/execute vis/vis.mac
+#/vis/scene/add/axes 0.0 0.0 1556 200 mm
+#/vis/viewer/set/viewpointVector 0 0 1000
+#/vis/viewer/set/viewpointThetaPhi 90 0 deg
+#/vis/viewer/panTo -1588.838 0.0 mm
+#/vis/viewer/zoom 40000
+#/vis/viewer/zoom 500000
+#/vis/scene/add/axes 0.0 0.0 0.0 1 m

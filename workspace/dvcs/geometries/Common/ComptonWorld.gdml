@@ -1,0 +1,37 @@
+<!-- Definitions for the World Volume -->
+<define>
+  &ComptonDefinitions;
+</define>
+
+<!-- Common materials -->
+<materials>
+  &ComptonMaterials;
+</materials>
+
+<!-- The World Solid -->
+<solids>
+  <box lunit="m" name="WorldSolid"
+      x="WorldDimX" y="WorldDimY" z="WorldDimZ" />
+</solids>
+
+<structure>
+
+  <!-- World Volume Reference -->
+  <volume name="World" >
+    <materialref ref="Air" />
+    <solidref ref="WorldSolid" />
+
+    <!-- Construct Photon Detector -->
+    <physvol>
+      <file name="&ComptonPhotonDetector;" />
+      <positionref ref="ComptonPhotonDetectorPos" />
+      <!--<rotation ref="ComptonPhotonDetectorRot" /> -->
+    </physvol>
+
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.1">
+  <world ref="World"/>
+</setup>

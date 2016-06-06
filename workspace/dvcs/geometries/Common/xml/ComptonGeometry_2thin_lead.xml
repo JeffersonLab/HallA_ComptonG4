@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE gdml [
+
+<!-- File Containing ThinLead definition. Ideally, these should be the
+     only files you need to specify. -->
+<!ENTITY ComptonThinLead SYSTEM "SyncShield_6mm.xml">
+
+<!-- Do not change the following unless you know what you are doing -->
+
+<!-- File Containing common definitions -->
+<!ENTITY ComptonDefinitions SYSTEM "ComptonDefinitions.xml">
+
+<!-- File Containing Materials definition -->
+<!ENTITY ComptonMaterials SYSTEM "ComptonMaterials.xml">
+
+<!-- File Containing Solids definition -->
+<!ENTITY ComptonSolids SYSTEM "ComptonSolids.xml">
+
+<!-- File Containing Volumes definition -->
+<!ENTITY ComptonVolumes SYSTEM "ComptonVolumes.xml">
+
+<!-- File Containing LeadTungstateDetector definition -->
+<!ENTITY ComptonLeadTungstateDetector SYSTEM "ComptonLeadTungstateDetector.xml">
+
+<!-- File Containing Beamline definition -->
+<!ENTITY ComptonBeamline SYSTEM "ComptonBeamline.xml">
+
+<!-- File Containing OpticalSurfaces definition -->
+<!ENTITY ComptonOpticalSurfaces SYSTEM "ComptonOpticalSurfaces.xml">
+
+
+<!-- File Containing the standard world geometry definition -->
+<!ENTITY ComptonStandardGeometry SYSTEM "ComptonStandardGeometry.xml">
+
+]>
+
+<!--<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd" >-->
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd" >
+  &ComptonStandardGeometry;
+</gdml>

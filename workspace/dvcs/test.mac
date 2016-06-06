@@ -1,0 +1,17 @@
+/Compton/gun/mode 3
+/Compton/gun/verbose 0
+/Compton/run/runnumber 33
+/Compton/run/autosave 100
+/Compton/gun/ElectronEnergy 1.160 GeV
+/Compton/gun/LaserWavelenght 532 nm
+/Compton/gun/PhotonVertexZ 0.0 mm
+/Compton/gun/Initialize
+/Compton/event/printevent 10
+/Compton/step/OpticalMaxStepTime 250 ns
+/Compton/detector/setoptions :ALL_IGNORE: store_edep_hits=no
+
+/tracking/verbose 0
+#/process/list
+#/process/setVerbose 2 OpBoundary
+
+/run/beamOn 1
