@@ -26,6 +26,7 @@
 #include <G4SurfaceProperty.hh>
 #include <G4OpticalSurface.hh>
 #include <G4SDManager.hh>
+#include <G4Version.hh>
 
 // Magnetic fields stuff
 #include <G4FieldManager.hh>
@@ -86,7 +87,11 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
   {
     G4cout << (*lvciter)->GetName() << G4endl;
     G4GDMLAuxListType auxInfo = parser.GetVolumeAuxiliaryInformation(*lvciter);
+#if G4VERSION_NUMBER >= 1020
+    std::vector<G4GDMLAuxStructType>::const_iterator ipair = auxInfo.begin();
+#else
     std::vector<G4GDMLAuxPairType>::const_iterator ipair = auxInfo.begin();
+#endif
     for( ipair = auxInfo.begin(); ipair != auxInfo.end(); ipair++ )
     {
 
@@ -161,7 +166,11 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
       << (*pvciter)->GetName().hash(G4String::exact) << G4endl;
     G4GDMLAuxListType auxInfo = parser.GetVolumeAuxiliaryInformation(
       (*pvciter)->GetLogicalVolume());
+#if G4VERSION_NUMBER >= 1020
+    std::vector<G4GDMLAuxStructType>::const_iterator ipair = auxInfo.begin();
+#else
     std::vector<G4GDMLAuxPairType>::const_iterator ipair = auxInfo.begin();
+#endif
     for( ipair = auxInfo.begin(); ipair != auxInfo.end(); ipair++ ) {
       G4String str=ipair->type;
       G4String val=ipair->value;
