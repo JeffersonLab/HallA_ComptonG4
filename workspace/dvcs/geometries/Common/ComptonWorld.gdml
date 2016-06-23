@@ -28,6 +28,18 @@
       <!--<rotation ref="ComptonPhotonDetectorRot" /> -->
     </physvol>
 
+    <!-- Construct Electron Detector -->
+    <physvol>
+      <file name="&ComptonElectronDetector;" />
+        <positionref ref="ComptonElectronDetectorPos" />
+      </physvol>
+
+     <!-- Construct Chicane -->
+     <physvol>
+       <file name="&ComptonChicane;"/>
+         <positionref ref="ChicanePosition"/>
+     </physvol>
+
   </volume>
 
 </structure>

@@ -14,7 +14,7 @@
 <!ENTITY ChicaneDefinitions SYSTEM "ChicaneDefinitions.gdml">
 
 <!-- File Containing Chicane Beamline -->
-<!ENTITY ChicaneBeamline SYSTEM "ChicaneBeamline.gdml">
+<!ENTITY ChicaneBeamline SYSTEM "../Common/blank.gdml">
 
 <!-- File Containing Chicane Volume Definitions -->
 <!ENTITY ChicaneDipole SYSTEM "../Common/blank.gdml">

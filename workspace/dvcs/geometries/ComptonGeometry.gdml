@@ -12,7 +12,10 @@
 <!ENTITY ComptonPhotonDetector "geometries/PhotonDetector/ComptonPhotonDetector.gdml">
 
 <!-- File Containing the Electron Detector implementation -->
-<!ENTITY ComptonElectronDetector "ComptonElectronDetector.gdml">
+<!ENTITY ComptonElectronDetector "geometries/ElectronDetector/ComptonElectronDetector.gdml">
+
+<!-- File Containing The Chicane implementation -->
+<!ENTITY ComptonChicane "geometries/Chicane/ComptonChicane.gdml">
 
 <!-- Standard file containing common materials -->
 <!ENTITY ComptonMaterials SYSTEM "Common/ComptonMaterials.gdml">

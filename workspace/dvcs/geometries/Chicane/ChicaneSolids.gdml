@@ -1,0 +1,157 @@
+<!-- Define the "Chicane" solids  -->
+
+
+<!-- tube and box segments defined here -->
+  
+
+<box name="ChicaneWorldPiece1" lunit="mm"
+    x="dim_ChicaneWorldX"
+    y="dim_ChicaneWorldY"
+    z="dim_ChicaneWorldZ" />
+
+<box name="ChicaneWorldPiece2" lunit="mm"
+    x="2*dim_ChicaneWorldX"
+    y="2*dim_ChicaneWorldY"
+    z="2*dim_ChicaneWorldZ + 1.0" />
+
+<subtraction name="ChicaneWorld">
+    <first ref="ChicaneWorldPiece1"/>
+    <second ref="ChicaneWorldPiece2"/>
+    <position name="pos_ChicaneWorld" unit="mm" x="0" y="0" z="-dim_ChicaneWorldZ/2. -1."/>
+</subtraction>
+
+<!-- defining the Straight Pipe -->
+  <tube name="md" aunit="degree" lunit="mm" rmin="0.0" rmax="Piperadii" z="Length" deltaphi="360" startphi="0" />
+
+<!-- define the first bend pipe -->
+  <tube name="t2" aunit="degree" lunit="mm" rmin="0.0" rmax="Piperadii" z="lengthBpipe" deltaphi="360" startphi="0"  />
+
+<!-- Union The Straight Pipe and First bend pipe --> 
+ <union name="mdUniont2">
+    <first ref="md"/>
+    <second ref="t2"/>
+    <position name ="bendPipeOnePosition" unit="mm" 
+	x="0.0" 
+	y="-BpipePosY" 
+	z="-BpipePosZ" />
+    <rotation name="bendPipeOneRotation" unit="degree" 
+	x="-BendAngle" 
+	y="0" 
+	z="180"/>
+  </union>
+
+<!-- Define First elbow -->
+
+  <torus name="T1" aunit="degree" lunit="mm" rmin="pipeThickness" rmax="Piperadii" rtor="Height" deltaphi="BendAngle" startphi="270" />
+
+ <union name="t2UnionT1">
+    <first ref="mdUniont2"/>
+    <second ref="T1"/>
+    <position name="elbowPipeOnePosition" unit="mm"
+	x="0.0" 
+	y="0.0" 
+	z="-EpipePosZ" />
+    <rotation name="ElbowOneRotation" unit="degree" 
+	x="0"
+	y="90"
+	z="0"/>
+  </union>
+<!-- Define Interaction pipe -->
+  <tube name="t3" aunit="degree" lunit="mm" rmin="pipeThickness" rmax="Piperadii" z="1100" deltaphi="360" startphi="0" />
+
+ <union name="T1Uniont3">
+    <first ref="t2UnionT1"/>
+    <second ref="t3"/>
+    <position name="interactionPipePosition" unit="mm"
+	x="0"
+	y="-Height"
+	z="0"/>
+  </union>
+
+<!-- Define Second Elbow -->
+
+  <torus name="T2" aunit="degree" lunit="mm" rmin="pipeThickness" rmax="Piperadii" rtor="Height" deltaphi="BendAngle" startphi="240" />
+
+  <union name="t3UnionT2">
+    <first ref="T1Uniont3"/>
+    <second ref="T2"/>
+    <position name="elbowPipeTwoPosition" unit="mm" 
+	x="0.0"
+	y="0.0" 
+	z="EpipePosZ"/>
+    <rotation name="ElbowTwoRotation" unit="degree" 
+	x="0"
+	y="90" 
+	z="0"/>
+  </union>
+<!-- Define second bend pipe -->
+  <tube name="t4" aunit="degree" lunit="mm" rmin="0.0" rmax="Piperadii" z="lengthBpipe" deltaphi="360" startphi="0"   />
+
+<union name="T2Uniont4">
+    <first ref="t3UnionT2"/>
+    <second ref="t4"/>
+    <position name="bendPipeTwoPosition" unit="mm"
+	x="0.0" 
+	y="-BpipePosY" 
+	z="BpipePosZ"/>
+    <rotation name="bendPipeTwoRotation" unit="degree" 
+	x="0" 
+	y="-5*BendAngle" 
+	z="90"/>
+  </union>
+
+<!-- Boxes for dipoles not necessary unless you want to view the region -->
+  <box name="b1" x="500" y="200" z="300" lunit="mm"/>
+  <box name="b2" x="500" y="200" z="300" lunit="mm"/>
+  <box name="b3" x="500" y="200" z="300" lunit="mm"/>
+  <box name="b4" x="500" y="200" z="300" lunit="mm"/>
+
+
+<!-- adding smaller modulues to make chicane hollow-->
+  <tube name="mdi" aunit="degree" lunit="mm" rmin="0.0" rmax="pipeThickness" z="Length+200" deltaphi="360" startphi="0" />
+
+ <subtraction name="Chicane1">
+   <first ref="T2Uniont4"/>
+   <second ref="mdi"/>
+ </subtraction>
+
+  <tube name="t2i" aunit="degree" lunit="mm" rmin="0.0" rmax="pipeThickness" z="lengthBpipe" deltaphi="360" startphi="0"  />
+
+<subtraction name="Chicane2">
+   <first ref="Chicane1"/>
+    <second ref="t2i"/>
+    <position name ="Chicane1Position" unit="mm" 
+	x="0.0" 
+	y="-BpipePosY" 
+	z="-BpipePosZ" />
+    <rotation name="Chicane1Rotation" unit="degree" 
+	x="-BendAngle" 
+	y="0" 
+	z="180"/>
+ </subtraction>
+
+  <tube name="t4i" aunit="degree" lunit="mm" rmin="0.0" rmax="pipeThickness" z="lengthBpipe" deltaphi="360" startphi="0"/>
+<!-- final chicane -->
+<subtraction name="ChicaneHollow">
+   <first ref="Chicane2"/>
+    <second ref="t4i"/>
+   <position name="Chicane2Position" unit="mm"
+	x="0.0" 
+	y="-BpipePosY" 
+	z="BpipePosZ"/>
+    <rotation name="Chicane2Rotation" unit="degree" 
+	x="0" 
+	y="-5*BendAngle" 
+	z="90"/>
+ </subtraction>
+
+
+
+ 
+
+
+
+
+
+
+

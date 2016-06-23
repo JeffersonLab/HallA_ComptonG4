@@ -11,6 +11,13 @@
 <!-- Test position, must change to real position later! -->
 <position name="ComptonPhotonDetectorPos" x="0" y="0" z="6" unit="m" />
 
+<!-- Define the nominal position/rotation for the PhDetector -->
+<!-- Test position, must change to real position later! -->
+<position name="ComptonElectronDetectorPos" x="0" y=".53" z="6" unit="m" />
+
+<!-- Define the Chicane position -->
+<position name="ChicanePosition" x="0" y="0" z="6" unit="m" />
+
 
 <!-- Define common variables -->
 <variable name="AirGap" value="0.000" />

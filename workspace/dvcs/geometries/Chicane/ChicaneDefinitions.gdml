@@ -1,0 +1,74 @@
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  - - - - - - - - - - - - Distances and Dimensions - - - - - - - - - - - - -
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+
+
+<!-- Define variables -->
+
+<!-- Length of the straight pipe -->
+<variable name="Length" value="5950"/>
+
+<!-- Height of the chicane(from straight pipe to interaction pipe)-->
+<variable name="Height" value="567" />
+
+<!-- Pipe radius -->
+<variable name="Piperadii" value="100"/>
+
+<!-- Pipe thickness -->
+<variable name="pipeThickness" value="70"/>
+
+<!-- Straight Pipe Z position -->
+<variable name="midPipePosZ" value="0.5*(Length-1000)"/>
+
+<!-- Compton target Z position -->
+<variable name="compTargPosZ" value="0.5*(Length-1000)"/>
+
+<!-- Bend angle in degrees -->
+<variable name="BendAngle" value="30"/>
+
+<!-- Length of Bend pipes -->
+<variable name="lengthBpipe" value="Height/(sin(pi/6))- 0.45*(pi/6)*(Height)"/> 
+
+<!-- Bend pipe Y position -->
+<variable name="BpipePosY" value="0.25*lengthBpipe"/>
+
+<!-- Bend pipe Z position -->
+<variable name="BpipePosZ" value="550 + (pi/6)*Height + 0.4*lengthBpipe"/>
+
+<!-- Elbow pipe Z position -->
+<variable name="EpipePosZ" value="545"/>
+
+<!-- Define the nominal position/rotation for the Chicane -->
+<position name="ChicanePosition" x="0" y="Height" z="400" unit="mm" />
+
+<!-- ChicaneWorld Dimiensions -->
+<variable name="dim_ChicaneWorldX" value="2*Piperadii"/>
+<variable name="dim_ChicaneWorldY" value="2*Height"/>
+<variable name="dim_ChicaneWorldZ" value="2*Length"/>
+
+
+<!--NOTE: need change pi/6 to match BendAngle in rads -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

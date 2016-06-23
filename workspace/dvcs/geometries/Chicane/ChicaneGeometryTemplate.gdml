@@ -1,0 +1,28 @@
+<!-- Definitions specific for the Chicane -->
+<define>
+  &ChicaneDefinitions;
+</define>
+<!-- Materials specific for the Chicane -->
+<materials>
+     <material Z="1" name="Vacuum" state="gas">
+       <T unit="K" value="2.73"/>
+       <P unit="pascal" value="3e-18"/>
+       <D unit="g/cm3" value="1e-25"/>
+       <atom unit="g/mole" value="1.01"/>
+     </material>
+</materials>
+
+<!-- Chicane Solids -->
+<solids>
+ &ChicaneSolids;
+</solids>
+
+
+<!-- Inclued Chicane volumes -->
+<structure>
+ &ChicaneVolumes;
+</structure>
+
+<setup name="Default" version="1.1">
+  <world ref="ComptonChicane"/>
+</setup>
