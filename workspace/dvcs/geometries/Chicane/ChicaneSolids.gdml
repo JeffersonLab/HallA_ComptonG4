@@ -17,7 +17,7 @@
 <subtraction name="ChicaneWorld">
     <first ref="ChicaneWorldPiece1"/>
     <second ref="ChicaneWorldPiece2"/>
-    <position name="pos_ChicaneWorld" unit="mm" x="0" y="0" z="-dim_ChicaneWorldZ/2. -1."/>
+    <position name="pos_ChicaneWorld" unit="mm" x="0" y="0" z="-dim_ChicaneWorldZ/2. -1. "/>
 </subtraction>
 
 <!-- defining the Straight Pipe -->
@@ -72,9 +72,32 @@
 
   <torus name="T2" aunit="degree" lunit="mm" rmin="pipeThickness" rmax="Piperadii" rtor="Height" deltaphi="BendAngle" startphi="240" />
 
-  <union name="t3UnionT2">
+
+
+<!-- Photon exit tube-->
+<cutTube name="Pht_Exit" aunit="degree" lunit="mm" rmin="Pht_ExitPipe_thickness" rmax="Pht_ExitPipe_radii" z="Pht_ExitPipe_length" deltaphi="360" startphi="0"
+lowX="0" lowY="2.3" lowZ="-1" highX="0" highY="0" highZ="0"  />
+
+
+
+<union name="T2UnionPht_Exit">
+    <first ref="T2"/>
+    <second ref="Pht_Exit"/>
+    <position name="Pht_Exit_pos" unit="mm"
+        x="Pht_ExitPipe_posX"
+        y="Pht_ExitPipe_posY"
+        z="Pht_ExitPipe_posZ" />
+    <rotation name="Pht_Exit_rot" unit="degree"
+        x="0"
+        y="90"
+        z="0" />
+</union>
+
+
+
+ <union name="t3UnionT2">
     <first ref="T1Uniont3"/>
-    <second ref="T2"/>
+    <second ref="T2UnionPht_Exit"/>
     <position name="elbowPipeTwoPosition" unit="mm" 
 	x="0.0"
 	y="0.0" 
@@ -84,6 +107,11 @@
 	y="90" 
 	z="0"/>
   </union>
+
+
+
+
+
 <!-- Define second bend pipe -->
   <tube name="t4" aunit="degree" lunit="mm" rmin="0.0" rmax="Piperadii" z="lengthBpipe" deltaphi="360" startphi="0"   />
 
@@ -100,6 +128,25 @@
 	z="90"/>
   </union>
 
+
+<!-- Photon exit pipe (inner) -->
+<tube name="Pht_Exit_inner" aunit="degree" lunit="mm" rmin="0" rmax="Pht_ExitPipe_thickness" z="205" deltaphi="360" startphi="0"/>
+
+
+<subtraction name="T2SubPht_Exit_inner">
+    <first ref="T2Uniont4"/>
+    <second ref="Pht_Exit_inner"/>
+    <position name="Pht_Exit_inner_pos" unit="mm"
+    x="0"
+    y="-567"
+    z="-890" />
+    <rotation name="Pht_Exit_inner_rot" unit="degree"
+    x="0"
+    y="0"
+    z="0" />
+</subtraction>
+
+
 <!-- Boxes for dipoles not necessary unless you want to view the region -->
   <box name="b1" x="500" y="200" z="300" lunit="mm"/>
   <box name="b2" x="500" y="200" z="300" lunit="mm"/>
@@ -111,7 +158,7 @@
   <tube name="mdi" aunit="degree" lunit="mm" rmin="0.0" rmax="pipeThickness" z="Length+200" deltaphi="360" startphi="0" />
 
  <subtraction name="Chicane1">
-   <first ref="T2Uniont4"/>
+   <first ref="T2SubPht_Exit_inner"/>
    <second ref="mdi"/>
  </subtraction>
 
@@ -126,12 +173,13 @@
 	z="-BpipePosZ" />
     <rotation name="Chicane1Rotation" unit="degree" 
 	x="-BendAngle" 
-	y="0" 
+	y="0"
 	z="180"/>
  </subtraction>
 
   <tube name="t4i" aunit="degree" lunit="mm" rmin="0.0" rmax="pipeThickness" z="lengthBpipe" deltaphi="360" startphi="0"/>
-<!-- final chicane -->
+
+
 <subtraction name="ChicaneHollow">
    <first ref="Chicane2"/>
     <second ref="t4i"/>
@@ -144,11 +192,6 @@
 	y="-5*BendAngle" 
 	z="90"/>
  </subtraction>
-
-
-
- 
-
 
 
 

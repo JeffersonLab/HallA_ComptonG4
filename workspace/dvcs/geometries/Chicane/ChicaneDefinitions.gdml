@@ -47,6 +47,13 @@
 <variable name="dim_ChicaneWorldY" value="2*Height"/>
 <variable name="dim_ChicaneWorldZ" value="2*Length"/>
 
+<!-- Photon Exit pipe -->
+<variable name="Pht_ExitPipe_posX" value="2*EpipePosZ+580"/>
+<variable name="Pht_ExitPipe_posY" value="-Height"/>
+<variable name="Pht_ExitPipe_posZ" value="0"/>
+<variable name="Pht_ExitPipe_radii" value="60"/>
+<variable name="Pht_ExitPipe_thickness" value="20"/>
+<variable name="Pht_ExitPipe_length" value="600"/>
 
 <!--NOTE: need change pi/6 to match BendAngle in rads -->
 
