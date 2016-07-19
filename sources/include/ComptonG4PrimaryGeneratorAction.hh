@@ -92,6 +92,7 @@ private:
 
   // Generate custom Primaries
   void GeneratePrimaryComptonMode();
+  void GenerateComptonElectronMode();
   void GeneratePrimaryOpticalMode();
   void GeneratePrimaryMonoEnergeticMode();
   void GeneratePrimaryPolarizedElectronsMode();

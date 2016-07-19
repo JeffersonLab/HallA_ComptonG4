@@ -1,23 +1,23 @@
-// ComptonG4 includes
+// ComptonG4 Includes:
 #include "ComptonG4PrimaryGeneratorAction.hh"
 #include "ComptonG4PrimaryGeneratorMessenger.hh"
 #include "ComptonG4Analysis.hh"
 
-// GEANT4 Includes
+// GEANT4 Includes:
 #include <G4Event.hh>
 #include <G4ParticleGun.hh>
 #include <G4ParticleTable.hh>
 #include <Randomize.hh>
 #include <G4OpticalPhoton.hh>
 
-// Standard Includes
+// Standard Includes:
 #include <cmath>
 
 ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analysis *analysis) :
 
-  fAnalysis(analysis),fTransversePol(0.0),fLongitudinalPol(1.0),fVerbose(0)
+  fAnalysis(analysis), fTransversePol(0.0), fLongitudinalPol(1.0), fVerbose(0)
 {
-  G4int n_particle = 1; // Gun shoots photons ( and may shoot electrons too)
+  G4int n_particle = 1; // Gun shoots photons (and may shoot electrons too)
   fParticleGun = new G4ParticleGun(n_particle);
 
   // Messenger class
@@ -65,7 +65,7 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaries(G4Event *event)
   case 2:
     break;
   case 3: // Compton mode (i.e, real physics mode)
-    GeneratePrimaryComptonMode();
+    GeneratePrimaryComptonMode(); // Generates both Compton photon, electron eventually. Currently just photons 
     break;
   case 4: // Optical photon mode
     GeneratePrimaryOpticalMode();
@@ -73,6 +73,10 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaries(G4Event *event)
   case 5: // Polarized Electrons mode
     GeneratePrimaryPolarizedElectronsMode();
     break;
+  case 6: // GenerateComptonElectronMode() **do this first! 2016-06-29
+    GenerateComptonElectronMode();
+    break;
+    //case 7: // GenerateComptonPhotonMode() // Just Compton photons
   default: // Do nothing, use the default GEANT4 gun
     break;
   };
@@ -82,23 +86,22 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaries(G4Event *event)
 
 void ComptonG4PrimaryGeneratorAction::Initialize()
 {
-  // Initialize this generator. If we are using compton mode, one of the
-  // first thing to initialize is the distribution function (cross section)
+  // Initialize this generator. If we are using Compton mode, one of the
+  // first things to initialize is the distribution function (cross section)
 
-  if( fGeneratorMode == 3 ) {
-    // Variables used in the Compton mode
-
-    fLaserEnergy = CLHEP::h_Planck * CLHEP::c_light/fLaserWavelength;
-    fAParameter = 1/(1+(4*fLaserEnergy*fElectronEnergy)/
+  if ( fGeneratorMode == 3 ) {
+    fLaserEnergy = CLHEP::h_Planck * CLHEP::c_light / fLaserWavelength;
+    fAParameter = 1 / (1 + (4*fLaserEnergy*fElectronEnergy)/
         (CLHEP::electron_mass_c2*CLHEP::electron_mass_c2));
-    fMaxPhotonEnergy = fElectronEnergy*(1-fAParameter);
-    G4double am1 = fAParameter-1.0;
-    for(int i = 0; i < 10000; i++ ) {
+    fMaxPhotonEnergy = fElectronEnergy * (1 - fAParameter);
+    // Compton scattering cross section (eqn 4.8):
+    G4double am1 = fAParameter - 1.0;
+    for(int i = 0; i < 10000; i++) {
       G4double rho = G4double(i/10000.0);
       G4double term1 = rho*rho*am1*am1/(1.+rho*am1);
       G4double term3 = (1.-rho*(1.0+fAParameter))/(1.+rho*am1);
-      fCXdSig_dRho[i] = 2*CLHEP::pi*CLHEP::classic_electr_radius*
-        CLHEP::classic_electr_radius*fAParameter*(term1+1.0+term3*term3);
+      fCXdSig_dRho[i] = 2 * CLHEP::pi * CLHEP::classic_electr_radius*
+        CLHEP::classic_electr_radius * fAParameter *(term1 +1.0 + term3*term3);
     }
   }
 
@@ -114,15 +117,15 @@ G4double ComptonG4PrimaryGeneratorAction::GetRandomRho()
 
 void ComptonG4PrimaryGeneratorAction::GeneratePrimaryMonoEnergeticMode()
 {
-	  fParticleGun->SetParticleEnergy(fMaxPhotonEnergy);
-	  fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
-	  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.0,0.0,1.0));
-	  fParticleGun->SetParticleDefinition(fGammaDef);
-	  fAnalysis->SetAsym(0.0);
-	  fAnalysis->SetRho(0.0);
-	  fAnalysis->SetGammaE(fMaxPhotonEnergy/CLHEP::MeV);
-	  fAnalysis->SetTheta(0.0);
-	  fAnalysis->SetPhi(0.0);
+  fParticleGun->SetParticleEnergy(fMaxPhotonEnergy);
+  fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
+  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.0,0.0,1.0));
+  fParticleGun->SetParticleDefinition(fGammaDef);
+  fAnalysis->SetAsym(0.0);
+  fAnalysis->SetRho(0.0);
+  fAnalysis->SetGammaE(fMaxPhotonEnergy/CLHEP::MeV);
+  fAnalysis->SetTheta(0.0);
+  fAnalysis->SetPhi(0.0);
 }
 
 void ComptonG4PrimaryGeneratorAction::GeneratePrimaryOpticalMode()
@@ -132,8 +135,7 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryOpticalMode()
       CLHEP::RandFlat::shoot(CLHEP::pi/4.0)/CLHEP::radian,
       CLHEP::RandFlat::shoot(2.0*CLHEP::pi)/CLHEP::radian);
   fParticleGun->SetParticleEnergy(
-      CLHEP::RandFlat::shoot(1.0)*
-      fMaxPhotonEnergy);
+      CLHEP::RandFlat::shoot(1.0) * fMaxPhotonEnergy);
   fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
   fParticleGun->SetParticleMomentumDirection(opticalDirection);
   fParticleGun->SetParticlePolarization(opticalDirection);
@@ -143,42 +145,95 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryOpticalMode()
 void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
 {
   G4double gammaE = 0.0;      // Scattered photon energy
-  G4double rho = 0.0;         // Normalized photon energy photonE/CE
-  G4double gammaTheta = 0.0;  // Photon scattered angle polar angle
-  G4double gammaPhi = 0.0;    // Photon scattered azymuthal angle
-  G4ThreeVector gammaDirection(0.0,0.0,1.0); // This will hold the direction
-              // of the scattered photon. For now, we just point it towards
-              // the photon detector
+  G4double rho = 0.0;         // Normalized photon energy gammaE/ComptonEdge
+  G4double gammaTheta = 0.0;  // Photon scattered polar angle
+  G4double gammaPhi = 0.0;    // Photon scattered azimuthal angle
+  G4ThreeVector gammaDirection(0.0, 0.0, 1.0); // This will hold the direction
+              // of the scattered photon. 
+              // For now, we just point it towards the photon detector.
 
-  // Now get a random rho
   rho = GetRandomRho();
-  gammaE = rho*fMaxPhotonEnergy;
-  // I took the following for theta from Megan Friend's CompCal code
-  G4double tmp = CLHEP::electron_mass_c2/fElectronEnergy;
-  tmp = tmp*tmp +4*gammaE/fElectronEnergy;
-  // TODO: Fix this! Why are these values so large?!?!
-  gammaTheta = std::acos( 1.0- 0.5*tmp*((1./rho)-1.0));
-  // Since the above did not work, I reworked the equation myself
-  tmp = CLHEP::electron_mass_c2/fElectronEnergy;
-  gammaTheta = std::sqrt(4*fLaserEnergy*fAParameter/gammaE-(tmp*tmp));
+  gammaE = rho * fMaxPhotonEnergy;
+  // Theta from Megan Friend's CompCal code:
+  G4double tmp = CLHEP::electron_mass_c2 / fElectronEnergy;
+  gammaTheta = std::sqrt( 4 * fLaserEnergy * fAParameter / gammaE -(tmp*tmp));
+  gammaPhi = CLHEP::RandFlat::shoot(2.0 * CLHEP::pi); // Arbitrary
+  gammaDirection.setRThetaPhi(1.0, gammaTheta/CLHEP::radian,
+      gammaPhi / CLHEP::radian);
 
-  gammaPhi=CLHEP::RandFlat::shoot(2.0*CLHEP::pi);
-  gammaDirection.setRThetaPhi(1.0,gammaTheta/CLHEP::radian,
-      gammaPhi/CLHEP::radian);
   fParticleGun->SetParticleEnergy(gammaE);
   fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
   fParticleGun->SetParticleMomentumDirection(gammaDirection);
   fParticleGun->SetParticleDefinition(fGammaDef);
-  //G4cout << "Direction: (" << gammaDirection.getX()/mm << ","
-  //    << gammaDirection.getY()/mm << "," << gammaDirection.getZ()/mm << ")\n";
+  /*
+  if (fVerbose > 0)
+    G4cout << "Direction: (" << gammaDirection.getX()/mm << ","
+      << gammaDirection.getY()/mm << "," << gammaDirection.getZ()/mm << ")\n";
+  */
   fAnalysis->SetAsym(GetComptonAsym(rho));
   fAnalysis->SetRho(rho);
   fAnalysis->SetGammaE(gammaE/CLHEP::MeV);
-  fAnalysis->SetTheta(57.2957795*gammaTheta/CLHEP::radian);
-  fAnalysis->SetPhi(57.2957795*gammaPhi/CLHEP::radian);
-  if(fVerbose>0)
+  fAnalysis->SetTheta(57.2957795 * gammaTheta / CLHEP::radian);
+  fAnalysis->SetPhi(57.2957795 * gammaPhi / CLHEP::radian);
+  if (fVerbose > 0)
     G4cout << "Shooting photon with energy: " << gammaE/CLHEP::MeV << " MeV"
       << G4endl;
+}
+
+// Added case 6: 2016-06-29 (L Thorne)
+void ComptonG4PrimaryGeneratorAction::GenerateComptonElectronMode(){
+
+  // Use conservation of E, p; knowing photon stuff:
+  // Do all photon stuff again: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  G4double gammaE = 0.0;      // Scattered photon energy
+  G4double rho = 0.0;         // Normalized photon energy gammaE/ComptonEdge
+  G4double gammaTheta = 0.0;  // Photon scattered polar angle
+  G4double gammaPhi = 0.0;    // Photon scattered azimuthal angle
+  G4ThreeVector gammaDirection(0.0, 0.0, 1.0); // This will hold the direction
+              // of the scattered photon. 
+              // For now, we just point it towards the photon detector.
+  rho = GetRandomRho();
+  gammaE = rho * fMaxPhotonEnergy;
+  // Theta from Megan Friend's CompCal code:
+  G4double tmp = CLHEP::electron_mass_c2 / fElectronEnergy;
+  gammaTheta = std::sqrt( 4 * fLaserEnergy * fAParameter / gammaE -(tmp*tmp));
+  gammaPhi = CLHEP::RandFlat::shoot(2.0 * CLHEP::pi); // Arbitrary
+  gammaDirection.setRThetaPhi(1.0, gammaTheta/CLHEP::radian,
+      gammaPhi / CLHEP::radian);
+  // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  G4double electronE = 0.0;    // Scattered electron energy
+  G4double electronTheta = 0.0; // Scattered electron polar angle
+  G4ThreeVector electronDirection(0.0, 0.0, 1.0); // Into e- detector?
+  G4double electronP = 0.0;    // Initial electron momentum (z dir) 
+  G4double electronMinEnergy = 0.0; // Corresponds to Compton edge
+  G4double electronRho = 0.0;  // Normalized e- energy: electronE/ComptonEdge
+  G4double electronPhi = 0.0; // Azimuthal scattered electron dir
+
+  electronE = (fElectronEnergy + fLaserEnergy) - gammaE; // E cons
+  electronP = std::sqrt(std::pow(fElectronEnergy, 2) - std::pow(CLHEP::electron_mass_c2, 2));	
+  electronTheta = std::asin(gammaE * std::sin(gammaTheta) / electronP);//Px cons
+  electronMinEnergy = fElectronEnergy - gammaE; // Megan: Eqn 4.4
+  electronRho = electronE / electronMinEnergy;
+  electronPhi = -gammaPhi;
+
+  fParticleGun->SetParticleEnergy(electronE);
+  fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
+  fParticleGun->SetParticleMomentumDirection(electronDirection);
+  fParticleGun->SetParticleDefinition(fElectronDef); // e-?
+  /*
+  if (fVerbose > 0)
+    G4cout << "Direction: (" << electronDirection.getX()/mm << ","
+    << electronDirection.getY()/mm << "," << electronDirection.getZ()/mm << ")\n";
+  */
+  fAnalysis->SetAsym(GetComptonAsym(rho)); // Asym photon = asym e-
+  fAnalysis->SetRho(rho);
+  fAnalysis->SetGammaE(electronE/CLHEP::MeV); // Later add SetElectronE
+  fAnalysis->SetTheta(57.2957795 * electronTheta / CLHEP::radian);
+  fAnalysis->SetPhi(57.2957795 * electronPhi / CLHEP::radian);
+  if (fVerbose > 0)
+    G4cout << "Shooting electron with energy: " << electronE/CLHEP::MeV << " MeV" << G4endl;
+
 }
 
 void ComptonG4PrimaryGeneratorAction::GeneratePrimaryPolarizedElectronsMode()
