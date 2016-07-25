@@ -13,6 +13,7 @@
 // Standard Includes:
 #include <cmath>
 
+
 ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analysis *analysis) :
 
   fAnalysis(analysis), fTransversePol(0.0), fLongitudinalPol(1.0), fVerbose(0)
@@ -20,14 +21,15 @@ ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analys
   G4int n_particle = 1; // Gun shoots photons (and may shoot electrons too)
   fParticleGun = new G4ParticleGun(n_particle);
 
-  // Messenger class
+  // Messenger class:
   fGunMessenger = new ComptonG4PrimaryGeneratorMessenger(this);
 
-  // Default mode is a standard GEANT4 gun
+  // Default mode is a standard GEANT4 gun:
   fGeneratorMode = 0;
 
-  // Initialize all settings to zero (no hard coded values allowed here!!)
-  SetPhotonVertex(G4ThreeVector(0.0,0.0,0.0));
+
+  // Initialize all settings to zero (no hard coded values allowed here!!):
+  SetPhotonVertex(G4ThreeVector(0.0, 0.0, 0.0));
   SetPhotonDivergence(0.0);
   SetPhotonTrackStart(0.0);
   SetElectronEnergy(0.0);
@@ -41,45 +43,87 @@ ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analys
   fElectronDef = particleTable->FindParticle("e-");
   fOpticalDef = particleTable->FindParticle("optical");
 
-  // Set a default primary Z vertex
-  fPrimaryVertexLocation = G4ThreeVector(0*CLHEP::mm,0*CLHEP::mm,0*CLHEP::mm);
+  // Set a default primary Z vertex:
+  fPrimaryVertexLocation = G4ThreeVector(0*CLHEP::mm, 0*CLHEP::mm, 0*CLHEP::mm);
 }
 
 ComptonG4PrimaryGeneratorAction::~ComptonG4PrimaryGeneratorAction()
 {
-  if(fParticleGun)
+  if (fParticleGun)
     delete fParticleGun;
 
-  if(fGunMessenger)
+  if (fGunMessenger)
     delete fGunMessenger;
+}
+
+void ComptonG4PrimaryGeneratorAction::SetGeneratorMode(G4String val){
+
+  val.toLower();
+
+  if (val.compareTo("mono") == 0){
+    fGeneratorMode = kGenMono;
+  }
+  else if (val.compareTo("nogen") == 0){
+    fGeneratorMode = kGenNoGen;
+  }
+  else if (val.compareTo("comptonall") == 0){
+    fGeneratorMode = kGenComptonAll;
+  }
+  else if (val.compareTo("optical") == 0){
+    fGeneratorMode = kGenOptical;
+  }
+  else if (val.compareTo("polelectron") == 0){
+    fGeneratorMode = kGenPolElectron;
+  }
+  else if (val.compareTo("comptonelectron") == 0){
+    fGeneratorMode = kGenComptonElectron;
+  }
+  else if (val.compareTo("comptonphoton") == 0){
+    fGeneratorMode = kGenComptonPhoton;
+  }
+  else {
+    // Default mode
+    fGeneratorMode = kGenNoGen; // ?
+  }
+
 }
 
 
 void ComptonG4PrimaryGeneratorAction::GeneratePrimaries(G4Event *event)
 {
-  // We generate the primaries based on the selected mode
+  
+  // Generate primaries based on selected mode:
+
   switch(fGeneratorMode) {
-  case 1:
+  case kGenMono: // Previously case #1
     GeneratePrimaryMonoEnergeticMode();
     break;
-  case 2:
+  case kGenNoGen:  // Previously case #2
     break;
-  case 3: // Compton mode (i.e, real physics mode)
-    GeneratePrimaryComptonMode(); // Generates both Compton photon, electron eventually. Currently just photons 
+  case kGenComptonAll: // Compton photon + e- mode (= real physics mode) 
+                       // Previously case #3
+    GeneratePrimaryComptonMode(); // Currently just  photons 
     break;
-  case 4: // Optical photon mode
+  case kGenOptical: // Previously case #4
     GeneratePrimaryOpticalMode();
     break;
-  case 5: // Polarized Electrons mode
+  case kGenPolElectron: // Previously case #5
     GeneratePrimaryPolarizedElectronsMode();
     break;
-  case 6: // GenerateComptonElectronMode() **do this first! 2016-06-29
+  case kGenComptonElectron: // Previously case #6
     GenerateComptonElectronMode();
+    break;  
+    /* 
+  case kGenComptonPhoton: // Just Compton photons.  Previously case #7
+    GenerateComptonPhotonMode(); // Doesn't exist yet
     break;
-    //case 7: // GenerateComptonPhotonMode() // Just Compton photons
-  default: // Do nothing, use the default GEANT4 gun
+   */  
+  default: // Do nothing, use the default GEANT4 gun.
     break;
   };
+  
+  
+  
   fParticleGun->GeneratePrimaryVertex(event);
 }
 
@@ -89,7 +133,7 @@ void ComptonG4PrimaryGeneratorAction::Initialize()
   // Initialize this generator. If we are using Compton mode, one of the
   // first things to initialize is the distribution function (cross section)
 
-  if ( fGeneratorMode == 3 ) {
+  if ( fGeneratorMode == kGenComptonAll ) { // Later just "comptonphoton"
     fLaserEnergy = CLHEP::h_Planck * CLHEP::c_light / fLaserWavelength;
     fAParameter = 1 / (1 + (4*fLaserEnergy*fElectronEnergy)/
         (CLHEP::electron_mass_c2*CLHEP::electron_mass_c2));
@@ -123,7 +167,7 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryMonoEnergeticMode()
   fParticleGun->SetParticleDefinition(fGammaDef);
   fAnalysis->SetAsym(0.0);
   fAnalysis->SetRho(0.0);
-  fAnalysis->SetGammaE(fMaxPhotonEnergy/CLHEP::MeV);
+  fAnalysis->SetGammaE(fMaxPhotonEnergy / CLHEP::MeV);
   fAnalysis->SetTheta(0.0);
   fAnalysis->SetPhi(0.0);
 }
@@ -132,8 +176,8 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryOpticalMode()
 {
   G4ThreeVector opticalDirection = G4ThreeVector(0.0,0.0,1.0);
   opticalDirection.setRThetaPhi(1.0,
-      CLHEP::RandFlat::shoot(CLHEP::pi/4.0)/CLHEP::radian,
-      CLHEP::RandFlat::shoot(2.0*CLHEP::pi)/CLHEP::radian);
+      CLHEP::RandFlat::shoot(CLHEP::pi / 4.0) / CLHEP::radian,
+      CLHEP::RandFlat::shoot(2.0 * CLHEP::pi) / CLHEP::radian);
   fParticleGun->SetParticleEnergy(
       CLHEP::RandFlat::shoot(1.0) * fMaxPhotonEnergy);
   fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
@@ -261,6 +305,7 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryPolarizedElectronsMode()
  *
  * @param rho The normalized photon energy
  */
+
 G4double ComptonG4PrimaryGeneratorAction::GetComptonAsym( G4double rho)
 {
   G4double am1 = fAParameter-1.0;
