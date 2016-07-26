@@ -26,7 +26,6 @@ class G4ParticleDefinition;
  !*/
 
 enum ComptonG4Generator_t {
-
   kGenMono = 1,
   kGenNoGen,
   kGenComptonAll,
@@ -34,8 +33,27 @@ enum ComptonG4Generator_t {
   kGenPolElectron,
   kGenComptonElectron,
   kGenComptonPhoton
-
 };
+
+
+struct ComptonG4ComptonGenerator {
+  // Photon:
+  G4double gammaE;
+  G4double rho;
+  G4double gammaTheta;
+  G4double gammaPhi;
+  G4ThreeVector gammaDirection;
+  // Electron:
+  G4double electronE;
+  G4double electronTheta;
+  G4double electronP;
+  //G4double electronMinEnergy;
+  G4double electronPhi;
+  G4ThreeVector electronDirection;
+};
+
+
+
 
 
 class ComptonG4PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction {
@@ -72,6 +90,7 @@ public:
   // Compton Process helpers:
   G4double GetRandomRho();
   G4double GetComptonAsym(G4double rho);
+  
 
 
 private:
@@ -104,12 +123,13 @@ private:
   G4double fCXdSig_dRho[10000];
 
   // Generate custom Primaries:
-  void GeneratePrimaryComptonMode();
+  void GeneratePrimaryComptonMode(G4Event *event);
   void GenerateComptonElectronMode();
-  //void GenerateComptonPhotonMode(); // Doesn't exist yet
+  void GenerateComptonPhotonMode();
   void GeneratePrimaryOpticalMode();
   void GeneratePrimaryMonoEnergeticMode();
   void GeneratePrimaryPolarizedElectronsMode();
+  ComptonG4ComptonGenerator GeneratePrimaryComptonValues(); // "getter
 
   int fVerbose;
 };
