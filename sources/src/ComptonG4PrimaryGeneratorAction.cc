@@ -57,8 +57,8 @@ ComptonG4PrimaryGeneratorAction::~ComptonG4PrimaryGeneratorAction()
 }
 
 
-void ComptonG4PrimaryGeneratorAction::SetGeneratorMode(G4String val){
-
+void ComptonG4PrimaryGeneratorAction::SetGeneratorMode(G4String val)
+{
   val.toLower();
 
   if (val.compareTo("mono") == 0){
@@ -82,17 +82,13 @@ void ComptonG4PrimaryGeneratorAction::SetGeneratorMode(G4String val){
   else if (val.compareTo("comptonphoton") == 0){
     fGeneratorMode = kGenComptonPhoton;
   }
-  //else { // Let fGeneratorMode stay 0
-    // Default mode
-    //fGeneratorMode = kGenNoGen;
-  
+  // Else let fGeneratorMode stay 0.
 
 }
 
 
 void ComptonG4PrimaryGeneratorAction::GeneratePrimaries(G4Event *event)
 {
-  
   // Generate primaries based on selected mode:
 
   switch(fGeneratorMode) {
@@ -273,8 +269,8 @@ void ComptonG4PrimaryGeneratorAction::GenerateComptonElectronMode(){
 
 // ++++++++++++++++++
 
-void ComptonG4PrimaryGeneratorAction::GenerateComptonPhotonMode(){
-
+void ComptonG4PrimaryGeneratorAction::GenerateComptonPhotonMode()
+{
   ComptonG4ComptonGenerator gen = GeneratePrimaryComptonValues();
 
   fParticleGun->SetParticleEnergy(gen.gammaE);
@@ -317,8 +313,8 @@ G4double ComptonG4PrimaryGeneratorAction::GetComptonAsym( G4double rho)
 }
 
 
-ComptonG4ComptonGenerator ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonValues(){
-
+ComptonG4ComptonGenerator ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonValues()
+{
   ComptonG4ComptonGenerator result; // Refers to struct in .hh
 
   result.gammaE = 0.0;      // Scattered photon energy
@@ -339,16 +335,13 @@ ComptonG4ComptonGenerator ComptonG4PrimaryGeneratorAction::GeneratePrimaryCompto
 
   result.electronE = 0.0;    // Scattered electron energy
   result.electronTheta = 0.0; // Scattered electron polar angle
-  result.electronDirection = G4ThreeVector(0.0, 0.0, 1.0); // Into e- detector?
+  result.electronDirection = G4ThreeVector(0.0, 0.0, 1.0);
   result.electronP = 0.0;    // Initial electron momentum (z dir) 
-  //result.electronMinEnergy = 0.0; // Corresponds to Compton edge
-  //result.electronRho = 0.0;  // Normalized e- energy: electronE/ComptonEdge
   result.electronPhi = 0.0; // Azimuthal scattered electron dir
 
   result.electronE = (fElectronEnergy + fLaserEnergy) - result.gammaE; // E cons
   result.electronP = std::sqrt(std::pow(fElectronEnergy, 2) - std::pow(CLHEP::electron_mass_c2, 2));	
   result.electronTheta = std::asin(result.gammaE * std::sin(result.gammaTheta) / result.electronP); //Px conservation
-  //result.electronMinEnergy = fElectronEnergy - result.gammaE; // Megan: Eqn 4.4
   result.electronPhi = -result.gammaPhi;
   result.electronDirection.setRThetaPhi(1.0, result.electronTheta/CLHEP::radian,      result.electronPhi / CLHEP::radian);
 

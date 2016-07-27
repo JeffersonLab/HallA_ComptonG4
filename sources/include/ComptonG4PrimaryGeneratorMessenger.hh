@@ -3,7 +3,7 @@
 
 #include <G4UImessenger.hh>
 
-// Pre-defined classes
+// Pre-defined classes:
 class ComptonG4PrimaryGeneratorAction;
 class G4UIdirectory;
 class G4UIcmdWithAnInteger;

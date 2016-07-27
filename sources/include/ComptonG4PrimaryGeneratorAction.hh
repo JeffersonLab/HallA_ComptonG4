@@ -47,7 +47,6 @@ struct ComptonG4ComptonGenerator {
   G4double electronE;
   G4double electronTheta;
   G4double electronP;
-  //G4double electronMinEnergy;
   G4double electronPhi;
   G4ThreeVector electronDirection;
 };
@@ -129,7 +128,7 @@ private:
   void GeneratePrimaryOpticalMode();
   void GeneratePrimaryMonoEnergeticMode();
   void GeneratePrimaryPolarizedElectronsMode();
-  ComptonG4ComptonGenerator GeneratePrimaryComptonValues(); // "getter
+  ComptonG4ComptonGenerator GeneratePrimaryComptonValues(); // "getter"
 
   int fVerbose;
 };

@@ -24,7 +24,7 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
   fGenModeCmd->SetParameterName("Mode", false);
   fGenModeCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 
-  // Set the Initial Energy (which depends on the mode selected)
+  // Set the Initial Energy (which depends on the mode selected):
   fSetElectronEnergyCmd = new G4UIcmdWithADoubleAndUnit(
       "/Compton/gun/ElectronEnergy",this);
   fSetElectronEnergyCmd->SetGuidance("Initial Elecron Energy (mode dependent).");
@@ -32,7 +32,7 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
   fSetElectronEnergyCmd->SetUnitCategory("Energy");
   fSetElectronEnergyCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  // Set Laser Wavelenght (which depends on the mode selected)
+  // Set Laser Wavelenght (which depends on the mode selected):
   fSetLaserWavelengthCmd = new G4UIcmdWithADoubleAndUnit(
       "/Compton/gun/LaserWavelenght",this);
   fSetLaserWavelengthCmd->SetGuidance("Laser photon wavelength (mode dependent).");
@@ -40,7 +40,7 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
   fSetLaserWavelengthCmd->SetUnitCategory("Length");
   fSetLaserWavelengthCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  // Set Initial Photon Vertex
+  // Set Initial Photon Vertex:
   fSetPhotonVertexXCmd = new G4UIcmdWithADoubleAndUnit(
       "/Compton/gun/PhotonVertexX",this);
   fSetPhotonVertexXCmd->SetGuidance("Initial photon vertex");
@@ -62,7 +62,7 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
   fSetPhotonVertexZCmd->SetUnitCategory("Length");
   fSetPhotonVertexZCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  // Set Incident Particle Energy (cannot be used in Compton mode)
+  // Set Incident Particle Energy (cannot be used in Compton mode):
   fSetIncidentEnergyCmd = new G4UIcmdWithADoubleAndUnit(
       "/Compton/gun/MaxPhotonEnergy",this);
   fSetIncidentEnergyCmd->SetGuidance("Incident or Max Particle Energy (non compatible with Compton Mode");
@@ -102,7 +102,7 @@ ComptonG4PrimaryGeneratorMessenger::~ComptonG4PrimaryGeneratorMessenger()
 void ComptonG4PrimaryGeneratorMessenger::SetNewValue(
     G4UIcommand *command, G4String newValue)
 { // Process new value from G4 Kernel
-  if( command == fGenModeCmd ) {
+  if ( command == fGenModeCmd ) {
     fAction->SetGeneratorMode(newValue); 
   } else if ( command == fSetElectronEnergyCmd ) {
     fAction->SetElectronEnergy(fSetElectronEnergyCmd->GetNewDoubleValue(newValue));
@@ -121,7 +121,6 @@ void ComptonG4PrimaryGeneratorMessenger::SetNewValue(
   } else if ( command == fSetPhotonVertexYCmd ) {
     fAction->SetPhotonY(fSetPhotonVertexXCmd->GetNewDoubleValue(newValue));
   } else if ( command == fSetTransversePolCmd ) {
-    fAction->SetTransversePol(
-        fSetTransversePolCmd->GetNewDoubleValue(newValue));
+    fAction->SetTransversePol(fSetTransversePolCmd->GetNewDoubleValue(newValue));
   }
 }
