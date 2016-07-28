@@ -21,12 +21,25 @@ include_directories(${my_project_headers_dirlist})
 # Local path for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
+## Check if compiler supports C++11 standard if avialable
+## (Got this snipped from Wouter)
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+if(COMPILER_SUPPORTS_CXX11)
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++11 support.")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+elseif(COMPILER_SUPPORTS_CXX0X)
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++0x support.")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+else()
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support.")
+endif()
+
 # Load ROOT and setup include directory
 find_package(ROOT REQUIRED)
 include_directories(${ROOT_INCLUDE_DIR})
-# Create dictionary for headers if ROOT version < 5.90
-set(my_project_sources_dictionary "")
-if(ROOT_VERSION VERSION_LESS 5.90)
+# Create dictionary for headers for ROOT
 message("Generating dictionaries for ROOT ${ROOT_VERSION}...")
 # Loop over all found LinkDef.h header files
 set(my_project_linkdefs_files "")
@@ -41,13 +54,10 @@ ROOT_GENERATE_DICTIONARY(
   "${ROOTPWA_DICTIONARY}"
   "${_header}"
   LINKDEF "${_file}"
-  OPTIONS "-f"
+  OPTIONS "-p" ## -p to use compilers preprocessor instead of CINTs preprocessor
   )
 set(my_project_sources_dictionary ${my_project_sources_dictionary} ${ROOTPWA_DICTIONARY})
 endforeach()
-else()
-message("No dictionaries needed for ROOT ${ROOT_VERSION}.")
-endif()
 #set(ROOT_LIBRARIES ${ROOT_LIBRARIES} -lGui)
 message("All project sources: ${my_project_sources_dictionary}")
 
