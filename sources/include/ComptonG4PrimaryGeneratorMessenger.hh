@@ -3,13 +3,14 @@
 
 #include <G4UImessenger.hh>
 
-// Pre-defined classes
+// Pre-defined classes:
 class ComptonG4PrimaryGeneratorAction;
 class G4UIdirectory;
 class G4UIcmdWithAnInteger;
 class G4UIcmdWithADoubleAndUnit;
 class G4UIcmdWithADouble;
 class G4UIcmdWithoutParameter;
+class G4UIcmdWithAString;
 
 /*!
  * @class ComptonG4PrimaryGeneratorMessenger
@@ -22,6 +23,7 @@ class G4UIcmdWithoutParameter;
  * @author Juan Carlos Cornejo <cornejo@jlab.org>
  *
  !*/
+
 class ComptonG4PrimaryGeneratorMessenger : public G4UImessenger {
 public:
   ComptonG4PrimaryGeneratorMessenger(ComptonG4PrimaryGeneratorAction *action);
@@ -32,7 +34,7 @@ public:
 private:
   ComptonG4PrimaryGeneratorAction *fAction;
   G4UIdirectory              *fGunDir;
-  G4UIcmdWithAnInteger       *fGenModeCmd;
+  G4UIcmdWithAString         *fGenModeCmd;
   G4UIcmdWithADoubleAndUnit  *fSetIncidentEnergyCmd;
   G4UIcmdWithADoubleAndUnit  *fSetElectronEnergyCmd;
   G4UIcmdWithADoubleAndUnit  *fSetLaserWavelengthCmd;

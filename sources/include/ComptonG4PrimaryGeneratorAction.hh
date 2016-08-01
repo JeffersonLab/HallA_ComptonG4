@@ -25,6 +25,36 @@ class G4ParticleDefinition;
  *
  !*/
 
+enum ComptonG4Generator_t {
+  kGenMono = 1,
+  kGenNoGen,
+  kGenComptonAll,
+  kGenOptical,
+  kGenPolElectron,
+  kGenComptonElectron,
+  kGenComptonPhoton
+};
+
+
+struct ComptonG4ComptonGenerator {
+  // Photon:
+  G4double gammaE;
+  G4double rho;
+  G4double gammaTheta;
+  G4double gammaPhi;
+  G4ThreeVector gammaDirection;
+  // Electron:
+  G4double electronE;
+  G4double electronTheta;
+  G4double electronP;
+  G4double electronPhi;
+  G4ThreeVector electronDirection;
+};
+
+
+
+
+
 class ComptonG4PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction {
 public:
   ComptonG4PrimaryGeneratorAction(ComptonG4Analysis *analysis = 0);
@@ -32,11 +62,11 @@ public:
 
   void GeneratePrimaries(G4Event *event);
 
-  // Setup setters
+  // Setup setters:
   void SetElectronEnergy(G4double val) { fElectronEnergy = val; }
   void SetMaxPhotonEnergy(G4double val) { fMaxPhotonEnergy = val; }
   void SetLaserWavelength(G4double val) { fLaserWavelength = val; }
-  void SetGeneratorMode(G4int val){fGeneratorMode=val;}
+  void SetGeneratorMode(G4String val); // Define function, not implementing yet
   void SetPhotonX(G4double val) { fPrimaryVertexLocation.setX(val); }
   void SetPhotonY(G4double val) { fPrimaryVertexLocation.setY(val); }
   void SetPhotonZ(G4double val) { fPrimaryVertexLocation.setZ(val); }
@@ -56,9 +86,10 @@ public:
 
   void Initialize();
 
-  // Compton Process helpers
+  // Compton Process helpers:
   G4double GetRandomRho();
   G4double GetComptonAsym(G4double rho);
+  
 
 
 private:
@@ -66,7 +97,7 @@ private:
   G4ParticleGun *fParticleGun;
   ComptonG4PrimaryGeneratorMessenger *fGunMessenger;
 
-  // Settings
+  // Settings:
   G4ThreeVector fPrimaryVertexLocation; // Primary generation point for photons
   G4double fElectronEnergy;       // Electron beam energy
   G4double fLaserWavelength;      // Laser wavelength
@@ -77,24 +108,27 @@ private:
   G4double fTransversePol;        // Transverse polarization for e beam
   G4double fLongitudinalPol;      // Longitudinal polarization for e beam
 
-  // Compton Mode settings
+  // Compton Mode settings:
   G4double fLaserEnergy;               // Laser energy
   G4double fAParameter;           // A common parameter that appears in the
                                   // Compton Mode kinematics
 
-  // Hold the particle definitions
+  // Hold the particle definitions:
   G4ParticleDefinition* fGammaDef;    // Gamma definition pointer
   G4ParticleDefinition* fElectronDef; // Electron definition pointer
   G4ParticleDefinition* fOpticalDef;  // Optical photon definition pointer
 
-  // Hold CX arrays
+  // Hold CX arrays:
   G4double fCXdSig_dRho[10000];
 
-  // Generate custom Primaries
-  void GeneratePrimaryComptonMode();
+  // Generate custom Primaries:
+  void GeneratePrimaryComptonMode(G4Event *event);
+  void GenerateComptonElectronMode();
+  void GenerateComptonPhotonMode();
   void GeneratePrimaryOpticalMode();
   void GeneratePrimaryMonoEnergeticMode();
   void GeneratePrimaryPolarizedElectronsMode();
+  ComptonG4ComptonGenerator GeneratePrimaryComptonValues(); // "getter"
 
   int fVerbose;
 };
