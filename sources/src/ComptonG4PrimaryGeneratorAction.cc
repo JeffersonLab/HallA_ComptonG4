@@ -61,25 +61,25 @@ void ComptonG4PrimaryGeneratorAction::SetGeneratorMode(G4String val)
 {
   val.toLower();
 
-  if (val.compareTo("mono") == 0 || val == 1){
+  if (val.compareTo("mono") == 0 || val.compareTo("1") == 0){
     fGeneratorMode = kGenMono;
   }
-  else if (val.compareTo("nogen") == 0 || val == 2){
+  else if (val.compareTo("nogen") == 0 || val.compareTo("2") == 0){
     fGeneratorMode = kGenNoGen;
   }
-  else if (val.compareTo("comptonall") == 0 || val == 3){
+  else if (val.compareTo("comptonall") == 0 || val.compareTo("3") == 0){
     fGeneratorMode = kGenComptonAll;
   }
-  else if (val.compareTo("optical") == 0 || val == 4){
+  else if (val.compareTo("optical") == 0 || val.compareTo("4") == 0){
     fGeneratorMode = kGenOptical;
   }
-  else if (val.compareTo("polelectron") == 0 || val == 5){
+  else if (val.compareTo("polelectron") == 0 || val.compareTo("5") == 0){
     fGeneratorMode = kGenPolElectron;
   }
-  else if (val.compareTo("comptonelectron") == 0 || val == 6){
+  else if (val.compareTo("comptonelectron") == 0 || val.compareTo("6") == 0){
     fGeneratorMode = kGenComptonElectron;
   }
-  else if (val.compareTo("comptonphoton") == 0 || val == 7){
+  else if (val.compareTo("comptonphoton") == 0 || val.compareTo("7") == 0){
     fGeneratorMode = kGenComptonPhoton;
   }
   // Else let fGeneratorMode stay 0.
