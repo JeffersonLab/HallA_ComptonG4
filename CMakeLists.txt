@@ -40,7 +40,7 @@ endif()
 find_package(ROOT REQUIRED)
 include_directories(${ROOT_INCLUDE_DIR})
 # Create dictionary for headers for ROOT
-message("Generating dictionaries for ROOT ${ROOT_VERSION}...")
+# message("Generating dictionaries for ROOT ${ROOT_VERSION}...")
 # Loop over all found LinkDef.h header files
 set(my_project_linkdefs_files "")
 set(my_project_linkdefs_header_files "")
@@ -50,6 +50,7 @@ foreach( _linkdef ${my_project_linkdefs})
   string(REGEX REPLACE "LinkDef.h" ".hh" _header ${_file})
   string(REGEX REPLACE "LinkDef.h" "" _prefix ${_file})
   set(ROOTPWA_DICTIONARY ${CMAKE_CURRENT_BINARY_DIR}/${_prefix}Dictionary)
+  set(ROOTPCM_DICTIONARY ${ROOTPWA_DICTIONARY}_rdict.pcm)
 ROOT_GENERATE_DICTIONARY(
   "${ROOTPWA_DICTIONARY}"
   "${_header}"
@@ -57,9 +58,10 @@ ROOT_GENERATE_DICTIONARY(
   OPTIONS "-p" ## -p to use compilers preprocessor instead of CINTs preprocessor
   )
 set(my_project_sources_dictionary ${my_project_sources_dictionary} ${ROOTPWA_DICTIONARY})
+set(my_project_dictionary_pcm ${my_project_dictionary_pcm} ${ROOTPCM_DICTIONARY})
 endforeach()
 #set(ROOT_LIBRARIES ${ROOT_LIBRARIES} -lGui)
-message("All project sources: ${my_project_sources_dictionary}")
+#message("All project sources: ${my_project_sources_dictionary}")
 
 # Find Boost libraries
 # There is a bug in CMAke 2.8's internal find boost process
@@ -112,3 +114,7 @@ install (TARGETS ComptonG4_batch DESTINATION bin)
 install (TARGETS ComptonG4Root DESTINATION bin)
 install (TARGETS ComptonG4Lib DESTINATION lib)
 install( FILES ${my_project_headers} DESTINATION include )
+## Install *.pcm (ROOT 6 dictionaries) only for ROOT 6 and above
+if(ROOT_VERSION VERSION_GREATER 5.90)
+  install( FILES ${my_project_dictionary_pcm} DESTINATION lib )
+endif(ROOT_VERSION VERSION_GREATER 5.90)

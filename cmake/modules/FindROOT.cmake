@@ -49,7 +49,15 @@ find_package_handle_standard_args(ROOT DEFAULT_MSG ROOT_CONFIG_EXECUTABLE
 mark_as_advanced(ROOT_CONFIG_EXECUTABLE)
 
 include(CMakeParseArguments)
-find_program(ROOTCINT_EXECUTABLE rootcint PATHS $ENV{ROOTSYS}/bin)
+if(ROOT_VERSION VERSION_LESS 5.90)
+  ## Use rootcint  for ROOT <= 5
+  find_program(ROOTDICT_EXECUTABLE rootcint PATHS $ENV{ROOTSYS}/bin)
+  message("--   Found rootcint")
+else()
+  ## Use rootcling for ROOT >= 6
+  find_program(ROOTDICT_EXECUTABLE rootcling PATHS $ENV{ROOTSYS}/bin)
+  message("--   Found rootcling")
+endif()
 find_program(GENREFLEX_EXECUTABLE genreflex PATHS $ENV{ROOTSYS}/bin)
 find_package(GCCXML)
 
@@ -91,11 +99,19 @@ function(ROOT_GENERATE_DICTIONARY dictionary)
     set(linkdefs ${linkdefs} ${linkFile})
     unset(linkFile CACHE)
   endforeach()
-  #---call rootcint------------------------------------------
+  #---call rootcint or rootcling-----------------------------
+if(ROOT_VERSION VERSION_LESS 5.90)
   add_custom_command(OUTPUT ${dictionary}.cxx ${dictionary}.h
-                     COMMAND ${ROOTCINT_EXECUTABLE} -cint -f  ${dictionary}.cxx 
-                                          -c ${ARG_OPTIONS} ${includedirs} ${headerfiles} ${linkdefs} 
-                     DEPENDS ${headerfiles} ${linkdefs} VERBATIM)
+    COMMAND ${ROOTDICT_EXECUTABLE} -cint -f  ${dictionary}.cxx 
+    -c ${ARG_OPTIONS} ${includedirs} ${headerfiles} ${linkdefs} 
+    DEPENDS ${headerfiles} ${linkdefs} VERBATIM)
+else(ROOT_VERSION VERSION_LESS 5.90)
+  add_custom_command(OUTPUT ${dictionary}.cxx ${dictionary}.h
+    COMMAND ${ROOTDICT_EXECUTABLE} -f  ${dictionary}.cxx 
+    -c ${ARG_OPTIONS} ${includedirs} ${headerfiles} ${linkdefs} 
+    DEPENDS ${headerfiles} ${linkdefs} VERBATIM)
+endif(ROOT_VERSION VERSION_LESS 5.90)
+
 endfunction()
 
 #----------------------------------------------------------------------------
