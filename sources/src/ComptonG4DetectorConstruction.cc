@@ -51,14 +51,25 @@
 ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
     G4String geometry_file, ComptonG4SensitiveDetectorManager* senseManager,
     ComptonG4Analysis *analysis) :
+  fGeometryFile(geometry_file), fSenseManager(senseManager),
   fPhysicsWorld(0),fAnalysis(analysis)
 {
-  G4GDMLParser parser;
-  parser.Read(geometry_file);
-  fPhysicsWorld = parser.GetWorldVolume();
-
   // Create an instance of the messenger class
   fMessenger = new ComptonG4DetectorConstructionMessenger(this);
+}
+
+ComptonG4DetectorConstruction::~ComptonG4DetectorConstruction()
+{
+  if(fMessenger)
+    delete fMessenger;
+}
+
+
+G4VPhysicalVolume*  ComptonG4DetectorConstruction::Construct()
+{
+  G4GDMLParser parser;
+  parser.Read(fGeometryFile);
+  fPhysicsWorld = parser.GetWorldVolume();
 
   // Material table
   const G4MaterialTable* materials =  G4Material::GetMaterialTable();
@@ -100,7 +111,7 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
       if( str == "SensDet" ) {
         // Register this new sensitive detector
         //(*lvciter)->SetSensitiveDetector(senseManager->RegisterDetector(val));
-        senseManager->RegisterDetector(*lvciter,val);
+        fSenseManager->RegisterDetector(*lvciter,val);
       } else if ( str == "Color" ) {
         double red = 1.0;
         double green = 1.0;
@@ -175,7 +186,7 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
       G4String str=ipair->type;
       G4String val=ipair->value;
       if( str == "SensDet" ) {
-        senseManager->AddVolume((*pvciter)->GetLogicalVolume()->GetName(),
+        fSenseManager->AddVolume((*pvciter)->GetLogicalVolume()->GetName(),
             *pvciter);
         //fAnalysis->AddDetector((*pvciter)->GetName());
         //((ComptonG4SensitiveDetector*)
@@ -222,17 +233,8 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
       }
     }
   }
-}
 
-ComptonG4DetectorConstruction::~ComptonG4DetectorConstruction()
-{
-  if(fMessenger)
-    delete fMessenger;
-}
-
-
-G4VPhysicalVolume*  ComptonG4DetectorConstruction::Construct()
-{
+  // Finally, return a pointer to the physics world
   return fPhysicsWorld;
 }
 

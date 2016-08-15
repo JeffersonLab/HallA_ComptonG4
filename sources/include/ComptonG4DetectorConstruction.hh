@@ -37,6 +37,8 @@ public:
       std::map<G4String, G4String> options);
   G4LogicalVolume* GetMagneticVolume(G4String name);
 private:
+  G4String fGeometryFile;
+  ComptonG4SensitiveDetectorManager *fSenseManager;
   G4VPhysicalVolume* fPhysicsWorld;
 
   ComptonG4DetectorConstructionMessenger *fMessenger;
