@@ -49,6 +49,7 @@ int main( int argc, char **argv)
 {
 
   G4String geometry_file;
+  G4String preinit_file;
   G4String config_file;
   G4String batch_file;
   G4bool use_optical;
@@ -65,7 +66,7 @@ int main( int argc, char **argv)
   po::options_description generic("Generic options");
   generic.add_options()
     ("help,h","print this help message") // help
-    ("config,c",po::value<std::string>(&geometry_file)->default_value("./")
+    ("config,c",po::value<std::string>(&geometry_file)->default_value("")
         ,"config file") // config file
     ;
 
@@ -74,6 +75,7 @@ int main( int argc, char **argv)
   config.add_options()
     ("geometry-file",po::value<std::string>(),"Geometry filename")
     ("batch-file",po::value<std::string>(),"Batch filename")
+    ("preinit",po::value<std::string>(),"Execute Pre-Init macro")
     ("output-dir",po::value<std::string>()->default_value("./")
      ,"path output directory")
     ("rootfile-prefix",po::value<std::string>()->default_value("ComptonG4_")
@@ -130,12 +132,19 @@ int main( int argc, char **argv)
     return 1;
   }
 
-  // Process the mandatory geometry file
-  if(!vm.count("geometry-file")){
-    G4cerr << "Did not specify a geometry file!" << G4endl;
-    return -1;
-  } else {
+  // Process optional preinit macro file
+  if(vm.count("preinit")){
+    preinit_file = vm["preinit"].as<std::string>();
+    G4cout << "Executing Pre-Init file: " <<
+     preinit_file << G4endl;
+  }
+
+
+  // Process optional world geometry file
+  if(vm.count("geometry-file")){
     geometry_file = vm["geometry-file"].as<std::string>();
+    G4cout << "Reading world geometry from GDML file:" <<
+     geometry_file << G4endl;
   }
 
   // Process optional parameters
@@ -251,11 +260,16 @@ int main( int argc, char **argv)
   runManager->SetUserAction(runAction);
   runManager->SetUserAction(new ComptonG4StackingAction(optical_tracker));
 
-  // Initialize G4 kernel
-  runManager->Initialize();
-
   // get the pointer to the User Interface manager
   G4UImanager* UI = G4UImanager::GetUIpointer();
+
+  // Execute the preinit file if user supplied one
+  if(!preinit_file.isNull()) {
+    UI->ApplyCommand(G4String("/control/execute ") + preinit_file);
+  }
+
+  // Initialize G4 kernel
+  runManager->Initialize();
 
   // Execute any commands the user passed as parameter
   for(size_t i = 0; i < ui_cmds.size(); i++ ) {
@@ -268,7 +282,7 @@ int main( int argc, char **argv)
   // Read default GUI mac file
   char *guiFile= getenv("COMPTONG4_GUI_MAC_FILE");
   if(guiFile!=NULL) {
-    G4String cmd("/control/execute");
+    G4String cmd("/control/execute ");
     cmd += guiFile;
     UI->ApplyCommand(cmd );
   } else {

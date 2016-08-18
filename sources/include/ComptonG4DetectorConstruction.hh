@@ -2,6 +2,7 @@
 #define _COMPTONDETECTORCONSTRUCTION_H
 
 #include <G4VUserDetectorConstruction.hh>
+#include <G4ThreeVector.hh>
 #include <map>
 
 // Predefine classes
@@ -11,6 +12,7 @@ class ComptonG4Analysis;
 class ComptonG4DipoleField;
 class G4LogicalVolume;
 class G4VPhysicalVolume;
+class ComptonG4GDMLVolumes;
 
 /*!
  * @class ComptonG4DetectorConstruction
@@ -36,15 +38,20 @@ public:
   void ProcessMagneticVolumeOptions(G4String name,
       std::map<G4String, G4String> options);
   G4LogicalVolume* GetMagneticVolume(G4String name);
+  void SetWorldInVacuum(bool vacuum = false) { fWorldInVacuum = vacuum; }
+  void FinalizeGeometry();
 private:
   G4String fGeometryFile;
   ComptonG4SensitiveDetectorManager *fSenseManager;
   G4VPhysicalVolume* fPhysicsWorld;
+  bool fWorldInVacuum;  // World in Vacuum? (As opposed to air)
+  bool fCheckOverlap;   // When adding volumes, should we check for overlaps?
 
   ComptonG4DetectorConstructionMessenger *fMessenger;
   ComptonG4Analysis *fAnalysis;
   std::vector<G4LogicalVolume*> fMagneticVolumes;
   std::vector<ComptonG4DipoleField *> fMagneticFields;
+  ComptonG4GDMLVolumes *fGDMLVolumes;
 };
 
 #endif

@@ -9,10 +9,10 @@
 #include "ComptonG4Analysis.hh"
 #include "ComptonG4Utils.hh"
 #include "ComptonG4DipoleField.hh"
+#include "ComptonG4GDMLVolumes.hh"
 
 #include <G4VPhysicalVolume.hh>
 #include <G4PVPlacement.hh>
-#include <G4ThreeVector.hh>
 #include "G4LogicalVolumeStore.hh"
 #include "G4PhysicalVolumeStore.hh"
 #include <G4Colour.hh>
@@ -27,6 +27,7 @@
 #include <G4OpticalSurface.hh>
 #include <G4SDManager.hh>
 #include <G4Version.hh>
+#include <G4NistManager.hh>
 
 // Magnetic fields stuff
 #include <G4FieldManager.hh>
@@ -52,10 +53,14 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
     G4String geometry_file, ComptonG4SensitiveDetectorManager* senseManager,
     ComptonG4Analysis *analysis) :
   fGeometryFile(geometry_file), fSenseManager(senseManager),
-  fPhysicsWorld(0),fAnalysis(analysis)
+  fPhysicsWorld(0),fWorldInVacuum(false),fCheckOverlap(false),
+  fAnalysis(analysis)
 {
+  // Create the GDML volumes class
+  fGDMLVolumes = new ComptonG4GDMLVolumes();
+
   // Create an instance of the messenger class
-  fMessenger = new ComptonG4DetectorConstructionMessenger(this);
+  fMessenger = new ComptonG4DetectorConstructionMessenger(this,fGDMLVolumes);
 }
 
 ComptonG4DetectorConstruction::~ComptonG4DetectorConstruction()
@@ -64,13 +69,52 @@ ComptonG4DetectorConstruction::~ComptonG4DetectorConstruction()
     delete fMessenger;
 }
 
-
 G4VPhysicalVolume*  ComptonG4DetectorConstruction::Construct()
 {
-  G4GDMLParser parser;
-  parser.Read(fGeometryFile);
-  fPhysicsWorld = parser.GetWorldVolume();
+  // Should we place the world in Vacuum or Air?
+  G4Material *mat_World;
+  if(fWorldInVacuum) {
+    mat_World = G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic");
+  } else {
+    mat_World = G4NistManager::Instance()->FindOrBuildMaterial("G4_AIR");
+  }
 
+  G4LogicalVolume *log_World;
+  // If a geometry file was specified, use that as the world
+  if(!fGeometryFile.isNull()) {
+    fPhysicsWorld = fGDMLVolumes->GetWorldFromFile(fGeometryFile);
+    log_World = fPhysicsWorld->GetLogicalVolume();
+    log_World->SetMaterial(mat_World);
+  } else {
+    G4cout << "No geometry file specified, generating standard world." << G4endl;
+    /////////////////////////////////////////////////////////////////////////////
+    // Construct a world volume
+    G4Box *sol_World = new G4Box("sol_World",4*CLHEP::m/2.,
+        4*CLHEP::m/2.,20*CLHEP::m/2.);
+
+    log_World = new G4LogicalVolume(sol_World,mat_World,
+        "log_World",0,0,0);
+
+    // Set world invisible
+    log_World->SetVisAttributes(G4VisAttributes::Invisible);
+
+    // Finally, create and return a pointer to the physical world.
+    fPhysicsWorld = new G4PVPlacement(0,G4ThreeVector(),"phys_World",
+        log_World,0,false,0);
+
+  }
+  // Add all the user volumes to the world
+  fGDMLVolumes->Construct(log_World);
+
+  // Finalize detector construction
+  FinalizeGeometry();
+
+  // And we are done!
+  return fPhysicsWorld;
+}
+
+void ComptonG4DetectorConstruction::FinalizeGeometry()
+{
   // Material table
   const G4MaterialTable* materials =  G4Material::GetMaterialTable();
   for(size_t i = 0; i < materials->size(); i++ ) {
@@ -97,7 +141,8 @@ G4VPhysicalVolume*  ComptonG4DetectorConstruction::Construct()
   for( lvciter = lvs->begin(); lvciter != lvs->end(); lvciter++ )
   {
     G4cout << (*lvciter)->GetName() << G4endl;
-    G4GDMLAuxListType auxInfo = parser.GetVolumeAuxiliaryInformation(*lvciter);
+    G4GDMLAuxListType auxInfo =
+      fGDMLVolumes->GetVolumeAuxiliaryInformation(*lvciter);
 #if G4VERSION_NUMBER >= 1020
     std::vector<G4GDMLAuxStructType>::const_iterator ipair = auxInfo.begin();
 #else
@@ -175,7 +220,7 @@ G4VPhysicalVolume*  ComptonG4DetectorConstruction::Construct()
   for( pvciter = pvs->begin(); pvciter != pvs->end(); pvciter++ ) {
     G4cout << "Physical Volume: " << (*pvciter)->GetName() << " \tHash ID: "
       << (*pvciter)->GetName().hash(G4String::exact) << G4endl;
-    G4GDMLAuxListType auxInfo = parser.GetVolumeAuxiliaryInformation(
+    G4GDMLAuxListType auxInfo = fGDMLVolumes->GetVolumeAuxiliaryInformation(
       (*pvciter)->GetLogicalVolume());
 #if G4VERSION_NUMBER >= 1020
     std::vector<G4GDMLAuxStructType>::const_iterator ipair = auxInfo.begin();
@@ -233,9 +278,6 @@ G4VPhysicalVolume*  ComptonG4DetectorConstruction::Construct()
       }
     }
   }
-
-  // Finally, return a pointer to the physics world
-  return fPhysicsWorld;
 }
 
 void ComptonG4DetectorConstruction::ActivateDetector(G4String)
