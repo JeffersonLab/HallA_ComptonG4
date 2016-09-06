@@ -17,7 +17,7 @@
 <!ENTITY ChicaneBeamline SYSTEM "../Common/blank.gdml">
 
 <!-- File Containing Chicane Volume Definitions -->
-<!ENTITY ChicaneDipole SYSTEM "../Common/blank.gdml">
+<!ENTITY ChicaneDipole SYSTEM "ChicaneDipole.gdml">
 
 <!-- The remainder of the file should be left unmodified. It just sets up
       the template that pulls from the above defined entities to construct

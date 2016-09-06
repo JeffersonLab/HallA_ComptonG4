@@ -1,0 +1,17 @@
+
+
+<!-- Volume reference for the dipoles -->
+    <volume name="BeamPolarizerLogical" >
+        <materialref ref="AirVacuum" />
+        <solidref ref="BeamPolarizerSolid" />
+        <auxiliary auxtype="Color" auxvalue="#7CB9E855" />
+        <auxiliary auxtype="SensDet" auxvalue="ComptonG4BeamPolarizer" />
+    </volume>
+
+
+<volume name="DipoleField" >
+    <materialref ref="AirVacuum" />
+    <solidref ref="DipoleSolid" />
+    <auxiliary auxtype="Color" auxvalue="#E9D66B44" />
+    <auxiliary auxtype="Magnetic" auxvalue="ComptonDipoleField" />
+</volume>

@@ -42,7 +42,7 @@ ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analys
   fOpticalDef = particleTable->FindParticle("optical");
 
   // Set a default primary Z vertex
-  fPrimaryVertexLocation = G4ThreeVector(0*CLHEP::mm,0*CLHEP::mm,0*CLHEP::mm);
+  fPrimaryVertexLocation = G4ThreeVector(0*CLHEP::mm,567.0*CLHEP::mm,0*CLHEP::mm);
 }
 
 ComptonG4PrimaryGeneratorAction::~ComptonG4PrimaryGeneratorAction()
@@ -184,7 +184,7 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
 void ComptonG4PrimaryGeneratorAction::GeneratePrimaryPolarizedElectronsMode()
 {
   fParticleGun->SetParticleEnergy(fElectronEnergy);
-  fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
+    fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.0,0.0,1.0));
   G4double transAngle = CLHEP::RandFlat::shoot(2*CLHEP::pi)/CLHEP::radian;
   fParticleGun->SetParticlePolarization(G4ThreeVector(

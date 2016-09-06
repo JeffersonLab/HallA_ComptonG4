@@ -4,12 +4,8 @@
 </define>
 <!-- Materials specific for the Chicane -->
 <materials>
-     <material Z="1" name="Vacuum" state="gas">
-       <T unit="K" value="2.73"/>
-       <P unit="pascal" value="3e-18"/>
-       <D unit="g/cm3" value="1e-25"/>
-       <atom unit="g/mole" value="1.01"/>
-     </material>
+    
+
 </materials>
 
 <!-- Chicane Solids -->
@@ -21,6 +17,59 @@
 <!-- Inclued Chicane volumes -->
 <structure>
  &ChicaneVolumes;
+ &ChicaneDipole;
+ 
+ <volume name="ComptonChicane">
+     <materialref ref="AirVacuum"/>
+     <solidref ref="ChicaneWorld"/>
+     <auxiliary auxtype="Color" auxvalue="#00000000" />
+    
+     <physvol>
+         <volumeref ref="Chicane"/>
+         <positionref ref="ChicanePosition"/>
+     </physvol>
+
+     <physvol name="BeamPol1">
+         <volumeref ref="BeamPolarizerLogical" />
+         <position name="BeamPol1Position" unit="mm"
+         x="0" y="567" z="-4700" />
+     </physvol>
+     
+     <physvol name="BeamPol2">
+         <volumeref ref="BeamPolarizerLogical" />
+         <position name="BeamPol2Position" unit="mm"
+         x="0" y="567" z="4700" />
+     </physvol>
+     
+     <physvol name="Dipole1">
+         <volumeref ref="DipoleField" />
+         <positionref ref="dipole1" />
+         <rotation name="Dipole1FieldRotation" z="0" unit="deg" />
+     </physvol>
+     
+     <physvol name="Dipole2">
+         <volumeref ref="DipoleField" />
+         <positionref ref="dipole2" />
+         <rotation name="Dipole2FieldRotation" unit="deg" z="180" />
+     </physvol>
+     
+     
+     <physvol name="Dipole3">
+         <volumeref ref="DipoleField" />
+         <positionref ref="dipole3" />
+         <rotation name="Dipole3FieldRotation" z="180" unit="deg" />
+     </physvol>
+     
+     <physvol name="Dipole4">
+         <volumeref ref="DipoleField" />
+         <positionref ref="dipole4" />
+         <rotation name="Dipole4FieldRotation" unit="deg" z="0" />
+     </physvol>
+     
+ </volume>
+ 
+ 
+ 
 </structure>
 
 <setup name="Default" version="1.1">

@@ -26,6 +26,7 @@ public:
 
   static const G4double kGausToTeslaConversion;
 private:
+  
   std::vector<G4double> fCoordinate[3];
   std::vector<std::vector<std::vector<G4double> > > fMagneticField;
   std::vector<G4ThreeVector> fOffsets;

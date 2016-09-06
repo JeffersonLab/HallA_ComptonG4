@@ -4,21 +4,10 @@
 <!-- tube and box segments defined here -->
   
 
-<box name="ChicaneWorldPiece1" lunit="mm"
+<box name="ChicaneWorld" lunit="mm"
     x="dim_ChicaneWorldX"
     y="dim_ChicaneWorldY"
     z="dim_ChicaneWorldZ" />
-
-<box name="ChicaneWorldPiece2" lunit="mm"
-    x="2*dim_ChicaneWorldX"
-    y="2*dim_ChicaneWorldY"
-    z="2*dim_ChicaneWorldZ + 1.0" />
-
-<subtraction name="ChicaneWorld">
-    <first ref="ChicaneWorldPiece1"/>
-    <second ref="ChicaneWorldPiece2"/>
-    <position name="pos_ChicaneWorld" unit="mm" x="0" y="0" z="-dim_ChicaneWorldZ/2. -1. "/>
-</subtraction>
 
 <!-- defining the Straight Pipe -->
   <tube name="md" aunit="degree" lunit="mm" rmin="0.0" rmax="Piperadii" z="Length" deltaphi="360" startphi="0" />
@@ -147,11 +136,11 @@ lowX="0" lowY="2.3" lowZ="-1" highX="0" highY="0" highZ="0"  />
 </subtraction>
 
 
-<!-- Boxes for dipoles not necessary unless you want to view the region -->
-  <box name="b1" x="500" y="200" z="300" lunit="mm"/>
-  <box name="b2" x="500" y="200" z="300" lunit="mm"/>
-  <box name="b3" x="500" y="200" z="300" lunit="mm"/>
-  <box name="b4" x="500" y="200" z="300" lunit="mm"/>
+<!-- Dipole Box -->
+  <box lunit="cm" name="DipoleSolid" x="50" y="20" z="30" />
+
+  <tube lunit="mm" name="BeamPolarizerSolid" rmin="0" rmax="50" z="50" startphi="0" deltaphi="360" aunit="degree" />
+
 
 
 <!-- adding smaller modulues to make chicane hollow-->

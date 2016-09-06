@@ -40,12 +40,12 @@
 <variable name="EpipePosZ" value="545"/>
 
 <!-- Define the nominal position/rotation for the Chicane -->
-<position name="ChicanePosition" x="0" y="Height" z="400" unit="mm" />
+<position name="ChicanePosition" x="0" y="Height" z="400.0" unit="mm" />
 
 <!-- ChicaneWorld Dimiensions -->
-<variable name="dim_ChicaneWorldX" value="2*Piperadii"/>
-<variable name="dim_ChicaneWorldY" value="2*Height"/>
-<variable name="dim_ChicaneWorldZ" value="2*Length"/>
+<variable name="dim_ChicaneWorldX" value="5*Piperadii"/>
+<variable name="dim_ChicaneWorldY" value="5*Height"/>
+<variable name="dim_ChicaneWorldZ" value="5*Length"/>
 
 <!-- Photon Exit pipe -->
 <variable name="Pht_ExitPipe_posX" value="2*EpipePosZ+580"/>
@@ -57,13 +57,11 @@
 
 <!--NOTE: need change pi/6 to match BendAngle in rads -->
 
-
-
-
-
-
-
-
+<!-- Dipole Positions -->
+<position name="dipole1" x="0.0" y="Height" z="-midPipePosZ - (-BpipePosZ - BpipePosY/tan(pi/6)+400)" unit="mm"/>
+<position name="dipole2" x="0.0" y="0.0" z="-300" unit="mm"/>
+<position name="dipole3" x="0.0" y="0.0" z="1100" unit="mm"/>
+<position name="dipole4" x="0.0" y="Height" z="(midPipePosZ-BpipePosZ) - BpipePosY/tan(pi/6) +1200 " unit="mm"/>
 
 
 

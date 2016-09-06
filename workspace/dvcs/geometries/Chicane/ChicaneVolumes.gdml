@@ -1,71 +1,12 @@
 <!-- Define the "Chicane" volumes -->
 
-<!-- Volume reference for the dipoles -->
-     
-<!-- first Dipole -->
-  <volume name="firstDipole">
-      <materialref ref="Vacuum"/>
-      <solidref ref="b1"/>
-    </volume>
- 
-<!-- Second Dipole -->
-    <volume name="secondDipole">
-      <materialref ref="Vacuum"/>
-      <solidref ref="b2"/>
-    </volume>
-   
-<!-- Third Dipole -->    
-    <volume name="thirdDipole">
-      <materialref ref="Vacuum"/>
-      <solidref ref="b3"/>
-    </volume>
-   
-<!-- Fourth Dipole -->
-    <volume name="fourthDipole">
-      <materialref ref="Vacuum"/>
-      <solidref ref="b4"/>
-    </volume>
-    
- 
 
 <!-- Define the Chicane -->
 
    <volume name="Chicane">
-     <materialref ref="Vacuum"/>
+     <materialref ref="AirVacuum"/>
       <solidref ref="ChicaneHollow"/>
     </volume>
-<!-- Put physvol into world volume -->
-
- <volume name="ComptonChicane">
-   <materialref ref="Vacuum"/>
-   <solidref ref="ChicaneWorld"/>
-       <physvol>
-	 <volumeref ref="Chicane"/>
-	 <positionref ref="ChicanePosition"/>
-       </physvol>
-<!--
-       <physvol>
-	 <volumeref ref="firstDipole"/>
-	 <positionref ref="dipole1"/>
-       </physvol>
-
-       <physvol>
-	 <volumeref ref="secondDipole"/>
-	 <positionref ref="dipole2"/>
-       </physvol>
- 
-       <physvol>
-	 <volumeref ref="thirdDipole"/>
-	 <positionref ref="dipole3"/>
-       </physvol>
-
-      <physvol>
-	 <volumeref ref="fourthDipole"/>
-	 <positionref ref="dipole4"/>
-      </physvol>
-
--->
- </volume>
 
 
     
