@@ -46,7 +46,7 @@
 	z="0"/>
   </union>
 <!-- Define Interaction pipe -->
-  <tube name="t3" aunit="degree" lunit="mm" rmin="pipeThickness" rmax="Piperadii" z="1100" deltaphi="360" startphi="0" />
+  <tube name="t3" aunit="degree" lunit="mm" rmin="pipeThickness" rmax="Piperadii" z="interactionPipe" deltaphi="360" startphi="0" />
 
  <union name="T1Uniont3">
     <first ref="t2UnionT1"/>
@@ -127,8 +127,8 @@ lowX="0" lowY="2.3" lowZ="-1" highX="0" highY="0" highZ="0"  />
     <second ref="Pht_Exit_inner"/>
     <position name="Pht_Exit_inner_pos" unit="mm"
     x="0"
-    y="-567"
-    z="-890" />
+    y="Pht_ExitPipe_posY"
+    z="-EpipePosZ -272.5" />
     <rotation name="Pht_Exit_inner_rot" unit="degree"
     x="0"
     y="0"
@@ -137,7 +137,7 @@ lowX="0" lowY="2.3" lowZ="-1" highX="0" highY="0" highZ="0"  />
 
 
 <!-- Dipole Box -->
-  <box lunit="cm" name="DipoleSolid" x="50" y="20" z="30" />
+  <box lunit="cm" name="DipoleSolid" x="50" y="30" z="30" />
 
   <tube lunit="mm" name="BeamPolarizerSolid" rmin="0" rmax="50" z="50" startphi="0" deltaphi="360" aunit="degree" />
 
@@ -182,8 +182,157 @@ lowX="0" lowY="2.3" lowZ="-1" highX="0" highY="0" highZ="0"  />
 	z="90"/>
  </subtraction>
 
+<!-- Fill Chicane -->
+
+<torus name="T1i" aunit="degree" lunit="mm" rmin="0" rmax="pipeThickness" rtor="Height" deltaphi="BendAngle" startphi="270" />
+<torus name="T2i" aunit="degree" lunit="mm" rmin="0" rmax="pipeThickness" rtor="Height" deltaphi="BendAngle" startphi="240" />
+<tube name="t3i" aunit="degree" lunit="mm" rmin="0" rmax="pipeThickness" z="interactionPipe" deltaphi="360" startphi="0" />
+<!--
+<union name="Fill1">
+    <first ref="mdi"/>
+    <second ref="t2i"/>
+    <position name ="bendPipeOnePosition" unit="mm"
+    x="0.0"
+    y="-BpipePosY"
+    z="-BpipePosZ" />
+    <rotation name="bendPipeOneRotation" unit="degree"
+    x="-BendAngle"
+    y="0"
+    z="180"/>
+</union>
+
+<union name="Fill2">
+    <first ref="Fill1"/>
+    <second ref="T1i"/>
+    <position name="elbowPipeOnePosition" unit="mm"
+    x="0.0"
+    y="0.0"
+    z="-EpipePosZ" />
+    <rotation name="ElbowOneRotation" unit="degree"
+    x="0"
+    y="90"
+    z="0"/>
+</union>
+
+<union name="Fill3">
+    <first ref="Fill2"/>
+    <second ref="t3i"/>
+    <position name="interactionPipePosition" unit="mm"
+    x="0"
+    y="0.0"
+    z="0"/>
+</union>
+
+<union name="Fill4">
+    <first ref="Fill3"/>
+    <second ref="T2i"/>
+    <position name="elbowPipeTwoPosition" unit="mm"
+    x="0.0"
+    y="0.0"
+    z="EpipePosZ"/>
+    <rotation name="ElbowTwoRotation" unit="degree"
+    x="0"
+    y="90"
+    z="0"/>
+</union>
+
+<union name="Fill5">
+    <first ref="Fill4"/>
+    <second ref="t4i"/>
+    <position name="bendPipeTwoPosition" unit="mm"
+    x="0.0"
+    y="-BpipePosY"
+    z="BpipePosZ"/>
+    <rotation name="bendPipeTwoRotation" unit="degree"
+    x="0"
+    y="-5*BendAngle"
+    z="90"/>
+</union>
+
+<subtraction name="Fill6">
+    <first ref="Fill5"/>
+    <second ref="DipoleSolid"/>
+    <positionref ref="dipole1"/>
+</subtraction>
+ 
+<subtraction name="Fill7">
+    <first ref="Fill6"/>
+    <second ref="DipoleSolid"/>
+    <positionref ref="dipole2"/>
+
+</subtraction>
+
+<subtraction name="Fill8">
+    <first ref="Fill7"/>
+    <second ref="DipoleSolid"/>
+    <positionref ref="dipole3"/>
+</subtraction>
+<subtraction name="Fill9">
+    <first ref="Fill8"/>
+    <second ref="DipoleSolid"/>
+    <positionref ref="dipole4"/>
+</subtraction>
+-->
+<!---->
+<tube name="null" aunit="degree" lunit="mm" rmin="pipeThickness-1" rmax="pipeThickness" z="1" deltaphi="360" startphi="0" />
+<union name="Fill1">
+    <first ref="mdi"/>
+    <second ref="t2i"/>
+    <position name ="bendPipeOnePosition" unit="mm"
+    x="0.0"
+    y="-BpipePosY"
+    z="-BpipePosZ" />
+    <rotation name="bendPipeOneRotation" unit="degree"
+    x="-BendAngle"
+    y="0"
+    z="180"/>
+</union>
+
+<union name="Fill2">
+    <first ref="Fill1"/>
+    <second ref="T1i"/>
+    <position name="elbowPipeOnePosition" unit="mm"
+    x="0.0"
+    y="0.0"
+    z="-EpipePosZ" />
+    <rotation name="ElbowOneRotation" unit="degree"
+    x="0"
+    y="90"
+    z="0"/>
+</union>
+
+<union name="Fill3">
+    <first ref="Fill2"/>
+    <second ref="t3i"/>
+    <position name="interactionPipePosition" unit="mm"
+    x="0"
+    y="-Height"
+    z="0"/>
+</union>
 
 
+<subtraction name="Fill4">
+    <first ref="Fill3"/>
+    <second ref="DipoleSolid"/>
+    <positionref ref="dipole1S"/>
+</subtraction>
 
+<subtraction name="Fill5">
+    <first ref="Fill4"/>
+    <second ref="DipoleSolid"/>
+    <positionref ref= "dipole2S"/>
+</subtraction>
+
+<subtraction name="Fill6">
+    <first ref="Fill5"/>
+    <second ref="DipoleSolid"/>
+    <positionref ref="dipole3S"/>
+</subtraction>
+
+<subtraction name="Fill9">
+    <first ref="Fill6"/>
+    <second ref="DipoleSolid"/>
+    <positionref ref="dipole4S"/>
+</subtraction>
 
 

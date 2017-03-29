@@ -7,7 +7,7 @@
 <!-- Define variables -->
 
 <!-- Length of the straight pipe -->
-<variable name="Length" value="5950"/>
+<variable name="Length" value="12000"/>
 
 <!-- Height of the chicane(from straight pipe to interaction pipe)-->
 <variable name="Height" value="567" />
@@ -21,6 +21,9 @@
 <!-- Straight Pipe Z position -->
 <variable name="midPipePosZ" value="0.5*(Length-1000)"/>
 
+<!-- Interaction pipe -->
+<variable name="interactionPipe" value="0.2*(Length)"/>
+
 <!-- Compton target Z position -->
 <variable name="compTargPosZ" value="0.5*(Length-1000)"/>
 
@@ -28,24 +31,27 @@
 <variable name="BendAngle" value="30"/>
 
 <!-- Length of Bend pipes -->
-<variable name="lengthBpipe" value="Height/(sin(pi/6))- 0.45*(pi/6)*(Height)"/> 
+<variable name="lengthBpipe" value="Height/(sin(pi/6))- 0.45*(pi/6)*(Height)"/>
 
 <!-- Bend pipe Y position -->
 <variable name="BpipePosY" value="0.25*lengthBpipe"/>
 
-<!-- Bend pipe Z position -->
-<variable name="BpipePosZ" value="550 + (pi/6)*Height + 0.4*lengthBpipe"/>
-
 <!-- Elbow pipe Z position -->
-<variable name="EpipePosZ" value="545"/>
+<variable name="EpipePosZ" value="0.5*interactionPipe-10"/>
+
+<!-- Bend pipe Z position -->
+<variable name="BpipePosZ" value="EpipePosZ + 0.5*(cos(pi/6))*lengthBpipe + 0.9*(pi/6)*Height"/>
+
+
 
 <!-- Define the nominal position/rotation for the Chicane -->
-<position name="ChicanePosition" x="0" y="Height" z="400.0" unit="mm" />
+<position name="ChicanePosition" x="0" y="Height" z="0.0" unit="mm" />
+<rotation name="ChicaneRotation" x="0" y="180" z="0" unit="deg"/>
 
 <!-- ChicaneWorld Dimiensions -->
-<variable name="dim_ChicaneWorldX" value="5*Piperadii"/>
-<variable name="dim_ChicaneWorldY" value="5*Height"/>
-<variable name="dim_ChicaneWorldZ" value="5*Length"/>
+<variable name="dim_ChicaneWorldX" value="Piperadii"/>
+<variable name="dim_ChicaneWorldY" value="3*Height"/>
+<variable name="dim_ChicaneWorldZ" value="3*Length"/>
 
 <!-- Photon Exit pipe -->
 <variable name="Pht_ExitPipe_posX" value="2*EpipePosZ+580"/>
@@ -58,14 +64,17 @@
 <!--NOTE: need change pi/6 to match BendAngle in rads -->
 
 <!-- Dipole Positions -->
-<position name="dipole1" x="0.0" y="Height" z="-midPipePosZ - (-BpipePosZ - BpipePosY/tan(pi/6)+400)" unit="mm"/>
-<position name="dipole2" x="0.0" y="0.0" z="-300" unit="mm"/>
-<position name="dipole3" x="0.0" y="0.0" z="1100" unit="mm"/>
-<position name="dipole4" x="0.0" y="Height" z="(midPipePosZ-BpipePosZ) - BpipePosY/tan(pi/6) +1200 " unit="mm"/>
+<position name="dipole1" x="0.0" y="Height" z="-0.5*lengthBpipe*sin(pi/3)-BpipePosZ" unit="mm"/>
+<position name="dipole2" x="0.0" y="0.0" z="-EpipePosZ-100" unit="mm"/>
+<position name="dipole3" x="0.0" y="0.0" z="EpipePosZ+100" unit="mm"/>
+<position name="dipole4" x="0.0" y="Height" z="+0.5*lengthBpipe*sin(pi/3)+BpipePosZ" unit="mm"/>
 
 
-
-
+<!-- for boolean subtraction -->
+<position name="dipole1S" x="0.0" y="0.0" z="-0.5*lengthBpipe*sin(pi/3)-BpipePosZ" unit="mm"/>
+<position name="dipole2S" x="0.0" y="-Height" z="-EpipePosZ-100" unit="mm"/>
+<position name="dipole3S" x="0.0" y="-Height" z="EpipePosZ+100" unit="mm"/>
+<position name="dipole4S" x="0.0" y="0.0" z="+0.5*lengthBpipe*sin(pi/3)+BpipePosZ" unit="mm"/>
 
 
 

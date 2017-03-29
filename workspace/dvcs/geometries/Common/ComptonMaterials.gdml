@@ -83,7 +83,7 @@
   <property name="SLOWCOMPONENT" ref="LeadTungstateEmission" />
   <property name="FASTSCINTILLATIONRISETIME" ref="LeadTungstateRiseTime" />
   <property name="SLOWSCINTILLATIONRISETIME" ref="LeadTungstateRiseTime" />
-  <!-- <T value="287.15" unit="K" /> -->
+  <!--<T value="287.15" unit="K" />-->
   <D value="8.3" unit="g/cm3" />
   <composite n="1" ref="Lead" />
   <composite n="1" ref="Tungsten" />
@@ -111,7 +111,8 @@
 </material>
 
 <material name="Air" >
-  <D unit="g/cm3" value="0.00129" />
+ <T unit="K" value = "293"/>
+  <D unit="g/cm3" value="1.18e-3" />
   <fraction n="0.7" ref="Nitrogen" />
   <fraction n="0.3" ref="Oxygen" />
 </material>

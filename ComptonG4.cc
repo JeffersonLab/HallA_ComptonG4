@@ -33,6 +33,7 @@
 #include "ComptonG4DetectorConstruction.hh"
 #include "ComptonG4Analysis.hh"
 #include "ComptonG4PrimaryGeneratorAction.hh"
+#include "ComptonG4Radiation.hh"
 #include "ComptonG4EventAction.hh"
 #include "ComptonG4RunAction.hh"
 #include "ComptonG4SteppingAction.hh"
@@ -186,7 +187,7 @@ int main( int argc, char **argv)
   // Create the default /Compton directory for all messengers
   G4UIdirectory *compDir = new G4UIdirectory("/Compton/");
   compDir->SetGuidance("UI commands for the ComptonG4 simulation");
-
+ 
   //runManager->SetUserInitialization( new QGSP_BERT() );
   FTFP_BERT *physicsList = new FTFP_BERT();
   // Optical photons controlled by command line flag
@@ -195,18 +196,19 @@ int main( int argc, char **argv)
     optical->SetFiniteRiseTime(true);
     physicsList->RegisterPhysics(optical);
   }
+  
   runManager->SetUserInitialization( physicsList );
   if(physicsList->GetPhysics("Optical") ){
     G4cout << "***Optical Processes ON***" << G4endl;
   } else {
     G4cout << "***Optical Processes OFF***" << G4endl;
   }
-
+ 
   // Mandatory Detector Constructor
   runManager->SetUserInitialization(new
       ComptonG4DetectorConstruction(geometry_file,sensManager,analysis));
-
-
+ runManager->SetUserInitialization(new ComptonG4Radiation());
+  
   // Ensure that the random number status is properly stored on each event
   runManager->StoreRandomNumberStatusToG4Event(1);
 
@@ -242,18 +244,20 @@ int main( int argc, char **argv)
 #endif
 
   // Set user action classes
+
   runManager->SetUserAction(new ComptonG4PrimaryGeneratorAction(analysis));
   runManager->SetUserAction(new ComptonG4SteppingAction(analysis));
   runManager->SetUserAction(new ComptonG4EventAction(analysis));
+  
   ComptonG4RunAction *runAction = new ComptonG4RunAction(analysis);
   runAction->SetRunNumber(run);
   runAction->SetRunMinDigits(run_min_digits);
   runManager->SetUserAction(runAction);
   runManager->SetUserAction(new ComptonG4StackingAction(optical_tracker));
-
+  
   // Initialize G4 kernel
   runManager->Initialize();
-
+ 
   // get the pointer to the User Interface manager
   G4UImanager* UI = G4UImanager::GetUIpointer();
 

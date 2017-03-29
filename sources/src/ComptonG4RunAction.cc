@@ -20,6 +20,7 @@ ComptonG4RunAction::~ComptonG4RunAction()
 
 void ComptonG4RunAction::BeginOfRunAction(const G4Run*)
 {
+   
   fAnalysis->Initialize();
 }
 

@@ -23,24 +23,31 @@
      <materialref ref="AirVacuum"/>
      <solidref ref="ChicaneWorld"/>
      <auxiliary auxtype="Color" auxvalue="#00000000" />
-    
-     <physvol>
+     
+   <physvol>
          <volumeref ref="Chicane"/>
          <positionref ref="ChicanePosition"/>
+         <rotationref ref="ChicaneRotation"/>
      </physvol>
 
-     <physvol name="BeamPol1">
+        <physvol name="BeamPol1">
          <volumeref ref="BeamPolarizerLogical" />
          <position name="BeamPol1Position" unit="mm"
-         x="0" y="567" z="-4700" />
+         x="0" y="Height" z="-6500" />
      </physvol>
      
      <physvol name="BeamPol2">
          <volumeref ref="BeamPolarizerLogical" />
          <position name="BeamPol2Position" unit="mm"
-         x="0" y="567" z="4700" />
+         x="0" y="Height" z="6500" />
      </physvol>
-     
+   
+   <physvol name="Filler">
+       <volumeref ref="Mat"/>
+       <positionref ref="ChicanePosition"/>
+       <rotationref ref="ChicaneRotation"/>
+    </physvol>
+
      <physvol name="Dipole1">
          <volumeref ref="DipoleField" />
          <positionref ref="dipole1" />

@@ -41,7 +41,7 @@ void ComptonG4DipoleField::GetFieldValue(const G4double location[4],
     
 if(!readfrommap){
     if(location[2] < 495.5*CLHEP::cm && location[2]  > 465.5*CLHEP::cm){
-        fieldValue[0] = 0.007;
+        fieldValue[0] = 0.0685;
         fieldValue[1] = 0;
         fieldValue[2] = 0;
 
@@ -49,21 +49,21 @@ if(!readfrommap){
     }
     
     else if(location[2] < 585.0*CLHEP::cm && location[2] > 555.0*CLHEP::cm){
-        fieldValue[0] = -0.00675;
+        fieldValue[0] = -0.0685;
         fieldValue[1] = 0;
         fieldValue[2] = 0;
         
         
     }
     if(location[2] < 725.0*CLHEP::cm && location[2] > 695.0*CLHEP::cm){
-        fieldValue[0] = -0.0075;
+        fieldValue[0] = -0.0685;
         fieldValue[1] = 0;
         fieldValue[2] = 0;
         
         
     }
     if(location[2] < 814.5*CLHEP::cm && location[2] > 784.5*CLHEP::cm){
-        fieldValue[0] = 0.00725;
+        fieldValue[0] = 0.0685;
         fieldValue[1] = 0;
         fieldValue[2] = 0;
         
@@ -106,11 +106,11 @@ else if(readfrommap){
         G4bool insideField = false;
         for( size_t i = 0; i < fOffsets.size() && !insideField; i++ ) {
             G4ThreeVector v = fRotations[i].inverse()(G4ThreeVector(location[0],
-                    location[1],location[2]-5600*CLHEP::mm)-fOffsets[i]); // for the chicane we have an offset (along z) of 5.6 m from the origin.
+            location[1],location[2]-6600*CLHEP::mm)-fOffsets[i]); // for the chicane we have an offset (along z) of 6.6 m from the origin.
                                          //------ ^ ------
             
             if ( v.x() >= fMinCoordinate[0] && v.x() <= fMaxCoordinate[0] &&
-                v.x() >= fMinCoordinate[0] && v.x() <= fMaxCoordinate[0] &&
+                v.y() >= fMinCoordinate[1] && v.y() <= fMaxCoordinate[1] &&
                 std::abs(v.z()) >= fMinCoordinate[2] &&
                 std::abs(v.z()) <= fMaxCoordinate[2]) {
                 insideField = true;
@@ -141,7 +141,7 @@ else if(readfrommap){
             }
         }
         // fudgeFactor to help increase the strength of the magnetic field, if it's not strong enough.
-        G4double fudgeFactor = 6.3;
+        G4double fudgeFactor = 53;
        
         G4ThreeVector field(fudgeFactor*fMagneticField[0][indexz][0],fMagneticField[1][indexz][0],fMagneticField[2][indexz][0]);
         G4ThreeVector fieldRotated = fRotations[rotationIndex](field);
@@ -149,7 +149,9 @@ else if(readfrommap){
         fieldValue[1] = fieldRotated.y();
         fieldValue[2] = fieldRotated.z();
         
-     
+        //G4cout  << " Z position= "<<location[2]/CLHEP::cm  <<  " B field = "<< fieldValue[0] << G4endl;
+        
+        
     }
     
     
@@ -186,7 +188,7 @@ else if(!TOSCAmap)  {
      
       
     if ( v.x() >= fMinCoordinate[0] && v.x() <= fMaxCoordinate[0] &&
-        v.x() >= fMinCoordinate[0] && v.x() <= fMaxCoordinate[0] &&
+        v.y() >= fMinCoordinate[1] && v.y() <= fMaxCoordinate[1] &&
         std::abs(v.z()) >= fMinCoordinate[2] &&
           std::abs(v.z()) <= fMaxCoordinate[2]) {
       insideField = true;

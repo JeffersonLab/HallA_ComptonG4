@@ -53,6 +53,7 @@ ComptonG4DetectorConstruction::ComptonG4DetectorConstruction(
     ComptonG4Analysis *analysis) :
   fPhysicsWorld(0),fAnalysis(analysis)
 {
+    
   G4GDMLParser parser;
   parser.Read(geometry_file);
   fPhysicsWorld = parser.GetWorldVolume();
@@ -319,7 +320,6 @@ G4LogicalVolume* ComptonG4DetectorConstruction::GetMagneticVolume(G4String name)
     if((*it)->GetName() == name)
       return *it;
   }
-
-  // Not found? Boo!
+   // Not found? Boo!
   return 0;
 }

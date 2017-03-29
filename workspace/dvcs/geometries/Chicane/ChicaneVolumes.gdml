@@ -7,6 +7,14 @@
      <materialref ref="AirVacuum"/>
       <solidref ref="ChicaneHollow"/>
     </volume>
+<!---->
+<volume name="Mat">
+    <materialref ref="Air"/>
+    <solidref ref="Fill9"/>
+    <auxiliary auxtype="Color" auxvalue="#7CDCDCDC" />
+</volume>
+
+
 
 
     

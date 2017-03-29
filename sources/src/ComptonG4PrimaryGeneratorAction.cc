@@ -17,6 +17,8 @@ ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analys
 
   fAnalysis(analysis),fTransversePol(0.0),fLongitudinalPol(1.0),fVerbose(0)
 {
+    
+
   G4int n_particle = 1; // Gun shoots photons ( and may shoot electrons too)
   fParticleGun = new G4ParticleGun(n_particle);
 
@@ -43,6 +45,8 @@ ComptonG4PrimaryGeneratorAction::ComptonG4PrimaryGeneratorAction(ComptonG4Analys
 
   // Set a default primary Z vertex
   fPrimaryVertexLocation = G4ThreeVector(0*CLHEP::mm,567.0*CLHEP::mm,0*CLHEP::mm);
+    
+    
 }
 
 ComptonG4PrimaryGeneratorAction::~ComptonG4PrimaryGeneratorAction()
@@ -183,6 +187,8 @@ void ComptonG4PrimaryGeneratorAction::GeneratePrimaryComptonMode()
 
 void ComptonG4PrimaryGeneratorAction::GeneratePrimaryPolarizedElectronsMode()
 {
+    
+    
   fParticleGun->SetParticleEnergy(fElectronEnergy);
     fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.0,0.0,1.0));
