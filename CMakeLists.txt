@@ -21,13 +21,26 @@ include_directories(${my_project_headers_dirlist})
 # Local path for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
+## Check if compiler supports C++11 standard if avialable
+## (Got this snipped from Wouter)
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+if(COMPILER_SUPPORTS_CXX11)
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++11 support.")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+elseif(COMPILER_SUPPORTS_CXX0X)
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++0x support.")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+else()
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support.")
+endif()
+
 # Load ROOT and setup include directory
 find_package(ROOT REQUIRED)
 include_directories(${ROOT_INCLUDE_DIR})
-# Create dictionary for headers if ROOT version < 5.90
-set(my_project_sources_dictionary "")
-if(ROOT_VERSION VERSION_LESS 5.90)
-message("Generating dictionaries for ROOT ${ROOT_VERSION}...")
+# Create dictionary for headers for ROOT
+# message("Generating dictionaries for ROOT ${ROOT_VERSION}...")
 # Loop over all found LinkDef.h header files
 set(my_project_linkdefs_files "")
 set(my_project_linkdefs_header_files "")
@@ -37,19 +50,18 @@ foreach( _linkdef ${my_project_linkdefs})
   string(REGEX REPLACE "LinkDef.h" ".hh" _header ${_file})
   string(REGEX REPLACE "LinkDef.h" "" _prefix ${_file})
   set(ROOTPWA_DICTIONARY ${CMAKE_CURRENT_BINARY_DIR}/${_prefix}Dictionary)
+  set(ROOTPCM_DICTIONARY ${ROOTPWA_DICTIONARY}_rdict.pcm)
 ROOT_GENERATE_DICTIONARY(
   "${ROOTPWA_DICTIONARY}"
   "${_header}"
   LINKDEF "${_file}"
-  OPTIONS "-f"
+  OPTIONS "-p" ## -p to use compilers preprocessor instead of CINTs preprocessor
   )
 set(my_project_sources_dictionary ${my_project_sources_dictionary} ${ROOTPWA_DICTIONARY})
+set(my_project_dictionary_pcm ${my_project_dictionary_pcm} ${ROOTPCM_DICTIONARY})
 endforeach()
-else()
-message("No dictionaries needed for ROOT ${ROOT_VERSION}.")
-endif()
 #set(ROOT_LIBRARIES ${ROOT_LIBRARIES} -lGui)
-message("All project sources: ${my_project_sources_dictionary}")
+#message("All project sources: ${my_project_sources_dictionary}")
 
 # Find Boost libraries
 # There is a bug in CMAke 2.8's internal find boost process
@@ -102,3 +114,7 @@ install (TARGETS ComptonG4_batch DESTINATION bin)
 install (TARGETS ComptonG4Root DESTINATION bin)
 install (TARGETS ComptonG4Lib DESTINATION lib)
 install( FILES ${my_project_headers} DESTINATION include )
+## Install *.pcm (ROOT 6 dictionaries) only for ROOT 6 and above
+if(ROOT_VERSION VERSION_GREATER 5.90)
+  install( FILES ${my_project_dictionary_pcm} DESTINATION lib )
+endif(ROOT_VERSION VERSION_GREATER 5.90)

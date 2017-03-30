@@ -4,9 +4,11 @@
 
 #include <G4UIdirectory.hh>
 #include <G4UIcmdWithoutParameter.hh>
-#include <G4UIcmdWithAnInteger.hh>
+#include <G4UIcmdWithAnInteger.hh> 
+#include <G4UIcmdWithAString.hh> 
 #include <G4UIcmdWithADoubleAndUnit.hh>
 #include <G4UIcmdWithADouble.hh>
+
 
 ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
     ComptonG4PrimaryGeneratorAction *action) :
@@ -15,14 +17,14 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
   fGunDir = new G4UIdirectory("/Compton/gun/");
   fGunDir->SetGuidance("Controls Primary Particle Generator");
 
-  // Set Mode for primary particle generation
-  fGenModeCmd = new G4UIcmdWithAnInteger("/Compton/gun/mode",this);
+  // Set Mode for primary particle generation:
+  fGenModeCmd = new G4UIcmdWithAString("/Compton/gun/mode", this);
   fGenModeCmd->SetGuidance("Controls gamma generation mode.");
   fGenModeCmd->SetGuidance("  Choice 1) Mono-Energetic, 2) Flat Distribution, 3) Compton Shape, 4) Bremsstrauhlung");
-  fGenModeCmd->SetParameterName("Mode",false);
-  fGenModeCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+  fGenModeCmd->SetParameterName("Mode", false);
+  fGenModeCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 
-  // Set the Initial Energy (which depends on the mode selected)
+  // Set the Initial Energy (which depends on the mode selected):
   fSetElectronEnergyCmd = new G4UIcmdWithADoubleAndUnit(
       "/Compton/gun/ElectronEnergy",this);
   fSetElectronEnergyCmd->SetGuidance("Initial Elecron Energy (mode dependent).");
@@ -30,15 +32,15 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
   fSetElectronEnergyCmd->SetUnitCategory("Energy");
   fSetElectronEnergyCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  // Set Laser Wavelenght ( which depends on the mode selected)
+  // Set Laser Wavelenght (which depends on the mode selected):
   fSetLaserWavelengthCmd = new G4UIcmdWithADoubleAndUnit(
       "/Compton/gun/LaserWavelenght",this);
-  fSetLaserWavelengthCmd->SetGuidance("Laser photon wavelenght (mode dependent).");
+  fSetLaserWavelengthCmd->SetGuidance("Laser photon wavelength (mode dependent).");
   fSetLaserWavelengthCmd->SetParameterName("LaserWavelenght",false);
   fSetLaserWavelengthCmd->SetUnitCategory("Length");
   fSetLaserWavelengthCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  // Set Initial Photon Vertex
+  // Set Initial Photon Vertex:
   fSetPhotonVertexXCmd = new G4UIcmdWithADoubleAndUnit(
       "/Compton/gun/PhotonVertexX",this);
   fSetPhotonVertexXCmd->SetGuidance("Initial photon vertex");
@@ -60,7 +62,7 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
   fSetPhotonVertexZCmd->SetUnitCategory("Length");
   fSetPhotonVertexZCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  // Set Incident Particle Energy (cannot be used in Compton mode)
+  // Set Incident Particle Energy (cannot be used in Compton mode):
   fSetIncidentEnergyCmd = new G4UIcmdWithADoubleAndUnit(
       "/Compton/gun/MaxPhotonEnergy",this);
   fSetIncidentEnergyCmd->SetGuidance("Incident or Max Particle Energy (non compatible with Compton Mode");
@@ -68,13 +70,13 @@ ComptonG4PrimaryGeneratorMessenger::ComptonG4PrimaryGeneratorMessenger(
   fSetIncidentEnergyCmd->SetUnitCategory("Energy");
   fSetIncidentEnergyCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  // Set Verbose Level
+  // Set Verbose Level:
   fSetVerboseCmd = new G4UIcmdWithAnInteger("/Compton/gun/verbose",this);
   fSetVerboseCmd->SetGuidance("Controls verbose level");
   fSetVerboseCmd->SetParameterName("verbose",0);
   fSetVerboseCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  // Set the maximum transverse polarization in beam mode
+  // Set the maximum transverse polarization in beam mode:
   fSetTransversePolCmd = new G4UIcmdWithADouble(
       "/Compton/gun/TransversePol",this);
   fSetTransversePolCmd->SetGuidance("Maximum Transverse Polarization in Beam Mode");
@@ -100,8 +102,8 @@ ComptonG4PrimaryGeneratorMessenger::~ComptonG4PrimaryGeneratorMessenger()
 void ComptonG4PrimaryGeneratorMessenger::SetNewValue(
     G4UIcommand *command, G4String newValue)
 { // Process new value from G4 Kernel
-  if( command == fGenModeCmd ) {
-    fAction->SetGeneratorMode(fGenModeCmd->GetNewIntValue(newValue));
+  if ( command == fGenModeCmd ) {
+    fAction->SetGeneratorMode(newValue); 
   } else if ( command == fSetElectronEnergyCmd ) {
     fAction->SetElectronEnergy(fSetElectronEnergyCmd->GetNewDoubleValue(newValue));
   } else if ( command == fSetIncidentEnergyCmd ) {
@@ -119,7 +121,6 @@ void ComptonG4PrimaryGeneratorMessenger::SetNewValue(
   } else if ( command == fSetPhotonVertexYCmd ) {
     fAction->SetPhotonY(fSetPhotonVertexXCmd->GetNewDoubleValue(newValue));
   } else if ( command == fSetTransversePolCmd ) {
-    fAction->SetTransversePol(
-        fSetTransversePolCmd->GetNewDoubleValue(newValue));
+    fAction->SetTransversePol(fSetTransversePolCmd->GetNewDoubleValue(newValue));
   }
 }

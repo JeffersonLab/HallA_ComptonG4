@@ -134,8 +134,14 @@ int ComptonG4Analysis::DetectorIndex(std::string name)
  */
 void ComptonG4Analysis::Initialize()
 {
+  // Load up CINT or Cling so that we have access to our dictionaries
+  if(gROOT->GetVersionInt()<60000) {
+    gSystem->Load("libCint.so");
+  } else {
+    gSystem->Load("libCling.so");
+  }
+
   // Ask ROOT to load our library
-  gSystem->Load("libCint.so");
   gSystem->Load("libComptonG4.so");
   gROOT->ProcessLine("#include <string>");
   gROOT->ProcessLine("#include <vector>");
