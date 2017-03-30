@@ -5,18 +5,18 @@
 <!-- Define dimmensions of the tunnel -->
 <quantity name="WorldDimX" type="length" value="1"   unit="m" />
 <quantity name="WorldDimY" type="length" value="1.5" unit="m" />
-<quantity name="WorldDimZ" type="length" value="2"  unit="m" />
+<quantity name="WorldDimZ" type="length" value="20"  unit="m" />
 
 <!-- Define the nominal position/rotation for the PhDetector -->
 <!-- Test position, must change to real position later! -->
-<position name="ComptonPhotonDetectorPos" x="0" y="0.0" z="14" unit="m" />
+<position name="ComptonPhotonDetectorPos" x="0" y="0.0" z="7.0" unit="m" />
 
 <!-- Define the nominal position/rotation for the PhDetector -->
 <!-- Test position, must change to real position later! -->
-<position name="ComptonElectronDetectorPos" x="0" y="0.567" z="9.11" unit="m" />
+<position name="ComptonElectronDetectorPos" x="0" y="0.590" z="7" unit="m" />
 
 <!-- Define the Chicane position -->
-<position name="ChicanePosition" x="0" y="0" z="7" unit="m" />
+<position name="ChicanePosition" x="0" y="0" z="0" unit="m" />
 
 
 <!-- Define common variables -->

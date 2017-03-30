@@ -18,9 +18,14 @@ ComptonG4DipoleField::~ComptonG4DipoleField()
     
 }
 
-void ComptonG4DipoleField::GetFieldValue(const G4double location[4],
+void ComptonG4DipoleField::GetFieldValue(const G4double locationZZ[4],
     G4double *fieldValue) const
 {
+  G4double loc[3];
+  loc[0] = locationZZ[0];
+  loc[1] = locationZZ[1];
+  loc[2] = locationZZ[2]+7*CLHEP::m;
+  loc[3] = locationZZ[3];
    
 
  G4bool readfrommap = true;
@@ -40,7 +45,7 @@ void ComptonG4DipoleField::GetFieldValue(const G4double location[4],
 //---------------------------------------------------------------------------------------------------------------------------------------------------
     
 if(!readfrommap){
-    if(location[2] < 495.5*CLHEP::cm && location[2]  > 465.5*CLHEP::cm){
+    if(loc[2] < 495.5*CLHEP::cm && loc[2]  > 465.5*CLHEP::cm){
         fieldValue[0] = 0.0685;
         fieldValue[1] = 0;
         fieldValue[2] = 0;
@@ -48,21 +53,21 @@ if(!readfrommap){
 
     }
     
-    else if(location[2] < 585.0*CLHEP::cm && location[2] > 555.0*CLHEP::cm){
+    else if(loc[2] < 585.0*CLHEP::cm && loc[2] > 555.0*CLHEP::cm){
         fieldValue[0] = -0.0685;
         fieldValue[1] = 0;
         fieldValue[2] = 0;
         
         
     }
-    if(location[2] < 725.0*CLHEP::cm && location[2] > 695.0*CLHEP::cm){
+    if(loc[2] < 725.0*CLHEP::cm && loc[2] > 695.0*CLHEP::cm){
         fieldValue[0] = -0.0685;
         fieldValue[1] = 0;
         fieldValue[2] = 0;
         
         
     }
-    if(location[2] < 814.5*CLHEP::cm && location[2] > 784.5*CLHEP::cm){
+    if(loc[2] < 814.5*CLHEP::cm && loc[2] > 784.5*CLHEP::cm){
         fieldValue[0] = 0.0685;
         fieldValue[1] = 0;
         fieldValue[2] = 0;
@@ -70,7 +75,7 @@ if(!readfrommap){
         
     }
     
-   //G4cout << " Z position= "<<location[2]/CLHEP::cm << " B field = "<< fieldValue[0] << G4endl;
+   //G4cout << " Z position= "<<loc[2]/CLHEP::cm << " B field = "<< fieldValue[0] << G4endl;
     
     }
     
@@ -105,8 +110,8 @@ else if(readfrommap){
         
         G4bool insideField = false;
         for( size_t i = 0; i < fOffsets.size() && !insideField; i++ ) {
-            G4ThreeVector v = fRotations[i].inverse()(G4ThreeVector(location[0],
-            location[1],location[2]-6600*CLHEP::mm)-fOffsets[i]); // for the chicane we have an offset (along z) of 6.6 m from the origin.
+            G4ThreeVector v = fRotations[i].inverse()(G4ThreeVector(loc[0],
+            loc[1],loc[2]-6600*CLHEP::mm)-fOffsets[i]); // for the chicane we have an offset (along z) of 6.6 m from the origin.
                                          //------ ^ ------
             
             if ( v.x() >= fMinCoordinate[0] && v.x() <= fMaxCoordinate[0] &&
@@ -149,7 +154,7 @@ else if(readfrommap){
         fieldValue[1] = fieldRotated.y();
         fieldValue[2] = fieldRotated.z();
         
-        //G4cout  << " Z position= "<<location[2]/CLHEP::cm  <<  " B field = "<< fieldValue[0] << G4endl;
+        //G4cout  << " Z position= "<<loc[2]/CLHEP::cm  <<  " B field = "<< fieldValue[0] << G4endl;
         
         
     }
@@ -182,8 +187,8 @@ else if(!TOSCAmap)  {
 
   G4bool insideField = false;
   for( size_t i = 0; i < fOffsets.size() && !insideField; i++ ) {
-    G4ThreeVector v = fRotations[i].inverse()(G4ThreeVector(location[0],
-                    location[1],location[2])-fOffsets[i]);
+    G4ThreeVector v = fRotations[i].inverse()(G4ThreeVector(loc[0],
+                    loc[1],loc[2])-fOffsets[i]);
     
      
       
@@ -247,7 +252,7 @@ else if(!TOSCAmap)  {
 }
    
     
-//G4cout  << " Z position= "<<location[2]/CLHEP::cm  <<  " B field = "<< fieldValue[0] << G4endl;
+//G4cout  << " Z position= "<<loc[2]/CLHEP::cm  <<  " B field = "<< fieldValue[0] << G4endl;
     
  
     }

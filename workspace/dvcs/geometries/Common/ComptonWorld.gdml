@@ -20,6 +20,11 @@
   <volume name="World" >
     <materialref ref="AirVacuum" />
     <solidref ref="WorldSolid" />
+    <!-- Construct Chicane -->
+    <physvol>
+      <file name="&ComptonChicane;"/>
+      <positionref ref="ChicanePosition"/>
+    </physvol>
 
     <!-- Construct Photon Detector -->
     <physvol>
@@ -28,20 +33,12 @@
       <!--<rotation ref="ComptonPhotonDetectorRot" /> -->
     </physvol>
 
-    <!-- Construct Electron Detector      <physvol>
+    <!-- Construct Electron Detector -->
+    <physvol>
       <file name="&ComptonElectronDetector;" />
-        <positionref ref="ComptonElectronDetectorPos" />
-        <rotation name="ComptonElectronDetectorRot" aunit="degree" x="0.5" y="0" z="0"/>
-      </physvol>
--->
-
-
-     <!-- Construct Chicane -->
-
-     <physvol>
-       <file name="&ComptonChicane;"/>
-         <positionref ref="ChicanePosition"/>
-     </physvol>
+      <positionref ref="ComptonElectronDetectorPos" />
+      <rotation name="ComptonElectronDetectorRot" aunit="degree" x="0.5" y="0" z="0"/>
+    </physvol>
 
   </volume>
 

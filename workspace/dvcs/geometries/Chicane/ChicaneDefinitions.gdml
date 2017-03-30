@@ -51,7 +51,7 @@
 <!-- ChicaneWorld Dimiensions -->
 <variable name="dim_ChicaneWorldX" value="Piperadii"/>
 <variable name="dim_ChicaneWorldY" value="3*Height"/>
-<variable name="dim_ChicaneWorldZ" value="3*Length"/>
+<variable name="dim_ChicaneWorldZ" value="1.08*Length"/>
 
 <!-- Photon Exit pipe -->
 <variable name="Pht_ExitPipe_posX" value="2*EpipePosZ+580"/>

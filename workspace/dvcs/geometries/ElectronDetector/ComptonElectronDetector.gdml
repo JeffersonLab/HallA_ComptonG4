@@ -33,17 +33,18 @@
 
 <!-- The ElectronDetectorTest Solid -->
 <solids>
-  <tube aunit="degree" lunit="cm" name="ElectronDetectorTestSolid"
-      rmin="0" rmax="5" z="1" deltaphi="360" startphi="0"/>
+  <box lunit="mm" name="ElectronDetectorTestSolid"
+      x="50" y="50" z="2" />
 </solids>
 
 <structure>
 
   <!-- ElectronDetectorTest Volume Reference -->
   <volume name="ElectronDetectorTest" >
-    <materialref ref="AirVacuum" />
+    <materialref ref="LeadMaterial" />
     <solidref ref="ElectronDetectorTestSolid" />
-
+    <auxiliary auxtype="Color" auxvalue="#FF0000FF" />
+    <auxiliary auxtype="SensDet" auxvalue="ComptonG4Crystal" />
   </volume>
 
 </structure>

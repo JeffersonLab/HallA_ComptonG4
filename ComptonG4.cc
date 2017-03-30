@@ -58,6 +58,7 @@ int main( int argc, char **argv)
   G4String output_dir;
   G4String rootfile_prefix;
   std::vector<std::string> ui_cmds;
+  std::vector<std::string> ui_pcmds;
   G4int run;
   G4int run_min_digits;
 
@@ -86,7 +87,9 @@ int main( int argc, char **argv)
     ("random-seed",po::value<G4double>()->default_value(17760704.),
      "Set the random seed")
     ("command",po::value<std::vector<std::string> >(),
-     "ordered list of commands to process")
+     "ordered list of post-commands to process")
+    ("precommand",po::value<std::vector<std::string> >(),
+     "ordered list of pre-commands to process")
     ("run,r",po::value<G4int>()->default_value(0),
      "Set the run number (can also be set in a macro)")
     ("run-min-digits",po::value<G4int>()->default_value(5),
@@ -150,6 +153,9 @@ int main( int argc, char **argv)
   if(vm.count("command")){
     ui_cmds = vm["command"].as<std::vector<std::string> >();
   }
+  if(vm.count("precommand")){
+    ui_pcmds = vm["precommand"].as<std::vector<std::string> >();
+  }
 
 #ifdef COMPTONG4_BATCH_MODE // We are in batch mode
   // Process the batch file
@@ -203,12 +209,12 @@ int main( int argc, char **argv)
   } else {
     G4cout << "***Optical Processes OFF***" << G4endl;
   }
- 
+
   // Mandatory Detector Constructor
   runManager->SetUserInitialization(new
       ComptonG4DetectorConstruction(geometry_file,sensManager,analysis));
- runManager->SetUserInitialization(new ComptonG4Radiation());
-  
+ //runManager->SetUserInitialization(new ComptonG4Radiation());
+
   // Ensure that the random number status is properly stored on each event
   runManager->StoreRandomNumberStatusToG4Event(1);
 
@@ -254,16 +260,23 @@ int main( int argc, char **argv)
   runAction->SetRunMinDigits(run_min_digits);
   runManager->SetUserAction(runAction);
   runManager->SetUserAction(new ComptonG4StackingAction(optical_tracker));
-  
-  // Initialize G4 kernel
-  runManager->Initialize();
- 
+
   // get the pointer to the User Interface manager
   G4UImanager* UI = G4UImanager::GetUIpointer();
+  UI->SetVerboseLevel(9);
+
+  // Execute any pre-commands the user passed as parameter
+  for(size_t i = 0; i < ui_pcmds.size(); i++ ) {
+    G4cout << "Applying pre-command: " << ui_pcmds[i] << " # result: "
+      << UI->ApplyCommand(ui_pcmds[i]) << G4endl;
+  }
+  // Initialize G4 kernel
+  runManager->Initialize();
 
   // Execute any commands the user passed as parameter
   for(size_t i = 0; i < ui_cmds.size(); i++ ) {
-    UI->ApplyCommand(ui_cmds[i]);
+    G4cout << "Applying post-command: " << ui_pcmds[i] << " # result: "
+      << UI->ApplyCommand(ui_pcmds[i]) << G4endl;
   }
 
 #ifndef COMPTONG4_BATCH_MODE // Interactive mode

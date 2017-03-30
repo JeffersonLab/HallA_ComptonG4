@@ -1,12 +1,10 @@
-#/Compton/gun/mode comptonphoton
-/Compton/gun/mode PolElectron
+/Compton/gun/mode ComptonAll
 /Compton/gun/verbose 0
-/Compton/run/runnumber 1
+/Compton/run/runnumber 3
 /Compton/run/autosave 100
 /Compton/gun/ElectronEnergy 11.0 GeV
 /Compton/gun/LaserWavelenght 532 nm
 /Compton/gun/PhotonVertexZ 0.0 m
-/Compton/gun/PhotonVertexZ -9.0 m
 /Compton/gun/Initialize
 /Compton/event/printevent 10
 /Compton/step/OpticalMaxStepTime 250 ns

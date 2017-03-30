@@ -6,6 +6,8 @@
 /gui/addButton viewer "Run 1 event"          "/control/execute test.mac"
 /gui/addButton viewer "Run 1 optical"          "/control/execute test_optical.mac"
 /gui/addButton viewer "Run 1 optical random"          "/control/execute test_optical_random.mac"
+/gui/addButton viewer "Run 1 (Beam)"          "/control/execute test_beam.mac"
+/gui/addButton viewer "Run 1 (Compton)"          "/control/execute test_comptonall.mac"
 
 
 /gui/addMenu   viewer Tests

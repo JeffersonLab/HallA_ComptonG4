@@ -59,6 +59,7 @@ ComptonG4PrimaryGeneratorAction::~ComptonG4PrimaryGeneratorAction()
 void ComptonG4PrimaryGeneratorAction::SetGeneratorMode(G4String val)
 {
   val.toLower();
+  fPrimaryVertexLocation = G4ThreeVector(0*CLHEP::mm, 0*CLHEP::mm, 0.*CLHEP::mm);
 
   if (val.compareTo("mono") == 0 || val.compareTo("1") == 0){
     fGeneratorMode = kGenMono;
@@ -74,6 +75,7 @@ void ComptonG4PrimaryGeneratorAction::SetGeneratorMode(G4String val)
   }
   else if (val.compareTo("polelectron") == 0 || val.compareTo("5") == 0){
     fGeneratorMode = kGenPolElectron;
+    fPrimaryVertexLocation = G4ThreeVector(0*CLHEP::mm, 567*CLHEP::mm, 0.*CLHEP::mm);
   }
   else if (val.compareTo("comptonelectron") == 0){
     fGeneratorMode = kGenComptonElectron;
