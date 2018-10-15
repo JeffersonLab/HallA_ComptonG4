@@ -190,6 +190,11 @@ int main( int argc, char **argv)
   //runManager->SetUserInitialization( new QGSP_BERT() );
   FTFP_BERT *physicsList = new FTFP_BERT();
   // Optical photons controlled by command line flag
+
+#ifdef G4UI_USE_QT
+  use_optical = 0;
+#endif
+
   if( use_optical ) {
     G4OpticalPhysics *optical = new G4OpticalPhysics(0);
     optical->SetFiniteRiseTime(true);
