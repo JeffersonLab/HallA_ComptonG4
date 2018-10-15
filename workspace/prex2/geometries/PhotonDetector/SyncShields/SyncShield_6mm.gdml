@@ -1,0 +1,5 @@
+<physvol name="SyncShieldPhysical">
+  <volumeref ref="vol_SyncShield6mm" />
+  <position name="pos_SyncShield6mm" unit="mm" x="0" y="0"
+      z="0.0" />
+</physvol>

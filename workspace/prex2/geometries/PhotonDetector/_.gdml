@@ -1,0 +1,91 @@
+<!-- Definitions specific for the Photon Detector -->
+<define>
+  &PhotonDetectorDefinitions;
+</define>
+
+<!-- Materials specific for the Photon Detector -->
+
+<materials>
+</materials>
+
+<!-- Photon Detector Solids -->
+<solids>
+  &PhotonDetectorSolids;
+</solids>
+
+
+<structure>
+  <!-- Include all the Photon Detector Volume Definitions -->
+  &PhotonDetectorVolumes;
+  <!-- Construc the Photon Detector Volume -->
+  <--<volume name="jaw" >
+    <materialref ref="Air" />
+    <solidref ref="World" />
+      <physvol name="phys_jaw">
+        <volumeref ref="JawLogical" />
+        <position name="jaw_Position" unit="mm" x="0" y="0" 
+          z="6500" />
+      </physvol>
+    <auxiliary auxtype="Color" auxvalue="#FFFFFF00"/>
+  </volume> -->
+
+<!--
+  <volume name="ComptonPhotonDetector" >
+    <materialref ref="Air" />
+    <solidref ref="sol_PhDetWorld" />    
+
+      <physvol name="phys_jaw">
+        <volumeref ref="JawLogical" />
+        <position name="jaw_Position" unit="mm" x="0" y="0" 
+          z="dim_PhDetWorldZ-ComptonPhotonDetectorDimZ-ShieldsDimZ-TungstenFingerDimZ/2.-25" />
+      </physvol>
+
+    <!-- Include Photon Detector Sync Shield Volume -->
+    <physvol name="phys_PhDet_SyncShield">
+      <file name="geometries/PhotonDetector/SyncShield.gdml"
+          volname="vol_PhDet_SyncShield&PhotonDetectorSyncShield;"/>
+      <position name="pos_PhDet_SyncShield" unit="mm" x="0" y="0"
+          z="dim_ColThick+dim_ColToSync" />
+    </physvol>
+
+    <!-- Include Photon Detector Collimator Volume -->
+    <physvol name="phys_PhDet_Collimator">
+      <volumeref ref="vol_PhDet_Collimator&PhotonDetectorCollimator;" />
+      <position name="pos_PhDet_Collimator" unit="mm" x="0" y="0"
+          z="dim_ColThick/2." />
+    </physvol>
+
+    <!-- Include Shields 7/25/16 -->
+    <physvol name="ShieldsPhysical">
+      <volumeref ref="ShieldsLogical" />
+      <position name="pos_Shields" unit="mm" 
+          x="0" y="0"
+          z="dim_PhDetWorldZ-ComptonPhotonDetectorDimZ-ShieldsDimZ/2."/>
+    </physvol>
+
+    <!-- Include Tungsten Fingers 7/25/16 -->
+    <physvol name="TungstenFingersPhysical">
+      <volumeref ref="TungstenFingersLogical" />
+      <position name="pos_TFs" unit="mm" x="0" y="0"
+          z="dim_PhDetWorldZ-ComptonPhotonDetectorDimZ-ShieldsDimZ-TungstenFingerDimZ/2."/>
+    </physvol> 
+
+    <!-- Include LeadTungstate Volume -->
+<!--    &PhotonDetector; -->
+
+    <!-- Do not draw the Photon Detector World Volume -->
+    <auxiliary auxtype="Color" auxvalue="#FFFFFF00"/>
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.1">
+  <world ref="ComptonPhotonDetector"/>
+</setup>
+
+<--
+<setup name="Default" version="1.1">
+  <world ref="jaw"/>
+</setup>
+-->
+

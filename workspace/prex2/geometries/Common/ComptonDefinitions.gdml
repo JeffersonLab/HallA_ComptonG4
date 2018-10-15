@@ -1,0 +1,104 @@
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     - - - - - - - - - - - - Distances and Dimensions - - - - - - - - - - - - -
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+<!-- Define dimmensions of the tunnel -->
+<quantity name="WorldDimX" type="length" value="1"   unit="m" />
+<quantity name="WorldDimY" type="length" value="1.5" unit="m" />
+<quantity name="WorldDimZ" type="length" value="2"  unit="m" />
+
+<!-- Define the nominal position/rotation for the PhDetector -->
+<!-- Test position, must change to real position later! -->
+<position name="ComptonPhotonDetectorPos" x="0" y="0" z="6" unit="m" />
+
+
+<!-- Define common variables -->
+<variable name="AirGap" value="0.000" />
+<variable name="MyLarTickness" value="0.025" />
+<variable name="BlackTapeTickness" value="3.000" />
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     - - - - - - - - - - - Optical Properties of Materials - - - - - - - - - -
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+<!-- LeadTungstate Optical Properties -->
+
+<matrix name="GSORIndex" coldim="2"
+        values="1.8*eV 1.85 3.4*eV 1.85" />
+
+<matrix name="GSOEmission" coldim="2"
+        values="1.8*eV 1.0 3.4*eV 0.0" />
+
+<matrix name="GSOFastComponent" coldim="2"
+        values="1.8*eV 1.0 3.4*eV 1.0" />
+
+<matrix name="GSORiseTime" coldim="1"
+        values="0.01*ns" />
+
+<matrix name="GSOYieldRatio" coldim="1"
+        values="0.204" />
+
+
+
+<matrix name="GSOFastTimeConstant" coldim="1"
+        values="5*ns" />
+
+<matrix name="GSOSlowTimeConstant" coldim="1"
+        values="70*ns" />
+
+
+<matrix name="GSOScintillationYield" coldim="1"
+        values="8.0/keV" />
+
+
+<matrix name="GSOResolutionScale" coldim="1"
+        values="1.0" />
+
+
+
+<!-- Air and Vaccuum Optical Properties -->
+<!-- Index from
+     http://refractiveindex.info/?shelf=other&book=air&page=Ciddor
+-->
+<matrix name="AirIndex" coldim="2"
+        values=" 1.94089*eV 1.00028 1.98629*eV 1.00028 2.03386*eV 1.00028 2.08377*eV 1.00028 2.13619*eV 1.00028 2.19131*eV 1.00028 2.24935*eV 1.00028 2.31055*eV 1.00028 2.37518*eV 1.00028 2.44352*eV 1.00028 2.51591*eV 1.00028 2.59273*eV 1.00028 2.67438*eV 1.00028 2.76134*eV 1.00028 2.85415*eV 1.00028 2.95341*eV 1.00028 3.05983*eV 1.00028 3.1742*eV 1.00028 3.29745*eV 1.00028 3.43066*eV 1.00029 3.57509*eV 1.00029 3.73222*eV 1.00029 3.90378*eV 1.00029 4.09189*eV 1.00029" />
+<matrix name="AirReflectivity" coldim="2" values="1.77*eV 0.0001 5.0*eV 0.0001" />
+
+<!-- Bicron Optical Grease (Saint-Gobian BC-630)
+     http://www.crystals.saint-gobain.com/uploadedFiles/SG-Crystals/Documents/Organic%20Product%20Accessories%20Data%20Sheet.pdf
+-->
+<matrix name="OpticalGreaseIndex" coldim="2"
+        values="1.77*eV 1.465 4.27*eV 1.465" />
+<matrix name="OpticalGreaseTransmittance" coldim="2"
+        values="1.75*eV 0.0 1.77*eV 0.95 4.27*eV 0.95 4.28*eV 0.0" />
+
+<!-- MyLar BoPET Optical Properties -->
+<!-- Index from
+     http://www.filmetrics.com/refractive-index-database/PET/Estar-Melinex-Mylar
+-->
+<matrix name="BoPETIndex" coldim="2"
+        values=" 1.90951*eV 1.6341 1.93759*eV 1.635 1.96657*eV 1.636 1.99646*eV 1.637 2.02734*eV 1.638 2.05926*eV 1.6391 2.09221*eV 1.6403 2.12633*eV 1.6416 2.16162*eV 1.6429 2.19815*eV 1.6443 2.236*eV 1.6458 2.27523*eV 1.6474 2.3159*eV 1.6491 2.35819*eV 1.6509 2.40205*eV 1.6528 2.44772*eV 1.6549 2.49515*eV 1.6571 2.54457*eV 1.6595 2.59609*eV 1.6621 2.6498*eV 1.6649 2.7059*eV 1.6679 2.76448*eV 1.6712 2.82572*eV 1.6748 2.88987*eV 1.6787 2.95714*eV 1.683 3.0277*eV 1.6878 3.0996*eV 1.69295" />
+<matrix name="BoPETReflectivity" coldim="2" values="1.77*eV 0.85 5.0*eV 0.85" />
+
+<!-- PMT Optical Properties -->
+<matrix name="BorosilicateGlassIndex" coldim="2"
+        values="1.889*eV 1.46916 1.1926*eV 1.46953 2.104*eV 1.47133 2.270*eV 1.47311 2.584*eV 1.47676 2.845*eV 1.48015"/>
+<matrix name="ComptonPMTGlassEfficiency" coldim="2" values="1.5*eV 1.0 5.0*eV 1.0"/>
+
+<matrix name="FusedSilicaGlassIndex" coldim="2"
+        values="0.3823*eV 1.4131 0.6025*eV 1.4372 0.7255*eV 1.4421 0.8889*eV 1.4458 1.1450*eV 1.4494 1.4383*eV 1.4525 1.8894*eV 1.4564 1.9261*eV 1.4567 2.1042*eV 1.4584 2.1103*eV 1.4585 2.2706*eV 1.4601 2.8453*eV 1.4666 3.0648*eV 1.4696 3.3973*eV 1.4745 4.1046*eV 1.4872 4.4238*eV 1.4940 5.7836*eV 1.5337 6.200*eV 1.5500 6.7027*eV 1.5750 7.2941*eV 1.6150" />
+
+<matrix name="SbKCsCathodeIndex" coldim="2"
+        values="1.8235*eV 2.9600 1.8647*eV 2.955 1.9077*eV 2.95 1.9528*eV 2.9500 2.000*eV 2.9600 2.0462*eV 2.9800 2.1017*eV 3.0100 2.1565*eV 3.0600 2.2143*eV 3.1200 2.2752*eV 3.2000 2.3396*eV 3.2600 2.4078*eV 3.0900 2.4800*eV 3.0000 2.5567*eV 3.0000 2.6383*eV 3.0000 2.7253*eV 2.8700 2.8182*eV 2.7000 2.9176*eV 2.6100 3.0244*eV 2.3800 3.1392*eV 2.1800 3.2632*eV 1.9200" />
+
+<matrix name="SbKCsCathodeEfficiency"  coldim="2"
+        values="1.9136*eV 0 1.91508*eV 0.340943 1.92969*eV 0.452773 1.93462*eV 0.49005 1.94954*eV 0.602305 1.96469*eV 0.727826 1.96979*eV 0.77263 1.98526*eV 0.917879 2.00098*eV 1.07653 2.01694*eV 1.24573 2.03316*eV 1.43466 2.04412*eV 1.56914 2.0664*eV 1.86217 2.08343*eV 2.10056 2.10075*eV 2.35666 2.11835*eV 2.6322 2.14229*eV 3.03467 2.1606*eV 3.37219 2.1855*eV 3.85171 2.21099*eV 4.3811 2.2305*eV 4.81469 2.25036*eV 5.27965 2.27739*eV 5.95994 2.29115*eV 6.33404 2.3121*eV 6.94208 2.32629*eV 7.39934 2.34789*eV 8.10817 2.37734*eV 9.12558 2.39233*eV 9.65985 2.41519*eV 10.4661 2.43849*eV 11.2603 2.46224*eV 12.0403 2.49464*eV 13.0257 2.5279*eV 13.9372 2.57075*eV 15.0108 2.60608*eV 15.8178 2.65164*eV 16.763 2.69883*eV 17.644 2.7378*eV 18.3295 2.79841*eV 19.2856 2.86177*eV 20.1571 2.92807*eV 20.9394 2.99751*eV 21.5977 3.07032*eV 22.0993 3.15987*eV 22.4991 3.25481*eV 22.7013 3.34084*eV 22.6661 3.43154*eV 22.4249 3.56042*eV 21.7673 3.68141*eV 20.8612 3.77298*eV 19.9165 3.84959*eV 18.9862 3.94984*eV 17.5831 4.03388*eV 16.3661 4.0993*eV 15.4533 4.10609*eV 0" />
+
+<matrix name="SbKCsCathodeAbsorption" coldim="2"
+        values="1.7*eV 0.0000001*mm  5.0*eV 0.0000001*mm" />
+
+<matrix name="TedlarAbsorption" coldim="2"
+        values="1.7*eV 0.001*mm  5.0*eV 0.001*mm" />
+
+<matrix name="TedlarEfficiency" coldim="2"
+        values="1.7*eV 0.85 5.0*eV 0.85" />

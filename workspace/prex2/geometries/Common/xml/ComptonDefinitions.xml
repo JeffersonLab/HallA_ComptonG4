@@ -1,0 +1,192 @@
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  - - - - - - - - - - - - Distances and Dimensions - - - - - - - - - - - - -
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+<!-- Define dimmensions of the tunnel -->
+<quantity name="WorldDimX" type="length" value="1"   unit="m" />
+<quantity name="WorldDimY" type="length" value="1.5" unit="m" />
+<quantity name="WorldDimZ" type="length" value="15"  unit="m" />
+
+<!-- Define the nominal position/rotation for the PhDetector -->
+<position name="ComptonPhotonDetectorPos" x="6000" y="0" z="0" unit="mm" />
+
+<!-- Define common variables -->
+<variable name="AirGap" value="0.000" />
+<variable name="MyLarTickness" value="0.025" />
+<variable name="BlackTapeTickness" value="3.000" />
+
+<!-- Define dimmensions of the tunnel -->
+<quantity name="TunnelDimX" type="length" value="1"   unit="m" />
+<quantity name="TunnelDimY" type="length" value="1.5" unit="m" />
+<quantity name="TunnelDimZ" type="length" value="15"  unit="m" />
+
+
+<!-- Styforoam thickness approximated, assumed to be the 0.56 in version
+  from Lowes, but with actual tickness of 0.526 in -->
+<variable name="StyrofoamTickness" value="13.36" />
+
+<!-- Individual LeadTungstate Crystals -->
+<variable name="LeadTungstateCrystalDimX" value="30" />
+<variable name="LeadTungstateCrystalDimY" value="30" />
+<variable name="LeadTungstateCrystalDimZ" value="200" />
+
+<!-- The stack of 4 LeadTungstate Crystals -->
+<variable name="LeadTungstateStackDimX" value="2*(LeadTungstateCrystalDimX+AirGap)" />
+<variable name="LeadTungstateStackDimY" value="2*(LeadTungstateCrystalDimY+AirGap)" />
+<variable name="LeadTungstateStackDimZ" value="LeadTungstateCrystalDimZ+AirGap" />
+
+<!-- Stack upstream side distance from interaction point (which is at z=0)
+  the survey puts the front at ~3537 from ELOG Laser/195)
+  https://qweak.jlab.org/elog/Laser/195
+-->
+<variable name="LeadTungstateDistanceFromIP" value="6000+StyrofoamTickness" />
+
+<!-- Air gap around LeadTungstate Stack -->
+<variable name="LeadTungstateStackAirWrapDimX" value="LeadTungstateStackDimX+2*AirGap" />
+<variable name="LeadTungstateStackAirWrapDimY" value="LeadTungstateStackDimY+2*AirGap" />
+<variable name="LeadTungstateStackAirWrapDimZ" value="LeadTungstateStackDimZ+AirGap" />
+
+<!-- MyLar Foil wrap around LeadTungsstate Crystals -->
+<variable name="LeadTungstateFoilWrapDimX" value="LeadTungstateStackAirWrapDimX+2*(MyLarTickness+AirGap)" />
+<variable name="LeadTungstateFoilWrapDimY" value="LeadTungstateStackAirWrapDimY+2*(MyLarTickness+AirGap)" />
+<variable name="LeadTungstateFoilWrapDimZ" value="LeadTungstateStackAirWrapDimZ+MyLarTickness+AirGap" />
+
+<!-- AirGap around MyLar Foil wrap around LeadTungsstate Crystals -->
+<variable name="LeadTungstateFoilAirWrapDimX" value="LeadTungstateFoilWrapDimX+2*AirGap" />
+<variable name="LeadTungstateFoilAirWrapDimY" value="LeadTungstateFoilWrapDimY+2*AirGap" />
+<variable name="LeadTungstateFoilAirWrapDimZ" value="LeadTungstateFoilWrapDimZ+AirGap" />
+
+<!-- LeadTungsate Detector Wrapped Stack -->
+<variable name="LeadTungstateDetectorDimX" value="LeadTungstateFoilAirWrapDimX+2*(BlackTapeTickness+AirGap)" />
+<variable name="LeadTungstateDetectorDimY" value="LeadTungstateFoilAirWrapDimY+2*(BlackTapeTickness+AirGap)" />
+<variable name="LeadTungstateDetectorDimZ" value="LeadTungstateFoilAirWrapDimZ+BlackTapeTickness+AirGap" />
+
+<!-- LeadTungsate-PMT Optical Grease -->
+<variable name="LeadTungstatePMTGreaseDimX" value="LeadTungstateDetectorDimX" />
+<variable name="LeadTungstatePMTGreaseDimY" value="LeadTungstateDetectorDimY" />
+<variable name="LeadTungstatePMTGreaseDimZ" value="1.0" />
+
+<!-- PMT Dimmensions -->
+<variable name="ComptonPMTDimRMin" value="0.0" />
+<variable name="ComptonPMTDimRMax" value="40.25" />
+<variable name="ComptonPMTDimZ" value="205.00" />
+
+<!-- Compton Photon Detector -->
+<variable name="ComptonPhotonDetectorDimX" value="2*ComptonPMTDimRMax" />
+<variable name="ComptonPhotonDetectorDimY" value="2*ComptonPMTDimRMax" />
+<variable name="ComptonPhotonDetectorDimZ" value="ComptonPMTDimZ+AirGap+LeadTungstatePMTGreaseDimZ+AirGap+LeadTungstateDetectorDimZ" />
+
+<!-- Thin Lead (for shielding infront of photon detector -->
+<!-- Thin Lead 1 -->
+<variable name="ThinLead1DimX" value="103." />
+<variable name="ThinLead1DimY" value="176." />
+<variable name="ThinLead1DimZ" value="2.3681" />
+<!-- Thin Lead 2 -->
+<variable name="ThinLead2DimX" value="101." />
+<variable name="ThinLead2DimY" value="182." />
+<variable name="ThinLead2DimZ" value="2.8756" />
+<!-- Thin Lead 3 -->
+<variable name="ThinLead3DimX" value="104." />
+<variable name="ThinLead3DimY" value="181." />
+<variable name="ThinLead3DimZ" value="2.4469" />
+<!-- Thin Lead 4 -->
+<variable name="ThinLead4DimX" value="97." />
+<variable name="ThinLead4DimY" value="177." />
+<variable name="ThinLead4DimZ" value="2.3389" />
+<!-- Distance from US PhDet side crystal -->
+<variable name="ThinLeadSeparation" value="0.1" />
+<variable name="ThinLeadDSDistanceFromIP" value="LeadTungstateDistanceFromIP-(StyrofoamTickness+ThinLeadSeparation)" />
+
+<!-- Beampipe -->
+<variable name="BeampipeEndDistanceFromLeadTungstateDetector" value="200" />
+<variable name="BeampipeDimRMin" value="68" />
+<variable name="BeampipeDimRMax" value="70" />
+<variable name="BeampipeDimZ" value="2*(LeadTungstateDistanceFromIP-BeampipeEndDistanceFromLeadTungstateDetector)" />
+
+<!-- Beampipe exit window -->
+<variable name="BeampipeExitWindowDimRMin" value="0." />
+<variable name="BeampipeExitWindowDimRMax" value="BeampipeDimRMin-(AirGap)" />
+<variable name="BeampipeExitWindowDimZ" value="2.0" />
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  - - - - - - - - - - - Optical Properties of Materials - - - - - - - - - - 
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+<!-- LeadTungstate Optical Properties -->
+<matrix name="LeadTungstateTransmittance" coldim="2"
+    values="1.93523*eV 0 1.93674*eV 75.2372 1.97069*eV 75.2014 2.00586*eV 75.1656 2.0423*eV 75.1268 2.08006*eV 75.0808 2.11928*eV 75.0304 2.16*eV 74.9692 2.20232*eV 74.8904 2.24633*eV 74.7988 2.2921*eV 74.6952 2.33981*eV 74.5768 2.3895*eV 74.446 2.4414*eV 74.3068 2.49561*eV 74.1479 2.55222*eV 73.9704 2.61146*eV 73.7721 2.67357*eV 73.5623 2.73865*eV 73.3448 2.80698*eV 73.1277 2.87887*eV 72.8963 2.95447*eV 72.6303 3.03414*eV 72.2665 3.11824*eV 71.7127 3.20704*eV 70.8514 3.30105*eV 69.5484 3.38339*eV 67.8436 3.43294*eV 66.3061 3.47159*eV 64.5004 3.4936*eV 63.0126 3.51688*eV 60.9429 3.53533*eV 58.8228 3.55286*eV 56.5315 3.56748*eV 54.2089 3.57478*eV 52.8333 3.58678*eV 50.3238 3.59666*eV 47.8076 3.60377*eV 45.8134 3.61354*eV 42.5866 3.61386*eV 42.5179 3.6241*eV 38.813 3.62994*eV 36.7737 3.63217*eV 35.9825 3.64113*eV 32.9783 3.6482*eV 30.6205 3.66124*eV 26.2575 3.66947*eV 23.5112 3.67263*eV 22.4771 3.67971*eV 20.2281 3.68485*eV 18.6449 3.68584*eV 18.2575 3.68617*eV 18.1723 3.68682*eV 17.961 3.70456*eV 12.9532 3.71388*eV 10.4147 3.72269*eV 8.10021 3.72997*eV 6.28832 3.73132*eV 5.95496 3.75073*eV 1.17672 3.75641*eV 0" />
+
+<matrix name="LeadTungstateRIndex" coldim="2"
+    values="1.92887*eV 2.19429 1.94835*eV 2.19596 1.96822*eV 2.19763 1.98849*eV 2.19927 2.0092*eV 2.20087 2.03033*eV 2.2024 2.05192*eV 2.20388 2.07397*eV 2.20531 2.0965*eV 2.20674 2.11952*eV 2.20822 2.14306*eV 2.20978 2.16712*eV 2.21146 2.19173*eV 2.21327 2.21691*eV 2.21523 2.24267*eV 2.21734 2.26903*eV 2.21957 2.29603*eV 2.22194 2.32367*eV 2.22443 2.35199*eV 2.22705 2.381*eV 2.22979 2.41075*eV 2.23267 2.44124*eV 2.2357 2.47251*eV 2.23888 2.5046*eV 2.24223 2.53753*eV 2.24575 2.57134*eV 2.24945 2.60606*eV 2.25337 2.64173*eV 2.25754 2.67839*eV 2.26199 2.71608*eV 2.26679 2.75485*eV 2.27198 2.79475*eV 2.27759 2.83581*eV 2.28366 2.8781*eV 2.29019 2.92167*eV 2.29723 2.96658*eV 2.30484 3.01289*eV 2.31313 3.06067*eV 2.32222 3.10999*eV 2.33225 3.16092*eV 2.34334 3.21355*eV 2.3555 3.26797*eV 2.36868 3.32426*eV 2.38266 3.38252*eV 2.39713 3.44286*eV 2.4116" />
+
+<matrix name="LeadTungstateAbsorptionLength" coldim="2"
+    values="1.91585*eV 0*cm 1.91733*eV 1193.26*cm 1.93137*eV 1175.95*cm 1.94561*eV 1159.15*cm 1.96006*eV 1143.68*cm 1.97473*eV 1130.03*cm 1.98962*eV 1118.47*cm 2.00474*eV 1109.03*cm 2.02009*eV 1101.41*cm 2.03568*eV 1095.15*cm 2.0515*eV 1089.73*cm 2.06758*eV 1084.68*cm 2.08391*eV 1079.7*cm 2.1005*eV 1074.69*cm 2.11736*eV 1069.67*cm 2.13449*eV 1064.66*cm 2.1519*eV 1059.71*cm 2.16959*eV 1054.64*cm 2.18758*eV 1049.03*cm 2.20587*eV 1042.22*cm 2.22447*eV 1033.37*cm 2.24338*eV 1021.57*cm 2.26262*eV 1006.05*cm 2.28219*eV 986.367*cm 2.3021*eV 962.457*cm 2.32237*eV 934.595*cm 2.34299*eV 903.423*cm 2.36398*eV 869.809*cm 2.38536*eV 834.551*cm 2.40712*eV 798.439*cm 2.42928*eV 762.276*cm 2.45186*eV 726.381*cm 2.47486*eV 690.913*cm 2.49829*eV 656.07*cm 2.52217*eV 621.662*cm 2.54652*eV 587.466*cm 2.57133*eV 553.351*cm 2.59664*eV 519.059*cm 2.62245*eV 484.35*cm 2.64878*eV 449.349*cm 2.67564*eV 414.242*cm 2.70305*eV 379.566*cm 2.73103*eV 345.934*cm 2.75959*eV 313.909*cm 2.78876*eV 283.947*cm 2.81855*eV 256.291*cm 2.84899*eV 230.985*cm 2.88009*eV 207.865*cm 2.91187*eV 186.692*cm 2.94437*eV 167.149*cm 2.9776*eV 148.985*cm 3.01158*eV 131.999*cm 3.04636*eV 116.08*cm 3.08194*eV 101.103*cm 3.11837*eV 87.0273*cm 3.15566*eV 73.957*cm 3.19386*eV 62.0267*cm 3.233*eV 51.3395*cm 3.27311*eV 41.7117*cm 3.31422*eV 33.751*cm 3.35638*eV 27.5467*cm 3.39963*eV 22.8586*cm 3.44401*eV 19.5342*cm 3.4488*eV 0*cm" />
+
+<matrix name="LeadTungstateEmission" coldim="2"
+    values="2.15071*eV 0 2.15258*eV 1.379 2.19022*eV 2.31456 2.22361*eV 3.11781 2.24882*eV 3.82686 2.27169*eV 4.5676 2.29286*eV 5.38013 2.31465*eV 6.31085 2.33866*eV 7.4149 2.36214*eV 8.57933 2.38482*eV 9.76842 2.40952*eV 11.1851 2.42043*eV 11.9083 2.4391*eV 13.2431 2.45844*eV 14.8146 2.47414*eV 16.1787 2.4858*eV 17.3236 2.49224*eV 17.9939 2.50828*eV 19.7587 2.51929*eV 21.0028 2.52977*eV 22.2333 2.53546*eV 22.9363 2.54766*eV 24.4248 2.55917*eV 25.8559 2.56733*eV 26.9021 2.57656*eV 28.0872 2.58932*eV 29.7028 2.59838*eV 30.8404 2.60466*eV 31.6209 2.61449*eV 32.7738 2.62506*eV 33.9684 2.63718*eV 35.3241 2.64782*eV 36.4846 2.65735*eV 37.5478 2.66621*eV 38.5687 2.6768*eV 39.8006 2.69373*eV 41.7626 2.69889*eV 42.3582 2.71099*eV 43.6926 2.72313*eV 44.9518 2.73539*eV 46.1324 2.74836*eV 47.3268 2.76954*eV 49.0938 2.77842*eV 49.7981 2.79887*eV 51.2568 2.81437*eV 52.2088 2.83134*eV 53.1162 2.85678*eV 54.1513 2.88933*eV 54.9446 2.9157*eV 55.301 2.96443*eV 55.216 3.00735*eV 54.5315 3.04174*eV 53.5902 3.06573*eV 52.5345 3.08449*eV 51.534 3.11409*eV 49.6314 3.13598*eV 48.0737 3.15586*eV 46.5266 3.1669*eV 45.5933 3.18603*eV 43.8565 3.19456*eV 43.0205 3.20754*eV 41.6798 3.21211*eV 41.1543 3.22556*eV 39.6143 3.24159*eV 37.7167 3.25452*eV 36.1852 3.26231*eV 35.2362 3.27437*eV 33.7862 3.28452*eV 32.5848 3.29754*eV 31.0511 3.29973*eV 30.7653 3.30951*eV 29.6044 3.32745*eV 27.4929 3.33605*eV 26.4887 3.35373*eV 24.484 3.36256*eV 23.5354 3.38043*eV 21.6756 3.39005*eV 20.7125 3.40466*eV 19.3332 3.42611*eV 17.5062 3.43713*eV 16.722 3.45408*eV 15.5897 3.48476*eV 14.0224 3.51509*eV 12.6234 3.56522*eV 10.3632 3.57036*eV 0" />
+
+<matrix name="LeadTungstateFastTimeConstant" coldim="1"
+    values="10*ns" />
+
+<matrix name="LeadTungstateSlowTimeConstant" coldim="1"
+    values="30*ns" />
+
+<!-- Based on the slow component having a relative ratio of 0.3 @ 30 ns cooled by 10% to gain ~20% light yield gain -->
+<matrix name="LeadTungstateScintillationYield" coldim="1"
+    values="1.20*150.8/MeV" />
+
+<matrix name="LeadTungstateYieldRatio" coldim="1"
+    values="0.204" />
+
+<matrix name="LeadTungstateResolutionScale" coldim="1"
+    values="1.0" />
+
+<matrix name="LeadTungstateRiseTime" coldim="1"
+    values="0.01*ns" />
+
+<!-- Air and Vaccuum Optical Properties -->
+<!-- Index from
+  http://refractiveindex.info/?shelf=other&book=air&page=Ciddor
+-->
+<matrix name="AirIndex" coldim="2"
+    values=" 1.94089*eV 1.00028 1.98629*eV 1.00028 2.03386*eV 1.00028 2.08377*eV 1.00028 2.13619*eV 1.00028 2.19131*eV 1.00028 2.24935*eV 1.00028 2.31055*eV 1.00028 2.37518*eV 1.00028 2.44352*eV 1.00028 2.51591*eV 1.00028 2.59273*eV 1.00028 2.67438*eV 1.00028 2.76134*eV 1.00028 2.85415*eV 1.00028 2.95341*eV 1.00028 3.05983*eV 1.00028 3.1742*eV 1.00028 3.29745*eV 1.00028 3.43066*eV 1.00029 3.57509*eV 1.00029 3.73222*eV 1.00029 3.90378*eV 1.00029 4.09189*eV 1.00029" />
+<matrix name="AirReflectivity" coldim="2" values="1.77*eV 0.0001 5.0*eV 0.0001" />
+
+<!-- Bicron Optical Grease (Saint-Gobian BC-630)
+  http://www.crystals.saint-gobain.com/uploadedFiles/SG-Crystals/Documents/Organic%20Product%20Accessories%20Data%20Sheet.pdf
+-->
+<matrix name="OpticalGreaseIndex" coldim="2"
+    values="1.77*eV 1.465 4.27*eV 1.465" />
+<matrix name="OpticalGreaseTransmittance" coldim="2"
+    values="1.75*eV 0.0 1.77*eV 0.95 4.27*eV 0.95 4.28*eV 0.0" />
+
+<!-- MyLar BoPET Optical Properties -->
+<!-- Index from
+  http://www.filmetrics.com/refractive-index-database/PET/Estar-Melinex-Mylar
+-->
+<matrix name="BoPETIndex" coldim="2"
+    values=" 1.90951*eV 1.6341 1.93759*eV 1.635 1.96657*eV 1.636 1.99646*eV 1.637 2.02734*eV 1.638 2.05926*eV 1.6391 2.09221*eV 1.6403 2.12633*eV 1.6416 2.16162*eV 1.6429 2.19815*eV 1.6443 2.236*eV 1.6458 2.27523*eV 1.6474 2.3159*eV 1.6491 2.35819*eV 1.6509 2.40205*eV 1.6528 2.44772*eV 1.6549 2.49515*eV 1.6571 2.54457*eV 1.6595 2.59609*eV 1.6621 2.6498*eV 1.6649 2.7059*eV 1.6679 2.76448*eV 1.6712 2.82572*eV 1.6748 2.88987*eV 1.6787 2.95714*eV 1.683 3.0277*eV 1.6878 3.0996*eV 1.69295" />
+<matrix name="BoPETReflectivity" coldim="2" values="1.77*eV 0.85 5.0*eV 0.85" />
+
+<!-- PMT Optical Properties -->
+<matrix name="BorosilicateGlassIndex" coldim="2"
+    values="1.889*eV 1.46916 1.1926*eV 1.46953 2.104*eV 1.47133 2.270*eV 1.47311 2.584*eV 1.47676 2.845*eV 1.48015"/>
+<matrix name="ComptonPMTGlassEfficiency" coldim="2" values="1.5*eV 1.0 5.0*eV 1.0"/>
+
+<matrix name="FusedSilicaGlassIndex" coldim="2"
+    values="0.3823*eV 1.4131 0.6025*eV 1.4372 0.7255*eV 1.4421 0.8889*eV 1.4458 1.1450*eV 1.4494 1.4383*eV 1.4525 1.8894*eV 1.4564 1.9261*eV 1.4567 2.1042*eV 1.4584 2.1103*eV 1.4585 2.2706*eV 1.4601 2.8453*eV 1.4666 3.0648*eV 1.4696 3.3973*eV 1.4745 4.1046*eV 1.4872 4.4238*eV 1.4940 5.7836*eV 1.5337 6.200*eV 1.5500 6.7027*eV 1.5750 7.2941*eV 1.6150" />
+
+<matrix name="SbKCsCathodeIndex" coldim="2"
+    values="1.8235*eV 2.9600 1.8647*eV 2.955 1.9077*eV 2.95 1.9528*eV 2.9500 2.000*eV 2.9600 2.0462*eV 2.9800 2.1017*eV 3.0100 2.1565*eV 3.0600 2.2143*eV 3.1200 2.2752*eV 3.2000 2.3396*eV 3.2600 2.4078*eV 3.0900 2.4800*eV 3.0000 2.5567*eV 3.0000 2.6383*eV 3.0000 2.7253*eV 2.8700 2.8182*eV 2.7000 2.9176*eV 2.6100 3.0244*eV 2.3800 3.1392*eV 2.1800 3.2632*eV 1.9200" />
+
+<matrix name="SbKCsCathodeEfficiency"  coldim="2"
+    values="1.9136*eV 0 1.91508*eV 0.340943 1.92969*eV 0.452773 1.93462*eV 0.49005 1.94954*eV 0.602305 1.96469*eV 0.727826 1.96979*eV 0.77263 1.98526*eV 0.917879 2.00098*eV 1.07653 2.01694*eV 1.24573 2.03316*eV 1.43466 2.04412*eV 1.56914 2.0664*eV 1.86217 2.08343*eV 2.10056 2.10075*eV 2.35666 2.11835*eV 2.6322 2.14229*eV 3.03467 2.1606*eV 3.37219 2.1855*eV 3.85171 2.21099*eV 4.3811 2.2305*eV 4.81469 2.25036*eV 5.27965 2.27739*eV 5.95994 2.29115*eV 6.33404 2.3121*eV 6.94208 2.32629*eV 7.39934 2.34789*eV 8.10817 2.37734*eV 9.12558 2.39233*eV 9.65985 2.41519*eV 10.4661 2.43849*eV 11.2603 2.46224*eV 12.0403 2.49464*eV 13.0257 2.5279*eV 13.9372 2.57075*eV 15.0108 2.60608*eV 15.8178 2.65164*eV 16.763 2.69883*eV 17.644 2.7378*eV 18.3295 2.79841*eV 19.2856 2.86177*eV 20.1571 2.92807*eV 20.9394 2.99751*eV 21.5977 3.07032*eV 22.0993 3.15987*eV 22.4991 3.25481*eV 22.7013 3.34084*eV 22.6661 3.43154*eV 22.4249 3.56042*eV 21.7673 3.68141*eV 20.8612 3.77298*eV 19.9165 3.84959*eV 18.9862 3.94984*eV 17.5831 4.03388*eV 16.3661 4.0993*eV 15.4533 4.10609*eV 0" />
+
+<matrix name="SbKCsCathodeAbsorption" coldim="2"
+    values="1.7*eV 0.0000001*mm  5.0*eV 0.0000001*mm" />
+
+<matrix name="TedlarAbsorption" coldim="2"
+    values="1.7*eV 0.001*mm  5.0*eV 0.001*mm" />
+
+<matrix name="TedlarEfficiency" coldim="2"
+    values="1.7*eV 0.85 5.0*eV 0.85" />

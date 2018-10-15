@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE gdml [
+<!--  The ENTITY definition will configure the detector template -->
+<!--  If you do not want to include a component, set the file name
+      to ../Common/blank.gdml -->
+
+<!-- File Containing the Solids -->
+<!ENTITY ChicaneSolids SYSTEM "ChicaneSolids.gdml">
+
+<!-- File Containing the Volumes -->
+<!ENTITY ChicaneVolumes SYSTEM "ChicaneVolumes.gdml">
+
+<!-- File Containing Chicane Specific Definitions -->
+<!ENTITY ChicaneDefinitions SYSTEM "ChicaneDefinitions.gdml">
+
+<!-- File Containing Chicane Beamline -->
+<!ENTITY ChicaneBeamline SYSTEM "ChicaneBeamline.gdml">
+
+<!-- File Containing Chicane Volume Definitions -->
+<!ENTITY ChicaneDipole SYSTEM "../Common/blank.gdml">
+
+<!-- The remainder of the file should be left unmodified. It just sets up
+      the template that pulls from the above defined entities to construct
+      a Chicane Geant4 volume. -->
+
+<!-- Standard Chicane Geometry -->
+<!ENTITY ChicaneGeometryTemplate SYSTEM "ChicaneGeometryTemplate.gdml">
+]>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schema/gdml.xsd" >
+  &ChicaneGeometryTemplate;
+</gdml>

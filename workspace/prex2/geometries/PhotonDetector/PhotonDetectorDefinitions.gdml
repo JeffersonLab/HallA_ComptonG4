@@ -1,0 +1,129 @@
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  - - - - - - - - - - - - Distances and Dimensions - - - - - - - - - - - - -
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+<!-- Define the nominal position/rotation for the PhDetector -->
+<position name="ComptonPhotonDetectorPos" x="0" y="0" z="6000" unit="mm" />
+
+<!-- Define common variables -->
+<variable name="AirGap" value="0.000" />
+<variable name="MyLarTickness" value="0.025" />
+<variable name="BlackTapeTickness" value="3.000" />
+
+<!-- Measured 3/16/2016 by GBF (in mm) -->
+<quantity name="dim_ColThick" value="51.1" />
+<!-- Guess: -->
+<quantity name="dim_ColToSync" value="10" />
+<!-- Some max properties for the Sync Shields (used for positioning only) -->
+<variable name="SyncShieldMaxThickness" value="10" />
+<!-- Distance from Collimator to front of PhDet (guess) -->
+<variable name="ColToPhDetDistance" value="215" />
+<variable name="dim_ColToPhDet" value="247.025" /> <!-- Used 328 before 9/30/16 --> 
+
+<!-- - - - - - - - - - - - - - - - -->
+<!-- Collimator dimensions -->
+<!-- <variable name="dim_ColMinRadius5mm" value="5" /> -->
+<variable name="dim_ColMinRadius10mm" value="10" />
+<variable name="dim_ColMaxRadius" value="60" /> <!-- Just a guess -->
+<!-- - - - - - - - - - - - - - - - -->
+
+<!-- Beam Pipe Window (in mm) 9/6/16 -->
+<variable name="BPWindowRadius" value="2.75*25.4/2" />
+<variable name="BPWindowThickness" value="0.5" />
+<variable name="ColToBPWindow" value="57" />  <!-- Used 32.6 before 9/30/16 -->
+
+<!-- Styforoam thickness approximated, assumed to be the 0.56 in version
+  from Lowes, but with actual tickness of 0.526 in -->
+<variable name="StyrofoamTickness" value="13.36" />
+
+
+
+<!-- Stack upstream side distance from interaction point (which is at z=0)
+  the survey puts the front at ~3537 from ELOG Laser/195)
+  https://qweak.jlab.org/elog/Laser/195
+-->
+<variable name="GSODistanceFromIP" value="6000+StyrofoamTickness" />
+
+
+
+<!-- PMT Dimmensions -->
+<variable name="ComptonPMTDimRMin" value="0.0" />
+<variable name="ComptonPMTDimRMax" value="40.25" />
+<variable name="ComptonPMTDimZ" value="205.00" />
+
+<!-- Compton Photon Detector -->
+<variable name="ComptonPhotonDetectorDimX" value="2*ComptonPMTDimRMax" />
+<variable name="ComptonPhotonDetectorDimY" value="2*ComptonPMTDimRMax" />
+<variable name="ComptonPhotonDetectorDimZ" value="ComptonPMTDimZ+AirGap+1+AirGap+150" />
+<variable name="dim_PhDetContainerZ" value="ComptonPMTDimZ+AirGap+1+AirGap+150" />
+
+<!-- Compton Photon Detector "World" -->
+<variable name="dim_PhDetWorldX" value="5*dim_ColMaxRadius" />
+<variable name="dim_PhDetWorldY" value="5*dim_ColMaxRadius" />
+<variable name="dim_PhDetWorldZ" value="dim_PhDetContainerZ+dim_ColToPhDet+dim_ColThick" />
+
+<!-- Add tungsten jaws 8/26/16 -->
+<variable name="JawDimX" value="3*25.4"/>
+<variable name="JawDimY" value="1.25*25.4"/>
+<variable name="JawDimZ" value="1.25*25.4"/>
+<variable name="JawToFingers" value="54.125"/> <!--- Used 3/4 inches before 9/30/16 -->
+<variable name="JawYPos" value="JawDimY/2.+9.0"/>
+
+<!-- Detector position 8/10/16 -->
+<variable name="DetXPos" value="0" />
+<variable name="DetYPos" value="0" />
+
+<!-- Add tungsten steels 7/6/16 -->
+<variable name="TungstenFingerDimX" value="3" />
+<variable name="TungstenFingerDimY" value="41" />
+<variable name="TungstenFingerDimZ" value="11" />
+<variable name="FingertoCenter" value="8" />
+<variable name="FingertoGSO" value="40" /> <!-- assumption used at first -->
+
+<!-- Add lengths for shields 7/21/16 -->
+<variable name="HollowTubeRadius" value="0.375*25.4"/>
+<variable name="CopperShieldDimZ" value="0.25*25.4"/>
+<variable name="LEDSpaceDimZ" value="28"/> 
+<variable name="AlCoverDimZ" value="18"/>
+<variable name="CoverToShieldDimZ" value="2.5*25.4"/>
+<variable name="AlShieldDimZ" value="0.125*25.4"/>
+<variable name="AlShieldToSync" value="21.1" />
+<variable name="ShieldsDimX" value="ComptonPhotonDetectorDimX"/>
+<variable name="ShieldsDimY" value="ComptonPhotonDetectorDimY"/>
+<variable name="ShieldsDimZ" value="CopperShieldDimZ+LEDSpaceDimZ+AlCoverDimZ+CoverToShieldDimZ+AlShieldDimZ"/>
+
+<!-- Define center -->
+<position name="center" />
+
+<!-- Thin Lead (for shielding infront of photon detector -->
+<!-- Thin Lead 1 -->
+<variable name="ThinLead1DimX" value="103." />
+<variable name="ThinLead1DimY" value="176." />
+<variable name="ThinLead1DimZ" value="2.3681" />
+<!-- Thin Lead 2 -->
+<variable name="ThinLead2DimX" value="101." />
+<variable name="ThinLead2DimY" value="182." />
+<variable name="ThinLead2DimZ" value="2.8756" />
+<!-- Thin Lead 3 -->
+<variable name="ThinLead3DimX" value="104." />
+<variable name="ThinLead3DimY" value="181." />
+<variable name="ThinLead3DimZ" value="2.4469" />
+<!-- Thin Lead 4 -->
+<variable name="ThinLead4DimX" value="97." />
+<variable name="ThinLead4DimY" value="177." />
+<variable name="ThinLead4DimZ" value="2.3389" />
+<!-- Distance from US PhDet side crystal -->
+<variable name="ThinLeadSeparation" value="0.1" />
+<variable name="ThinLeadDDistanceFromIP" value="GSODistanceFromIP-(StyrofoamTickness+ThinLeadSeparation)" />
+
+<!-- Beampipe -->
+<variable name="BeampipeEndDistanceFromLeadTungstateDetector" value="200" />
+<variable name="BeampipeDimRMin" value="68" />
+<variable name="BeampipeDimRMax" value="70" />
+<variable name="BeampipeDimZ" value="2*(GSODistanceFromIP-BeampipeEndDistanceFromLeadTungstateDetector)" />
+
+<!-- Beampipe exit window -->
+<variable name="BeampipeExitWindowDimRMin" value="0." />
+<variable name="BeampipeExitWindowDimRMax" value="BeampipeDimRMin-(AirGap)" />
+<variable name="BeampipeExitWindowDimZ" value="2.0" />
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE gdml [
+<!--  The ENTITY definition will configure the detector template -->
+<!--  If you do not want to include a component, set the file name
+      to ../Common/blank.gdml -->
+
+<!-- Sync Shield raidus to use (must be value already known by geometry) -->
+<!ENTITY PhotonDetectorSyncShield "6mm">
+
+<!-- Collimator to use -->
+<!ENTITY PhotonDetectorCollimator "5mm">
+
+<!-- The remainder of the file should be left unmodified. It just sets up
+      the template that pulls from the above defined entities to construct
+      a Photon Detector Geant4 volume. -->
+
+<!-- Standard Photon Detector Geometry -->
+<!ENTITY PhotonDetectorGeometryTemplate SYSTEM "PhotonDetectorGeometryTemplate.gdml">  
+<!--ENTITY PhotonDetectorGeometryTemplate SYSTEM "PhotonDetectorGeometryTemplate_jaw.gdml"> -->
+
+<!-- File Containing Photon Detector Specific Definitions -->
+<!ENTITY PhotonDetectorDefinitions SYSTEM "PhotonDetectorDefinitions.gdml">
+
+<!-- File Containing the Photon Detector (Actual) -->
+<!ENTITY PhotonDetector SYSTEM "Detectors/LeadTungstate.gdml">
+
+<!-- File Containing the Solids -->
+<!ENTITY PhotonDetectorSolids SYSTEM "PhotonDetectorSolids.gdml">
+
+<!-- File Containing the Volumes -->
+<!ENTITY PhotonDetectorVolumes SYSTEM "PhotonDetectorVolumes.gdml">
+
+]>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schema/gdml.xsd" >
+  &PhotonDetectorGeometryTemplate;
+</gdml>

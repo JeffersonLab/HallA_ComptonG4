@@ -1,0 +1,249 @@
+<element Z="1" formula="H" name="Hydrogen" >
+  <atom value="1.00794" unit="g/mole" />
+</element>
+
+<element Z="6" formula="C" name="Carbon" >
+  <atom value="12.011" unit="g/mole" />
+</element>
+
+<element Z="8" formula="O" name="Oxygen" >
+  <atom value="16." unit="g/mole" />
+</element>
+
+<element Z="64" formula="Gd" name="Gadolinium">
+  <atom value="157.25" unit="g/mole" />
+</element>
+
+<element Z="14" formula="Si" name="Silicon" >
+  <atom value="28.085" unit="g/mole" />
+</element>
+
+<element Z="5" formula="B" name="Boron" >
+  <atom value="10.811" unit="g/mole" />
+</element>
+
+<element Z="11" formula="Na" name="Sodium" >
+  <atom value="22.989769" unit="g/mole" />
+</element>
+
+<element Z="82" formula="Pb" name="Lead" >
+  <atom value="207.20" unit="g/mole"/>
+</element>
+
+<element Z="74" formula="W" name="Tungsten" >
+  <atom value="183.84" unit="g/mole" />
+</element>
+
+<element Z="7" formula="N" name="Nitrogen" >
+  <atom value="14" unit="g/mole"/>
+</element>
+
+<element Z="51" formula="Sb" name="Antimony">
+  <atom value="121.760" unit="g/mole" />
+</element>
+
+<element Z="19" formula="K" name="Potassium">
+  <atom value="39.0983" unit="g/mole" />
+</element>
+
+<element Z="55" formula="Cs" name="Caesium">
+  <atom value="132.905" unit="g/mole" />
+</element>
+
+<element Z="9" formula="F" name="Fluoride">
+  <atom value="18.9984032" unit="g/mole" />
+</element>
+
+<element Z="13" formula="Al" name="Aluminum">
+  <atom value="26.9815" unit="g/mole" />
+</element>
+
+<element Z="28" formula="Ni" name="Nickel">
+  <atom value="58.6934" unit="g/mole" />
+</element>
+
+<element Z="26" formula="Fe" name="Iron">
+  <atom value="55.845" unit="g/mole" />
+</element>
+
+<element Z="24" formula="Cr" name="Chromium">
+  <atom value="51.9961" unit="g/mole" />
+</element>
+
+<material Z="29" name="Copper" state="solid" >
+  <D unit="g/cm3" value="8.96" />
+  <atom unit="g/mole" value="63.546" />
+</material>
+
+<material name="LeadMaterial" Z="82" formula="Pb" state="solid">
+  <D value="11.35" unit="g/cm3" />
+  <atom unit="g/mole" value="207.20" />
+</material>
+
+<material name="AluminumMaterial" Z="13" state="solid">
+  <D unit="g/cm3" value="2.7" />
+  <atom unit="g/mole" value="26.9815" />
+</material>
+
+
+<material name="GSO" formula="Gd2SiO5" state="solid">
+  <property name="RINDEX" ref="GSORIndex" />
+  <property name="FASTTIMECONSTANT" ref="GSOFastTimeConstant" />
+  <property name="SLOWTIMECONSTANT" ref="GSOSlowTimeConstant" />
+  <property name="SCINTILLATIONYIELD" ref="GSOScintillationYield" />
+  <property name="RESOLUTIONSCALE" ref="GSOResolutionScale" />
+  <property name="FASTCOMPONENT" ref="GSOEmission" />
+  <property name="SLOWCOMPONENT" ref="GSOEmission" />
+  <property name="FASTSCINTILLATIONRISETIME" ref="GSORiseTime" />
+  <property name="SLOWSCINTILLATIONRISETIME" ref="GSORiseTime" />
+  <property name="YIELDRATIO" ref="GSOYieldRatio" />
+  <D value="6.71" unit="g/cm3" />
+  <composite n="2" ref="Gadolinium" />
+  <composite n="1" ref="Silicon" />
+  <composite n="5" ref="Oxygen" />
+</material>
+
+
+
+
+
+<!-- Tungsten Fingers 7/6/16 -->
+<material name="TungstenFinger">
+  <D unit="g/cm3" value="17" />
+  <fraction n="0.9" ref="Tungsten" />
+  <fraction n="0.06" ref="Nickel" />
+  <fraction n="0.04" ref="Copper" />
+</material>
+<!-- Beam Pipe Window 9/6/16 -->
+<material name="StainlessSteel">
+  <D unit="g/cm3" value="8" />
+  <fraction n="0.74" ref="Iron" />
+  <fraction n="0.18" ref="Chromium" />
+  <fraction n="0.08" ref="Nickel" />
+</material>
+
+<!-- Bicron Optical Grease (Saint-Gobian BC-630) -->
+<material name="OpticalGrease" >
+  <property name="RINDEX" ref="OpticalGreaseIndex" />
+  <property name="TRANSMITTANCE" ref="OpticalGreaseTransmittance" />
+  <D unit="g/cm3" value="1.060" />
+  <composite n="2" ref="Carbon" />
+  <composite n="6" ref="Hydrogen" />
+  <composite n="1" ref="Silicon" />
+  <composite n="1" ref="Oxygen" />
+</material>
+
+<material name="AirOptical" >
+  <property name="RINDEX" ref="AirIndex" />
+  <property name="REFLECTIVITY" ref="AirReflectivity" />
+  <D unit="g/cm3" value="0.00129" />
+  <fraction n="0.7" ref="Nitrogen" />
+  <fraction n="0.3" ref="Oxygen" />
+</material>
+
+<material name="Air" >
+  <D unit="g/cm3" value="0.00129" />
+  <fraction n="0.7" ref="Nitrogen" />
+  <fraction n="0.3" ref="Oxygen" />
+</material>
+
+<material name="AirVacuum" >
+  <D unit="g/cm3" value="1.0e-25" />
+  <fraction n="0.7" ref="Nitrogen" />
+  <fraction n="0.3" ref="Oxygen" />
+</material>
+
+<material name="AirVacuumOptical" >
+  <property name="RINDEX" ref="AirIndex" />
+  <D unit="g/cm3" value="1.0e-25" />
+  <fraction n="0.7" ref="Nitrogen" />
+  <fraction n="0.3" ref="Oxygen" />
+</material>
+
+
+<material name="Silica" formula="SiO2" >
+  <property name="RINDEX" ref="FusedSilicaGlassIndex" />
+  <D unit="g/cm3" value="2.65" />
+  <composite n="1" ref="Silicon" />
+  <composite n="2" ref="Oxygen" />
+</material>
+
+<material name="BoricOxide" formula="B2O3" >
+  <D unit="g/cm3" value="2.46" />
+  <composite n="2" ref="Boron" />
+  <composite n="3" ref="Oxygen" />
+</material>
+
+<material name="SodiumOxide" formula="Na2O" >
+  <D unit="g/cm3" value="2.27" />
+  <composite n="2" ref="Sodium" />
+  <composite n="1" ref="Oxygen" />
+</material>
+
+
+<material name="AluminumOxide" formula="Al2O3" >
+  <D unit="g/cm3" value="3.95" />
+  <composite n="2" ref="Aluminum" />
+  <composite n="3" ref="Oxygen" />
+</material>
+
+
+<material name="BorosilicateGlass" state="solid" >
+  <property name="RINDEX" ref="BorosilicateGlassIndex" />
+  <!-- From: http://www.camglassblowing.co.uk/gproperties.htm -->
+  <D unit="g/cm3" value="2.23" />
+  <fraction n="0.807" ref="Silica" />
+  <fraction n="0.130" ref="BoricOxide" />
+  <fraction n="0.040" ref="SodiumOxide" />
+  <fraction n="0.023" ref="AluminumOxide" />
+</material>
+
+<!-- Mylar definition -->
+<material name="BoPET" state="solid" formula="C10H8O4">
+  <property name="RINDEX" ref="BoPETIndex" />
+  <property name="REFLECTIVITY" ref="BoPETReflectivity" />
+  <D unit="g/cm3" value="1.38" />
+  <composite n="10" ref="Carbon" />
+  <composite n="8" ref="Hydrogen" />
+  <composite n="4" ref="Oxygen" />
+</material>
+
+<!-- Tedlar BlackTape definition -->
+<!-- This is a guess that this is what we use -->
+<material name="PVF" state="solid" formula="C2H3F">
+  <D unit="g/cm3" value="1.78" />
+  <composite n="2" ref="Carbon" />
+  <composite n="3" ref="Hydrogen" />
+  <composite n="1" ref="Fluoride" />
+</material>
+<material name="Acrylic" state="solid" formula="C5H8O2">
+  <D unit="g/cm3" value="1.19" />
+  <composite n="5" ref="Carbon" />
+  <composite n="8" ref="Hydrogen" />
+  <composite n="2" ref="Oxygen" />
+</material>
+<material name="Tedlar" state="solid" formula="C2H3FC5H8O2">
+  <property name="ABSLENGTH" ref="TedlarAbsorption" />
+  <property name="EFFICIENCY" ref="TedlarEfficiency" />
+  <D unit="g/cm3" value="1.485" />
+  <fraction n="0.5" ref="PVF" />
+  <fraction n="0.5" ref="Acrylic" />
+</material>
+
+<!-- Bialkali definition -->
+<material name="Bialkali" state="solid" formula="SbKCs" >
+  <property name="RINDEX" ref="SbKCsCathodeIndex" />
+  <property name="EFFICIENCY" ref="SbKCsCathodeEfficiency" />
+  <property name="ABSLENGTH" ref="SbKCsCathodeAbsorption" />
+  <D unit="g/cm3" value="4.28" /> <!-- Had to look this up! -->
+  <composite n="1" ref="Antimony" />
+  <composite n="1" ref="Potassium" />
+  <composite n="1" ref="Caesium" />
+</material>
+
+<!-- styrofoam -->
+<material name="Polystyrene" state="solid" formula="C8H8">
+  <D unit="g/cm3" value="0.028" />
+  <composite n="8" ref="Carbon" />
+  <composite n="8" ref="Hydrogen" />
+</material>

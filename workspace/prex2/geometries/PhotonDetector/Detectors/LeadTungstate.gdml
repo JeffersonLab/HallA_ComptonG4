@@ -1,0 +1,33 @@
+<physvol name="ComptonPhotonDetectorPhysical">
+  <volumeref ref="ComptonPhotonDetectorLogical" />
+  <position name="ComptonPhotonDetector_Position" unit="mm" x="DetXPos" y="DetYPos"
+            z="dim_PhDetWorldZ-ComptonPhotonDetectorDimZ/2." />
+</physvol>
+
+<!-- Include Shields 7/25/16 -->
+<physvol name="ShieldsPhysical">
+  <volumeref ref="ShieldsLogical" />
+  <position name="pos_Shields" unit="mm"  x="DetXPos" y="DetYPos"
+            z="dim_PhDetWorldZ-ComptonPhotonDetectorDimZ-ShieldsDimZ/2."/>
+</physvol>
+
+<!-- Include Tungsten Fingers 7/25/16 -->
+<physvol name="TungstenFingersPhysical">
+  <volumeref ref="TungstenFingersLogical" />
+  <position name="pos_TFs" unit="mm" x="DetXPos" y="DetYPos"
+            z="dim_PhDetWorldZ-ComptonPhotonDetectorDimZ-ShieldsDimZ-TungstenFingerDimZ/2."/>
+</physvol>
+
+<!-- Include Jaws 8/26/16 -->
+
+<physvol name="Jaw1Physical">
+  <volumeref ref="JawLogical" />
+  <position name="pos_Jaw1" unit="mm" x="0" y="JawYPos"
+            z="dim_PhDetWorldZ-ComptonPhotonDetectorDimZ-ShieldsDimZ-TungstenFingerDimZ-JawToFingers-JawDimZ/2."/>
+</physvol>
+
+<physvol name="Jaw2Physical">
+  <volumeref ref="JawLogical" />
+  <position name="pos_Jaw2" unit="mm" x="0" y="-JawYPos"
+            z="dim_PhDetWorldZ-ComptonPhotonDetectorDimZ-ShieldsDimZ-TungstenFingerDimZ-JawToFingers-JawDimZ/2."/>
+</physvol>

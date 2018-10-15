@@ -1,0 +1,65 @@
+<!-- Define the surface between LeadTungstate crystals and the OpticalAir -->
+
+<bordersurface name="LeadTungstateCrystalBorder1Air" surfaceproperty="LeadTungstatePolishedSurface" >
+  <physvolref ref="LeadTungstateStackPhysical"/>
+  <physvolref ref="LeadTungstateCrystal1Physical"/>
+</bordersurface>
+
+<bordersurface name="LeadTungstateCrystalBorder2Air" surfaceproperty="LeadTungstatePolishedSurface" >
+  <physvolref ref="LeadTungstateStackPhysical"/>
+  <physvolref ref="LeadTungstateCrystal2Physical"/>
+</bordersurface>
+
+<bordersurface name="LeadTungstateCrystalBorder3Air" surfaceproperty="LeadTungstatePolishedSurface" >
+  <physvolref ref="LeadTungstateStackPhysical"/>
+  <physvolref ref="LeadTungstateCrystal3Physical"/>
+</bordersurface>
+
+<bordersurface name="LeadTungstateCrystalBorder4Air" surfaceproperty="LeadTungstatePolishedSurface" >
+  <physvolref ref="LeadTungstateStackPhysical"/>
+  <physvolref ref="LeadTungstateCrystal4Physical"/>
+</bordersurface>
+
+<!-- Define the surface between Mylar Wrap and Optical Air -->
+<bordersurface name="LeadTungstateMylarAirBorder" surfaceproperty="LeadTungstateFoilSurface" >
+  <physvolref ref="LeadTungstateStackPhysical"/>
+  <physvolref ref="LeadTungstateFoilWrapPhysical"/>
+</bordersurface>
+
+<!-- Define the surface between BlackTape and Optical Air -->
+<bordersurface name="LeadTungstateBlackTapeAirBorder" surfaceproperty="LeadTungstateBlackTapeSurface" >
+  <physvolref ref="LeadTungstateFoilWrapPhysical"/>
+  <physvolref ref="LeadTungstateDetectorBlackTapeWrapPhysical"/>
+</bordersurface>
+
+<!-- Define the surface between Stack and Optical Air -->
+<bordersurface name="LeadTungstateStackAirBorder" surfaceproperty="LeadTungstatePolishedSurface" >
+  <physvolref ref="LeadTungstateStackPhysical" />
+  <physvolref ref="ComptonPhotonDetectorPhysical" />
+</bordersurface>
+
+<!-- Define the surface between Grease and Optical Air -->
+<bordersurface name="LeadTungstatePMTGreaseBorder" surfaceproperty="LeadTungstateGreaseSurface" >
+  <physvolref ref="ComptonPhotonDetectorPhysical" />
+  <physvolref ref="LeadTungstatePMTGreasePhysical" />
+</bordersurface>
+
+<!-- Define the surface between Grease and Optical Air -->
+<bordersurface name="PMTAirBorder" surfaceproperty="ComptonPMTGreaseSurface" >
+  <physvolref ref="ComptonPhotonDetectorPhysical" />
+  <physvolref ref="ComptonPMTPhysical" />
+</bordersurface>
+
+
+<!-- PMT optical borders -->
+<bordersurface name="PMTSideGlassBorder" surfaceproperty="PMTGlassSurface">
+  <physvolref ref="ComptonPMTPhysical" />
+  <physvolref ref="ComptonPMTGlassSide1" />
+</bordersurface>
+
+<bordersurface name="PMTSideCathodeBorder" surfaceproperty="PMTCathodeSurface" >
+  <physvolref ref="ComptonPMTCathode" />
+  <physvolref ref="ComptonPMTGlassSide1" />
+</bordersurface>
+
+

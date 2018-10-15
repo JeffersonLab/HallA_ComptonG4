@@ -1,0 +1,62 @@
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schema/gdml.xsd" >
+
+  <!-- Sync Shield specific definitions -->
+  <define>
+    <variable name="SyncShieldThick6mm_old" value="6.27" />
+    <!--<variable name="SyncShieldThick6mm" value="6.4" />-->
+    <variable name="SyncShieldThick6mm" value="1.64" />  <!-- for 8GeV -->
+    <variable name="SyncShieldRadius" value="25"/> <!-- Radius is a guess -->
+    <variable name="SyncShieldLength" value="3*25.4"/>
+    <variable name="i_SyncShield" value="0" />
+  </define>
+
+  <!-- Sync Shield specific materials -->
+  <materials>
+  </materials>
+
+  <!-- Sync Shield specific solids -->
+  <solids>
+    <tube name="sol_PhDet_SyncShield0mm" lunit="mm" aunit="degree"
+        rmin="0.0"
+        rmax="SyncShieldRadius"
+        z="0.001"
+        startphi="0"
+        deltaphi="360"
+      />
+    <tube name="sol_PhDet_SyncShield6mm_tube" lunit="mm" aunit="degree"
+        rmin="0.0"
+        rmax="SyncShieldRadius"
+        z="SyncShieldThick6mm"
+        startphi="0"
+        deltaphi="360"
+      />
+    <box lunit="mm" name="sol_PhDet_SyncShield6mm"
+        x="SyncShieldLength"
+        y="SyncShieldLength"
+        z="SyncShieldThick6mm"
+      />
+  </solids>
+
+  <!-- Sync Shield specific volumes -->
+  <structure>
+    <!-- Default Sync Shield (empty) -->
+    <volume name="vol_PhDet_SyncShield0mm">
+      <materialref ref="Air" />
+      <solidref ref="sol_PhDet_SyncShield0mm" />
+      <auxiliary auxtype="Color" auxvalue="#0000CD00"/>
+    </volume>
+
+    <!-- 6 mm version -->
+    <volume name="vol_PhDet_SyncShield6mm">
+      <materialref ref="LeadMaterial" />
+      <solidref ref="sol_PhDet_SyncShield6mm" />
+      <auxiliary auxtype="Color" auxvalue="#0000EF44"/>
+    </volume>
+
+  </structure>
+
+  <!-- Default is no sync shield (or 0mm) -->
+  <setup name="Default" version="1.0">
+    <world ref="vol_PhDet_SyncShield0mm" />
+  </setup>
+</gdml>

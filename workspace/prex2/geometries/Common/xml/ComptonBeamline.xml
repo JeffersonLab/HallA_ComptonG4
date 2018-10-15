@@ -1,0 +1,4 @@
+<physvol name="ComptonBeamlinePhysical">
+  <volumeref ref="ComptonBeamlineLogical" />
+  <position name="ComptonBeamline_Position" unit="mm" x="0" y="0" z="0" />
+</physvol>
