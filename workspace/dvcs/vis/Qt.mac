@@ -1,4 +1,4 @@
-/vis/open OGLIQt
+/vis/open OGL
 /control/execute vis/vis.mac
 #/vis/scene/add/axes 0.0 0.0 1556 200 mm
 #/vis/viewer/set/viewpointVector 0 0 1000
