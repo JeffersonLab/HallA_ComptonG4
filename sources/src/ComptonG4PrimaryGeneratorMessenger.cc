@@ -103,7 +103,7 @@ void ComptonG4PrimaryGeneratorMessenger::SetNewValue(
     G4UIcommand *command, G4String newValue)
 { // Process new value from G4 Kernel
   if ( command == fGenModeCmd ) {
-    fAction->SetGeneratorMode(newValue); 
+    fAction->SetGeneratorMode(newValue);
   } else if ( command == fSetElectronEnergyCmd ) {
     fAction->SetElectronEnergy(fSetElectronEnergyCmd->GetNewDoubleValue(newValue));
   } else if ( command == fSetIncidentEnergyCmd ) {
