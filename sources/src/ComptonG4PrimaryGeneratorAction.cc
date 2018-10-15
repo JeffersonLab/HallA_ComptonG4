@@ -272,7 +272,8 @@ void ComptonG4PrimaryGeneratorAction::GenerateComptonElectronMode(){
 void ComptonG4PrimaryGeneratorAction::GenerateComptonPhotonMode()
 {
   ComptonG4ComptonGenerator gen = GeneratePrimaryComptonValues();
-
+  // G4cout<<"setting gun position "<<fPrimaryVertexLocation<<G4endl;
+  // std::cin.ignore();
   fParticleGun->SetParticleEnergy(gen.gammaE);
   fParticleGun->SetParticlePosition(fPrimaryVertexLocation);
   fParticleGun->SetParticleMomentumDirection(gen.gammaDirection);

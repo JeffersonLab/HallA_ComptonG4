@@ -41,10 +41,17 @@ ComptonG4SteppingAction::~ComptonG4SteppingAction()
 void ComptonG4SteppingAction::UserSteppingAction(const G4Step* step)
 {
 
+  // G4cout<<"stp "<<step->GetStepLength()<<"\t"<<G4endl;
+  // G4cout<<"\t"<<step->GetPreStepPoint()->GetPosition()<<"\t>>>\t"<<step->GetPostStepPoint()->GetPosition()<<G4endl;
+  // G4cout<<"\t"<<step->GetPreStepPoint()->GetTouchableHandle()->GetVolume(0)->GetName()<<"\t>>>\t"<<step->GetPostStepPoint()->GetTouchableHandle()->GetVolume(0)->GetName()<<G4endl;
+  // G4cout<<"stp "<<step->GetPreStepPoint()->GetMomentum()<<"\t>>>\t"<<step->GetPostStepPoint()->GetMomentum()<<G4endl;
   G4Track *track = step->GetTrack();
   if( !track )
     return;
 
+  // G4cout<<__PRETTY_FUNCTION__<<G4endl
+  // 	<<"\t"<<track->GetPosition()<<"\t"<<track->GetTrackID()<<"\t"<<track->GetMomentum()<<G4endl;
+  // std::cin.ignore();
   // We want to track the primary particle all the way through
   if( track->GetParentID() == 0 ) {
     ComptonG4PrimaryHit hit;
