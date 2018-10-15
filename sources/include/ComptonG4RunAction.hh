@@ -1,5 +1,5 @@
 #ifndef COMPTONG4RUNTACTION_H
-#define COMPTONGRUNTACTION_H
+#define COMPTONG4RUNTACTION_H
 
 // GEANT4 includes
 #include <G4UserRunAction.hh>
