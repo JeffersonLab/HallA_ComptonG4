@@ -1,0 +1,129 @@
+<!-- Definitions specific for the Photon Detector -->
+<define>
+  &PhotonDetectorDefinitions;
+</define>
+
+<!-- Materials specific for the Photon Detector -->
+
+<materials>
+</materials>
+
+<!-- Photon Detector Solids -->
+<solids>
+  &PhotonDetectorSolids;
+</solids>
+
+
+<structure>
+  <!-- Include all the Photon Detector Volume Definitions -->
+  &PhotonDetectorVolumes;
+
+  <!-- Construc the Photon Detector Volume -->
+  <volume name="ComptonPhotonDetector" >
+    <materialref ref="Air" />
+    <solidref ref="sol_PhDetWorld" />
+
+    <!-- Include Photon Detector Sync Shield Volume -->
+  <!--  <physvol name="phys_PhDet_SyncShield">
+      <file name="geometries/PhotonDetector/SyncShield.gdml"
+            volname="vol_PhDet_SyncShield&PhotonDetectorSyncShield;"/>
+      <position name="pos_PhDet_SyncShield" unit="mm" x="0" y="0"
+                z="dim_PhDetWorldZ-ComptonPhotonDetectorDimZ-ShieldsDimZ-AlShieldToSync-6.4/2." />
+    </physvol> -->
+
+    <!-- Include Photon Detector Collimator Volume -->
+    <physvol name="phys_PhDet_Collimator">
+      <volumeref ref="vol_PhDet_Collimator&PhotonDetectorCollimator;" />
+      <position name="pos_PhDet_Collimator" unit="mm" x="0" y="0"
+                z="dim_ColThick/2." />
+    </physvol>
+
+    <!-- Include Beam Pipe Window 9/6/16 -->
+ <!--   <physvol name="phys_BPWindow">
+      <volumeref ref="BPWindowLogical" />
+      <position name="pos_BPWindow" unit="mm" x="0" y="0" z="-ColToBPWindow-BPWindowThickness/2." />
+    </physvol> -->
+
+ <physvol name="Syncshield">
+      <volumeref ref="SyncshieldLogical" />
+      <position name="Syncshield_Position" unit="mm"
+                x="0"
+                y="0"
+                z="150.0" />
+    </physvol>
+
+    <physvol name="ComptonVacuumDetector1">
+      <volumeref ref="ComptonVacuumDetector1Logical" />
+      <position name="ComptonVacuumDetector1_Position" unit="mm"
+                x="0"
+                y="0"
+                z="-30.0" />
+    </physvol>
+
+
+    <physvol name="ComptonVacuumDetector2">
+      <volumeref ref="ComptonVacuumDetector2Logical" />
+      <position name="ComptonVacuumDetector2_Position" unit="mm"
+                x="0"
+                y="0"
+                z="65.0" />
+    </physvol>
+
+
+    <physvol name="ComptonVacuumDetector3">
+      <volumeref ref="ComptonVacuumDetector3Logical" />
+      <position name="ComptonVacuumDetector3_Position" unit="mm"
+                x="0"
+                y="0"
+                z="125.0" />
+    </physvol>
+
+    
+        <physvol name="ComptonVacuumDetector4">
+        <volumeref ref="ComptonVacuumDetector4Logical" />
+        <position name="ComptonVacuumDetector4_Position" unit="mm"
+        x="0"
+        y="0"
+        z="161.0" />
+        </physvol>
+
+
+    <physvol name="ComptonVacuumDetector5">
+      <volumeref ref="ComptonVacuumDetector5Logical" />
+      <position name="ComptonVacuumDetector5_Position" unit="mm"
+                x="0"
+                y="0"
+                z="200.0" />
+    </physvol>
+
+
+
+<physvol name="ComptonVacuumDetector6">
+      <volumeref ref="ComptonVacuumDetector6Logical" />
+      <position name="ComptonVacuumDetector6_Position" unit="mm"
+                x="0"
+                y="0"
+                z="297.0" />
+    </physvol>
+<!--
+
+<physvol name="ComptonVacuumDetector7">
+      <volumeref ref="ComptonVacuumDetector7Logical" />
+      <position name="ComptonVacuumDetector7_Position" unit="mm"
+                x="0"
+                y="0"
+                z="370.0" />
+    </physvol> -->
+    
+    <!-- Include LeadTungstate Volume -->
+    &PhotonDetector;
+
+    <!-- Do not draw the Photon Detector World Volume -->
+    <auxiliary auxtype="Color" auxvalue="#FFFFFF00"/>
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.1">
+  <world ref="ComptonPhotonDetector"/>
+</setup>
