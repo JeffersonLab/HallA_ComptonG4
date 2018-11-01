@@ -7,6 +7,10 @@
 #/Compton/gun/ElectronEnergy 3.4 GeV
 #/Compton/gun/ElectronEnergy 10.617 GeV
 
+### set to 1 if you want to get printouts for every step
+######### this has a cin.ignore() statement in it so it will stop at every step
+/Compton/step/verbose 0
+
 /Compton/gun/LaserWavelenght 532 nm
 #/Compton/gun/LaserWavelenght 1064 nm
 #/Compton/gun/PhotonVertexZ 0.0 mm
