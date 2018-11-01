@@ -11,6 +11,9 @@
 ######### this has a cin.ignore() statement in it so it will stop at every step
 /Compton/step/verbose 0
 
+### which hits do you want to store? 1: only primaries 2: everything but optical photons
+/Compton/step/hitProcessLevel 1
+
 /Compton/gun/LaserWavelenght 532 nm
 #/Compton/gun/LaserWavelenght 1064 nm
 #/Compton/gun/PhotonVertexZ 0.0 mm

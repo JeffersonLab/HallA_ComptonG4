@@ -34,6 +34,8 @@ public:
     fVerbose = verbose;
   }
 
+  void SetHitProcessingLevel(G4int level){fProcessingHitLevel = level;}
+
   void ClearEvent();
 
   /*
@@ -47,6 +49,7 @@ private:
   ComptonG4SteppingMessenger *fStepMessenger;
   G4double fOpticalMaxStepTime;
   G4int fVerbose;
+  G4int fProcessingHitLevel;
   std::vector<ComptonG4PrimaryHit> fPrimaryHits;
   std::vector<ComptonG4PrimaryData>* fPrimaryDataPtr;
   std::vector<ComptonG4Hit> fStoppedOpticalHits;

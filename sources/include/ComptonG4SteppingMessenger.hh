@@ -32,6 +32,7 @@ private:
   G4UIdirectory              *fStepDir;
   G4UIcmdWithADoubleAndUnit  *fSetOpticalMaxStepTimeCmd;
   G4UIcmdWithAnInteger       *fSetVerboseCmd;
+  G4UIcmdWithAnInteger       *fSetHitProcessingCmd;
 };
 
 #endif

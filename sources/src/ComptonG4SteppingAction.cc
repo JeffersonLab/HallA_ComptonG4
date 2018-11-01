@@ -18,7 +18,8 @@
 #include <TTree.h>
 
 ComptonG4SteppingAction::ComptonG4SteppingAction(ComptonG4Analysis *analysis) :
-fAnalysis(analysis),fOpticalMaxStepTime(1.0e-6*CLHEP::s),fVerbose(0),
+  fAnalysis(analysis),fOpticalMaxStepTime(1.0e-6*CLHEP::s),fVerbose(0),
+  fProcessingHitLevel(1),
   fStoreFullOpticalStopped(false),fStoppedOpticalCerenkov(0),
   fStoppedOpticalScintillation(0),fStoppedOpticalOther(0),
   fStoppedOpticalTotal(0)
@@ -59,7 +60,7 @@ void ComptonG4SteppingAction::UserSteppingAction(const G4Step* step)
   }
 
   // We want to track the primary particle all the way through
-  if( track->GetParentID() == 0 ) {
+  if( track->GetParentID() == 0 && fProcessingHitLevel == 1) {
     ComptonG4PrimaryHit hit;
     hit.ProcessStep(step);
     hit.SetEnergyDeposited(step->GetTotalEnergyDeposit());
@@ -89,6 +90,12 @@ void ComptonG4SteppingAction::UserSteppingAction(const G4Step* step)
       track->SetTrackStatus(fStopAndKill);
       //fAnalysis->StoppedOpticalPhoton();
     }
+  }else if(fProcessingHitLevel == 2){
+    ComptonG4PrimaryHit hit;
+    hit.ProcessStep(step);
+    hit.SetEnergyDeposited(step->GetTotalEnergyDeposit());
+    fPrimaryHits.push_back(hit);
+    fPrimaryDataPtr->push_back(hit.GetData());
   }
 }
 

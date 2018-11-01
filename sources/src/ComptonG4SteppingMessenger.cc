@@ -26,12 +26,21 @@ ComptonG4SteppingMessenger::ComptonG4SteppingMessenger(
   fSetVerboseCmd->SetParameterName("verbose",0);
   fSetVerboseCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+  // Set Hit Processing Level
+  fSetHitProcessingCmd = new G4UIcmdWithAnInteger("/Compton/step/hitProcessLevel",this);
+  fSetHitProcessingCmd->SetGuidance("Controls hit processing level");
+  fSetHitProcessingCmd->SetParameterName("hitProc",0);
+  fSetHitProcessingCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
 }
 
 ComptonG4SteppingMessenger::~ComptonG4SteppingMessenger()
 { // Time for a cleanup!!
-  delete fSetOpticalMaxStepTimeCmd;
-  delete fStepDir;
+  if(fSetOpticalMaxStepTimeCmd) delete fSetOpticalMaxStepTimeCmd;
+  if(fStepDir)                  delete fStepDir;
+  if(fSetOpticalMaxStepTimeCmd) delete fSetOpticalMaxStepTimeCmd;
+  if(fSetVerboseCmd)            delete fSetVerboseCmd;
+  if(fSetHitProcessingCmd)      delete fSetHitProcessingCmd;
 }
 
 void ComptonG4SteppingMessenger::SetNewValue(
@@ -41,5 +50,7 @@ void ComptonG4SteppingMessenger::SetNewValue(
     fAction->SetOpticalMaxStepTime(fSetOpticalMaxStepTimeCmd->GetNewDoubleValue(newValue));
   } else if ( command == fSetVerboseCmd ) {
     fAction->SetVerbose(fSetVerboseCmd->GetNewIntValue(newValue));
+  } else if ( command == fSetHitProcessingCmd ) {
+    fAction->SetHitProcessingLevel(fSetHitProcessingCmd->GetNewIntValue(newValue));
   }
 }
