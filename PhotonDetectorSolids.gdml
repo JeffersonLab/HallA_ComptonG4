@@ -1,0 +1,228 @@
+<!-- Define the total "PhotonDetector" volume. Should encompass all
+     elements (Syncshield, Collimator, Crystals and PMT).
+
+The world volume positions the Photon Detector based on the "center" of the
+volume. But all it knows is the distance from the IP to the front face
+of the PhDet.
+-->
+
+<!-- Define solids for the Collimator -->
+<tube name="sol_PhDet_Collimator5mm" lunit="mm" aunit="degree"
+rmin="dim_ColMinRadius10mm"
+rmax="dim_ColMaxRadius"
+z="dim_ColThick"
+startphi="0" deltaphi="360"
+/>
+
+<!-- Lead Tungstate Photon Detector Solids
+     - Includes Crystal Stack
+     - Air gaps between volumes
+     - MyLar wrap
+     - Blacktape wrap
+     - Optical grease on PMT-LeadTungstate border
+     - PMT
+-->
+<tube lunit="mm" name="GSOCrystalSolid"
+      rmin="0."
+      rmax="30.0"
+      z="150.0"
+      startphi="0" deltaphi="360" aunit="degree" />
+
+<tube lunit="mm" name="GSOPMTGreaseSolid"
+      rmin="0."
+      rmax="30.0"
+      z="1.0"
+      startphi="0" deltaphi="360" aunit="degree" />
+
+
+<tube lunit="mm" name="GSOFoilWrapSolid"
+      rmin="30.0"
+      rmax="30.025"
+      z="150.0"
+      startphi="0" deltaphi="360" aunit="degree" />
+
+<box lunit="mm" name="ComptonVacuumDetector1Solid"
+     x="180"
+     y="180"
+     z="1"
+     />
+
+<box lunit="mm" name="ComptonVacuumDetector2Solid"
+     x="180"
+     y="180"
+     z="1"
+     />
+
+<box lunit="mm" name="ComptonVacuumDetector3Solid"
+     x="180"
+     y="180"
+     z="1"
+     />
+
+<box lunit="mm" name="ComptonVacuumDetector4Solid"
+     x="180"
+     y="180"
+     z="1"
+     /> 
+
+<box lunit="mm" name="ComptonVacuumDetector5Solid"
+     x="180"
+     y="180"
+     z="1"
+     />
+
+<tube lunit="mm" name="ComptonVacuumDetector6Solid"
+      rmin="0."
+      rmax="30.0"
+      z="1"
+      startphi="0" deltaphi="360" aunit="degree" />
+
+<tube lunit="mm" name="ComptonVacuumDetector7Solid"
+      rmin="38"
+      rmax="39.0"
+      z="150"
+      startphi="0" deltaphi="360" aunit="degree" />
+  
+
+
+<box lunit="mm" name="Syncshield"
+        x="3*25.4"
+        y="3*25.4"
+        z="1.64"
+      />
+  
+
+<box lunit="mm" name="ComptonPhotonDetectorSolid"
+     x="ComptonPhotonDetectorDimX"
+     y="ComptonPhotonDetectorDimY"
+     z="ComptonPhotonDetectorDimZ"
+     />
+<box lunit="mm" name="sol_PhDetWorld"
+     x="dim_PhDetWorldX"
+     y="dim_PhDetWorldY"
+     z="2.*dim_PhDetWorldZ"
+     />
+<!-- <box lunit="mm" name="sol_PhDetWorldPiece2" -->
+<!--      x="2.*dim_PhDetWorldX" -->
+<!--      y="2.*dim_PhDetWorldY" -->
+<!--      z="dim_PhDetWorldZ+1.0" -->
+<!--      /> -->
+<!-- <subtraction name="sol_PhDetWorld" > -->
+<!--   <first ref="sol_PhDetWorldPiece1" /> -->
+<!--   <second ref="sol_PhDetWorldPiece2" /> -->
+<!--   <position name="pos_PhDetWorld" unit="mm" x="0" y="0" z="-dim_PhDetWorldZ/2.-1." /> -->
+<!-- </subtraction> -->
+
+<tube lunit="mm" name="ComptonPMTSolid"
+      rmin="ComptonPMTDimRMin"
+      rmax="ComptonPMTDimRMax"
+      z="ComptonPMTDimZ"
+      startphi="0" deltaphi="360" aunit="degree" />
+
+<!-- Tungsten Fingers solids 7/6/16 -->
+<box lunit="mm" name="TungstenFingerSolid"
+     x="TungstenFingerDimX"
+     y="TungstenFingerDimY"
+     z="TungstenFingerDimZ"
+     />
+<box lunit="mm" name="TungstenFingersSolid"
+     x="ShieldsDimX"
+     y="ShieldsDimY"
+     z="TungstenFingerDimZ"
+     />
+<!-- Shields solids 7/21/16 -->
+
+<box lunit="mm" name="ShieldsSolid"
+     x="ShieldsDimX"
+     y="ShieldsDimY"
+     z="ShieldsDimZ"
+     /> 
+<box lunit="mm" name="styrofoam"
+     x="ShieldsDimX"
+     y="ShieldsDimY"
+     z="CoverToShieldDimZ"
+     />
+<box lunit="mm" name="CopperShieldSolid"
+     x="ShieldsDimX"
+     y="ShieldsDimY"
+     z="CopperShieldDimZ"
+     />
+<tube lunit="mm" name="CopperCutSolid"
+      rmin="0." rmax="HollowTubeRadius" z="CopperShieldDimZ"
+      startphi="0" deltaphi="360" aunit="degree" />
+<subtraction name="sol_CopperShield">
+  <first ref="CopperShieldSolid"/>
+  <second ref="CopperCutSolid"/>
+  <positionref ref="center" />
+</subtraction>
+
+<box lunit="mm" name="AlCoverSolid"
+     x="ShieldsDimX"
+     y="ShieldsDimY"
+     z="AlCoverDimZ"
+     />
+<tube lunit="mm" name="AlCoverCutSolid"
+      rmin="0." rmax="HollowTubeRadius" z="AlCoverDimZ"
+      startphi="0" deltaphi="360" aunit="degree" />
+<subtraction name="sol_AlCover">
+  <first ref="AlCoverSolid" />
+  <second ref="AlCoverCutSolid" />
+  <positionref ref="center" />
+</subtraction>
+
+<box lunit="mm" name="AlShieldSolid"
+     x="ShieldsDimX"
+     y="ShieldsDimY"
+     z="AlShieldDimZ"
+     />
+<tube lunit="mm" name="AlShieldCutSolid"
+      rmin="0." rmax="HollowTubeRadius" z="AlShieldDimZ"
+      startphi="0" deltaphi="360" aunit="degree" />
+<subtraction name="sol_AlShield" >
+  <first ref="AlShieldSolid" />
+  <second ref="AlShieldCutSolid" />
+  <positionref ref="center" />
+</subtraction>
+
+<!-- Beamline solids -->
+<tube lunit="mm" name="ComptonBeamlineSolid"
+      rmin="0." rmax="BeampipeDimRMax" z="BeampipeDimZ"
+      startphi="0" deltaphi="360" aunit="degree" />
+<tube lunit="mm" name="ComptonBeampipeSolid"
+      rmin="BeampipeDimRMin" rmax="BeampipeDimRMax" z="BeampipeDimZ"
+      startphi="0" deltaphi="360" aunit="degree" />
+<tube lunit="mm" name="ComptonBeampipeExitWindowSolid"
+      rmin="BeampipeExitWindowDimRMin" rmax="BeampipeExitWindowDimRMax" z="BeampipeExitWindowDimZ"
+      startphi="0" deltaphi="360" aunit="degree" />
+
+<tube lunit="mm" name="ComptonPMTCathodeSolid" rmin="0" rmax="38.5" z="0.1" startphi="0" deltaphi="360" aunit="degree" />
+<tube lunit="mm" name="ComptonPMTGlassSolid" rmin="41.25" rmax="42.25" z="205.0" startphi="0" deltaphi="360" aunit="degree" />
+<tube lunit="mm" name="ComptonPMTGlassSideSolid" rmin="0.0" rmax="41.25" z="1.0" startphi="0" deltaphi="360" aunit="degree" />
+
+<opticalsurface name="GSOPolishedSurface" model="UNIFIED" finish="polished" type="dielectric_dielectric" value="0.1"/>
+<opticalsurface name="GSOFoilSurface" model="UNIFIED" finish="polished" type="dielectric_metal" value="0.1"/>
+<!--
+    <opticalsurface name="LeadTungstateBlackTapeSurface" model="UNIFIED" finish="ground" type="dielectric_dielectric" value="0.1"/> -->
+<opticalsurface name="GSOGreaseSurface" model="UNIFIED" finish="polished" type="dielectric_dielectric" value="0.1"/>
+<opticalsurface name="PMTGlassSurface" model="UNIFIED" finish="polished" type="dielectric_dielectric" value="0.1" />
+<opticalsurface name="PMTCathodeSurface" model="UNIFIED" finish="polished" type="dielectric_metal" value="0.1" />
+<opticalsurface name="ComptonPMTGreaseSurface" model="UNIFIED" finish="polished" type="dielectric_dielectric" value="0.1"/>
+
+<box lunit="mm" name="JawSolid"
+     x="JawDimX"
+     y="JawDimY"
+     z="JawDimZ"
+     />
+<!--<box lunit="mm" name="World"
+    x="3*6000"
+    y="3*6000"
+    z="3*6000"
+    />
+-->
+
+<tube name="sol_BPWindow" lunit="mm" aunit="degree"
+      rmin="0"
+      rmax="BPWindowRadius"
+      z="BPWindowThickness"
+      startphi="0" deltaphi="360"
+      />
