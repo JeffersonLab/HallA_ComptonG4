@@ -1,0 +1,326 @@
+<!-- Start Define Collimator Volumes -->
+<volume name="vol_PhDet_Collimator5mm" >
+ <!--  <materialref ref="AluminumMaterial" /> -->
+   <materialref ref="LeadMaterial" />
+  <solidref ref="sol_PhDet_Collimator5mm" />
+  <auxiliary auxtype="Color" auxvalue="#0000CDFF" />
+</volume>
+<!-- End Define Collimator Volumes -->
+
+<!-- PMT Volume -->
+
+<volume name="ComptonPMTCathodeLogical" >
+  <materialref ref="Bialkali" />
+  <solidref ref="ComptonPMTCathodeSolid" />
+  <auxiliary auxtype="Color" auxvalue="#54545455" />
+  <auxiliary auxtype="SensDet" auxvalue="ComptonG4PMTCathode" />
+</volume>
+<volume name="ComptonPMTGlassSideLogical" >
+  <materialref ref="Silica" />
+  <solidref ref="ComptonPMTGlassSideSolid" />
+  <auxiliary auxtype="Color" auxvalue="#ABABAB77" />
+</volume>
+<volume name="ComptonPMTGlassLogical" >
+  <materialref ref="Silica" />
+  <solidref ref="ComptonPMTGlassSolid" />
+  <auxiliary auxtype="Color" auxvalue="#ABABAB22" />
+</volume>
+<volume name="ComptonPMTLogical" >
+  <materialref ref="AirVacuumOptical" />
+  <solidref ref="ComptonPMTSolid" />
+
+  <physvol name="PMTGlassSide1">
+    <volumeref ref="ComptonPMTGlassSideLogical" />
+    <position name="ComptonPMTGlassSide1Position" unit="mm" x="0" y="0" z="-102" />
+  </physvol>
+  <physvol name="PMTGlassSide2">
+    <volumeref ref="ComptonPMTGlassSideLogical" />
+    <position name="ComptonPMTGlassSide2Position" unit="mm" x="0" y="0" z="102" />
+  </physvol>
+  <physvol name="PMTCathode">
+    <volumeref ref="ComptonPMTCathodeLogical" />
+    <position name="ComptonPMTCathodePosition" unit="mm" x="0" y="0" z="-101.45" />
+  </physvol>
+
+  <physvol name="PMTGlass">
+    <volumeref ref="ComptonPMTGlassLogical" />
+    <position name="ComptonPMTGlassPosition" unit="mm" x="0" y="0" z="0.0" />
+  </physvol>
+
+  <auxiliary auxtype="Color" auxvalue="#ABABAB00" />
+</volume>
+
+<!-- Start: Define LeadTungstate 4crystal detector used in QWeak 2011-2012 -->
+
+
+
+<volume name="GSOCrystalLogical" >
+  <materialref ref="GSO" />
+  <solidref ref="GSOCrystalSolid" />
+  <auxiliary auxtype="Color" auxvalue="#9B111E77"/>
+  <auxiliary auxtype="SensDet" auxvalue="ComptonG4Crystal" />
+</volume>
+
+ <volume name="SyncshieldLogical">
+    <materialref ref="LeadMaterial" />
+      <solidref ref="Syncshield" />
+      <auxiliary auxtype="Color" auxvalue="#0000EF44"/>
+    </volume> 
+
+<volume name="ComptonVacuumDetector1Logical" >
+  <materialref ref="AirVacuum" />
+  <solidref ref="ComptonVacuumDetector1Solid" />
+  <auxiliary auxtype="Color" auxvalue="#9B111E76"/>
+  <auxiliary auxtype="SensDet" auxvalue="ComptonG4Crystal" />
+</volume>
+
+
+<volume name="ComptonVacuumDetector2Logical" >
+  <materialref ref="AirVacuum" />
+  <solidref ref="ComptonVacuumDetector2Solid" />
+  <auxiliary auxtype="Color" auxvalue="#9B111E74"/>
+  <auxiliary auxtype="SensDet" auxvalue="ComptonG4Crystal" />
+</volume>
+
+
+<volume name="ComptonVacuumDetector3Logical" >
+  <materialref ref="AirVacuum" />
+  <solidref ref="ComptonVacuumDetector3Solid" />
+  <auxiliary auxtype="Color" auxvalue="#9B111E75"/>
+  <auxiliary auxtype="SensDet" auxvalue="ComptonG4Crystal" />
+</volume>
+
+<volume name="ComptonVacuumDetector4Logical" >
+  <materialref ref="AirVacuum" />
+  <solidref ref="ComptonVacuumDetector4Solid" />
+  <auxiliary auxtype="Color" auxvalue="#9B111E73"/>
+  <auxiliary auxtype="SensDet" auxvalue="ComptonG4Crystal" />
+</volume>
+
+
+
+<volume name="ComptonVacuumDetector5Logical" >
+  <materialref ref="AirVacuum" />
+  <solidref ref="ComptonVacuumDetector5Solid" />
+  <auxiliary auxtype="Color" auxvalue="#9B111E72"/>
+  <auxiliary auxtype="SensDet" auxvalue="ComptonG4Crystal" />
+</volume>
+
+<volume name="ComptonVacuumDetector6Logical" >
+  <materialref ref="AirVacuum" />
+  <solidref ref="ComptonVacuumDetector6Solid" />
+  <auxiliary auxtype="Color" auxvalue="#9B111E72"/>
+  <auxiliary auxtype="SensDet" auxvalue="ComptonG4Crystal" />
+</volume>
+
+<volume name="ComptonVacuumDetector7Logical" >
+  <materialref ref="AirVacuum" />
+  <solidref ref="ComptonVacuumDetector7Solid" />
+  <auxiliary auxtype="Color" auxvalue="#9B111E72"/>
+  <auxiliary auxtype="SensDet" auxvalue="ComptonG4Crystal" />
+</volume>
+
+
+
+<!--
+<volume name="GSOFoilWrapLogical" >
+
+  <materialref ref="BoPET" />
+  <solidref ref="GSOFoilWrapSolid" />
+  <auxiliary auxtype="Color" auxvalue="#C0C0C055"/>
+</volume>  -->
+
+<volume name="GSOPMTGreaseLogical" >
+  <materialref ref="OpticalGrease" /> 
+  <solidref ref="GSOPMTGreaseSolid" />
+  <auxiliary auxtype="Color" auxvalue="#9B111E76"/>
+  <auxiliary auxtype="SensDet" auxvalue="ComptonG4Crystal" />
+</volume>     
+
+
+  
+  
+
+
+<volume name="ComptonPhotonDetectorLogical">
+  <materialref ref="AirOptical" />
+  <solidref ref="ComptonPhotonDetectorSolid" />
+  <physvol name="GSOCrystalPhysical">
+    <volumeref ref="GSOCrystalLogical" />
+    <position name="GSOCrystal_Position" unit="mm"
+              x="0"
+              y="0"
+              z="-(ComptonPhotonDetectorDimZ-150.0)/2.0"/>
+  </physvol>
+
+
+ <physvol name="ComptonVacuumDetector7">
+    <volumeref ref="ComptonVacuumDetector7Logical" />
+    <position name="ComptonVacuumDetector7_position" unit="mm"
+              x="0"
+              y="0"
+              z="-(ComptonPhotonDetectorDimZ-150.0)/2.0" />
+  </physvol>
+
+
+  <physvol name="GSOPMTGreasePhysical">
+    <volumeref ref="GSOPMTGreaseLogical" />
+    <position name="GSOPMTGrease_Position" unit="mm"
+              x="0"
+              y="0"
+              z="(ComptonPhotonDetectorDimZ-(2*ComptonPMTDimZ+1.0))/2.0" />
+  </physvol>
+
+<!--
+  <physvol name="GSOFoilWrapPhysical">
+    <volumeref ref="GSOFoilWrapLogical" />
+    <position name="GSOFoilWrapPosition"
+              unit="mm"
+              x="0.0"
+              y="0.0"
+              z="-103.0" />
+  </physvol> -->
+
+  <physvol name="ComptonPMTPhysical">
+    <volumeref ref="ComptonPMTLogical" />
+    <position name="ComptonPMT_Position" unit="mm"
+              x="0"
+              y="0"
+              z="(ComptonPhotonDetectorDimZ-ComptonPMTDimZ)/2.0" />
+  </physvol>
+
+  <!--<auxiliary auxtype="Color" auxvalue="#00336600"/>-->
+  <auxiliary auxtype="Color" auxvalue="#CEFA0500"/>
+</volume>
+<!-- End: Define LeadTungstate 4crystal detector used in QWeak 2011-2012 -->
+
+<!-- Start: Define Beampipe -->
+<volume name="ComptonBeampipeLogical" >
+  <materialref ref="AluminumMaterial" />
+  <solidref ref="ComptonBeampipeSolid" />
+  <auxiliary auxtype="Color" auxvalue="#ADB2BD"/>
+</volume>
+
+<volume name="ComptonBeampipeExitWindowLogical" >
+  <materialref ref="Copper" />
+  <solidref ref="ComptonBeampipeExitWindowSolid" />
+  <auxiliary auxtype="Color" auxvalue="#B87333"/>
+</volume>
+
+<volume name="ComptonBeamlineLogical" >
+  <materialref ref="AirVacuum" />
+  <solidref ref="ComptonBeamlineSolid" />
+  <physvol>
+    <volumeref ref="ComptonBeampipeLogical" />
+    <position name="ComptonBeampipe_Position"
+              unit="mm" x="0." y="0." z="0." />
+  </physvol>
+  <physvol>
+    <volumeref ref="ComptonBeampipeExitWindowLogical" />
+    <position name="ComptonBeampipeExitWindowUpstream_Position"
+              unit="mm" x="0" y="0" z="-(BeampipeDimZ-BeampipeExitWindowDimZ-AirGap)/2." />
+  </physvol>
+  <physvol>
+    <volumeref ref="ComptonBeampipeExitWindowLogical" />
+    <position name="ComptonBeampipeExitWindowDownstream_Position"
+              unit="mm" x="0" y="0" z="(BeampipeDimZ-BeampipeExitWindowDimZ-AirGap)/2." />
+  </physvol>
+
+  <auxiliary auxtype="Color" auxvalue="#00000000" />
+</volume>
+<!-- End: Define Beampipe -->
+
+<!-- Tungsten Fingers 7/6/16 -->
+<volume name="TungstenFingerLogical">
+  <materialref ref="TungstenFinger" />
+  <solidref ref="TungstenFingerSolid" />
+  <auxiliary auxtype="Color" auxvalue="#FFFFFF22" />
+</volume>
+<volume name="TungstenFingersLogical">
+  <materialref ref="AirVacuum" />
+  <solidref ref="TungstenFingersSolid" />
+  <physvol>
+    <volumeref ref="TungstenFingerLogical"/>
+    <position name="pos_Vertical_Tungsten" unit="mm"
+              x="FingertoCenter+TungstenFingerDimX/2.0" y="0" z="0"/>
+  </physvol>
+  <physvol>
+    <volumeref ref="TungstenFingerLogical"/>
+    <position name="pos_Horizontal_Tungsten" unit="mm"
+              x="FingertoCenter-TungstenFingerDimY/2.0"
+              y="FingertoCenter+TungstenFingerDimX/2.0"
+              z="0" />
+    <rotation name="rot_Horizontal_Tungsten" z="90" unit="deg" />
+  </physvol>
+  <auxiliary auxtype="Color" auxvalue="#00000000" />
+</volume>
+<!-- End: Tungsten Fingers -->
+<!-- Shields 7/25/16 -->
+<!--
+<volume name="CopperLogical">
+  <materialref ref="Copper" />
+  <solidref ref="sol_CopperShield" />
+  <auxiliary auxtype="Color" auxvalue="#FFFFCD22" />
+</volume>
+<volume name="AlCoverLogical">
+  <materialref ref="AluminumMaterial" />
+  <solidref ref="sol_AlCover" />
+  <auxiliary auxtype="Color" auxvalue="#0000CD22" />
+</volume>
+<volume name="AlShieldLogical">
+  <materialref ref="AluminumMaterial" />
+  <solidref ref="sol_AlShield" />
+  <auxiliary auxtype="Color" auxvalue="#0000CD22" />
+</volume>
+<volume name="styrofoamLogical">
+  <materialref ref="Polystyrene" />
+  <solidref ref="styrofoam" />
+  <auxiliary auxtype="Color" auxvalue="#FFFFFF22" />
+</volume>
+<volume name="ShieldsLogical">
+  <materialref ref="Air" />
+  <solidref ref="ShieldsSolid" />
+  <physvol>
+    <volumeref ref="CopperLogical" />
+    <position name="Copper_Position"
+              unit="mm" x="0" y="0" z="ShieldsDimZ/2.-CopperShieldDimZ/2."/>
+  </physvol>
+  <physvol>
+    <volumeref ref="AlCoverLogical" />
+    <position name="AlCover_Position"
+              unit="mm" x="0" y="0" z="ShieldsDimZ/2.-CopperShieldDimZ-LEDSpaceDimZ-AlCoverDimZ/2."/>
+  </physvol>
+  <physvol>
+    <volumeref ref="AlShieldLogical" />
+    <position name="AlShield_Position"
+              unit="mm" x="0" y="0" z="-ShieldsDimZ/2.+AlShieldDimZ/2."/>
+  </physvol>
+  <physvol>
+    <volumeref ref="styrofoamLogical" />
+    <position name="styrofoam_Position"
+              unit="mm" x="0" y="0" z="-ShieldsDimZ/2.+AlShieldDimZ+CoverToShieldDimZ/2."/>
+ </physvol>
+<physvol>
+    <volumeref ref="ComptonVacuumDetector5Logical" />
+    <position name="ComptonVacuumDetector5_Position" unit="mm"
+        x="0"
+        y="0"
+        z="-ShieldsDimZ/2.+AlShieldDimZ+CoverToShieldDimZ/2.+60" />
+  </physvol>
+
+  <auxiliary auxtype="Color" auxvalue="#00000000"/>
+</volume>  -->
+<!-- End: Shields -->
+
+<volume name="JawLogical">
+  <materialref ref="TungstenFinger" />
+  <solidref ref="JawSolid" />
+  <auxiliary auxtype="Color" auxvalue="#00FFCD22" />
+  <!--  <auxiliary auxtype="SensDet" auxvalue="ComptonG4Crystal" /> -->
+</volume>
+<!--
+<volume name="BPWindowLogical">
+  <materialref ref="StainlessSteel" />
+  <solidref ref="sol_BPWindow" />
+  <auxiliary auxtype="Color" auxvalue="#FFFFFF22" />
+</volume> -->
